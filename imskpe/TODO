@@ -4,7 +4,7 @@ TODO:
 
 OK lines / interpol over GList
 OK open par-files
-- save par-files
+OK save par-files
 - open wavfiles
 - generate wavfiles (through kpe80 - console tool)
 - use fft to show a spectrum
@@ -41,7 +41,7 @@ OK      - dafür eine extra funktion ...
 NO      - mit leeren listen ... 
 OK      - und eine init-funktion für new mit den schwa werten ...
           = start.par
-      - wenn schon vorhanden wieder einblenden
+OK    - wenn schon vorhanden wieder einblenden
 OK  - loadfile einführen
 OK    - globales struct für ein File?
 OK      - darin folgende daten:
@@ -52,16 +52,16 @@ PP      - laden eines eigenen optimaleren formats [nice to have]
     - speichern der preferences
       - preferences dialog
       - auch speichern der formantfarben
-      - y-achsen-max einstellbar machen (in preferences)
+OK    - y-achsen-max einstellbar machen (in preferences)
       - auch die unterteilungen einstellbar machen
-      - wie soll die aktuelle "hoehe" abgespeicht werden? für jedes diagramm einzeln? 
+OK    - wie soll die aktuelle "hoehe" abgespeicht werden? für jedes diagramm einzeln? 
         und wie die ganzen preferences? 
       - die formantsliste muss sowieso weg ... sie dient ja nun nur der farbenspeicherung ...
         und die linienart sollte auch berücksichtigt werden ...
-    - speichern der par-files
-      - im speicher den array aufbauen?
-      - oder jeden wert mit hilfe der liste berechnen
-        - steigung: (endwert-anfangswert)/(endtime-anfangstime)
+OK  - speichern der par-files
+NO    - im speicher den array aufbauen?
+OK    - oder jeden wert mit hilfe der liste berechnen
+OK      - steigung: (endwert-anfangswert)/(endtime-anfangstime)
 OK - anzeigen der koordinaten in der statusleiste
      - was soll noch in die statusleiste?:
 OK     - filename ?! (besser in den titel)
@@ -78,24 +78,13 @@ OK     wo der mauscursor "vorher" war ...
 OK     also ob ein redraw erforderlich ist, oder nicht ...
      - vielleicht eine zusätzliche pixmap-var, in der das linieal schon drin ist?!
        -> schneller beim repaint?!
-   - neuer zusätzlicher Editdialog
-      - wenn man über einem Punkt ist, dynamisch ins kontextmenu
-      - werte dynamisch begrenzen
+OK - neuer zusätzlicher Editdialog
+OK    - wenn man über einem Punkt ist, dynamisch ins kontextmenu
+OK    - werte dynamisch begrenzen
    - play/synthesize it
-      - buttons dafür
-      - preferences einträge für die pfade zu klatt80 / einem wav-player
+OK    - buttons dafür
+OK    - preferences einträge für die pfade zu klatt80 / einem wav-player
    - optimieren der move-interaktion
       - erkennen, ob ein anderer punkt nun bewegt wird
           und dies nur erlauben, wenn vorher die maustaste losgelassen wurde
-   - sprachproblematik bei den dropdowns!
-
-
-GtkHScale
-
-gtk_hscale_new_with_range ()
-
-http://developer.gnome.org/doc/API/2.0/gtk/GtkHScale.html
-
-GtkSpinButton
-
-http://developer.gnome.org/doc/API/2.0/gtk/GtkSpinButton.html#gtk-spin-button-set-adjustment
+OK - sprachproblematik bei den dropdowns!
