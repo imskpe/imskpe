@@ -79,7 +79,7 @@ int main (int argc, char *argv[])
   MouseEventInit();
 
   imskpe_main = create_imskpe_main ();
-  gtk_window_resize (GTK_WINDOW (imskpe_main), ConfigGetInteger("main_window_x"), ConfigGetInteger("main_window_y"));
+//   gtk_window_resize (GTK_WINDOW (imskpe_main), ConfigGetInteger("main_window_x"), ConfigGetInteger("main_window_y"));
   gtk_widget_show (imskpe_main);
 
   gtk_main ();

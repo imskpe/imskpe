@@ -44,6 +44,7 @@ typedef struct {
 #define TYPE_STR 0
 #define TYPE_INT 1
 #define TYPE_BOOL 2
+#define TYPE_COLOR 3
 
 /*
 procedures
@@ -55,6 +56,7 @@ void ConfigListInsertString(char *name, char *value, unsigned short type);
 void ConfigListInsertInteger(char *name, int value, unsigned short type);
 char *ConfigGetString(char *name);
 int ConfigGetInteger(char *name);
+GdkColor ConfigGetColor(char *name);
 void ConfigListFree();
 void ConfigNew();
 void ConfigSave();

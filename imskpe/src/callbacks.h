@@ -550,3 +550,11 @@ gboolean
 on_draw_band_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
+
+void
+on_lb_colors_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f1_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);

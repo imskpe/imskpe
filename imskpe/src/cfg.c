@@ -33,6 +33,8 @@
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
 
+#include "curves.h"
+#include "graphics.h"
 #include "loadconf.h"
 #include "cfg.h"
 
@@ -43,9 +45,6 @@ void ConfigLoad()
   char *tmp;
   int homelen;
 
-
-
-//  ConfigListInsertString(GO ON
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
@@ -55,7 +54,7 @@ void ConfigLoad()
     tmp[homelen]=0;
     tmp=strcat(tmp,"/.imskpe");
     tmp[homelen+strlen("/.imskpe")]=0;
-    printf(">%s<\n",tmp);
+//     printf(">%s<\n",tmp);
     LoadConf(tmp);
   }
   else
@@ -67,6 +66,33 @@ void ConfigLoad()
 void ConfigListInsert(char *name, char *value)
 {
   unsigned short type;
+  typConfig *data;
+  GList *cl;
+  char *p_value;
+  int i,j;
+
+  /* first look if name is already in list:  */
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    
+    if(!strcmp(data->name,name))
+    {
+      if(data->value!=NULL)
+      {
+	g_free(data->value);
+      }
+      p_value = g_malloc (sizeof (strlen(value)+1));
+      strcpy(p_value,value);
+      data->value = p_value;
+      return;
+    }
+    
+    cl = cl->next;
+  }
+
+  /* its not in list: */
 
   // test type:
   if(atoi(value)!=0)
@@ -75,8 +101,30 @@ void ConfigListInsert(char *name, char *value)
   }
   else
   {
-    // \todo add test with isdigit !!
-    type=TYPE_STR;
+    if(strlen(value)==7)
+    {
+      if(value[0]=='#')
+      {
+	j=0;
+	for(i=1;i<8;i++)
+	{
+	  if(isxdigit(value[i])==4096)
+	  {
+	    j++;
+	  }
+	}
+      }
+    }
+
+    // \todo mabe add test with isdigit !!
+    if(j==6)
+    {
+      type=TYPE_COLOR;
+    }
+    else
+    {
+      type=TYPE_STR;
+    }
   }
 
 //   printf("%30s = %30s [%d]\n",name,value,type);
@@ -90,14 +138,15 @@ void ConfigListInsertString(char *name, char *value, unsigned short type)
   char *p_name;
   char *p_value;
 
-
-//   printf("-1- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
+//    printf("-1- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
   p = (typConfig *)g_malloc (sizeof (typConfig));
-  p_name = g_malloc (sizeof (strlen(name)+1));
-  p_value = g_malloc (sizeof (strlen(value)+1));
+  p_name = g_malloc (sizeof (strlen(name)));
+  p_value = g_malloc (sizeof (strlen(value)));
 
   strcpy(p_value,value);
   strcpy(p_name,name);
+  p_value[strlen(value)]=0;
+  p_name[strlen(name)]=0;
 
   p->name = p_name;
   p->type = type;
@@ -155,27 +204,118 @@ int ConfigGetInteger(char *name)
   }
 }
 
+GdkColor ConfigGetColor(char *name)
+{
+  typConfig *data;
+  GList *cl;
+  int i,x,a[3];
+  char tmp[30];
+
+  strcpy(tmp,"color_");
+  strcat(tmp,name);
+
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    
+    if(!strcmp(data->name,tmp) && data->type==TYPE_COLOR)
+    {
+      // dirty hack!!!!
+
+      for(i=0;i<3;i++)
+      {
+ 	if(isdigit(data->value[(i*2)+2])==2048)
+ 	{
+ 	  x=data->value[(i*2)+2]-48;
+ 	}
+ 	else
+ 	{
+	  switch(data->value[(i*2)+2])
+	  {
+	  case 'a':case 'A':
+	      x=10;
+	      break;
+	  case 'b':case 'B':
+	      x=11;
+	      break;
+	  case 'c':case 'C':
+	      x=12;
+	    break;
+	  case 'd':case 'D':
+	      x=13;
+	      break;
+	  case 'e':case 'E':
+	      x=14;
+	      break;
+	  case 'f':case 'F':
+	      x=15;
+	      break;
+	  }
+ 	}
+	a[i]=x;
+	
+	if(isdigit(data->value[(i*2)+1])==2048)
+	{
+	  x=data->value[(i*2)+1]-48;
+	}
+	else
+	{
+	  switch(data->value[(i*2)+1])
+	  {
+	  case 'a':case 'A':
+	      x=10;
+	      break;
+	  case 'b':case 'B':
+	      x=11;
+	      break;
+	  case 'c':case 'C':
+	      x=12;
+	    break;
+	  case 'd':case 'D':
+	      x=13;
+	      break;
+	  case 'e':case 'E':
+	      x=14;
+	      break;
+	  case 'f':case 'F':
+	      x=15;
+	      break;
+	  }
+	}
+	a[i]+=x*16;
+      }
+      return GetColor((float)a[0]/(float)255,(float)a[1]/(float)255,(float)a[2]/(float)255);
+    }
+
+    cl = cl->next;
+  }
+}
+
 void ConfigListFree()
 {
   typConfig *data;
   GList *cl;
 
+  printf("-configlistfree start-\n");
+
   cl=g_list_first (cfg);
   while(cl)
   {	
     data=(typConfig *)cl->data;
-    
+
     if(data->name!=NULL)
-      free(data->name);
-    
+      g_free(data->name);
+
     if(data->value!=NULL)
-      free(data->value);
-    
+      g_free(data->value);
+
     if(data!=NULL)
-      free(data);
-    
+      g_free(data);
+
     cl = g_list_remove(cl,data);
   }
+  printf("-configlistfree end-\n");
 }
 
 void ConfigNew()
@@ -188,11 +328,71 @@ void ConfigNew()
   ConfigListInsert("playcmd","play");
   ConfigListInsert("tmpdir","/tmp");
 
-  ConfigListInsert("main_window_x","740");
-  ConfigListInsert("main_window_y","540");
+  ConfigListInsert("color_f1","#ff0000");
+  ConfigListInsert("color_f2","#00ff00");
+  ConfigListInsert("color_f3","#0000ff");
+  ConfigListInsert("color_f4","#00ffff");
+  ConfigListInsert("color_f5","#ffff00");
+  ConfigListInsert("color_f6","#ff00ff");
+  ConfigListInsert("color_nasals","#ffaaaa");
+  ConfigListInsert("color_vc","#aaffaa");
+  ConfigListInsert("color_ea","#aaaaff");
+
+//  ConfigListInsert("main_window_x","740");
+//  ConfigListInsert("main_window_y","540");
 }
 
 void ConfigSave()
 {
+  char *tmp;
+  FILE *outfp;
+  int homelen;
+
+  typConfig *data;
+  GList *cl;
+
+  if(g_get_home_dir()!=NULL)
+  {
+    homelen=strlen(g_get_home_dir());
+    tmp=(char *)g_malloc(sizeof(homelen)+20);
+
+    strncpy(tmp,g_get_home_dir(),homelen);
+    tmp[homelen]=0;
+    tmp=strcat(tmp,"/.imskpe");
+    tmp[homelen+strlen("/.imskpe")]=0;
+//     printf(">%s<\n",tmp);
+
+    outfp = fopen(tmp,"w");
+    if(outfp==NULL)
+    {
+      /** \todo use an errordialog ?! */
+      printf("can't open output parameter file");
+      
+      free(tmp);
+      return;
+    }
+    
+    /* write "header"  */
+    fprintf(outfp,"# please don't edit this file!!\n");
+    
+    printf("save config\n");
+    cl=g_list_first (cfg);
+    while(cl)
+    {	
+      data=(typConfig *)cl->data;
+      
+//       printf("%s=%s\n",data->name,data->value);
+      fprintf(outfp,"%s = %s\n",data->name,data->value);
+      
+      cl = cl->next;
+    }
+    
+    fclose(outfp);
+  }
+  else
+  {
+    printf("get_home_dir failed!!\n");
+    return;
+  }
 
 }

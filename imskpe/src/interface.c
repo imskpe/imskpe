@@ -1503,7 +1503,7 @@ create_imskpe_prefs (void)
   GtkWidget *lb_formant5;
   GtkWidget *lb_formant6;
   GtkWidget *lb_nasals;
-  GtkWidget *lb_vc;
+  GtkWidget *lb_vs;
   GtkWidget *lb_ea;
   GtkWidget *bn_color_f2;
   GtkWidget *bn_color_f4;
@@ -1635,12 +1635,12 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (lb_nasals), 0, 0.5);
 
-  lb_vc = gtk_label_new (_("voice src"));
-  gtk_widget_show (lb_vc);
-  gtk_table_attach (GTK_TABLE (table18), lb_vc, 0, 1, 8, 9,
+  lb_vs = gtk_label_new (_("voice src"));
+  gtk_widget_show (lb_vs);
+  gtk_table_attach (GTK_TABLE (table18), lb_vs, 0, 1, 8, 9,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_vc), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_vs), 0, 0.5);
 
   lb_ea = gtk_label_new (_("exc. amp."));
   gtk_widget_show (lb_ea);
@@ -1860,6 +1860,12 @@ create_imskpe_prefs (void)
   gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), bn_prefs_ok, GTK_RESPONSE_OK);
   GTK_WIDGET_SET_FLAGS (bn_prefs_ok, GTK_CAN_DEFAULT);
 
+  g_signal_connect ((gpointer) bn_color_f1, "clicked",
+                    G_CALLBACK (on_bn_color_f1_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) lb_colors, "realize",
+                    G_CALLBACK (on_lb_colors_realize),
+                    NULL);
   g_signal_connect ((gpointer) spn_max_freq, "realize",
                     G_CALLBACK (on_spn_max_freq_realize),
                     NULL);
@@ -1903,7 +1909,7 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant5, "lb_formant5");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant6, "lb_formant6");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_nasals, "lb_nasals");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_vc, "lb_vc");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_vs, "lb_vs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ea, "lb_ea");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f2, "bn_color_f2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f4, "bn_color_f4");

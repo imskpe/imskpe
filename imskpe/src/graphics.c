@@ -245,6 +245,8 @@ void FormantListInit ()
 
 GdkColor GetFormantListColor (gchar *searchstring)
 {
+  return ConfigGetColor(searchstring);
+
   typFormantList *oneformant;  
 
   formants=g_list_first (formants);
@@ -563,6 +565,8 @@ GdkGC *GetPenGdkColor (GdkGC *gc, GdkColor col)
 GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
 {
   GdkColor col;
+
+  printf("%f %f %f\n",Red,Green,Blue);
 
   col.red = (guint16)(Red*65535.0);
   col.green = (guint16)(Green*65535.0);

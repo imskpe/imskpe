@@ -464,106 +464,12 @@ on_imskpe_main_delete_event            (GtkWidget       *widget,
 }
 
 gboolean
-on_color_selection1_configure_event    (GtkWidget       *widget,
-                                        GdkEventConfigure *event,
-                                        gpointer         user_data)
-{
-
-// void gtk_color_selection_set_color( GtkColorSelection *colorsel,
-//                                     gdouble           *color )
-
-  return FALSE;
-}
-
-
-void
-on_color_selection1_color_changed      (GtkColorSelection *colorselection,
-                                        gpointer         user_data)
-{
-  GtkWidget *mainwindow = GetMainWindow();
-  if(mainwindow != NULL)
-  {
-    gdouble color[3];
-    GdkColor gdk_color;
-  
-    GtkNotebook *nb=(GtkNotebook*) lookup_widget (GTK_WIDGET (mainwindow), "nb_resonators");
-    GtkWidget *child=gtk_notebook_get_nth_page(nb, gtk_notebook_get_current_page(nb));
-    GtkWidget *widget=gtk_notebook_get_tab_label(nb,child);
-    GtkWidget *w= lookup_widget (GTK_WIDGET (mainwindow), "lb_f1");    
-
-/* Get current color */
-    
-    gtk_color_selection_get_color (colorselection,color);
-    
-  /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
-    gdk_color=GetColor(color[0],color[1],color[2]);
-
-
-/*    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
-      g_printf("%d\n",gtk_notebook_get_current_page(nb));
-*/
-    
-/*    g_printf("%d ?= %d\n",&widget,&w); */
-
-    gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &gdk_color);
-    gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &gdk_color);
-  }
-}
-
-
-void
-on_ok_button1_clicked                  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-void
-on_cancel_button1_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-
-gboolean
 on_imskpe_colorsel_destroy_event       (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data)
 {
   gtk_widget_destroy (widget);
   return TRUE;
-}
-
-
-
-void
-on_bn_fX_color_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  static GtkWidget *color = NULL;
-
-  if (color == NULL) 
-    {
-      color = create_imskpe_colorsel ();
-      /* set the widget pointer to NULL when the widget is destroyed */
-      g_signal_connect (G_OBJECT (color),
-			"destroy",
-			G_CALLBACK (gtk_widget_destroyed),
-			&color);
-
-      SetMainWindow(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
-      /* Make sure the dialog doesn't disappear behind the main window. */
-      gtk_window_set_transient_for (GTK_WINDOW (color), 
-				    GTK_WINDOW ((GtkWidget *)GetMainWindow()));
-      /* Do not allow user to resize the dialog */
-      gtk_window_set_resizable (GTK_WINDOW (color), FALSE);
-    }
-
-  /* Make sure the dialog is visible. */
-  gtk_window_present (GTK_WINDOW (color));
 }
 
 
@@ -650,7 +556,7 @@ on_lb_f1_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f1");
+  col = ConfigGetColor("f1");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -662,7 +568,7 @@ on_lb_f2_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f2");
+  col = ConfigGetColor("f2");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -674,7 +580,7 @@ on_lb_f3_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f3");
+  col = ConfigGetColor("f3");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -686,8 +592,9 @@ imskpe_quit                            (GtkWidget       *widget,
                                         gpointer         user_data)
 {
 //   FormantListFree();
-  ConfigListFree();
   CurveListFree(FileGetCurvesPointer());
+  ConfigSave();
+  ConfigListFree();
   gtk_main_quit ();
 }
 
@@ -773,7 +680,7 @@ on_lb_f4_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f4");
+  col = ConfigGetColor("f4");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -785,7 +692,7 @@ on_lb_f5_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f5");
+  col = ConfigGetColor("f5");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -797,7 +704,7 @@ on_lb_f6_realize                       (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("f6");
+  col = ConfigGetColor("f6");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -809,7 +716,7 @@ on_lb_nasals_realize                   (GtkWidget       *widget,
 {
   GdkColor col;
 
-  col = GetFormantListColor("nasals");
+  col = ConfigGetColor("nasals");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -1555,6 +1462,46 @@ void InitDialogPrefs()
   gtk_window_present (GTK_WINDOW (prefs));
 }
 
+void InitDialogColor(char *searchstring)
+{
+  static GtkWidget *color = NULL;
+  GtkWidget *w;
+  GdkColor col=ConfigGetColor(searchstring);
+  GdkColor *xcol;
+  xcol=malloc(sizeof(GdkColor));
+  xcol->red=col.red;
+  xcol->green=col.green;
+  xcol->blue=col.blue;
+
+  printf("%2x %2x %2x\n",xcol->red,xcol->green,xcol->blue);
+
+  if (color == NULL) 
+    {
+      color = create_imskpe_colorsel ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (color),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&color);
+
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (color), 
+				    GTK_WINDOW ((GtkWidget *)GetMainWindow()));
+      /* Do not allow user to resize the dialog */
+      gtk_window_set_resizable (GTK_WINDOW (color), FALSE);
+
+      w=lookup_widget (GTK_WIDGET (color), "color_selection1");
+      gtk_color_selection_set_current_color((GtkColorSelection *)w,
+					    xcol);
+
+      g_free(xcol);
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (color));
+}
+
+
 void
 on_bn_save_clicked                     (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
@@ -1615,7 +1562,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
 
   FileSave(dir);
 
-  system(tmp);
+//   system(tmp);
 
   g_free(dir);
 }
@@ -1625,7 +1572,7 @@ void
 on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
-
+  on_convert1_activate(NULL,NULL);
 }
 
 
@@ -1686,6 +1633,130 @@ on_ent_tmp_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("tmpdir"));
+}
+
+
+
+void
+on_lb_colors_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+  GtkWidget *w;
+
+  col = ConfigGetColor("f1");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant1");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("f2");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant2");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("f3");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant3");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("f4");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant4");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("f5");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant5");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("f6");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_formant6");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("nasals");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_nasals");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("vc");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_vs");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+
+  col = ConfigGetColor("ea");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_ea");
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+  
+}
+
+
+void
+on_bn_color_f1_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f1");
+}
+
+
+gboolean
+on_color_selection1_configure_event    (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
+
+
+void
+on_color_selection1_color_changed      (GtkColorSelection *colorselection,
+                                        gpointer         user_data)
+{
+  GtkWidget *mainwindow = GetMainWindow();
+  if(mainwindow != NULL)
+  {
+    gdouble color[3];
+    GdkColor gdk_color;
+  
+    GtkNotebook *nb=(GtkNotebook*) lookup_widget (GTK_WIDGET (mainwindow), "nb_resonators");
+    GtkWidget *child=gtk_notebook_get_nth_page(nb, gtk_notebook_get_current_page(nb));
+    GtkWidget *widget=gtk_notebook_get_tab_label(nb,child);
+    GtkWidget *w= lookup_widget (GTK_WIDGET (mainwindow), "lb_f1");    
+
+/* Get current color */
+    
+    gtk_color_selection_get_color (colorselection,color);
+    
+  /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
+    gdk_color=GetColor(color[0],color[1],color[2]);
+
+
+/*    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
+      g_printf("%d\n",gtk_notebook_get_current_page(nb));
+*/
+    
+/*    g_printf("%d ?= %d\n",&widget,&w); */
+
+    gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &gdk_color);
+    gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &gdk_color);
+  }
+}
+
+void
+on_ok_button1_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_cancel_button1_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
 

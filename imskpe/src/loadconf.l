@@ -62,7 +62,7 @@
 <confdata>[ ]*               ;
 <confdata>"="                return EQUAL;
 <confdata>":"                return DPOINT;
-<confdata>[-A-Za-z0-9_]*     return VALUE;
+<confdata>[-A-Za-z0-9_/#]*     return VALUE;
 <confdata>"#"                {BEGIN(comment);return COMMENT;}
 <confdata>\n                 {BEGIN(INITIAL);return EOL;}
 
@@ -84,6 +84,8 @@ void LoadConf(char *filename)
 
   printf("%s\n",filename);
 
+  ConfigNew();
+
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
@@ -92,13 +94,13 @@ void LoadConf(char *filename)
 
     free(filename);
 
-    ConfigNew();
-
     return;
   }
 
   /* read from file, line by line */
   i=0;equal=0;
+  strcpy(val,"");
+  strcpy(var,"");
   while (fgets (buffer, sizeof (buffer), infp)) 
   {
     i++;
@@ -127,24 +129,27 @@ void LoadConf(char *filename)
 	  {
 	    printf("in configfile: 2 or more = or : in line %i.\n",i);
 	  }    
-	  else
-	  if((strlen(val) > 0) && (strlen(var) > 0))
+	  else if(equal==1)
 	  {
-	    printf("var: %s = %s\n",var,val);
-	  }
-	  else
-	  {
-	    if(!(strlen(val)==0 && strlen(var)==0))
-	    {
-	      if(strlen(val) == 0)
+	      if((strlen(val) > 0) && (strlen(var) > 0))
 	      {
-		printf("in configfile: no value in line %i.\n",i);
+		printf("var: %s = %s\n",var,val);
+		  ConfigListInsert(var,val);
 	      }
-	      if(strlen(var) == 0)
+	      else
 	      {
-		printf("in configfile: no varname in line %i.\n",i);
+		  if(!(strlen(val)==0 && strlen(var)==0))
+		  {
+		      if(strlen(val) == 0)
+		      {
+			  printf("in configfile: no value in line %i.\n",i);
+		      }
+		      if(strlen(var) == 0)
+		      {
+			  printf("in configfile: no varname in line %i.\n",i);
+		      }
+		  }
 	      }
-	    }
 	  }
 
 	  // reset all
