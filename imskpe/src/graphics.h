@@ -68,7 +68,6 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia);
 GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue);
 GdkGC *GetPenGdkColor (GdkGC *gc, GdkColor col);
 GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue);
-GdkColor GetFormantListColor (gchar *searchstring);
 void Repaint(GtkWidget *d, diagramTyp dia);
 void Redrawpixmap(GtkWidget *w, GdkEventExpose  *event);
 typGraphics *NewGraphics ();

@@ -1356,9 +1356,6 @@ create_imskpe_colorsel (void)
   g_signal_connect ((gpointer) color_selection1, "configure_event",
                     G_CALLBACK (on_color_selection1_configure_event),
                     NULL);
-  g_signal_connect ((gpointer) color_selection1, "color_changed",
-                    G_CALLBACK (on_color_selection1_color_changed),
-                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_colorsel, imskpe_colorsel, "imskpe_colorsel");
@@ -1494,14 +1491,14 @@ create_imskpe_prefs (void)
   GtkWidget *nb_prefs;
   GtkWidget *table18;
   GtkWidget *bn_color_f1;
-  GtkWidget *lb_formant1;
+  GtkWidget *lb_f1;
   GtkWidget *drawingarea1;
   GtkWidget *lb_change;
-  GtkWidget *lb_formant2;
-  GtkWidget *lb_formant3;
-  GtkWidget *lb_formant4;
-  GtkWidget *lb_formant5;
-  GtkWidget *lb_formant6;
+  GtkWidget *lb_f2;
+  GtkWidget *lb_f3;
+  GtkWidget *lb_f4;
+  GtkWidget *lb_f5;
+  GtkWidget *lb_f6;
   GtkWidget *lb_nasals;
   GtkWidget *lb_vs;
   GtkWidget *lb_ea;
@@ -1571,12 +1568,12 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_tooltips_set_tip (tooltips, bn_color_f1, _("Change Color F1"), NULL);
 
-  lb_formant1 = gtk_label_new (_("Formant 1"));
-  gtk_widget_show (lb_formant1);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant1, 0, 1, 1, 2,
+  lb_f1 = gtk_label_new (_("Formant 1"));
+  gtk_widget_show (lb_f1);
+  gtk_table_attach (GTK_TABLE (table18), lb_f1, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant1), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f1), 0, 0.5);
 
   drawingarea1 = gtk_drawing_area_new ();
   gtk_widget_show (drawingarea1);
@@ -1593,40 +1590,40 @@ create_imskpe_prefs (void)
   gtk_misc_set_alignment (GTK_MISC (lb_change), 0, 0.5);
   gtk_misc_set_padding (GTK_MISC (lb_change), 60, 0);
 
-  lb_formant2 = gtk_label_new (_("Formant 2"));
-  gtk_widget_show (lb_formant2);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant2, 0, 1, 2, 3,
+  lb_f2 = gtk_label_new (_("Formant 2"));
+  gtk_widget_show (lb_f2);
+  gtk_table_attach (GTK_TABLE (table18), lb_f2, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant2), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f2), 0, 0.5);
 
-  lb_formant3 = gtk_label_new (_("Formant 3"));
-  gtk_widget_show (lb_formant3);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant3, 0, 1, 3, 4,
+  lb_f3 = gtk_label_new (_("Formant 3"));
+  gtk_widget_show (lb_f3);
+  gtk_table_attach (GTK_TABLE (table18), lb_f3, 0, 1, 3, 4,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant3), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f3), 0, 0.5);
 
-  lb_formant4 = gtk_label_new (_("Formant 4"));
-  gtk_widget_show (lb_formant4);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant4, 0, 1, 4, 5,
+  lb_f4 = gtk_label_new (_("Formant 4"));
+  gtk_widget_show (lb_f4);
+  gtk_table_attach (GTK_TABLE (table18), lb_f4, 0, 1, 4, 5,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant4), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f4), 0, 0.5);
 
-  lb_formant5 = gtk_label_new (_("Formant 5"));
-  gtk_widget_show (lb_formant5);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant5, 0, 1, 5, 6,
+  lb_f5 = gtk_label_new (_("Formant 5"));
+  gtk_widget_show (lb_f5);
+  gtk_table_attach (GTK_TABLE (table18), lb_f5, 0, 1, 5, 6,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant5), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f5), 0, 0.5);
 
-  lb_formant6 = gtk_label_new (_("Formant 6"));
-  gtk_widget_show (lb_formant6);
-  gtk_table_attach (GTK_TABLE (table18), lb_formant6, 0, 1, 6, 7,
+  lb_f6 = gtk_label_new (_("Formant 6"));
+  gtk_widget_show (lb_f6);
+  gtk_table_attach (GTK_TABLE (table18), lb_f6, 0, 1, 6, 7,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_formant6), 0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (lb_f6), 0, 0.5);
 
   lb_nasals = gtk_label_new (_("Nasals"));
   gtk_widget_show (lb_nasals);
@@ -1863,6 +1860,30 @@ create_imskpe_prefs (void)
   g_signal_connect ((gpointer) bn_color_f1, "clicked",
                     G_CALLBACK (on_bn_color_f1_clicked),
                     NULL);
+  g_signal_connect ((gpointer) bn_color_f2, "clicked",
+                    G_CALLBACK (on_bn_color_f2_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_f4, "clicked",
+                    G_CALLBACK (on_bn_color_f4_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_f5, "clicked",
+                    G_CALLBACK (on_bn_color_f5_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_f6, "clicked",
+                    G_CALLBACK (on_bn_color_f6_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_nasals, "clicked",
+                    G_CALLBACK (on_bn_color_nasals_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_vc, "clicked",
+                    G_CALLBACK (on_bn_color_vc_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_ea, "clicked",
+                    G_CALLBACK (on_bn_color_ea_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_color_f3, "clicked",
+                    G_CALLBACK (on_bn_color_f3_clicked),
+                    NULL);
   g_signal_connect ((gpointer) lb_colors, "realize",
                     G_CALLBACK (on_lb_colors_realize),
                     NULL);
@@ -1900,14 +1921,14 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, nb_prefs, "nb_prefs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table18, "table18");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f1, "bn_color_f1");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant1, "lb_formant1");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f1, "lb_f1");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea1, "drawingarea1");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_change, "lb_change");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant2, "lb_formant2");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant3, "lb_formant3");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant4, "lb_formant4");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant5, "lb_formant5");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant6, "lb_formant6");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f2, "lb_f2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f3, "lb_f3");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f4, "lb_f4");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f5, "lb_f5");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f6, "lb_f6");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_nasals, "lb_nasals");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_vs, "lb_vs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ea, "lb_ea");

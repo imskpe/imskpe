@@ -48,7 +48,7 @@ void ConfigLoad()
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
-    tmp=(char *)g_malloc(sizeof(homelen)+20);
+    tmp=(char *)g_malloc(homelen+20);
 
     strncpy(tmp,g_get_home_dir(),homelen);
     tmp[homelen]=0;
@@ -83,7 +83,7 @@ void ConfigListInsert(char *name, char *value)
       {
 	g_free(data->value);
       }
-      p_value = g_malloc (sizeof (strlen(value)+1));
+      p_value = g_malloc (sizeof(char)*(strlen(value)+1));
       strcpy(p_value,value);
       data->value = p_value;
       return;
@@ -140,8 +140,8 @@ void ConfigListInsertString(char *name, char *value, unsigned short type)
 
 //    printf("-1- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
   p = (typConfig *)g_malloc (sizeof (typConfig));
-  p_name = g_malloc (sizeof (strlen(name)));
-  p_value = g_malloc (sizeof (strlen(value)));
+  p_name = g_malloc (strlen(name));
+  p_value = g_malloc (strlen(value));
 
   strcpy(p_value,value);
   strcpy(p_name,name);
@@ -292,6 +292,84 @@ GdkColor ConfigGetColor(char *name)
   }
 }
 
+gboolean ConfigRename(char *name, char *ziel)
+{
+  typConfig *data;
+  GList *cl;
+  char *tmp;
+
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    
+    if(!strcmp(data->name,name))
+    {
+      if(data->name!=NULL)
+      {
+	g_free(data->name);
+      }
+      tmp = g_malloc (sizeof(char)*(strlen(ziel)+1));
+      strcpy(tmp,ziel);
+      data->name = tmp;
+      return TRUE;
+    }
+
+    cl = cl->next;
+  }
+  return FALSE;
+}
+
+gboolean ConfigFind(char *name)
+{
+  typConfig *data;
+  GList *cl;
+
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    
+    if(!strcmp(data->name,name))
+    {
+      return TRUE;
+    }
+
+    cl = cl->next;
+  }
+  return FALSE;
+}
+
+gboolean ConfigRemove(char *name)
+{
+  typConfig *data;
+  GList *cl;
+
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    
+    if(!strcmp(data->name,name))
+    {
+      if(data->name!=NULL)
+	g_free(data->name);
+      
+      if(data->value!=NULL)
+	g_free(data->value);
+      
+      if(data!=NULL)
+	g_free(data);
+
+      cl = g_list_remove(cl,data);
+      return TRUE;
+    }
+
+    cl = cl->next;
+  }
+  return FALSE;
+}
+
 void ConfigListFree()
 {
   typConfig *data;
@@ -335,7 +413,7 @@ void ConfigNew()
   ConfigListInsert("color_f5","#ffff00");
   ConfigListInsert("color_f6","#ff00ff");
   ConfigListInsert("color_nasals","#ffaaaa");
-  ConfigListInsert("color_vc","#aaffaa");
+  ConfigListInsert("color_vs","#aaffaa");
   ConfigListInsert("color_ea","#aaaaff");
 
 //  ConfigListInsert("main_window_x","740");
@@ -354,7 +432,7 @@ void ConfigSave()
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
-    tmp=(char *)g_malloc(sizeof(homelen)+20);
+    tmp=(char *)g_malloc(homelen+20);
 
     strncpy(tmp,g_get_home_dir(),homelen);
     tmp[homelen]=0;

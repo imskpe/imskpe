@@ -21,7 +21,7 @@
  * @file   callbacks.c
  * @author Andreas Madsack
  * 
- * @brief  callback-functions
+ * @brief  callback-ifdef
  * 
  * 
  */
@@ -49,6 +49,10 @@
 typedef enum {NONE, LOAD, SAVE} lsTyp;
 
 lsTyp loadorsave=NONE;
+
+char *selected_color;
+static GtkWidget *colordiag = NULL;
+static GtkWidget *prefs = NULL;
 
 
 /*** procedures:
@@ -1234,6 +1238,17 @@ void
 on_bn_prefs_cancel_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
+/*   ConfigRename("klattcmd","tmp_klatt"); */
+  ConfigRemove("tmp_color_f1");
+  ConfigRemove("tmp_color_f2");
+  ConfigRemove("tmp_color_f3");
+  ConfigRemove("tmp_color_f4");
+  ConfigRemove("tmp_color_f5");
+  ConfigRemove("tmp_color_f6");
+  ConfigRemove("tmp_color_nasals");
+  ConfigRemove("tmp_color_vs");
+  ConfigRemove("tmp_color_ea");
+
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
@@ -1244,6 +1259,17 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
 {
   // save values
 
+  if(ConfigFind("tmp_color_f1"))
+  {
+    ConfigRemove("color_f1");
+    ConfigRename("tmp_color_f1","color_f1");
+  }
+  // auch fuer die anderen farbwerte machen
+
+
+  // auch die anderen parameter auslesen und abspeichern!!
+     
+  return;
 }
 
 
@@ -1252,6 +1278,7 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
   // save values
+  on_bn_prefs_apply_clicked (NULL,NULL);
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
@@ -1442,8 +1469,6 @@ void InitDialogLoad()
 
 void InitDialogPrefs()
 {
- static GtkWidget *prefs = NULL;
-
   if (prefs == NULL) 
     {
       prefs = create_imskpe_prefs ();
@@ -1464,33 +1489,36 @@ void InitDialogPrefs()
 
 void InitDialogColor(char *searchstring)
 {
-  static GtkWidget *color = NULL;
   GtkWidget *w;
+
   GdkColor col=ConfigGetColor(searchstring);
   GdkColor *xcol;
-  xcol=malloc(sizeof(GdkColor));
+
+  xcol=(GdkColor *)malloc(sizeof(GdkColor));
   xcol->red=col.red;
   xcol->green=col.green;
   xcol->blue=col.blue;
 
+  selected_color=searchstring;
+
   printf("%2x %2x %2x\n",xcol->red,xcol->green,xcol->blue);
 
-  if (color == NULL) 
+  if (colordiag == NULL) 
     {
-      color = create_imskpe_colorsel ();
+      colordiag = create_imskpe_colorsel ();
       /* set the widget pointer to NULL when the widget is destroyed */
-      g_signal_connect (G_OBJECT (color),
+      g_signal_connect (G_OBJECT (colordiag),
 			"destroy",
 			G_CALLBACK (gtk_widget_destroyed),
-			&color);
+			&colordiag);
 
       /* Make sure the dialog doesn't disappear behind the main window. */
-      gtk_window_set_transient_for (GTK_WINDOW (color), 
+      gtk_window_set_transient_for (GTK_WINDOW (colordiag), 
 				    GTK_WINDOW ((GtkWidget *)GetMainWindow()));
       /* Do not allow user to resize the dialog */
-      gtk_window_set_resizable (GTK_WINDOW (color), FALSE);
+      gtk_window_set_resizable (GTK_WINDOW (colordiag), FALSE);
 
-      w=lookup_widget (GTK_WIDGET (color), "color_selection1");
+      w=lookup_widget (GTK_WIDGET (colordiag), "color_selection1");
       gtk_color_selection_set_current_color((GtkColorSelection *)w,
 					    xcol);
 
@@ -1498,7 +1526,7 @@ void InitDialogColor(char *searchstring)
     }
 
   /* Make sure the dialog is visible. */
-  gtk_window_present (GTK_WINDOW (color));
+  gtk_window_present (GTK_WINDOW (colordiag));
 }
 
 
@@ -1525,12 +1553,17 @@ on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
   InitDialogSave();
 }
 
+/* ------------------------------ 
+   convert / execute
+   ------------------------------ */
+
 
 void
 on_convert1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  
+
+
 }
 
 
@@ -1541,7 +1574,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   char *dir;
   char tmp[300];
 
-  dir = (char *)g_malloc(sizeof(ConfigGetString("tmpdir"))+20);
+  dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
 
   strcpy(dir,ConfigGetString("tmpdir"));
   strcat(dir,"/imskpe.");
@@ -1584,6 +1617,8 @@ on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
   on_execute1_activate(NULL,NULL);
 
 }
+
+// --------------------------------------------------
 
 
 void
@@ -1636,6 +1671,8 @@ on_ent_tmp_realize                     (GtkWidget       *widget,
 }
 
 
+// --------------------------------------------------
+
 
 void
 on_lb_colors_realize                   (GtkWidget       *widget,
@@ -1645,32 +1682,32 @@ on_lb_colors_realize                   (GtkWidget       *widget,
   GtkWidget *w;
 
   col = ConfigGetColor("f1");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant1");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f1");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
   col = ConfigGetColor("f2");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant2");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f2");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
   col = ConfigGetColor("f3");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant3");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f3");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
   col = ConfigGetColor("f4");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant4");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f4");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
   col = ConfigGetColor("f5");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant5");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f5");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
   col = ConfigGetColor("f6");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_formant6");
+  w=lookup_widget (GTK_WIDGET (widget), "lb_f6");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
@@ -1679,7 +1716,7 @@ on_lb_colors_realize                   (GtkWidget       *widget,
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
 
-  col = ConfigGetColor("vc");
+  col = ConfigGetColor("vs");
   w=lookup_widget (GTK_WIDGET (widget), "lb_vs");
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
@@ -1689,14 +1726,6 @@ on_lb_colors_realize                   (GtkWidget       *widget,
   gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
   
-}
-
-
-void
-on_bn_color_f1_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f1");
 }
 
 
@@ -1711,43 +1740,35 @@ on_color_selection1_configure_event    (GtkWidget       *widget,
 
 
 void
-on_color_selection1_color_changed      (GtkColorSelection *colorselection,
-                                        gpointer         user_data)
-{
-  GtkWidget *mainwindow = GetMainWindow();
-  if(mainwindow != NULL)
-  {
-    gdouble color[3];
-    GdkColor gdk_color;
-  
-    GtkNotebook *nb=(GtkNotebook*) lookup_widget (GTK_WIDGET (mainwindow), "nb_resonators");
-    GtkWidget *child=gtk_notebook_get_nth_page(nb, gtk_notebook_get_current_page(nb));
-    GtkWidget *widget=gtk_notebook_get_tab_label(nb,child);
-    GtkWidget *w= lookup_widget (GTK_WIDGET (mainwindow), "lb_f1");    
-
-/* Get current color */
-    
-    gtk_color_selection_get_color (colorselection,color);
-    
-  /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
-    gdk_color=GetColor(color[0],color[1],color[2]);
-
-
-/*    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
-      g_printf("%d\n",gtk_notebook_get_current_page(nb));
-*/
-    
-/*    g_printf("%d ?= %d\n",&widget,&w); */
-
-    gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &gdk_color);
-    gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &gdk_color);
-  }
-}
-
-void
 on_ok_button1_clicked                  (GtkButton       *button,
                                         gpointer         user_data)
 {
+  // colordialog ok:
+  gdouble color[3];
+  GdkColor gdk_color;
+  GtkWidget *w;
+  char tmp[30];
+
+  strcpy(tmp,"lb_");
+  strcat(tmp,selected_color);
+
+  printf("-%s-\n",tmp);
+
+  w = lookup_widget (GTK_WIDGET ((GtkWidget *)colordiag), "color_selection1");    
+  gtk_color_selection_get_color ((GtkColorSelection *)w,color);
+    
+  /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
+  gdk_color=GetColor(color[0],color[1],color[2]);
+
+  w = lookup_widget (GTK_WIDGET ((GtkWidget *)prefs), tmp);
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &gdk_color);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &gdk_color);
+
+
+  // \todo farbwerte in #aabbcc umrechnen und abspeichern!
+  printf("%d [%x] / %d [%x] / %d [%x]\n",gdk_color.red,(int)gdk_color.red*256,gdk_color.green,(int)gdk_color.green*256,gdk_color.blue,(int)gdk_color.blue*256);
+
+
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
@@ -1759,4 +1780,76 @@ on_cancel_button1_clicked              (GtkButton       *button,
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
+
+
+void
+on_bn_color_f1_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f1");
+}
+
+
+void
+on_bn_color_f2_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f2");
+}
+
+
+void
+on_bn_color_f4_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f4");
+}
+
+
+void
+on_bn_color_f5_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f5");
+}
+
+
+void
+on_bn_color_f6_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f6");
+}
+
+
+void
+on_bn_color_nasals_clicked             (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("nasals");
+}
+
+
+void
+on_bn_color_vc_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("vs");
+}
+
+
+void
+on_bn_color_ea_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("ea");
+}
+
+
+void
+on_bn_color_f3_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f3");
+}
 

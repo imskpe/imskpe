@@ -105,10 +105,6 @@ on_color_selection1_configure_event    (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_color_selection1_color_changed      (GtkColorSelection *colorselection,
-                                        gpointer         user_data);
-
-void
 on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
 
@@ -557,4 +553,36 @@ on_lb_colors_realize                   (GtkWidget       *widget,
 
 void
 on_bn_color_f1_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f2_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f4_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f5_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f6_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_nasals_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_vc_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_ea_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_color_f3_clicked                 (GtkButton       *button,
                                         gpointer         user_data);

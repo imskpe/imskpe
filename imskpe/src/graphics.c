@@ -163,135 +163,6 @@ gboolean GuiGetToggleButtonState(char tmp[30])
 }
 
 
-/* ------------------------------------------------------------  */
-
-
-void FormantListInit ()
-{
-  typFormantList *oneformant;
-  gchar *x;
-
-/* F1 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f1");
-
-  oneformant->color=GetColor(1.0,0,0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* F2 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f2");
-
-  oneformant->color=GetColor(0,0,1.0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* F3 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f3");
-
-  oneformant->color=GetColor(0,1.0,0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* F4 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f4");
-
-  oneformant->color=GetColor(1.0,1.0,0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* F5 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f5");
-
-  oneformant->color=GetColor(0,1.0,1.0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* F6 */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  oneformant->formantname = g_malloc (sizeof (gchar)*5);
-  strcpy(oneformant->formantname,"f6");
-
-  oneformant->color=GetColor(1.0,0,1.0);
-
-  formants = g_list_append (formants, oneformant);
-
-/* nasals */
-  oneformant = g_malloc (sizeof (typFormantList));
-
-  /** \todo save maxsize of of formantname!! */
-  oneformant->formantname = g_malloc (sizeof (gchar)*(strlen("nasals")+1));
-  strcpy(oneformant->formantname,"nasals");
-
-  oneformant->color=GetColor(0.5,0.5,1.0);
-
-  formants = g_list_append (formants, oneformant);
-}
-
-GdkColor GetFormantListColor (gchar *searchstring)
-{
-  return ConfigGetColor(searchstring);
-
-  typFormantList *oneformant;  
-
-  formants=g_list_first (formants);
-  while(formants)
-  {	
-    gchar *fname;
-    fname = g_malloc (sizeof (gchar)*8);
-
-    oneformant = formants->data;
-
-    strncpy(fname,oneformant->formantname,8);
-    if(!strcasecmp(fname,searchstring))
-    {
-//      printf("found %s\n",fname);
-      return oneformant->color;
-    }
-
-    formants=formants->next;
-
-    free(fname);
-  }
-  return GetColor(0.0,0.0,0.0);
-}
-
-
-void FormantListFree()
-{
-  typFormantList *data;
-
-  formants=g_list_first (formants);
-  while(formants)
-  {	
-    data=(typFormantList *)formants->data;
-    
-    if(data->formantname!=NULL)
-      free(data->formantname);
-    
-    if(data!=NULL)
-      free(data);
-    
-    formants = g_list_remove(formants,data);
-  }
-//  g_list_free(formants);
-}
-
 /* ------------------------------------------------ */
 
 
@@ -566,8 +437,6 @@ GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
 {
   GdkColor col;
 
-  printf("%f %f %f\n",Red,Green,Blue);
-
   col.red = (guint16)(Red*65535.0);
   col.green = (guint16)(Green*65535.0);
   col.blue = (guint16)(Blue*65535.0);
@@ -700,7 +569,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	      statusbarcurvemessage[0]=' '; /** cheat!! */
 	      
 	    }
-	    GdkGC *gc=GetPenGdkColor (NULL,GetFormantListColor(c->formant));
+	    GdkGC *gc=GetPenGdkColor (NULL,ConfigGetColor(c->formant));
 	    gdk_gc_set_line_attributes (gc,linewidth,GDK_LINE_SOLID,GDK_CAP_NOT_LAST,GDK_JOIN_MITER );
 
 	    gdk_draw_line 
@@ -724,7 +593,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 
 	    gdk_draw_rectangle
 		(g->pixmap,
-		 GetPenGdkColor (NULL,GetFormantListColor(c->formant)),
+		 GetPenGdkColor (NULL,ConfigGetColor(c->formant)),
 		 FALSE,
 		 ((d->allocation.width-25-10)*lastx/xmax+25)-mod,
 		 (d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25)-mod,
@@ -735,7 +604,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	    {
 	      gdk_draw_rectangle
 		  (g->pixmap,
-		   GetPenGdkColor (NULL,GetFormantListColor(c->formant)),
+		   GetPenGdkColor (NULL,ConfigGetColor(c->formant)),
 		   FALSE,
 		   ((d->allocation.width-25-10)*x/xmax+25)-2,
 		   (d->allocation.height-((d->allocation.height-25)*y/ymax)-25)-2,

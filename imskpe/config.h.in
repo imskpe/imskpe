@@ -1,4 +1,11 @@
 /* config.h.in.  Generated from configure.in by autoheader.  */
+#undef ENABLE_NLS
+#undef HAVE_CATGETS
+#undef HAVE_GETTEXT
+#undef GETTEXT_PACKAGE
+#undef HAVE_LC_MESSAGES
+#undef HAVE_STPCPY
+#undef HAVE_LIBSM
 
 /* always defined to indicate that i18n is enabled */
 #undef ENABLE_NLS

@@ -2458,7 +2458,6 @@
       <property name="has_opacity_control">False</property>
       <property name="has_palette">False</property>
       <signal name="configure_event" handler="on_color_selection1_configure_event" last_modification_time="Sat, 06 Mar 2004 17:20:08 GMT"/>
-      <signal name="color_changed" handler="on_color_selection1_color_changed" last_modification_time="Sat, 06 Mar 2004 17:20:12 GMT"/>
     </widget>
   </child>
 </widget>
@@ -2775,7 +2774,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant1">
+		<widget class="GtkLabel" id="lb_f1">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 1</property>
 		  <property name="use_underline">False</property>
@@ -2836,7 +2835,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant2">
+		<widget class="GtkLabel" id="lb_f2">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 2</property>
 		  <property name="use_underline">False</property>
@@ -2860,7 +2859,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant3">
+		<widget class="GtkLabel" id="lb_f3">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 3</property>
 		  <property name="use_underline">False</property>
@@ -2884,7 +2883,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant4">
+		<widget class="GtkLabel" id="lb_f4">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 4</property>
 		  <property name="use_underline">False</property>
@@ -2908,7 +2907,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant5">
+		<widget class="GtkLabel" id="lb_f5">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 5</property>
 		  <property name="use_underline">False</property>
@@ -2932,7 +2931,7 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_formant6">
+		<widget class="GtkLabel" id="lb_f6">
 		  <property name="visible">True</property>
 		  <property name="label" translatable="yes">Formant 6</property>
 		  <property name="use_underline">False</property>
@@ -3036,6 +3035,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_f2_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:36 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3056,6 +3056,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_f4_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:46 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3076,6 +3077,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_f5_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:51 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3096,6 +3098,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_f6_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:55 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3116,6 +3119,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_nasals_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:59 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3136,6 +3140,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_vc_clicked" last_modification_time="Thu, 04 Nov 2004 06:44:04 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3156,6 +3161,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_ea_clicked" last_modification_time="Thu, 04 Nov 2004 06:44:09 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3176,6 +3182,7 @@ imskpe
 		  <property name="use_underline">True</property>
 		  <property name="relief">GTK_RELIEF_NORMAL</property>
 		  <property name="focus_on_click">True</property>
+		  <signal name="clicked" handler="on_bn_color_f3_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:40 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>

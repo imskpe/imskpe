@@ -88,3 +88,13 @@ OK    - preferences einträge für die pfade zu klatt80 / einem wav-player
       - erkennen, ob ein anderer punkt nun bewegt wird
           und dies nur erlauben, wenn vorher die maustaste losgelassen wurde
 OK - sprachproblematik bei den dropdowns!
+
+  /// \todo farbe vom label holen!!! oder anderweitig abspeichern!!
+     - in die configliste, mit anderen identifiern ... vorteil, beim abspeichern einfach diese neuen auslesen und die alten damit überschreiben
+        todo: 
+	 - GdkColor => #aabbcc
+OK	 - delete value in cfg-list
+OK	 - rename value in cfg-list!
+        wichtig:
+OK	 - bei abbruch muessen diese tempöraren vars in der cfg-liste auch gelöscht werden!!!
+ 	 - bei ok, dann eben dieser lösch/umbenenn-ablauf
