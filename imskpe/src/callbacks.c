@@ -3,6 +3,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib/gprintf.h>
 
 #include "callbacks.h"
 #include "interface.h"
