@@ -6,8 +6,6 @@ first release:
 - open wavfiles
 - generate wavfiles (through kpe80 - console tool)
 - use fft to show a spectrum
-- initialize colors for formants (from GtkPreview, oder GtkDrawingArea)?
-  (save by change in Curve-List; and initialize this List!!)
 
 final:
 - bind to libklatt
@@ -17,3 +15,22 @@ final:
 nice to have:
 - fuzzy-gettext einträge auch in die .mo ?!?!
   (--use-fuzzy ... aber wie bekomme ich das per autoconf ?!)
+
+
+
+BoLSoGs merkzettel:
+- das lineal auslagern ...
+- auf den duration-spinbutton ein linealredraw triggern
+- den linealcode in eine eigene procedure packen
+  - y-achsen-max einstellbar machen
+  - auch die unterteilungen einstellbar machen
+- alles auch für amplitude und bandbreite
+- die callbacks.h aufräumen
+- auf die jeweiligen toggle-buttons reagieren:
+  - neue kurven initialisieren (defaultwerte: "schwa"?!)
+  - wenn schon vorhanden wieder einblenden
+- speichern der preferences
+  - preferences dialog
+  - auch speichern der formantfarben
+- anzeigen der koordinaten in der statusleiste
+  - was soll noch in die statusleiste?
