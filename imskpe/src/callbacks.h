@@ -98,10 +98,8 @@ void
 on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data);
 
-
-// formant init ...
+/* formant init ... */
 void FormantListInit ();
-
 
 void
 on_lb_f1_realize                       (GtkWidget       *widget,

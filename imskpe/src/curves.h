@@ -43,17 +43,15 @@ typedef struct {
  *
  * \todo sizes of char-arrays static?! sizes ok?
 */
+
 typedef struct {
     /** list over points */
     GList *points;
     /** name of togglebutton */
-//    gchar *widget_name; 
+/*    gchar *widget_name; */
     char widget_name[30];
-    /* name in PAR-Files */
-//    gchar *parname;
-//    char parname[7];
     /** name of formant */
-//    gchar *formant;
+/*    gchar *formant; */
     char formant[20];
     /** show curve or not */
     gboolean show;
@@ -82,7 +80,7 @@ typedef struct {
 
     MouseActionTyp thisaction;
 
-// only for move   
+/* only for move    */
     gboolean Button1Pressed;
 
 } MouseEventData;

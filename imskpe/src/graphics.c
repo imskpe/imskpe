@@ -203,6 +203,8 @@ int CalcRealY(int dy, int maxy,diagramTyp dia)
   int du=FileGetDuration();
   int rulerdiff=25;
   int max=5000;
+  int oy;
+
   switch(dia)
   {
   case FREQUENCIES:
@@ -216,7 +218,7 @@ int CalcRealY(int dy, int maxy,diagramTyp dia)
 	break;
   }    
 
-  int oy=(int)((double)((-dy+maxy-25)*max)/(double)(maxy-rulerdiff));
+  oy=(int)((double)((-dy+maxy-25)*max)/(double)(maxy-rulerdiff));
 
   return oy;
 }
@@ -241,6 +243,9 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
   int ysplits=10;  /* export in preferences */
 
   int ymax=5000;   
+
+  int mod=5;  /* -> preferences  | modificator for rulernumbers (x-axis)*/
+
   switch(dia)
   {
   case FREQUENCIES:
@@ -262,7 +267,7 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
   strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
   fontdesc = pango_font_description_from_string (tmp);  
 
-/* x-achse */
+/* x-axis */
   gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0) ,
 		 20, 
 		 widget->allocation.height-25,
@@ -271,7 +276,6 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
 
   for(i=0;i<=xsplits;i++)
   {
-    int mod=5;  /* -> preferences  */
 /*
     int mod=xsplits;
     if(i==0)
@@ -295,7 +299,7 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
     
   }
 
-/* y-achse */
+/* y-axis */
   gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0) ,
 		 25, 
 		 0,
@@ -480,21 +484,30 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     int ysplits=10;  /**< export in preferences */
     int ymax=5000;
 
-  switch(dia)
-  {
-  case FREQUENCIES:
+    int xmax = FileGetDuration();
+
+    int ui=FileGetUpdateInterval();
+    char statusbarcurvemessage[100];
+    gboolean statusshown=FALSE;
+    GList *val;
+    int linewidth=1;
+    int mod;
+    char s[80];
+
+    GdkGC *gc;
+    
+    switch(dia)
+    {
+    case FREQUENCIES:
 	ymax=ConfigGetInteger("maxfreq");
 	break;
-  case AMPLITUDE:
+    case AMPLITUDE:
   	ymax=ConfigGetInteger("maxamp");
 	break;
-  case BANDWIDTH:
+    case BANDWIDTH:
   	ymax=ConfigGetInteger("maxband");
 	break;
-  }    
-
-
-    int xmax = FileGetDuration();
+    }    
 
     /* --- clear pixmap --- */
     gdk_draw_rectangle (g->pixmap,
@@ -512,15 +525,6 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     ****************************************/
     
 //    printf("repaint\n");
-
-    int ui=FileGetUpdateInterval();
-    char statusbarcurvemessage[100];
-    strcpy(statusbarcurvemessage,"\0");
-    gboolean statusshown=FALSE;
-    GList *val;
-    int linewidth=1;
-    int mod;
-    char s[80];
 
 //    printf(".. %d\n",cv);
     while(cv)
@@ -564,7 +568,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	      statusbarcurvemessage[0]=' '; /** cheat!! */
 	      
 	    }
-	    GdkGC *gc=GetPenGdkColor (NULL,ConfigGetColor(c->formant));
+	    gc=GetPenGdkColor (NULL,ConfigGetColor(c->formant));
 	    gdk_gc_set_line_attributes (gc,linewidth,GDK_LINE_SOLID,GDK_CAP_NOT_LAST,GDK_JOIN_MITER );
 
 	    gdk_draw_line 
@@ -757,6 +761,22 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
   int tmp;
 
   int ymax=5000;
+
+  int lastpoint=MouseEventGetPoint();
+  int lastcurve=MouseEventGetCurve();
+  
+  GList *val;
+  typValueList p_pnt;
+  typValueList pp_pnt;
+  typValueList pnt;
+  typValueList n_pnt;
+  typValueList *v;
+  typValueList *v2;
+
+  double grad;
+  int yval;
+  int ytol;
+
   switch(dia)
   {
   case FREQUENCIES:
@@ -770,23 +790,11 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	break;
   }    
 
-  
-  int lastpoint=MouseEventGetPoint();
-  int lastcurve=MouseEventGetCurve();
-  
   while(cv)
   {	
     c=cv->data;
     if(c->show==TRUE && c->dia==dia)
     {
-      GList *val;
-      typValueList p_pnt;
-      typValueList pp_pnt;
-      typValueList pnt;
-      typValueList n_pnt;
-      typValueList *v;
-      typValueList *v2;
-      
       pp_pnt.time=-1;
       p_pnt.time=-1;
       pnt.time=-1;
@@ -849,12 +857,12 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	else
 	{
 	  if(rx>p_pnt.time && rx<=n_pnt.time) { // +/- ui ??
-	    
-	    double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
-	    int yval = (int)((double)p_pnt.value+(grad));
+
+	    grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
+	    yval = (int)((double)p_pnt.value+(grad));
 //  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
 	    
-	    int ytol=(ymax/100);
+	    ytol=(ymax/100);
 	    if(ytol<10)
 	    ytol=10;
 	    
@@ -914,6 +922,7 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
   MouseActionTyp action;
   int x, y;
   GdkModifierType state;
+  GdkEventButton *bevent;
 
   if (event->type == GDK_BUTTON_PRESS && event->button==1) {
     point=MouseEventGetPoint();
@@ -977,7 +986,7 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
       gtk_widget_hide ((GtkWidget*)lookup_widget (GTK_WIDGET (pmenu), "pm_movediag"));
     }
     
-    GdkEventButton *bevent = (GdkEventButton *) event;       
+    bevent = (GdkEventButton *) event;       
     gtk_menu_popup (GTK_MENU (pmenu), NULL, NULL, NULL, NULL,
 		      bevent->button, bevent->time);
     return;

@@ -23,6 +23,17 @@
  * @author Andreas Madsack
  * 
  * @brief  curve functions
+ *
+warning on AMD64:
+
+curves.c: In function `SetCurveShow':
+curves.c:272: warning: cast to pointer from integer of different size
+curves.c:276: warning: cast to pointer from integer of different size
+curves.c:276: warning: cast to pointer from integer of different size
+curves.c: In function `CurveInitStart':
+curves.c:535: warning: cast to pointer from integer of different size
+curves.c:546: warning: cast to pointer from integer of different size
+
  */
 
 #ifdef HAVE_CONFIG_H

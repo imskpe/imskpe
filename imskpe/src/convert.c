@@ -230,10 +230,17 @@ gboolean convert(char *filename)
 
   long i;
   int j;
-  typValueList *pnt[PARAMETERS];
-  typValueList *p_pnt[PARAMETERS];
   GList *vl[PARAMETERS];
   int y;
+  typValueList *pnt[PARAMETERS];
+  typValueList *p_pnt[PARAMETERS];
+
+  // wav-area-varibles:
+  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+  int wavewidth;
+  int waveheight;
+  int waveseg;
+  short val;
 
   kglobals.sample_factor = 1.0;
   kglobals.f0_flutter = 0;
@@ -306,12 +313,6 @@ gboolean convert(char *filename)
 /* 
    init wave-area
 */
-  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
-  int wavewidth;
-  int waveheight;
-  int waveseg;
-  short val;
-
   init_wave(w);
   wavewidth=width_wave(w);
   waveheight=height_wave(w);

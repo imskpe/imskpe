@@ -2082,8 +2082,8 @@ void
 on_cb_tool_style_realize               (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  ConfigInsert("prefs_tab4_tmp","1"); // one for each tab (4)
   int foo=ConfigGetInteger("toolbarstyle");  
+  ConfigInsert("prefs_tab4_tmp","1"); // one for each tab (4)
 
   gtk_combo_box_set_active ((GtkComboBox *)widget,foo);
 }
