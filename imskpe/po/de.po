@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
-"POT-Creation-Date: 2004-03-09 13:39+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2004-03-09 15:29+0100\n"
+"PO-Revision-Date: 2004-03-09 15:33+0100\n"
 "Last-Translator: Andreas Madsack <bolsog@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,7 +33,7 @@ msgstr "_Hilfe"
 
 #: src/interface.c:224
 msgid "_About"
-msgstr "_Über"
+msgstr "Über"
 
 #: src/interface.c:251
 msgid "move"
@@ -176,9 +176,10 @@ msgstr "Nasale"
 msgid "resonators"
 msgstr "Resonatoren"
 
+# lala
 #: src/interface.c:728
 msgid "glottal open quotient"
-msgstr "Glotisöffnungsquotient"
+msgstr "Glottalöffnungsquotient"
 
 #: src/interface.c:734
 msgid "breathiness"
