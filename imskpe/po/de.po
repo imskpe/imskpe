@@ -2,14 +2,16 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
+#
 # Andreas Madsack <bolsog@users.sf.net>, 2004.
+# Manuel Kountz <mkountz@freenet.de>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-11-26 19:51+0100\n"
-"PO-Revision-Date: 2004-03-23 22:33+0100\n"
+"PO-Revision-Date: 2004-11-28 15:48+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,23 +28,23 @@ msgstr "_Datei"
 
 #: src/interface.c:224
 msgid "_Actions"
-msgstr ""
+msgstr "_Aktionen"
 
 #: src/interface.c:231
 msgid "_Convert"
-msgstr ""
+msgstr "_Umwandeln"
 
 #: src/interface.c:234
 msgid "Generate Wav"
-msgstr ""
+msgstr "Erzeuge Wav"
 
 #: src/interface.c:243
 msgid "_Execute"
-msgstr ""
+msgstr "Ausführen"
 
 #: src/interface.c:246 src/interface.c:361
 msgid "Convert & Play"
-msgstr ""
+msgstr "Umwandeln & Ausführen"
 
 #: src/interface.c:255
 msgid "_Help"
@@ -54,32 +56,27 @@ msgstr "Über"
 
 #: src/interface.c:280
 msgid "Quit"
-msgstr ""
+msgstr "Beenden"
 
 #: src/interface.c:285
-#, fuzzy
 msgid "Open File"
-msgstr "Farbe wählen"
+msgstr "Datei öffnen"
 
 #: src/interface.c:290
-#, fuzzy
 msgid "New File"
-msgstr "Farbe wählen"
+msgstr "Neue Datei"
 
 #: src/interface.c:295
-#, fuzzy
 msgid "Save File"
-msgstr "Farbe wählen"
+msgstr "Datei speichern"
 
 #: src/interface.c:300
-#, fuzzy
 msgid "Save File As"
-msgstr "Farbe wählen"
+msgstr "Datei speichern als"
 
 #: src/interface.c:305 src/interface.c:1543
-#, fuzzy
 msgid "Preferences"
-msgstr "Frequenzen"
+msgstr "Einstellungen"
 
 #: src/interface.c:315 src/interface.c:2072
 msgid "move"
@@ -87,7 +84,7 @@ msgstr "verschieben"
 
 #: src/interface.c:321
 msgid "Move Point"
-msgstr ""
+msgstr "Punkt verschieben"
 
 #: src/interface.c:325 src/interface.c:2076
 msgid "insert"
@@ -95,7 +92,7 @@ msgstr "einfügen"
 
 #: src/interface.c:331
 msgid "Insert Point"
-msgstr ""
+msgstr "Punkt einfügen"
 
 #: src/interface.c:334 src/interface.c:2080
 msgid "delete"
@@ -103,11 +100,11 @@ msgstr "löschen"
 
 #: src/interface.c:340
 msgid "Delete Point"
-msgstr ""
+msgstr "Punkt löschen"
 
 #: src/interface.c:356
 msgid "par -> wav"
-msgstr ""
+msgstr "par -> wav"
 
 #: src/interface.c:379
 msgid "duration: "
@@ -118,7 +115,6 @@ msgid "msec"
 msgstr "msek"
 
 #: src/interface.c:400
-#, fuzzy
 msgid "update interval: "
 msgstr "Schrittweite"
 
@@ -135,6 +131,7 @@ msgid "voice source: "
 msgstr "Stimmquelle: "
 
 #: src/interface.c:428
+#, fuzzy
 msgid "branches"
 msgstr "Pfade"
 
@@ -212,27 +209,22 @@ msgid "F6"
 msgstr "F6"
 
 #: src/interface.c:715
-#, fuzzy
 msgid "zero frequencies"
 msgstr "Frequenz der Auslöschung"
 
 #: src/interface.c:721
-#, fuzzy
 msgid "zero bandwidth"
 msgstr "Bandbreite der Auslöschung"
 
 #: src/interface.c:727
-#, fuzzy
 msgid "pole frequency"
 msgstr "Frequenz des Maximums"
 
 #: src/interface.c:733
-#, fuzzy
 msgid "pole bandwidth"
 msgstr "Bandbreite des Maximums"
 
 #: src/interface.c:739
-#, fuzzy
 msgid "pole amplitude"
 msgstr "Amplitude des Maxmimums"
 
@@ -245,7 +237,6 @@ msgid "resonators"
 msgstr "Resonatoren"
 
 #: src/interface.c:757
-#, fuzzy
 msgid "glottal open quotient"
 msgstr "Öffnungsquotient der Glottisschwingung"
 
@@ -254,19 +245,18 @@ msgid "breathiness"
 msgstr "Behauchtheit"
 
 #: src/interface.c:769
-#, fuzzy
 msgid "spectral tilt"
 msgstr "Neigung des Spektrums"
 
+# ist auch im deutschen der fachausdruck?!
+# bei anderen fachausdrücken vielleicht auch??
 #: src/interface.c:775
-#, fuzzy
 msgid "skewness"
-msgstr "Schiefe"
+msgstr "skewness"
 
 #: src/interface.c:780
-#, fuzzy
 msgid "skewness (speed quotient) of voiced excitation signal"
-msgstr "Schiefe (speed quotient) des stimmhaften Anregungssignals"
+msgstr "skewness (speed quotient) des stimmhaften Anregungssignals"
 
 #: src/interface.c:782
 msgid "fundamental frequency"
@@ -325,12 +315,10 @@ msgid "Select Color"
 msgstr "Farbe wählen"
 
 #: src/interface.c:1374
-#, fuzzy
 msgid "Select File"
-msgstr "Farbe wählen"
+msgstr "Datei auswählen"
 
 #: src/interface.c:1417
-#, fuzzy
 msgid "About"
 msgstr "Über"
 
@@ -345,166 +333,169 @@ msgid ""
 "\n"
 "(c) 2004 by Andreas Madsack"
 msgstr ""
+"\n"
+"\n"
+"\n"
+"imskpe\n"
+"\n"
+"\n"
+"\n"
+"(c) 2004 by Andreas Madsack"
 
 #: src/interface.c:1452 src/interface.c:1967
 msgid "Credits"
-msgstr ""
+msgstr "Credits"
 
 #: src/interface.c:1559 src/interface.c:1644 src/interface.c:1651
 #: src/interface.c:1658 src/interface.c:1665 src/interface.c:1672
 #: src/interface.c:1679 src/interface.c:1686 src/interface.c:1693
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #: src/interface.c:1564
 msgid "Change Color F1"
-msgstr ""
+msgstr "Ändere Farbe F1"
 
 #: src/interface.c:1566
 msgid "Formant 1"
-msgstr ""
+msgstr "Formant 1"
 
 #: src/interface.c:1579
 msgid "change"
-msgstr ""
+msgstr "ändern"
 
 #: src/interface.c:1588
 msgid "Formant 2"
-msgstr ""
+msgstr "Formant 2"
 
 #: src/interface.c:1595
 msgid "Formant 3"
-msgstr ""
+msgstr "Formant 3"
 
 #: src/interface.c:1602
 msgid "Formant 4"
-msgstr ""
+msgstr "Formant 4"
 
 #: src/interface.c:1609
 msgid "Formant 5"
-msgstr ""
+msgstr "Formant 5"
 
 #: src/interface.c:1616
 msgid "Formant 6"
-msgstr ""
+msgstr "Formant 6"
 
 #: src/interface.c:1623
-#, fuzzy
 msgid "Nasals"
 msgstr "Nasale"
 
 #: src/interface.c:1649
 msgid "Change Color F2"
-msgstr ""
+msgstr "Ändere Farbe F2"
 
 #: src/interface.c:1656
 msgid "Change Color F4"
-msgstr ""
+msgstr "Ändere Farbe F4"
 
 #: src/interface.c:1663
 msgid "Change Color F5"
-msgstr ""
+msgstr "Ändere Farbe F5"
 
 #: src/interface.c:1670
 msgid "Change Color F6"
-msgstr ""
+msgstr "Ändere Farbe F6"
 
 #: src/interface.c:1677
 msgid "Change Color Nasals"
-msgstr ""
+msgstr "Ändere Farbe Nasale"
 
 #: src/interface.c:1684
 msgid "Change Color voice src"
-msgstr ""
+msgstr "Ändere Farbe Stimmquelle"
 
 #: src/interface.c:1691
 msgid "Change Color exc. amp."
-msgstr ""
+msgstr "Ändere Farbe Ampl. d. Anreg."
 
 #: src/interface.c:1698
 msgid "Change Color F3"
-msgstr ""
+msgstr "Ändere Farbe F3"
 
 #: src/interface.c:1700
 msgid "Colors"
-msgstr ""
+msgstr "Farben"
 
 #: src/interface.c:1708
-#, fuzzy
 msgid "max frequence"
-msgstr "Frequenzen"
+msgstr "max. Frequenzen"
 
 #: src/interface.c:1715
-#, fuzzy
 msgid "max amplidute"
-msgstr "Amplitude"
+msgstr "max. Amplitude"
 
 #: src/interface.c:1722
-#, fuzzy
 msgid "max bandwidth"
-msgstr "Bandbreite"
+msgstr "max. Bandbreite"
 
 #: src/interface.c:1750
 msgid "value:"
-msgstr ""
+msgstr "Wert:"
 
 #: src/interface.c:1757
 msgid "Ruler"
-msgstr ""
+msgstr "Lineal"
 
 #: src/interface.c:1765
 msgid "Path"
-msgstr ""
+msgstr "Pfad"
 
 #: src/interface.c:1779
 msgid "wav player"
-msgstr ""
+msgstr "Wave-Player"
 
 #: src/interface.c:1786
 msgid "tmp directory"
-msgstr ""
+msgstr "Tmp-Verzeichnis"
 
 #: src/interface.c:1798
 msgid "playcommand"
-msgstr ""
+msgstr "Abspielkommando"
 
+# kommando zum abspielen
 #: src/interface.c:1799
 msgid "play"
-msgstr ""
+msgstr "play"
 
 #: src/interface.c:1806
 msgid "directory for temp-files"
-msgstr ""
+msgstr "Verzeichnis für die Temp-Dateien"
 
 #: src/interface.c:1807
 msgid "/tmp"
-msgstr ""
+msgstr "/tmp"
 
 #: src/interface.c:1809
 msgid "Paths"
-msgstr ""
+msgstr "Verzeichnisse"
 
 #: src/interface.c:1817
-#, fuzzy
 msgid "misc"
-msgstr "msek"
+msgstr "verschiende"
 
 #: src/interface.c:1990
 msgid "Andreas Madsack <bolsog@users.sf.net>"
-msgstr ""
+msgstr "Andreas Madsack <bolsog@users.sf.net>"
 
 #: src/interface.c:1992
 msgid "written by"
-msgstr ""
+msgstr "programmiert von"
 
 #: src/interface.c:2006
 msgid "Manuel Kountz (de)"
-msgstr ""
+msgstr "Manuel Kountz (de)"
 
 #: src/interface.c:2008
-#, fuzzy
 msgid "translators"
-msgstr "Resonatoren"
+msgstr "Übersetzer"
 
 #: src/interface.c:2023
 msgid ""
@@ -517,57 +508,62 @@ msgid ""
 "Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
+"Dennis Klatt \n"
+"(für den Klatt-Formant-Synthese-Algorithmus)\n"
+"\n"
+"Jon Iles, Nick Ing-Simmons \n"
+"(für das Klatt-Kommandozeilen-Tool)\n"
+"\n"
+"Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
+"(für die KPE-GUI aus dem Jahre 1995)"
 
 #: src/interface.c:2025
 msgid "thanks to"
-msgstr ""
+msgstr "Danksagung an"
 
 #: src/interface.c:2084
 msgid "move dialog"
-msgstr ""
+msgstr "Verschieben Dialog"
 
 #: src/interface.c:2130
 msgid "imskpe - Move"
-msgstr ""
+msgstr "imskpe - Verschieben"
 
 #: src/interface.c:2144
 msgid "Value: "
-msgstr ""
+msgstr "Wert: "
 
 #: src/interface.c:2158
 msgid "Hz"
-msgstr ""
+msgstr "Hz"
 
 #: src/interface.c:2166
 msgid "Time:"
-msgstr ""
+msgstr "Zeit: "
 
 #: src/interface.c:2173
-#, fuzzy
 msgid "sec"
-msgstr "msek"
+msgstr "sek"
 
 #: src/interface.c:2236
 msgid "IMSKPE - Information"
-msgstr ""
+msgstr "IMSKPE - Information"
 
 #: src/interface.c:2248
-#, fuzzy
 msgid "IMSKPE-Splash"
-msgstr "IMSKPE"
+msgstr "IMSKPE-Splash"
 
 #: src/callbacks.c:322
-#, fuzzy
 msgid "Compiled"
-msgstr "digitalisiert"
+msgstr "kompiliert"
 
 #: src/callbacks.c:421
 msgid "write bugreports here: "
-msgstr ""
+msgstr "Fehlermeldungen bitte hier schreiben: "
 
 #: src/callbacks.c:422
 msgid "get announcements:"
-msgstr ""
+msgstr "Um bei neuen Versionen benachrichtigt zu werden:"
 
 #: src/support.c:90 src/support.c:114
 #, c-format
@@ -577,52 +573,52 @@ msgstr "Kann Bild %s nicht finden."
 #. * \todo use an errordialog ?!
 #: loadpar.l:120
 msgid "Problems open parameter file."
-msgstr ""
+msgstr "Probleme beim öffnen der Parameterdatei."
 
 #: loadpar.l:141
 msgid "no parameter file."
-msgstr ""
+msgstr "Datei ist keine PAR-Datei."
 
 #: loadpar.l:163 loadpar.l:173 loadpar.l:183 loadpar.l:193 loadpar.l:203
 #: loadpar.l:213
 #, c-format
 msgid "PAR-Import-Error: "
-msgstr ""
+msgstr "PAR-Importier-Fehler: "
 
 #: loadpar.l:164
 #, c-format
 msgid "DU not integer\n"
-msgstr ""
+msgstr "DU ist kein Integer\n"
 
 #: loadpar.l:174
 #, c-format
 msgid "UI not integer\n"
-msgstr ""
+msgstr "UI ist kein Integer\n"
 
 #: loadpar.l:184
 #, c-format
 msgid "SR not integer\n"
-msgstr ""
+msgstr "SR ist kein Integer\n"
 
 #: loadpar.l:194
 #, c-format
 msgid "NF not integer\n"
-msgstr ""
+msgstr "NF ist kein Integer\n"
 
 #: loadpar.l:204
 #, c-format
 msgid "SS not integer\n"
-msgstr ""
+msgstr "SS ist kein Integer\n"
 
 #: loadpar.l:214
 #, c-format
 msgid "CP not integer\n"
-msgstr ""
+msgstr "CP ist kein Integer\n"
 
 #: loadpar.l:220
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
-msgstr ""
+msgstr "eine nicht zuweisbare Variable in der PAR-Datei: %s [%s]\n"
 
 #~ msgid "_View"
 #~ msgstr "_Anzeigen"
