@@ -3,33 +3,34 @@ Summary:  imskpe - formantsynthesis gui
 Version: 1.0beta1
 Release: 1
 License: GPL
-Group: Applications
+Group: Applications/Sound
 URL: http://imskpe.sf.net
 Source0: %{name}-%{version}.tar.gz
-# Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Buildroot: /tmp/bol
+Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: GTK+-2.4.0
 
 %description 
 imskpe is gui for formantsynthesis based on algorthms by Dennis Klatt.
+%prep
+%setup -q
 %build 
-%configure --prefix=/usr/local
+./configure --prefix=%{_prefix}
 make
 
 %install 
 rm -fr %{buildroot}
 
 %makeinstall
+make DESTDIR=%{buildroot} install
 
 %clean 
-rm -fr %{buildroot}
+[ "%{buildroot}" != '/' ] && rm -rf %{buildroot}
 
 %files 
 %defattr(-,root,root) 
-%{_bindir}/* 
-%{_mandir}/* 
+%{_prefix}/bin/imskpe
 %{_datadir}/* 
-%{_doc}/*
+%doc AUTHORS ChangeLog INSTALL README NEWS TODO
 
 %changelog 
 
