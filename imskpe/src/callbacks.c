@@ -372,6 +372,60 @@ on_bn_about_credits_clicked            (GtkButton       *button,
   gtk_window_present (GTK_WINDOW (credits));
 }
 
+
+/** 
+ * initialize and set splashscreen!
+ * 
+ */
+void InitSplash()
+{
+ static GtkWidget *splash = NULL;
+ GtkWidget *w;
+ char buf[512];
+
+ if (splash == NULL) 
+ {
+   splash = create_imskpe_splash ();
+   /* set the widget pointer to NULL when the widget is destroyed */
+   g_signal_connect (G_OBJECT (splash),
+		     "destroy",
+		     G_CALLBACK (gtk_widget_destroyed),
+		     &splash);
+
+
+   w = lookup_widget (GTK_WIDGET (splash), "splash_label");    
+   snprintf(buf,sizeof(buf),
+	    "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
+	    "\n\n"
+	    "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
+	    "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
+	    ,VERSION,_("write bugreports here: "),"http://sourceforge.net/tracker/?group_id=94548",
+	    _("get announcements:"),"http://lists.sourceforge.net/lists/listinfo/imskpe-announce"
+	  );
+   gtk_label_set_markup (GTK_LABEL (w), buf);  
+
+   /* Make sure the dialog doesn't disappear behind the main window. */
+   gtk_window_set_transient_for (GTK_WINDOW (splash), 
+				 GTK_WINDOW (GetMainWindow()));
+ }
+
+ /* Make sure the dialog is visible. */
+ gtk_window_present (GTK_WINDOW (splash));
+}
+
+/** 
+ * close splashscreen
+ * 
+ * @param button 
+ * @param user_data 
+ */
+void
+on_splash_close_clicked                (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
 /** @} */
 
 /* ---------------------------------------------------------------------- */
@@ -1775,7 +1829,7 @@ void InitDialogColor(char *searchstring)
   {
     strcpy(tmp,searchstring);
     strcat(tmp,"_tmp");
-    printf("found: %s\n",tmp);
+//    printf("found: %s\n",tmp);
     col=ConfigGetColor(tmp);
   }
   else
@@ -1950,7 +2004,7 @@ on_ok_button1_clicked                  (GtkButton       *button,
   strcpy(tmp,"lb_");
   strcat(tmp,selected_color);
 
-  printf("-%s-\n",tmp);
+//   printf("-%s-\n",tmp);
 
   w = lookup_widget (GTK_WIDGET ((GtkWidget *)colordiag), "color_selection1");    
   gtk_color_selection_get_color ((GtkColorSelection *)w,color);
@@ -2076,7 +2130,18 @@ void
 on_convert1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  convert();
+  char tmp[300];
+
+  /* get par-filename */
+  strcpy(tmp,FileGetFilename());
+  tmp[strlen(tmp)-strlen(strrchr(tmp, '.'))]=0; /* delete .par at end */
+  strcat(tmp,".wav");  /* and .wav*/
+
+  convert(tmp);
+
+  strcat(tmp," written");
+
+  SetStatusBar ("sb_state",tmp);
 }
 
 
@@ -2087,31 +2152,21 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   char *dir;
   char tmp[300];
 
-
-  return;
-
   dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
 
   strcpy(dir,ConfigGetString("tmpdir"));
   strcat(dir,"/imskpe.");
   sprintf(tmp,"%d",getpid());
   strcat(dir,tmp);
-  printf("%s\n",dir);
 
-  strcpy(tmp,ConfigGetString("klattcmd"));
-  strcpy(tmp,"/home/bol/imskpe/klatt80/klatt");
-  strcat(tmp," -i ");
-  strcat(tmp,dir);
-  strcat(tmp,".par -o ");
-  strcat(tmp,dir);
+  strcpy(tmp,dir);
   strcat(tmp,".wav");
 
-  strcat(dir,".par");
-  dir[strlen(dir)]=0;
-
-  FileSave(dir);
-
-//   system(tmp);
+  convert(tmp);
+  strcpy(dir,ConfigGetString("playcmd"));
+  strcat(dir," ");
+  strcat(dir,tmp);
+  system(dir);
 
   g_free(dir);
 }
@@ -2147,7 +2202,7 @@ void
 on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data)
 {
-  SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
+ SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
 }
 
 

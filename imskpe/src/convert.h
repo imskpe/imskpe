@@ -43,5 +43,5 @@
 
 /* defaults */
 
-gboolean convert();
+gboolean convert(char *filename);
 

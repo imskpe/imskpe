@@ -531,7 +531,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	  {
 	    y=v->value;
 	  }
-	  if(x>0 && y>0)
+	  if(x>=0 && y>=0)
 	  {
 
 

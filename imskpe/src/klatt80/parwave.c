@@ -214,7 +214,6 @@ short *output;
 
   frame_init(globals,frame);  /* get parameters for next frame of speech */
 
-
   flutter(globals,frame);  /* add f0 flutter */
 
 
@@ -226,7 +225,6 @@ short *output;
     /* Get low-passed random number for aspiration and frication noise */
 
     noise = gen_noise(noise,globals);
-
     /*    
       Amplitude modulate noise (reduce noise amplitude during
       second half of glottal period) if voicing simultaneously present.
@@ -444,6 +442,7 @@ short *output;
     out = resonator(&(globals->rout),out);
 
     temp = out * globals->amp_gain0;  /* Convert back to integer */
+//     printf("temp %f * %f | %f\n",out,globals->amp_gain0,temp);
 
     if (temp < -32768.0)
     {

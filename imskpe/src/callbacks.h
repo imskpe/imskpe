@@ -576,3 +576,8 @@ on_bn_color_ea_clicked                 (GtkButton       *button,
 void
 on_bn_color_f3_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
+
+
+void
+on_splash_close_clicked                (GtkButton       *button,
+                                        gpointer         user_data);

@@ -82,7 +82,7 @@ void LoadConf(char *filename)
   int toktype;
   char val[100], var[100];  // das ist nicht optimal ... die können überlaufen!
 
-  printf("%s\n",filename);
+//   printf("%s\n",filename);
 
   ConfigNew();
 
@@ -112,7 +112,7 @@ void LoadConf(char *filename)
       switch(toktype)
       {
       case COMMENT:
-	  printf("comment\n");
+//	  printf("comment\n");
 	  break;
       case VARNAME:
 	  strcpy(var,yytext);   // hardening: strncpy!!
@@ -133,8 +133,8 @@ void LoadConf(char *filename)
 	  {
 	      if((strlen(val) > 0) && (strlen(var) > 0))
 	      {
-		printf("var: %s = %s\n",var,val);
-		  ConfigInsert(var,val);
+// 		printf("var: %s = %s\n",var,val);
+		ConfigInsert(var,val);
 	      }
 	      else
 	      {

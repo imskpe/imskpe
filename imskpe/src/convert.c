@@ -30,15 +30,18 @@
 #  include <config.h>
 #endif
 
-
+#include <stdio.h>
 #include <gtk/gtk.h>
 #include "convert.h"
 
 #include "loadfile.h"
+#include "loadpar.h"
 
 #include "klatt80/parwave.h"
 
 /* defaults */
+
+#define SAMPLE_FACTOR 0.00001
 
 static int naturalGlottalSamples[]=
 {
@@ -77,7 +80,7 @@ static struct waveInfo {
   
 } wfi[] = {{"original",FALSE},{"synthesised",TRUE},{NULL}};
 
-gboolean convert()
+gboolean convert(char *filename)
 {
   klatt_global_t kglobals;
 
@@ -86,40 +89,50 @@ gboolean convert()
 
   int param,frame,samplesPerFrame,sample,noFrames;
   int startSample,endSample,noSamples;
-  short *dataShortPtr,*waveformDestination;
+  short *dataShortPtr,*waveformDestination,*tmpPtr;
   double *dataDoublePtr;
   struct waveInfo *wpi;
   struct fpInfo *fpi;
   long *lptr;
+  FILE *outfp;
+  unsigned char high_byte;
+  unsigned char low_byte;
+  short raw_type;
+  unsigned int size;
 
-  printf("convert start\n");
+  long i;
+  int j;
+  typValueList *pnt[PARAMETERS];
+  typValueList *p_pnt[PARAMETERS];
+  GList *vl[PARAMETERS];
+  int y;
+
+//   printf("convert start\n");
   
   kglobals.sample_factor = 1.0;
   kglobals.f0_flutter = 0;
   kglobals.natural_samples = naturalGlottalSamples;
   kglobals.num_samples = NOGLOTTALSAMPLES;
 
+  kglobals.synthesis_model = FileGetBranches();  // auslesen!!
+  kglobals.samrate = FileGetSamplingRate();
+  kglobals.glsource = FileGetVoiceSource();
+  kglobals.natural_samples = naturalGlottalSamples;
+  kglobals.num_samples = FileGetDuration()/FileGetUpdateInterval();
+  kglobals.sample_factor = (float) SAMPLE_FACTOR;
+  kglobals.nfcascade = 0;
+  kglobals.outsl = 0;
+  kglobals.f0_flutter = 0;
 
- //  /* calculate the desired duration */
-//   GframeDuration= (float)updateInterval/1000.;
-//   Gduration=GframeDuration * (float)noFrames;
-//   fixedParamInfo[DU].currentValue=(int)(Gduration * 1000.);
-
-//   /* Each frame's 40 values are placed in this array prior to calling parwave()*/
-//   klatt_frame_t kframe;
+//   printf("DEBUG: \n");
+//   printf("DU: %d\n",FileGetDuration());
+//   printf("UI: %d\n",FileGetUpdateInterval());
+//   printf("SR: %d\n",FileGetSamplingRate());
+//   printf("VS: %d\n",FileGetVoiceSource());
+//   printf("PP: %d\n",FileGetBranches());
 
   samplesPerFrame=(int)(((double)FileGetUpdateInterval()/1000.)*
  			(double)FileGetSamplingRate());
-  
-  /* fill in the correct values for the global parameters */
-//   for (fpi=fixedParamInfo;
-//        fpi->name!=NULL;
-//        fpi++)
-//     {
-//       /* fill in current value in the frame */
-//       if (fpi->kframePtr!=NULL)
-// 	*(fpi->kframePtr)=fpi->currentValue;
-//     }
   
   /* calculate the number of samples per frame */
    kglobals.nspfr=(long)((float)FileGetSamplingRate()*
@@ -129,41 +142,111 @@ gboolean convert()
   /* calculate the number of samples*/
    noFrames=FileGetDuration()/FileGetUpdateInterval();
   
-  /* locate the waveform destination */
-   wpi=&wfi[1]; // [SYNTH];
-   waveformDestination=wpi->waveS;
-  
-  /* mark that the waveform has changed */
-   wpi->recalcSpec=TRUE;
-   wpi->recalcSgram=TRUE;
-   wpi->recalcGreyScales=TRUE;
-  
-   for (frame=0;
-        frame<noFrames;
-        frame++,waveformDestination+=samplesPerFrame)
-     {
-       // todo: calculate values like in savefile and write to this struct!
-       // where does the memory comes from?
-       // lptr must be malloced? where does this happen in kpe.c ?
-       // hmm IN: one frame ... out one wavedest ...
-       // memory for wavedest?
+  for(j=0;j<PARAMETERS;j++)
+  {
+    vl[j]=(GList *) g_list_first (CurveSearchByNr(FileGetCurvesPointer(),j)->points);
+    p_pnt[j]=(typValueList *)vl[j]->data;
+    pnt[j]=(typValueList *)vl[j]->data;
+  }
 
-       /* insert values into a Klatt Frame */
-//        for (param=0,lptr=(long *)&kframe;
-//  	   param<;
-//  	   param++,lptr++)
-//  	{
-// 	  *lptr=(long)(variedParamInfo[param].data[frame]*
-// 		       (double)variedParamInfo[param].range);
-	  ;
-//  	}
-      
-       /* Change to Klatt's 1/10Hz steps */
-       kframe.F0hz10 *=10;
-      
-       parwave(&kglobals,&kframe,waveformDestination);
-     }
+//   printf("\nframes: %d\n",noFrames);
+
+  outfp = fopen(filename,"w");
+  if(outfp==NULL)
+  {
+    printf("error opening out-file!\n");
+  }
+
+  /* write header of wave */
+  /* 'RIFF'+4+'WAVE'+'fmt '+4+fmt(16)+'data'+4 == 44 bytes*/ 
+  fprintf(outfp,"RIFF");
+  size=36+FileGetDuration()*32;
+  fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
+  fprintf(outfp,"WAVEfmt \20%c%c%c%c%c",0,0,0,1,0);
+  i=1;
+  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // always one channel!
+  i=FileGetSamplingRate();
+  fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // samplingrate
+  i=FileGetSamplingRate()*1*2; // Bps=samplerate*channels*samplesize;
+  fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // Bps
+  i=1*2;  // Bpsmp=channels*samplesize
+  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // Bpsmp
+  i=2<<3;
+  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // samplebits
+  fprintf(outfp,"data");
+  size=FileGetDuration()*32;
+  fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
   
+
+  waveformDestination = (int*) malloc(sizeof(int)*20000);  // 20k = MAX_SAM
+  if(waveformDestination==NULL)
+  {
+	perror("malloc failed");
+        exit(1);
+  }
+
+  for (frame=0;
+       frame<noFrames;
+       frame++)
+  {
+    i=frame*FileGetUpdateInterval();
+    
+    lptr=(long *)&kframe;
+    for(j=0;j<PARAMETERS;j++,lptr++)
+    {
+      if(pnt[j]->time<i)
+      {
+	p_pnt[j]=pnt[j];
+	if(vl[j]->next != NULL)
+	{
+	  vl[j]=vl[j]->next;
+	  pnt[j]=(typValueList *)vl[j]->data;
+	}
+      }
+      
+      if((pnt[j]->time-p_pnt[j]->time)==0)
+      {
+	/* to prevent from div by 0 */
+	y=pnt[j]->value;
+      }
+      else
+      {
+	y=p_pnt[j]->value + (int)((float)(pnt[j]->value-p_pnt[j]->value)/(float)(pnt[j]->time-p_pnt[j]->time)*(float)(i-p_pnt[j]->time));
+      }
+      *lptr=(long)y;
+//       printf("%d ",y);
+      
+    }
+//     printf("\n");
+
+    /* Change to Klatt's 1/10Hz steps */
+    kframe.F0hz10 *=10;
+    parwave(&kglobals,&kframe,waveformDestination);
+    
+    for(j=0;
+	j<samplesPerFrame;
+	j++)
+    {
+      low_byte = waveformDestination[j] & 0xff;
+      high_byte = waveformDestination[j] >> 8;
+      
+      if(raw_type==1)
+      {
+	fprintf(outfp,"%c%c",high_byte,low_byte);
+      }
+      else
+      {
+	fprintf(outfp,"%c%c",low_byte,high_byte);
+      }
+//       printf("write value %5d [%2x%2x]\n",j,low_byte,high_byte);
+    }
+    
+  }
+//   printf("convert ended\n");
+
+  fclose(outfp);
+
+/* use later for wav-drawarea! */
 //   /* calculate some new waveform display Xcoords */
 //   startSample=(int)(Gstart*(float)GsampleRate);
 //   endSample=(int)(Gend*(float)GsampleRate);

@@ -23,5 +23,6 @@ solaris:
 
 
 *** final:
+- add libsndfile-support (first do a win32 compile!)
 - maybe play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
 

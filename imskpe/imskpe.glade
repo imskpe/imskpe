@@ -23,7 +23,7 @@
 
   <child>
     <widget class="GtkVBox" id="vbox1">
-      <property name="width_request">740</property>
+      <property name="width_request">770</property>
       <property name="height_request">540</property>
       <property name="visible">True</property>
       <property name="homogeneous">False</property>
@@ -109,18 +109,46 @@
 		  <child>
 		    <widget class="GtkImageMenuItem" id="convert1">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-convert</property>
-		      <property name="use_stock">True</property>
+		      <property name="tooltip" translatable="yes">Generate Wav</property>
+		      <property name="label" translatable="yes">_Convert</property>
+		      <property name="use_underline">True</property>
 		      <signal name="activate" handler="on_convert1_activate" last_modification_time="Mon, 01 Nov 2004 10:56:27 GMT"/>
+		      <accelerator key="G" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image3">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-convert</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 
 		  <child>
 		    <widget class="GtkImageMenuItem" id="execute1">
 		      <property name="visible">True</property>
-		      <property name="label">gtk-execute</property>
-		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="on_execute1_activate" last_modification_time="Mon, 01 Nov 2004 10:56:27 GMT"/>
+		      <property name="tooltip" translatable="yes">Convert &amp; Play</property>
+		      <property name="label" translatable="yes">_Execute</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_execute1_activate" last_modification_time="Sun, 21 Nov 2004 16:13:18 GMT"/>
+		      <accelerator key="E" modifiers="GDK_CONTROL_MASK" signal="activate"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image4">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-execute</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
 		    </widget>
 		  </child>
 		</widget>
@@ -349,6 +377,7 @@
 
 	  <child>
 	    <widget class="GtkToolbar" id="toolbar4">
+	      <property name="visible">True</property>
 	      <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
 	      <property name="toolbar_style">GTK_TOOLBAR_BOTH</property>
 	      <property name="tooltips">True</property>
@@ -368,12 +397,30 @@
 	      </child>
 
 	      <child>
-		<widget class="GtkToolButton" id="bn_info">
+		<widget class="GtkToolButton" id="bn_convert">
 		  <property name="visible">True</property>
-		  <property name="stock_id">gtk-dialog-info</property>
+		  <property name="tooltip" translatable="yes">par -&gt; wav</property>
+		  <property name="stock_id">gtk-convert</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_bn_convert_clicked" last_modification_time="Mon, 01 Nov 2004 11:13:48 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkToolButton" id="bn_execute">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Convert &amp; Play</property>
+		  <property name="stock_id">gtk-execute</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_bn_execute_clicked" last_modification_time="Mon, 01 Nov 2004 11:13:58 GMT"/>
 		</widget>
 		<packing>
 		  <property name="expand">False</property>
@@ -2143,68 +2190,9 @@
 	      <property name="spacing">0</property>
 
 	      <child>
-		<widget class="GtkHBox" id="hbox5">
+		<widget class="GtkDrawingArea" id="draw_wave">
+		  <property name="height_request">40</property>
 		  <property name="visible">True</property>
-		  <property name="homogeneous">False</property>
-		  <property name="spacing">0</property>
-
-		  <child>
-		    <widget class="GtkDrawingArea" id="drawingarea2">
-		      <property name="visible">True</property>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">True</property>
-		      <property name="fill">True</property>
-		    </packing>
-		  </child>
-
-		  <child>
-		    <widget class="GtkToolbar" id="toolbar3">
-		      <property name="visible">True</property>
-		      <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
-		      <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
-		      <property name="tooltips">True</property>
-		      <property name="show_arrow">False</property>
-
-		      <child>
-			<widget class="GtkToolButton" id="bn_convert">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">par -&gt; wav</property>
-			  <property name="stock_id">gtk-convert</property>
-			  <property name="visible_horizontal">True</property>
-			  <property name="visible_vertical">True</property>
-			  <property name="is_important">False</property>
-			  <signal name="clicked" handler="on_bn_convert_clicked" last_modification_time="Mon, 01 Nov 2004 11:13:48 GMT"/>
-			</widget>
-			<packing>
-			  <property name="expand">False</property>
-			  <property name="homogeneous">True</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkToolButton" id="bn_execute">
-			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">Convert &amp; Play</property>
-			  <property name="stock_id">gtk-execute</property>
-			  <property name="visible_horizontal">True</property>
-			  <property name="visible_vertical">True</property>
-			  <property name="is_important">False</property>
-			  <signal name="clicked" handler="on_bn_execute_clicked" last_modification_time="Mon, 01 Nov 2004 11:13:58 GMT"/>
-			</widget>
-			<packing>
-			  <property name="expand">False</property>
-			  <property name="homogeneous">True</property>
-			</packing>
-		      </child>
-		    </widget>
-		    <packing>
-		      <property name="padding">0</property>
-		      <property name="expand">False</property>
-		      <property name="fill">False</property>
-		    </packing>
-		  </child>
 		</widget>
 		<packing>
 		  <property name="padding">0</property>
@@ -4152,6 +4140,81 @@ Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele
 	<packing>
 	  <property name="padding">0</property>
 	  <property name="expand">True</property>
+	  <property name="fill">True</property>
+	</packing>
+      </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkDialog" id="imskpe_splash">
+  <property name="width_request">400</property>
+  <property name="height_request">300</property>
+  <property name="visible">True</property>
+  <property name="title" translatable="yes">IMSKPE - Information</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_CENTER</property>
+  <property name="modal">True</property>
+  <property name="resizable">False</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="decorated">True</property>
+  <property name="skip_taskbar_hint">True</property>
+  <property name="skip_pager_hint">True</property>
+  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
+  <property name="has_separator">False</property>
+
+  <child internal-child="vbox">
+    <widget class="GtkVBox" id="dialog-vbox5">
+      <property name="visible">True</property>
+      <property name="homogeneous">False</property>
+      <property name="spacing">0</property>
+
+      <child internal-child="action_area">
+	<widget class="GtkHButtonBox" id="dialog-action_area5">
+	  <property name="visible">True</property>
+	  <property name="layout_style">GTK_BUTTONBOX_END</property>
+
+	  <child>
+	    <widget class="GtkButton" id="splash_close">
+	      <property name="visible">True</property>
+	      <property name="can_default">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="label">gtk-close</property>
+	      <property name="use_stock">True</property>
+	      <property name="relief">GTK_RELIEF_NORMAL</property>
+	      <property name="focus_on_click">True</property>
+	      <property name="response_id">-7</property>
+	      <signal name="clicked" handler="on_splash_close_clicked" last_modification_time="Sun, 21 Nov 2004 17:20:28 GMT"/>
+	    </widget>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
+	  <property name="fill">True</property>
+	  <property name="pack_type">GTK_PACK_END</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkLabel" id="splash_label">
+	  <property name="visible">True</property>
+	  <property name="can_focus">True</property>
+	  <property name="label" translatable="yes">IMSKPE-Splash</property>
+	  <property name="use_underline">False</property>
+	  <property name="use_markup">True</property>
+	  <property name="justify">GTK_JUSTIFY_LEFT</property>
+	  <property name="wrap">False</property>
+	  <property name="selectable">True</property>
+	  <property name="xalign">0.5</property>
+	  <property name="yalign">0.5</property>
+	  <property name="xpad">0</property>
+	  <property name="ypad">0</property>
+	</widget>
+	<packing>
+	  <property name="padding">0</property>
+	  <property name="expand">False</property>
 	  <property name="fill">True</property>
 	</packing>
       </child>

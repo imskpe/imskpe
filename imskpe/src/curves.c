@@ -382,7 +382,7 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
 	v2time=v->time;
       }
 
-      if(!(((p_pnt.time+ui)>otime) && (v2time<otime)))
+      if((((p_pnt.time+ui)<otime) && (v2time>otime)))
       {
 	if(otime!=0 && otime!=v2time)
 	{
@@ -390,7 +390,10 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
 	}
       }
       
-      v->value=value;
+      if(value>=0)
+      {
+	v->value=value;
+      }
       FileSetIsChanged(TRUE);
 //       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
       return TRUE;
@@ -473,14 +476,18 @@ gboolean PointInsert(typCurveList *cl, int time, int value)
 void CurveInitStart()
 {
   int starttable [] = {
-      100,60,500,60,1500,
-      90,1500,150,3250,200,
-      3700,200,4990,500,6680,
-      439,6680,489,0,40,
-      0,0,0,0,0,
-      60,0,90,0,150,
-      0,200,0,200,0,
-      500,0,0,60,60};
+      100,59,500,59,1500,89,
+      2500,149,3250,200,3700,
+      200,4990,500,280,89,280,
+      89,0,40,0,0,0,0,59,59,59,
+      89,59,149,59,200,59,200,
+      59,500,0,0,59,59};
+//       100,59,500,59,1500,89,
+//       1500,149,3250,200,3700,
+//       200,4990,500,6680,439,6680,
+//       489,0,40,0,0,0,0,0,60,0,90,
+//       0,150,0,200,0,200,
+//       0,500,0,0,60,60};
   typCurveList *curve;
   unsigned int du;
   GList *points=NULL;
@@ -497,7 +504,7 @@ void CurveInitStart()
     points=NULL;
     points = g_list_append(points, (typValueList *)GenPoint(0,starttable[i]));
     points = g_list_append(points, (typValueList *)GenPoint(du,starttable[i]));
-    CurveInsert((GList *)FileGetCurvesPointer(), i, points);
+    CurveInsert(FileGetCurvesPointer(), i, points);
   }
 
 }

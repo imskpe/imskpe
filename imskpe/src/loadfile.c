@@ -82,7 +82,7 @@ void FileOpen(char *filename)
   /** \todo test for filename extension!! */
   LoadPar(filename);
 
-  printf("%s\n",aFile->filename);
+//   printf("%s\n",aFile->filename);
 
 //  printf("x- %d\n",aFile->duration);
   /** \todo free aFile at quit! -> in need of FileGetFilename*/
@@ -382,8 +382,9 @@ void FileInit()
     CurveListFree(aFile->curves);
   }
   aFile=g_malloc (sizeof (typFile));
-  tmp=g_malloc (sizeof (char)*(strlen("unnamed")+1));
-  strncpy(tmp,"unnamed",strlen("unnamed"));
+  tmp=g_malloc (sizeof (char)*(strlen("unnamed.par")+1));
+  strncpy(tmp,"unnamed.par",strlen("unnamed.par"));
+  tmp[strlen("unnamed.par")]=0;
 
   aFile->filename=tmp;
   aFile->ischanged=FALSE;
@@ -391,25 +392,13 @@ void FileInit()
 
   FileSetDuration(500);
   FileSetUpdateInterval(10);
-  FileSetVoiceSource(16000);
+  FileSetSamplingRate(16000);
   FileSetNumberFormants(5);
-  FileSetSamplingRate(2);
+  FileSetVoiceSource(2);
   FileSetBranches(1);
 
   CurveInitStart();
 
-//  printf("%s\n",aFile->filename);
-
-//  printf("x- %d\n",aFile->duration);
   /** \todo free aFile at quit! -> in need of FileGetFilename*/
 }
 
-
-
-// GList *FileGetFormantsPointer()
-// {
-//   if(aFile!=NULL)
-//   {
-//     return aFile->formants;
-//   }
-// }

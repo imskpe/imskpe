@@ -72,6 +72,7 @@
 <paramdata>\n                   {datanr=0;BEGIN(INITIAL);}
 
 .                               {return UNKNOWN;}
+\n                              return EOL;
 %%
 /** 
  * LoadPar loads a PAR-File in curves-List 
@@ -108,8 +109,7 @@ void LoadPar(char *filename)
     tmp=NULL;
   }
 
-  printf("%s\n",filename);
-
+//   printf("%s\n",filename);
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
