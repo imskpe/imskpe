@@ -2,7 +2,8 @@ TODO:
 
 first release:
 - lines / interpol over GList
-- open/save par-files
+OK open par-files
+- save par-files
 - open wavfiles
 - generate wavfiles (through kpe80 - console tool)
 - use fft to show a spectrum
@@ -18,19 +19,23 @@ nice to have:
 
 
 
-BoLSoGs merkzettel:
-- das lineal auslagern ...
-- auf den duration-spinbutton ein linealredraw triggern
-- den linealcode in eine eigene procedure packen
-  - y-achsen-max einstellbar machen
-  - auch die unterteilungen einstellbar machen
-- alles auch für amplitude und bandbreite
-- die callbacks.h aufräumen
+BoLSoGs private todo-list (in german):
+OK - das lineal auslagern ... 
+OK - auf den duration-spinbutton ein linealredraw triggern
+OK - den linealcode in eine eigene procedure packen
+OK - alles auch für amplitude und bandbreite
+OK - die callbacks.h aufräumen
 - auf die jeweiligen toggle-buttons reagieren:
   - neue kurven initialisieren (defaultwerte: "schwa"?!)
+    - dafür eine extra funktion ... 
+    - mit leeren listen ...
+    - und eine init-funktion für new mit den schwa werten ...
+      = start.par
   - wenn schon vorhanden wieder einblenden
 - speichern der preferences
   - preferences dialog
   - auch speichern der formantfarben
+  - y-achsen-max einstellbar machen (in preferences)
+  - auch die unterteilungen einstellbar machen
 - anzeigen der koordinaten in der statusleiste
   - was soll noch in die statusleiste?

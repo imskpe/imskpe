@@ -69,6 +69,9 @@ INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
 INSTOBJEXT = @INSTOBJEXT@
 INTLLIBS = @INTLLIBS@
 LDFLAGS = @LDFLAGS@
+LEX = @LEX@
+LEXLIB = @LEXLIB@
+LEX_OUTPUT_ROOT = @LEX_OUTPUT_ROOT@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
@@ -138,7 +141,10 @@ imskpe_SOURCES = \
 	main.c \
 	support.c support.h \
 	interface.c interface.h \
-	callbacks.c callbacks.h
+	graphics.c graphics.h \
+	callbacks.c callbacks.h \
+	cfg.c cfg.h \
+	loadpar.l loadpar.h
 
 
 imskpe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
@@ -151,7 +157,8 @@ bin_PROGRAMS = imskpe$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 
 am_imskpe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
-	callbacks.$(OBJEXT)
+	graphics.$(OBJEXT) callbacks.$(OBJEXT) cfg.$(OBJEXT) \
+	loadpar.$(OBJEXT)
 imskpe_OBJECTS = $(am_imskpe_OBJECTS)
 imskpe_DEPENDENCIES =
 imskpe_LDFLAGS =
@@ -159,21 +166,23 @@ imskpe_LDFLAGS =
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/callbacks.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/interface.Po ./$(DEPDIR)/main.Po \
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/callbacks.Po ./$(DEPDIR)/cfg.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/graphics.Po ./$(DEPDIR)/interface.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/loadpar.Po ./$(DEPDIR)/main.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/support.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+LEXCOMPILE = $(LEX) $(LFLAGS) $(AM_LFLAGS)
 DIST_SOURCES = $(imskpe_SOURCES)
-DIST_COMMON = $(srcdir)/Makefile.in Makefile.am
+DIST_COMMON = $(srcdir)/Makefile.in Makefile.am loadpar.c
 SOURCES = $(imskpe_SOURCES)
 
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .c .o .obj
+.SUFFIXES: .c .l .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.in $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
 	  $(AUTOMAKE) --gnu  src/Makefile
@@ -214,7 +223,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callbacks.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cfg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/graphics.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loadpar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/support.Po@am__quote@
 
@@ -239,6 +251,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/$*.Po' tmpdepfile='$(DEPDIR)/$*.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `if test -f '$<'; then $(CYGPATH_W) '$<'; else $(CYGPATH_W) '$(srcdir)/$<'; fi`
+
+.l.c:
+	$(LEXCOMPILE) `test -f $< || echo '$(srcdir)/'`$<
+	sed '/^#/ s|$(LEX_OUTPUT_ROOT)\.c|$@|' $(LEX_OUTPUT_ROOT).c >$@
+	rm -f $(LEX_OUTPUT_ROOT).c
 uninstall-info-am:
 
 ETAGS = etags
@@ -356,6 +373,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-rm -f loadpar.c
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-generic mostlyclean-am

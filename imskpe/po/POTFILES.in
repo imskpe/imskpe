@@ -4,3 +4,6 @@ src/main.c
 src/interface.c
 src/callbacks.c
 src/support.c
+src/graphics.c
+src/cfg.c
+src/file.c

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2004-03-09 15:52+0100\n"
+"POT-Creation-Date: 2004-04-27 00:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,240 +15,240 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/interface.c:170
+#: src/interface.c:167
 msgid "IMSKPE"
 msgstr ""
 
-#: src/interface.c:181
+#: src/interface.c:178
 msgid "_File"
 msgstr ""
 
-#: src/interface.c:213
+#: src/interface.c:210
 msgid "_View"
 msgstr ""
 
-#: src/interface.c:217
+#: src/interface.c:214
 msgid "_Help"
 msgstr ""
 
-#: src/interface.c:224
+#: src/interface.c:221
 msgid "_About"
 msgstr ""
 
-#: src/interface.c:251
+#: src/interface.c:248
 msgid "move"
 msgstr ""
 
-#: src/interface.c:261
+#: src/interface.c:258
 msgid "insert"
 msgstr ""
 
-#: src/interface.c:270
+#: src/interface.c:267
 msgid "delete"
 msgstr ""
 
-#: src/interface.c:292
+#: src/interface.c:289
 msgid "duration: "
 msgstr ""
 
-#: src/interface.c:300 src/interface.c:308
+#: src/interface.c:296 src/interface.c:303
 msgid "msec"
 msgstr ""
 
-#: src/interface.c:316
+#: src/interface.c:310
 msgid "update interval: "
 msgstr ""
 
-#: src/interface.c:324
+#: src/interface.c:317
 msgid "sampling rate: "
 msgstr ""
 
-#: src/interface.c:332
+#: src/interface.c:324
 msgid "Num of formants: "
 msgstr ""
 
-#: src/interface.c:340
+#: src/interface.c:331
 msgid "voice source: "
 msgstr ""
 
-#: src/interface.c:348
+#: src/interface.c:338
 msgid "branches"
 msgstr ""
 
-#: src/interface.c:356
+#: src/interface.c:345
 msgid "samp/sec"
 msgstr ""
 
-#: src/interface.c:379
+#: src/interface.c:367
 msgid "impulse"
 msgstr ""
 
-#: src/interface.c:380
+#: src/interface.c:368
 msgid "natural"
 msgstr ""
 
-#: src/interface.c:381
+#: src/interface.c:369
 msgid "sampled"
 msgstr ""
 
-#: src/interface.c:395
+#: src/interface.c:383
 msgid "cascade + parallel"
 msgstr ""
 
-#: src/interface.c:396
+#: src/interface.c:384
 msgid "parallel only"
 msgstr ""
 
-#: src/interface.c:430
+#: src/interface.c:418
 msgid "global"
 msgstr ""
 
-#: src/interface.c:449 src/interface.c:489 src/interface.c:528
-#: src/interface.c:567 src/interface.c:606 src/interface.c:645
-#: src/interface.c:828
+#: src/interface.c:436 src/interface.c:475 src/interface.c:513
+#: src/interface.c:551 src/interface.c:589 src/interface.c:627
+#: src/interface.c:805
 msgid "frequencies"
 msgstr ""
 
-#: src/interface.c:455 src/interface.c:495 src/interface.c:534
-#: src/interface.c:573 src/interface.c:612 src/interface.c:651
+#: src/interface.c:442 src/interface.c:481 src/interface.c:519
+#: src/interface.c:557 src/interface.c:595 src/interface.c:633
 msgid "amplitudes"
 msgstr ""
 
-#: src/interface.c:461 src/interface.c:501 src/interface.c:540
-#: src/interface.c:579 src/interface.c:618 src/interface.c:657
+#: src/interface.c:448 src/interface.c:487 src/interface.c:525
+#: src/interface.c:563 src/interface.c:601 src/interface.c:639
 msgid "bandwidth"
 msgstr ""
 
-#: src/interface.c:467 src/interface.c:507 src/interface.c:546
-#: src/interface.c:585 src/interface.c:624 src/interface.c:663
+#: src/interface.c:454 src/interface.c:493 src/interface.c:531
+#: src/interface.c:569 src/interface.c:607 src/interface.c:645
 msgid "bandwidth parallel"
 msgstr ""
 
-#: src/interface.c:473
+#: src/interface.c:460
 msgid "F1"
 msgstr ""
 
-#: src/interface.c:513
+#: src/interface.c:499
 msgid "F2"
 msgstr ""
 
-#: src/interface.c:552
+#: src/interface.c:537
 msgid "F3"
 msgstr ""
 
-#: src/interface.c:591
+#: src/interface.c:575
 msgid "F4"
 msgstr ""
 
-#: src/interface.c:630
+#: src/interface.c:613
 msgid "F5"
 msgstr ""
 
-#: src/interface.c:669
+#: src/interface.c:651
 msgid "F6"
 msgstr ""
 
-#: src/interface.c:684
+#: src/interface.c:665
 msgid "zero frequencies"
 msgstr ""
 
-#: src/interface.c:690
+#: src/interface.c:671
 msgid "zero bandwidth"
 msgstr ""
 
-#: src/interface.c:696
+#: src/interface.c:677
 msgid "pole frequency"
 msgstr ""
 
-#: src/interface.c:702
+#: src/interface.c:683
 msgid "pole bandwidth"
 msgstr ""
 
-#: src/interface.c:708
+#: src/interface.c:689
 msgid "pole amplitude"
 msgstr ""
 
-#: src/interface.c:714
+#: src/interface.c:695
 msgid "nasals"
 msgstr ""
 
-#: src/interface.c:719
+#: src/interface.c:699
 msgid "resonators"
 msgstr ""
 
-#: src/interface.c:728
+#: src/interface.c:707
 msgid "glottal open quotient"
 msgstr ""
 
-#: src/interface.c:734
+#: src/interface.c:713
 msgid "breathiness"
 msgstr ""
 
-#: src/interface.c:740
+#: src/interface.c:719
 msgid "spectral tilt"
 msgstr ""
 
-#: src/interface.c:746
+#: src/interface.c:725
 msgid "skewness"
 msgstr ""
 
-#: src/interface.c:751
+#: src/interface.c:730
 msgid "skewness (speed quotient) of voiced excitation signal"
 msgstr ""
 
-#: src/interface.c:753
+#: src/interface.c:732
 msgid "fundamental frequency"
 msgstr ""
 
-#: src/interface.c:759
+#: src/interface.c:738
 msgid "voice src"
 msgstr ""
 
-#: src/interface.c:768
+#: src/interface.c:746
 msgid "amp. of voicing"
 msgstr ""
 
-#: src/interface.c:774
+#: src/interface.c:752
 msgid "amp. of aspiration"
 msgstr ""
 
-#: src/interface.c:780
+#: src/interface.c:758
 msgid "amp. of frication"
 msgstr ""
 
-#: src/interface.c:786
+#: src/interface.c:764
 msgid "amp. of bypass path (par)"
 msgstr ""
 
-#: src/interface.c:791
+#: src/interface.c:769
 msgid "amplitude of bypass path (parallel branch)"
 msgstr ""
 
-#: src/interface.c:793
+#: src/interface.c:771
 msgid "amp. of voicing (par)"
 msgstr ""
 
-#: src/interface.c:798
+#: src/interface.c:776
 msgid "amplitude of voicing (parallel branch)"
 msgstr ""
 
-#: src/interface.c:800
+#: src/interface.c:778
 msgid "overall signal gain"
 msgstr ""
 
-#: src/interface.c:806
+#: src/interface.c:784
 msgid "exc. amp."
 msgstr ""
 
-#: src/interface.c:858
+#: src/interface.c:814
 msgid "amplitude"
 msgstr ""
 
-#: src/interface.c:867
+#: src/interface.c:823
 msgid "bandwidths"
 msgstr ""
 
-#: src/interface.c:1090
+#: src/interface.c:1072
 msgid "Select Color"
 msgstr ""
 

@@ -1,3 +1,21 @@
+/*
+    Copyright (C) 2004 Andreas Madsack
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
+
 #include <gtk/gtk.h>
 
 
@@ -96,42 +114,6 @@ on_imskpe_main_activate_default        (GtkWindow       *window,
 // formant init ...
 void FormantListInit ();
 
-gboolean
-on_lb_f1_configure_event               (GtkWidget       *widget,
-                                        GdkEventConfigure *event,
-                                        gpointer         user_data);
-
-gboolean
-on_lb_f1_visibility_notify_event       (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
-void
-on_lb_f1_show                          (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
-on_lb_f1_populate_popup                (GtkLabel        *label,
-                                        GtkMenu         *menu,
-                                        gpointer         user_data);
-
-gboolean
-on_lb_resonators_button_press_event    (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-void
-on_lb_resonators_show                  (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-gboolean
-on_nb_resonators_select_page           (GtkNotebook     *notebook,
-                                        gboolean         move_focus,
-                                        gpointer         user_data);
-
-void
-on_lb_f1_parent_set                    (GtkWidget       *widget,
-                                        gpointer         user_data);
 
 void
 on_lb_f1_realize                       (GtkWidget       *widget,
@@ -148,4 +130,47 @@ on_lb_f3_realize                       (GtkWidget       *widget,
 gboolean
 imskpe_quit                            (GtkWidget       *widget,
                                         GdkEvent        *event,
+                                        gpointer         user_data);
+
+void
+on_spbn_duration_changed               (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_amp_configure_event            (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_amp_expose_event               (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_band_configure_event           (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_band_expose_event              (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_band_motion_notify_event       (GtkWidget       *widget,
+                                        GdkEventMotion  *event,
+                                        gpointer         user_data);
+
+void
+on_nb_draw_switch_page                 (GtkNotebook     *notebook,
+                                        GtkNotebookPage *page,
+                                        guint            page_num,
+                                        gpointer         user_data);
+
+void
+on_ok_button2_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_cancel_button2_clicked              (GtkButton       *button,
                                         gpointer         user_data);

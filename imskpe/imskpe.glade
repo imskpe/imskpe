@@ -651,6 +651,7 @@
 			  <property name="snap_to_ticks">False</property>
 			  <property name="wrap">False</property>
 			  <property name="adjustment">500 30 5000 10 100 100</property>
+			  <signal name="changed" handler="on_spbn_duration_changed" last_modification_time="Thu, 08 Apr 2004 19:17:33 GMT"/>
 			</widget>
 			<packing>
 			  <property name="left_attach">1</property>
@@ -2015,6 +2016,7 @@
 		  <property name="tab_pos">GTK_POS_TOP</property>
 		  <property name="scrollable">False</property>
 		  <property name="enable_popup">False</property>
+		  <signal name="switch_page" handler="on_nb_draw_switch_page" last_modification_time="Thu, 08 Apr 2004 19:57:01 GMT"/>
 
 		  <child>
 		    <widget class="GtkDrawingArea" id="draw_freq">
@@ -2050,65 +2052,12 @@
 		  </child>
 
 		  <child>
-		    <widget class="GtkTable" id="table1">
+		    <widget class="GtkDrawingArea" id="draw_amp">
 		      <property name="visible">True</property>
-		      <property name="n_rows">2</property>
-		      <property name="n_columns">2</property>
-		      <property name="homogeneous">False</property>
-		      <property name="row_spacing">0</property>
-		      <property name="column_spacing">0</property>
-
-		      <child>
-			<widget class="GtkDrawingArea" id="draw_amp">
-			  <property name="visible">True</property>
-			  <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK</property>
-			  <signal name="motion_notify_event" handler="on_draw_amp_motion_notify_event" last_modification_time="Sat, 06 Mar 2004 16:05:17 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkVRuler" id="vruler1">
-			  <property name="visible">True</property>
-			  <property name="metric">GTK_PIXELS</property>
-			  <property name="lower">0</property>
-			  <property name="upper">10</property>
-			  <property name="position">4.32203</property>
-			  <property name="max_size">10</property>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options">fill</property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkHRuler" id="hruler1">
-			  <property name="visible">True</property>
-			  <property name="metric">GTK_PIXELS</property>
-			  <property name="lower">0</property>
-			  <property name="upper">10</property>
-			  <property name="position">6.04396</property>
-			  <property name="max_size">10</property>
-			</widget>
-			<packing>
-			  <property name="left_attach">1</property>
-			  <property name="right_attach">2</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
+		      <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK</property>
+		      <signal name="motion_notify_event" handler="on_draw_amp_motion_notify_event" last_modification_time="Sat, 06 Mar 2004 16:05:17 GMT"/>
+		      <signal name="configure_event" handler="on_draw_amp_configure_event" last_modification_time="Thu, 08 Apr 2004 19:25:37 GMT"/>
+		      <signal name="expose_event" handler="on_draw_amp_expose_event" last_modification_time="Thu, 08 Apr 2004 19:25:44 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2138,6 +2087,10 @@
 		  <child>
 		    <widget class="GtkDrawingArea" id="draw_band">
 		      <property name="visible">True</property>
+		      <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK</property>
+		      <signal name="configure_event" handler="on_draw_band_configure_event" last_modification_time="Thu, 08 Apr 2004 19:25:53 GMT"/>
+		      <signal name="expose_event" handler="on_draw_band_expose_event" last_modification_time="Thu, 08 Apr 2004 19:26:00 GMT"/>
+		      <signal name="motion_notify_event" handler="on_draw_band_motion_notify_event" last_modification_time="Thu, 08 Apr 2004 19:26:15 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2244,6 +2197,38 @@
       <property name="has_palette">False</property>
       <signal name="configure_event" handler="on_color_selection1_configure_event" last_modification_time="Sat, 06 Mar 2004 17:20:08 GMT"/>
       <signal name="color_changed" handler="on_color_selection1_color_changed" last_modification_time="Sat, 06 Mar 2004 17:20:12 GMT"/>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkFileSelection" id="imskpe_file">
+  <property name="border_width">12</property>
+  <property name="visible">True</property>
+  <property name="title" translatable="yes">Select File</property>
+  <property name="type">GTK_WINDOW_TOPLEVEL</property>
+  <property name="window_position">GTK_WIN_POS_NONE</property>
+  <property name="modal">False</property>
+  <property name="resizable">True</property>
+  <property name="destroy_with_parent">False</property>
+  <property name="show_fileops">True</property>
+
+  <child internal-child="cancel_button">
+    <widget class="GtkButton" id="cancel_button2">
+      <property name="visible">True</property>
+      <property name="can_default">True</property>
+      <property name="can_focus">True</property>
+      <property name="relief">GTK_RELIEF_NORMAL</property>
+      <signal name="clicked" handler="on_cancel_button2_clicked" last_modification_time="Wed, 19 May 2004 21:53:00 GMT"/>
+    </widget>
+  </child>
+
+  <child internal-child="ok_button">
+    <widget class="GtkButton" id="ok_button2">
+      <property name="visible">True</property>
+      <property name="can_default">True</property>
+      <property name="can_focus">True</property>
+      <property name="relief">GTK_RELIEF_NORMAL</property>
+      <signal name="clicked" handler="on_ok_button2_clicked" last_modification_time="Wed, 19 May 2004 21:45:01 GMT"/>
     </widget>
   </child>
 </widget>
