@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-06 01:28+0100\n"
-"PO-Revision-Date: 2004-12-02 16:06+0100\n"
+"PO-Revision-Date: 2004-12-06 02:28+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -436,23 +436,20 @@ msgid "value:"
 msgstr "Wert:"
 
 #: src/interface.c:1768
-#, fuzzy
 msgid "Font: "
-msgstr "Formant 6"
+msgstr "Schriftart: "
 
 #: src/interface.c:1781
 msgid "Sans 6"
-msgstr ""
+msgstr "Sans 6"
 
 #: src/interface.c:1788
-#, fuzzy
 msgid "Change Font"
-msgstr "Ändere Farbe F1"
+msgstr "Ändere Schriftart"
 
 #: src/interface.c:1802
-#, fuzzy
 msgid "Change"
-msgstr "ändern"
+msgstr "Ändern"
 
 #: src/interface.c:1806
 msgid "Ruler"
@@ -497,7 +494,7 @@ msgstr "Symbolleistenstil:"
 
 #: src/interface.c:1880
 msgid "show realy quit dialog: "
-msgstr ""
+msgstr "Anzeigen des Beenden-Dialogs: "
 
 #: src/interface.c:1896
 msgid "Value"
@@ -596,13 +593,12 @@ msgid "IMSKPE-Splash"
 msgstr "IMSKPE-Splash"
 
 #: src/interface.c:2555
-#, fuzzy
 msgid "Select Font"
-msgstr "Datei auswählen"
+msgstr "Schriftart auswählen"
 
 #: src/interface.c:2576
 msgid "0123456789"
-msgstr ""
+msgstr "0123456789"
 
 #: src/callbacks.c:94 src/callbacks.c:241
 msgid "Save changed data?"
@@ -637,7 +633,7 @@ msgstr "Wirklich die Einstellungen zurücksetzen?"
 #. wav-file written
 #: src/callbacks.c:2374
 msgid " written"
-msgstr "programmiert von"
+msgstr "geschrieben"
 
 #: src/callbacks.c:2448
 msgid "Really quit?"
