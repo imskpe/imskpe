@@ -859,8 +859,10 @@ on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
   GtkWidget *w;
+  int foo;
+  
   w=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "nb_draw");
-  int foo=gtk_notebook_get_current_page((GtkNotebook *)w);
+  foo=gtk_notebook_get_current_page((GtkNotebook *)w);
 //   printf("foo_sp: %d\n",foo);
   configure_page(foo);
 
