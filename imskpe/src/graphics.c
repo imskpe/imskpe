@@ -496,6 +496,8 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 
     GdkGC *gc;
     
+    strcpy(statusbarcurvemessage,"\0");
+
     switch(dia)
     {
     case FREQUENCIES:

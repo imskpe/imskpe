@@ -1,3 +1,11 @@
+2005-01-13  Andreas Madsack  <bolsog@users.sf.net>
+
+	* bugfixes
+
+2005-01-11  Andreas Madsack  <bolsog@users.sf.net>
+
+	* tests with -pedantic-compile and some fixes
+
 2005-01-09  Andreas Madsack  <bolsog@users.sf.net>
 
         * beta 5 released
