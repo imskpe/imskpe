@@ -189,7 +189,6 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   int foo=gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
   char tmp[300];
 
-//  w=(GtkWidget *)lookup_widget (GTK_WIDGET (w), "extra");
   len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
   filename = (char *) malloc(sizeof(char)*(len+1));
@@ -202,7 +201,6 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
     
   if(foo==0) // par
   {
-
     SetTitle(filename);
     FileSave(filename);
   
@@ -343,7 +341,6 @@ void InitDialogSave()
    g_signal_connect ((gpointer) cb_filesave_extra, "changed",
                     G_CALLBACK (on_extra_changed),
                     NULL);
-
 
    gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (filesave), hbox);
    
@@ -1169,10 +1166,9 @@ on_bn_move_ok_clicked                  (GtkButton       *button,
  */
 gboolean
 on_draw_scroll_event              (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data)
+				   GdkEvent        *event,
+				   gpointer         user_data)
 {
-
   if(gtk_toggle_tool_button_get_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_move")))
   {
     if(event->scroll.direction==0)
@@ -1774,11 +1770,6 @@ on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
     @name preferences parts 
     @{ */
 
-/** bad style trick variable ... */
-char *selected_color;
-
-/** pointer to colordialog */
-GtkWidget *colordiag = NULL;
 /** pointer to prefs dialog */
 GtkWidget *prefs = NULL;
 
@@ -1828,48 +1819,56 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   GtkWidget *w;
   int val;  
   char tmp[100];
-  GdkColor *color;
-
+  GdkColor color;
 
   // save values
 //   printf("apply\n");
   if(ConfigFind("prefs_tab1_tmp"))
   {
     w=lookup_widget (GTK_WIDGET (button), "cb_f1");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f1");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f1");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_f2");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f2");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f2");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_f3");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f3");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f3");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_f4");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f4");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f4");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_f5");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f5");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f5");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_f6");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "f6");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "f6");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_nasals");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "nasals");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "nasals");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_vs");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "vs");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "vs");
 
     w=lookup_widget (GTK_WIDGET (button), "cb_ea");
-    gtk_color_button_get_color ((GtkColorButton *)w, color);
-    ConfigInsertColor(color, "ea");
+    g_return_if_fail(w != NULL);
+    gtk_color_button_get_color ((GtkColorButton *)w, &color);
+    ConfigInsertColor(&color, "ea");
 
     // set colors on gui-labels
     SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f1"),"f1");
