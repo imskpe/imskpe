@@ -49,8 +49,15 @@ typedef struct {
 /*
   procedures
 */
-GtkWidget *get_main_window();
-void set_main_window(GtkWidget *w);
+GtkWidget *GetMainWindow();
+void SetMainWindow(GtkWidget *w);
+
+void GuiSetDuration(unsigned int x);
+void GuiSetUpdateInterval(unsigned int x);
+void GuiSetSamplingRate(unsigned int x);
+void GuiSetNumberFormants(unsigned int x);
+void GuiSetVoiceSource(unsigned int x);
+void GuiSetBranches(unsigned int x);
 
 GdkGC *GetPenRGB (int nRed, int nGreen, int nBlue);
 GdkGC *GetPenGdkColor (GdkColor col);

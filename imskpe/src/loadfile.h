@@ -62,20 +62,21 @@ typedef struct {
 void FileOpen(char *filename);
 
 gboolean FileSetDuration(unsigned int d);
-
+unsigned int FileGetDuration();
 gboolean FileSetUpdateInterval(unsigned int ui);
-
+unsigned int FileGetUpdateInterval();
 gboolean FileSetSamplingRate(unsigned int sr);
-
+unsigned int FileGetSamplingRate();
 gboolean FileSetNumberFormants(unsigned int f);
-
+unsigned int FileGetNumberFormants();
 gboolean FileSetVoiceSource(unsigned int vs);
-
+unsigned int FileGetVoiceSource();
 gboolean FileSetBranches(unsigned int cp);
-
+unsigned int FileGetBranches();
 void FileSetIsChanged(gboolean b);
 gboolean FileGetIsChanged();
 
 void FileSetCurvesPointer(GList *curves);
 GList *FileGetCurvesPointer();
 //GList *FileGetFormantsPointer();
+void FileInit();

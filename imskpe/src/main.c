@@ -35,6 +35,7 @@
 #include "callbacks.h"
 #include "support.h"
 #include "locale.h"
+#include "loadfile.h"
 
 /** 
  * main
@@ -67,6 +68,7 @@ int main (int argc, char *argv[])
       \todo init complete start-file (maybe start.par)
    */
   FormantListInit();
+  FileInit();
 
   imskpe_main = create_imskpe_main ();
   gtk_widget_show (imskpe_main);
@@ -83,6 +85,8 @@ int main (int argc, char *argv[])
  * IMSKPE is a GTK2-gui for klatt-speech-synthesis
  *
  */
+
+// doxygen comments for generated files:
 
 /**
  * @file   interface.c

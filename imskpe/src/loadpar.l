@@ -149,6 +149,7 @@ void LoadPar(char *filename)
 	      printf(_("PAR-Import-Error: "));
 	      printf(_("DU not integer\n"));
 	    }
+	    GuiSetDuration(atoi(yytext));
 	  }
  	  else 
 	  if (!strcmp(var,"UI"))
@@ -158,6 +159,7 @@ void LoadPar(char *filename)
  	      printf(_("PAR-Import-Error: "));
  	      printf(_("UI not integer\n"));
  	    }
+	    GuiSetUpdateInterval(atoi(yytext));
 	  }
 	  else
 	  if (!strcmp(var,"SR"))
@@ -167,6 +169,7 @@ void LoadPar(char *filename)
  	      printf(_("PAR-Import-Error: "));
  	      printf(_("SR not integer\n"));
  	    }
+	    GuiSetSamplingRate(atoi(yytext));
 	  }
 	  else
 	  if (!strcmp(var,"NF"))
@@ -176,6 +179,7 @@ void LoadPar(char *filename)
  	      printf(_("PAR-Import-Error: "));
  	      printf(_("NF not integer\n"));
  	    }
+	    GuiSetNumberFormants(atoi(yytext));
 	  }
 	  else
 	  if (!strcmp(var,"SS"))
@@ -185,6 +189,7 @@ void LoadPar(char *filename)
  	      printf(_("PAR-Import-Error: "));
  	      printf(_("SS not integer\n"));
  	    }
+	    GuiSetVoiceSource(atoi(yytext));
 	  }
 	  else
 	  if (!strcmp(var,"CP"))
@@ -194,6 +199,7 @@ void LoadPar(char *filename)
  	      printf(_("PAR-Import-Error: "));
  	      printf(_("CP not integer\n"));
  	    }
+	    GuiSetBranches(atoi(yytext));
 	  }
 	  else
 	  {
@@ -282,20 +288,21 @@ void LoadPar(char *filename)
    - formants weg -> preferences colortable her!!
 
 */
-    printf("X-\n");
+//    printf("X-\n");
     CurveInsert(FileGetCurvesPointer(),i,pointtmp);
 
-//     while(pointtmp)
-//     {	
-//       point = (typValueList *) pointtmp->data;
+     while(pointtmp)
+     {	
+       point = (typValueList *) pointtmp->data;
 
-//       printf("%4d %4d %2d\n",point->time,point->value,i); 
+       printf("%4d %4d %2d\n",point->time,point->value,i); 
       
 //       if(point!=NULL)
 //       free(point);
 
 //       pointtmp = g_list_remove(pointtmp,point);
-//     }
+       pointtmp = pointtmp->next;
+     }
     free(tmp);
   }
   free(filename);

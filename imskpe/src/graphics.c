@@ -80,17 +80,80 @@ int nScreenHeight = 200;
 GList *formants = NULL;  // put in preferences ?
 
 /** \todo put in another file - not graphic relevant! */
-GtkWidget *get_main_window()
+GtkWidget *GetMainWindow()
 {
   return (GtkWidget *)main_window;
 }
 
-void set_main_window(GtkWidget *w)
+void SetMainWindow(GtkWidget *w)
 {
   main_window=(GtkWidget *)w;
 
   return;
 }
+
+void GuiSetDuration(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_duration");
+  gtk_spin_button_set_value ((GtkSpinButton *)w,
+			     (float)x);
+}
+
+void GuiSetUpdateInterval(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_ui");
+  gtk_spin_button_set_value ((GtkSpinButton *)w,
+			     (float)x);
+}
+
+void GuiSetSamplingRate(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_sprate");
+  gtk_spin_button_set_value ((GtkSpinButton *)w,
+			     (float)x);
+}
+
+void GuiSetNumberFormants(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_numF");
+  gtk_spin_button_set_value ((GtkSpinButton *)w,
+			     (float)x);
+}
+
+void GuiSetVoiceSource(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_vs_entry");
+  switch(x)
+  {
+  case 1:
+      gtk_entry_set_text ((GtkEntry *)w,"impulse");
+      break;
+  case 2:
+      gtk_entry_set_text ((GtkEntry *)w,"natural");
+      break;
+  case 3:
+      gtk_entry_set_text ((GtkEntry *)w,"sampled");
+      break;
+  }
+}
+
+void GuiSetBranches(unsigned int x)
+{
+  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_cp_entry");
+  switch(x)
+  {
+  case 1:
+      gtk_entry_set_text ((GtkEntry *)w,"cascade + parallel");
+      break;
+  case 2:
+      gtk_entry_set_text ((GtkEntry *)w,"parallel only");
+      break;
+  }
+}
+
+
+/* ------------------------------------------------------------  */
+
 
 void FormantListInit ()
 {
@@ -473,7 +536,8 @@ void Repaint(GtkWidget *d)
     int ysplits=10;  /**< export in preferences */
     int ymax=500;   /**< put in preferences and/or calculate it! */
 
-    int xmax = gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
+    int xmax = FileGetDuration();
+//gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
 
 
     /* --- clear pixmap --- */
@@ -614,7 +678,7 @@ void SetStatusBar(char *sb, gchar *text)
 
 //   tmp = g_strdup_printf(text);
   
-  s=(GtkStatusbar *) lookup_widget (GTK_WIDGET (get_main_window()), sb);
+  s=(GtkStatusbar *) lookup_widget (GTK_WIDGET (GetMainWindow()), sb);
 //  context_id = gtk_statusbar_get_context_id(
 //                          GTK_STATUSBAR (s), "Statusbar example");
 

@@ -70,3 +70,4 @@ typCurveList CurveInsert(GList *curves,int parid, GList *points);
 void CurveListFree(GList *curves);
 GList *CurveSearchWidgetName(GList *curve,char *wn);
 typValueList *PointInsert (gint t, gint v);
+void CurveInitStart();

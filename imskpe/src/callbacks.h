@@ -213,3 +213,32 @@ on_lb_f6_realize                       (GtkWidget       *widget,
 void
 on_lb_nasals_realize                   (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_cm_vs_entry_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_cm_cp_entry_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data);
+
+void
+on_spbn_sprate_value_changed           (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_spbn_ui_value_changed               (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_new_clicked                      (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_cm_voicesource_state_changed        (GtkWidget       *widget,
+                                        GtkStateType     state,
+                                        gpointer         user_data);

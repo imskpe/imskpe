@@ -74,8 +74,6 @@ void FileOpen(char *filename)
   /** \todo test for filename extension!! */
   LoadPar(filename);
 
-  /** \todo actualize the widgets !! */
-
   printf("%s\n",aFile->filename);
 
 //  printf("x- %d\n",aFile->duration);
@@ -102,6 +100,18 @@ gboolean FileSetDuration(unsigned int d)
   }
 }
 
+unsigned int FileGetDuration()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->duration;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 gboolean FileSetUpdateInterval(unsigned int ui)
 {
   if(aFile!=NULL)
@@ -119,6 +129,18 @@ gboolean FileSetUpdateInterval(unsigned int ui)
   else
   {
     return FALSE;
+  }
+}
+
+unsigned int FileGetUpdateInterval()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->update_interval;
+  }
+  else
+  {
+    return 0;
   }
 }
 
@@ -142,6 +164,19 @@ gboolean FileSetSamplingRate(unsigned int sr)
   }
 }
 
+unsigned int FileGetSamplingRate()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->sampling_rate;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+
 gboolean FileSetNumberFormants(unsigned int f)
 {
   if(aFile!=NULL)
@@ -162,6 +197,19 @@ gboolean FileSetNumberFormants(unsigned int f)
   }
 }
 
+unsigned int FileGetNumberFormants()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->formant_number;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+
 gboolean FileSetVoiceSource(unsigned int vs)
 {
   if(aFile!=NULL)
@@ -179,6 +227,18 @@ gboolean FileSetVoiceSource(unsigned int vs)
   }
 }
 
+unsigned int FileGetVoiceSource()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->voice_source;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 gboolean FileSetBranches(unsigned int cp)
 {
   if(aFile!=NULL)
@@ -192,6 +252,18 @@ gboolean FileSetBranches(unsigned int cp)
     default:
 	return FALSE;
     }
+  }
+}
+
+unsigned int FileGetBranches()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->branches;
+  }
+  else
+  {
+    return 0;
   }
 }
 
@@ -225,6 +297,42 @@ GList *FileGetCurvesPointer()
       return g_list_first(aFile->curves);
     }
   }
+}
+
+void FileInit()
+{
+  char *tmp;
+  
+  /** \todo look if old file isChanged and needs to be saved. */
+
+  if(aFile != NULL)
+  {
+    g_free(aFile->filename);
+    g_free(aFile);
+    // free curves!!
+    CurveListFree(aFile->curves);
+  }
+  aFile=g_malloc (sizeof (typFile));
+  tmp=g_malloc (sizeof (char)*(strlen("unnamed")+1));
+  strncpy(tmp,"unnamed",strlen("unnamed"));
+
+  aFile->filename=tmp;
+  aFile->ischanged=FALSE;
+  aFile->curves=NULL;
+
+  FileSetDuration(500);
+  FileSetUpdateInterval(10);
+  FileSetVoiceSource(16000);
+  FileSetNumberFormants(5);
+  FileSetSamplingRate(2);
+  FileSetBranches(1);
+
+  CurveInitStart();
+
+//  printf("%s\n",aFile->filename);
+
+//  printf("x- %d\n",aFile->duration);
+  /** \todo free aFile at quit! -> in need of FileGetFilename*/
 }
 
 

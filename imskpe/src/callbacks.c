@@ -57,8 +57,7 @@ void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
-
+  CurveInitStart();
 }
 
 
@@ -77,10 +76,10 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
 			G_CALLBACK (gtk_widget_destroyed),
 			&fileopen);
 
-      set_main_window(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
+      SetMainWindow(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
       /* Make sure the dialog doesn't disappear behind the main window. */
       gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
-				    GTK_WINDOW (get_main_window()));
+				    GTK_WINDOW (GetMainWindow()));
     }
 
   /* Make sure the dialog is visible. */
@@ -132,10 +131,10 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 	  );
       gtk_label_set_markup (GTK_LABEL (w), buf);  
 
-      set_main_window(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
+      SetMainWindow(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
       /* Make sure the dialog doesn't disappear behind the main window. */
       gtk_window_set_transient_for (GTK_WINDOW (about), 
-				    GTK_WINDOW (get_main_window()));
+				    GTK_WINDOW (GetMainWindow()));
     }
 
   /* Make sure the dialog is visible. */
@@ -319,7 +318,7 @@ void
 on_color_selection1_color_changed      (GtkColorSelection *colorselection,
                                         gpointer         user_data)
 {
-  GtkWidget *mainwindow = get_main_window();
+  GtkWidget *mainwindow = GetMainWindow();
   if(mainwindow != NULL)
   {
     gdouble color[3];
@@ -393,10 +392,10 @@ on_bn_fX_color_clicked                 (GtkButton       *button,
 			G_CALLBACK (gtk_widget_destroyed),
 			&color);
 
-      set_main_window(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
+      SetMainWindow(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
       /* Make sure the dialog doesn't disappear behind the main window. */
       gtk_window_set_transient_for (GTK_WINDOW (color), 
-				    GTK_WINDOW (get_main_window()));
+				    GTK_WINDOW (GetMainWindow()));
       /* Do not allow user to resize the dialog */
       gtk_window_set_resizable (GTK_WINDOW (color), FALSE);
     }
@@ -468,6 +467,9 @@ on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
     gtk_widget_show (w);
   }
 
+
+  FileSetNumberFormants((unsigned int)val);
+
 }
 
 
@@ -529,13 +531,6 @@ imskpe_quit                            (GtkWidget       *widget,
   return FALSE;
 }
 
-
-void
-on_spbn_duration_changed               (GtkEditable     *editable,
-                                        gpointer         user_data)
-{
-  redraw_all_drawareas();
-}
 
 void
 on_nb_draw_switch_page                 (GtkNotebook     *notebook,
@@ -602,10 +597,10 @@ on_bn_open_clicked                     (GtkButton       *button,
 			G_CALLBACK (gtk_widget_destroyed),
 			&fileopen);
 
-      set_main_window(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
+      SetMainWindow(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
       /* Make sure the dialog doesn't disappear behind the main window. */
       gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
-				    GTK_WINDOW (get_main_window()));
+				    GTK_WINDOW (GetMainWindow()));
     }
 
   /* Make sure the dialog is visible. */
@@ -667,4 +662,83 @@ on_lb_nasals_realize                   (GtkWidget       *widget,
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
+
+
+void
+on_cm_vs_entry_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+  char x[10];
+  strncpy(x,gtk_editable_get_chars(editable,0,-1),10);
+
+  if(!strcmp("impulse",x))
+  {
+    FileSetVoiceSource(1);
+//     printf("impulse: 1\n");
+  }
+  if(!strcmp("natural",x))
+  {
+    FileSetVoiceSource(2);
+//     printf("natural: 2\n");
+  }
+  if(!strcmp("sampled",x))
+  {
+    FileSetVoiceSource(3);
+//     printf("sampled: 3\n");
+  }
+}
+
+
+void
+on_cm_cp_entry_changed                 (GtkEditable     *editable,
+                                        gpointer         user_data)
+{
+  char x[20];
+  strncpy(x,gtk_editable_get_chars(editable,0,-1),20);
+
+  if(!strcmp("cascade + parallel",x))
+  {
+    FileSetBranches(1);
+//     printf("cascade + parallel: 1\n");
+  }
+  if(!strcmp("parallel only",x))
+  {
+    FileSetBranches(2);
+//     printf("parallel only: 2\n");
+  }
+}
+
+
+void
+on_spbn_sprate_value_changed           (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  FileSetSamplingRate((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
+}
+
+
+void
+on_spbn_ui_value_changed               (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  FileSetUpdateInterval((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
+}
+
+
+void
+on_bn_new_clicked                      (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  CurveInitStart();
+}
+
+
+void
+on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  redraw_all_drawareas();
+  FileSetDuration((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
+}
+
 

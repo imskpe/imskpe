@@ -26,18 +26,18 @@ OK - den linealcode in eine eigene procedure packen
 OK - alles auch für amplitude und bandbreite
 OK - die callbacks.h aufräumen
 - auf die jeweiligen toggle-buttons reagieren:
-  - neue kurven initialisieren (defaultwerte: "schwa"?!)
-    - dafür eine extra funktion ... 
-    - mit leeren listen ...
-    - und eine init-funktion für new mit den schwa werten ...
-      = start.par
+OK  - neue kurven initialisieren (defaultwerte: "schwa"?!)
+OK    - dafür eine extra funktion ... 
+NO    - mit leeren listen ... 
+OK    - und eine init-funktion für new mit den schwa werten ...
+        = start.par
   - wenn schon vorhanden wieder einblenden
 OK loadfile einführen
-  - globales struct für ein File?
-    - darin folgende daten:
-      - filename, ischanged, pointer auf formants-GList
-  - darin: 
-    - laden der par-files
+OK  - globales struct für ein File?
+OK    - darin folgende daten:
+OK      - filename, ischanged, pointer auf formants-GList
+OK  - darin: 
+OK    - laden der par-files
     - laden eines eigenen optimaleren formats [nice to have]
 - speichern der preferences
   - preferences dialog
@@ -45,4 +45,11 @@ OK loadfile einführen
   - y-achsen-max einstellbar machen (in preferences)
   - auch die unterteilungen einstellbar machen
 - anzeigen der koordinaten in der statusleiste
-  - was soll noch in die statusleiste?
+  - was soll noch in die statusleiste?:
+    - filename ?! (besser in den titel)
+    - aktuelle kurve unter dem cursor
+
+notes:
+gtk_toggle_button_set_active ()
+http://developer.gnome.org/doc/API/gtk/gtktogglebutton.html#GTK-TOGGLE-BUTTON-SET-STATE
+

@@ -97,12 +97,12 @@ typCurveList CurveInsert(GList *curves, int parid, GList *points)
   typValueList *pval=NULL;
   int tmp;
     
-  printf("%s / %s / %s / %d - %d\n",
-	 curvetable[parid].parname,
-	 curvetable[parid].formant,
-	 curvetable[parid].widget_name,
-	 curvetable[parid].dia,
-	 g_list_length(points));
+//   printf("%s / %s / %s / %d - %d\n",
+// 	 curvetable[parid].parname,
+// 	 curvetable[parid].formant,
+// 	 curvetable[parid].widget_name,
+// 	 curvetable[parid].dia,
+// 	 g_list_length(points));
 
   /*
     todo:
@@ -112,14 +112,15 @@ typCurveList CurveInsert(GList *curves, int parid, GList *points)
     - 
    */
 
-  printf("curves: %d\n",g_list_length(curves));
+
+//  printf("curves: %d\n",g_list_length(curves));
 
   // -> data ??!
   el=(GList *)CurveSearchWidgetName((GList *)curves,(char *)curvetable[parid].widget_name);
 
   if(el==NULL)
   {
-    printf("--\n");
+//    printf("--\n");
     eval = g_malloc (sizeof (typCurveList));
 
     eval->points=points;
@@ -160,6 +161,13 @@ typCurveList CurveInsert(GList *curves, int parid, GList *points)
   FileSetCurvesPointer(curves);
 }
 
+/** 
+ * CurvesListFree
+ *
+ * freeing a list of curves (and all points on each curve)
+ * 
+ * @param curves 
+ */
 void CurveListFree(GList *curves)
 {
   typCurveList *cdata;
@@ -195,6 +203,7 @@ void CurveListFree(GList *curves)
     cl = g_list_remove(cl,cdata);
   }
   printf("\n");
+  FileSetCurvesPointer(NULL);
 }
 
 GList *CurveSearchWidgetName(GList *curve,char *wn)
@@ -225,3 +234,41 @@ typValueList *PointInsert (gint t, gint v)
   return vl;
 }
 
+/** 
+ * Init default Curve
+ *
+ * using DU from File-struct to get 2nd point!
+ * setting no other values, except curve!
+ * 
+ * @param curves 
+ */
+void CurveInitStart()
+{
+  int starttable [] = {
+      100,60,500,60,1500,
+      90,1500,150,3250,200,
+      3700,200,4990,500,6680,
+      439,6680,489,0,40,
+      0,0,0,0,0,
+      60,0,90,0,150,
+      0,200,0,200,0,
+      500,0,0,60,60};
+  typCurveList *curve;
+  unsigned int du;
+  GList *points=NULL;
+  int i;
+
+  CurveListFree((GList *)FileGetCurvesPointer()); /* ok here?  */
+
+  du=FileGetDuration();
+
+  for(i=0;i<40;i++)
+  {
+    points=NULL;
+
+    points = g_list_append(points, (typValueList *)PointInsert(0,starttable[i]));
+    points = g_list_append(points, (typValueList *)PointInsert(du,starttable[i]));
+    CurveInsert((GList *)FileGetCurvesPointer(), i, points);
+  }
+
+}

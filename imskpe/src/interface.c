@@ -48,6 +48,7 @@ create_imskpe_main (void)
   GtkWidget *toolbar1;
   GtkWidget *bn_quit;
   GtkWidget *bn_open;
+  GtkWidget *bn_new;
   GtkWidget *toolbar2;
   GtkWidget *bn_move;
   GtkWidget *bn_insert;
@@ -232,7 +233,7 @@ create_imskpe_main (void)
   toolbar1 = gtk_toolbar_new ();
   gtk_widget_show (toolbar1);
   gtk_box_pack_start (GTK_BOX (hbox2), toolbar1, FALSE, FALSE, 0);
-  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_BOTH);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_BOTH_HORIZ);
 
   bn_quit = gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar1),
                                 "gtk-quit",
@@ -245,6 +246,12 @@ create_imskpe_main (void)
                                 NULL,
                                 NULL, NULL, NULL, -1);
   gtk_widget_show (bn_open);
+
+  bn_new = gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar1),
+                                "gtk-new",
+                                NULL,
+                                NULL, NULL, NULL, -1);
+  gtk_widget_show (bn_new);
 
   toolbar2 = gtk_toolbar_new ();
   gtk_widget_show (toolbar2);
@@ -373,6 +380,7 @@ create_imskpe_main (void)
   gtk_table_attach (GTK_TABLE (table14), cm_voicesource, 1, 3, 4, 5,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_combo_set_value_in_list (GTK_COMBO (cm_voicesource), TRUE, TRUE);
   cm_voicesource_items = g_list_append (cm_voicesource_items, (gpointer) _("impulse"));
   cm_voicesource_items = g_list_append (cm_voicesource_items, (gpointer) _("natural"));
   cm_voicesource_items = g_list_append (cm_voicesource_items, (gpointer) _("sampled"));
@@ -389,6 +397,7 @@ create_imskpe_main (void)
   gtk_table_attach (GTK_TABLE (table14), cm_cascpar, 1, 3, 5, 6,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_combo_set_value_in_list (GTK_COMBO (cm_cascpar), TRUE, TRUE);
   cm_cascpar_items = g_list_append (cm_cascpar_items, (gpointer) _("cascade + parallel"));
   cm_cascpar_items = g_list_append (cm_cascpar_items, (gpointer) _("parallel only"));
   gtk_combo_set_popdown_strings (GTK_COMBO (cm_cascpar), cm_cascpar_items);
@@ -876,6 +885,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_open, "clicked",
                     G_CALLBACK (on_bn_open_clicked),
                     NULL);
+  g_signal_connect ((gpointer) bn_new, "clicked",
+                    G_CALLBACK (on_bn_new_clicked),
+                    NULL);
   g_signal_connect ((gpointer) bn_move, "toggled",
                     G_CALLBACK (on_bn_move_toggled),
                     NULL);
@@ -888,11 +900,20 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) spbn_numF, "value_changed",
                     G_CALLBACK (on_spbn_numF_changed),
                     NULL);
-  g_signal_connect ((gpointer) spbn_duration, "changed",
-                    G_CALLBACK (on_spbn_duration_changed),
+  g_signal_connect ((gpointer) cm_vs_entry, "changed",
+                    G_CALLBACK (on_cm_vs_entry_changed),
+                    NULL);
+  g_signal_connect ((gpointer) cm_cp_entry, "changed",
+                    G_CALLBACK (on_cm_cp_entry_changed),
+                    NULL);
+  g_signal_connect ((gpointer) spbn_sprate, "value_changed",
+                    G_CALLBACK (on_spbn_sprate_value_changed),
+                    NULL);
+  g_signal_connect ((gpointer) spbn_ui, "value_changed",
+                    G_CALLBACK (on_spbn_ui_value_changed),
                     NULL);
   g_signal_connect ((gpointer) spbn_duration, "value_changed",
-                    G_CALLBACK (on_spbn_duration_changed),
+                    G_CALLBACK (on_spbn_duration_value_changed),
                     NULL);
   g_signal_connect ((gpointer) bn_f1_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
@@ -990,6 +1011,7 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar1, "toolbar1");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_quit, "bn_quit");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_open, "bn_open");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_new, "bn_new");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_move, "bn_move");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_insert, "bn_insert");
