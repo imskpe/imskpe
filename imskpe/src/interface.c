@@ -52,6 +52,7 @@ create_imskpe_main (void)
   GtkWidget *bn_new;
   GtkWidget *bn_prefs;
   GtkWidget *toolbar2;
+  GtkWidget *tmp_image;
   GtkWidget *bn_move;
   GtkWidget *bn_insert;
   GtkWidget *bn_delete;
@@ -269,19 +270,31 @@ create_imskpe_main (void)
 
   bn_move = (GtkWidget*) gtk_toggle_tool_button_new ();
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (bn_move), _("move"));
+  tmp_image = create_pixmap (imskpe_main, "move_point.png");
+  gtk_widget_show (tmp_image);
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_move), tmp_image);
   gtk_widget_show (bn_move);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_move);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_move), tooltips, _("move point"), NULL);
   gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (bn_move), TRUE);
 
   bn_insert = (GtkWidget*) gtk_toggle_tool_button_new ();
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (bn_insert), _("insert"));
+  tmp_image = create_pixmap (imskpe_main, "new_point.png");
+  gtk_widget_show (tmp_image);
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_insert), tmp_image);
   gtk_widget_show (bn_insert);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_insert);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_insert), tooltips, _("insert point"), NULL);
 
   bn_delete = (GtkWidget*) gtk_toggle_tool_button_new ();
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (bn_delete), _("delete"));
+  tmp_image = create_pixmap (imskpe_main, "delete_point.png");
+  gtk_widget_show (tmp_image);
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_delete), tmp_image);
   gtk_widget_show (bn_delete);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_delete);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_delete), tooltips, _("delete point"), NULL);
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);

@@ -1,21 +1,21 @@
 /*
-    curves.c - Part of IMSKPE
+  curves.c - Part of IMSKPE
 
-    Copyright (C) 2004 Andreas Madsack
+  Copyright (C) 2004 Andreas Madsack
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 /**
@@ -109,7 +109,7 @@ void CurveInsert(GList *curves, int parid, GList *points)
     - free pointlist
     - add new one ...
     - 
-   */
+  */
 
 
 //  printf("curves: %d\n",g_list_length(curves));
@@ -367,28 +367,94 @@ void PointDelete (typCurveList *cl, int time)
 
 }
 
-void PointInsert(typCurveList *cl, int time, int value)
+gboolean PointMove(typCurveList *cl, int otime, int time, int value)
 {
-//   GList *vl=(GList *)g_list_first(cl->points);
-//   typValueList *v;  
+  GList *vl=(GList *)g_list_first(cl->points);
+  typValueList *v;  
+  int ui=FileGetUpdateInterval();
 
-//   while(vl)
-//   {
-//     v=vl->data;
-//     if(v->time==time)
-//     {    
-//       if(v!=NULL)
-//       {
-// 	free(v);
-//       }
+  while(vl)
+  {
+    v=vl->data;
+    if(v->time==otime)
+    {    
+      // point found
       
-//       vl = g_list_remove(vl,v);
-//     }
-//     else
-//     {
-//       vl=vl->next;
-//     }
-//   }
+      // check if time is between range!
+
+// \todo !!!!!!!!!!!!!!
+
+      v->time=time;
+      v->value=value;
+      printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
+      return TRUE;
+    }
+    else
+    {
+      vl=vl->next;
+    }
+  }
+  return FALSE;
+}
+
+gboolean PointInsert(typCurveList *cl, int time, int value)
+{
+  GList *vl=(GList *)g_list_first(cl->points);
+  typValueList *v;  
+
+  typValueList p_pnt;
+  typValueList pnt;
+  typValueList n_pnt;
+   
+  p_pnt.time=-1;
+  pnt.time=-1;
+  n_pnt.time=-1;
+   
+  while(vl)
+  {
+    v=vl->data;
+
+    if(p_pnt.time<0) {
+      if(pnt.time<0) {
+	pnt.time=v->time;
+	pnt.value=v->value;
+      }
+      else {
+	p_pnt.time=pnt.time;
+	p_pnt.value=pnt.value;
+	pnt.time=v->time;
+	pnt.value=v->value;
+      }
+    }
+    else {
+      p_pnt.time=pnt.time;
+      p_pnt.value=pnt.value;
+      pnt.time=v->time;
+      pnt.value=v->value;
+    }
+
+    if(time>p_pnt.time && time<pnt.time) {
+
+      // insert one ...
+
+//       printf("time p: %5d  %5d  pos: %5d \n",p_pnt.time,pnt.time,time);
+//       printf("val  p: %5d  %5d  pos: %5d \n",p_pnt.value,pnt.value,value);
+
+//       printf("lpos: %d\n",g_list_position ((GList *)g_list_first(cl->points),vl));
+
+//       int pos=g_list_position ((GList *)g_list_first(cl->points),vl);
+      
+      g_list_insert_before((GList *)g_list_first(cl->points),vl,(typValueList *)GenPoint (time,value));
+
+// GList*      g_list_insert                   (GList *list,
+//                                              gpointer data,
+//                                              gint position);
+      return TRUE;
+    }
+
+    vl=vl->next;
+  }
+  return FALSE;
 }
 
 

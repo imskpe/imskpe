@@ -228,8 +228,10 @@
 	      <child>
 		<widget class="GtkToggleToolButton" id="bn_move">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">move point</property>
 		  <property name="label" translatable="yes">move</property>
 		  <property name="use_underline">True</property>
+		  <property name="icon">move_point.png</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
@@ -245,8 +247,10 @@
 	      <child>
 		<widget class="GtkToggleToolButton" id="bn_insert">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">insert point</property>
 		  <property name="label" translatable="yes">insert</property>
 		  <property name="use_underline">True</property>
+		  <property name="icon">new_point.png</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
@@ -262,8 +266,10 @@
 	      <child>
 		<widget class="GtkToggleToolButton" id="bn_delete">
 		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">delete point</property>
 		  <property name="label" translatable="yes">delete</property>
 		  <property name="use_underline">True</property>
+		  <property name="icon">delete_point.png</property>
 		  <property name="visible_horizontal">True</property>
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>

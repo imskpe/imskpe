@@ -392,9 +392,11 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 // 		   ,
 // 		   ,p_pnt.value
 // 		);
-	    int yval = (int)((double)p_pnt.value+(((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time)));
-// 	    printf("%5d %5d | %5d\n",yval,ry,rx);
-	    if(yval>ry-50 && yval<ry+50)
+	    double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
+	    int yval = (int)((double)p_pnt.value+(grad));
+//  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
+
+	    if(yval>ry-(50) && yval<ry+(50)) // +abs((int)grad))
 	    {
 	      if(MouseEventSetCurve(c->nr)) {
 // 		printf("--r--\n");
@@ -402,15 +404,31 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 	      }
 	      setc++;
 	    }
-	    if((pnt.value>ry-20 && pnt.value<ry+20) && (rx>pnt.time-20 && rx<pnt.time+20))
+	    if((pnt.value>ry-40 && pnt.value<ry+40) && (rx>pnt.time-20 && rx<pnt.time+20))
 	    {
+	      if(state & GDK_BUTTON1_MASK)
+	      {
+		if(MouseEventGetAction()==MOVE)
+		{
+		  PointMove(CurveSearchByNr(FileGetCurvesPointer(),c->nr),pnt.time,rx,ry);
+		}
+	      }
+
+
+// ??? start
+	      if(MouseEventSetCurve(c->nr)) {
+		redraw_page(dia-1);
+	      }
+	      setc++;
+// ??? end
+
 	      if(MouseEventSetPoint(pnt.time,c->nr)) {
 // 		printf("--r--\n");
 		redraw_page(dia-1);
 	      }
 	      setp++;
 	    }
-
+	    
 // 	    printf("\n");
 	  }
 	  
@@ -424,7 +442,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     if(lastcurve!=-1 && setc==0)
     {
       if(MouseEventSetCurve(-1)) {
- 	printf("c ");
+//  	printf("c ");
  	redraw_page(dia-1);
       }
     }
@@ -432,7 +450,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     if(setp==0)
     {
       if(MouseEventSetPoint(-1,-1)) {
- 	printf("p ");
+//  	printf("p ");
 	redraw_page(dia-1);
       }
     }
@@ -479,10 +497,10 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
 	  
 	  rx=CalcRealX(x, widget->allocation.width);  
 	  ry=CalcRealY(y, widget->allocation.height);  
-// 	  PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),point,);
-// 	  redraw_page(dia-1);
-	  printf("%d / %d\n",rx,ry);
-	  printf("insert\n");
+ 	  PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),rx,ry);
+ 	  redraw_page(dia-1);
+// 	  printf("%d / %d\n",rx,ry);
+// 	  printf("insert\n");
 	}
       }
       else
@@ -491,7 +509,7 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
 	{
 	  PointDelete(CurveSearchByNr(FileGetCurvesPointer(),curve),point);
 	  redraw_page(dia-1);
-	  printf("delete\n");
+// 	  printf("delete\n");
 	}
 	if(action==MOVE)
 	{

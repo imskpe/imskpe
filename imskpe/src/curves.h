@@ -94,6 +94,7 @@ typCurveList *CurveSearchByNr(GList *curve,int nr);
 gboolean SetCurveShow(char *wn);
 typValueList *GenPoint (gint t, gint v);
 void PointDelete (typCurveList *vallist, int time);
+gboolean PointInsert(typCurveList *cl, int time, int value);
 void CurveInitStart();
 
 /* mouseevent-functions  */
