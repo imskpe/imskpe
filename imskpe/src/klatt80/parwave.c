@@ -70,11 +70,11 @@ double input;
 {
  double x;
 
- x = (double) (r->a * input + r->b * r->p1 + r->c * r->p2);
- r->p2 = r->p1;
- r->p1 = x;
+ x = (double) ((double)r->a * (double)input + (double)r->b * (double)r->p1 + (double)r->c * (double)r->p2);
+ r->p2 = (double)r->p1;
+ r->p1 = (double)x;
 
- return x;
+ return (double)x;
 }
 
 
@@ -94,10 +94,10 @@ resonator_ptr r;
 double input;
 
 {
- register double x = r->a * input + r->b * r->p1 + r->c * r->p2;
- r->p2 = r->p1;
- r->p1 = input;
- return x;
+ register double x = (double)r->a * (double)input + (double)r->b * (double)r->p1 + (double)r->c * (double)r->p2;
+ r->p2 = (double)r->p1;
+ r->p1 = (double)input;
+ return (double)x;
 }
 
 
@@ -226,7 +226,6 @@ short *output;
 
     noise = gen_noise(noise,globals);
 
-//     printf("-1- %f\n",noise);
     /*    
       Amplitude modulate noise (reduce noise amplitude during
       second half of glottal period) if voicing simultaneously present.
@@ -236,13 +235,11 @@ short *output;
     {
       noise *= (double) 0.5;
     }
-//     printf("-2- %f\n",noise);
 
     /* Compute frication noise */
 
     frics = globals->amp_frica * noise;
 
-//     printf("-3- %f\n",frics);
     /*  
       Compute voicing waveform. Run glottal source simulation at 4 
       times normal sample rate to minimize quantization noise in 
@@ -321,6 +318,7 @@ short *output;
       Nasal antiresonator, then formants FNP, F5, F4, F3, F2, F1 
     */
 
+    out=0;
     if(globals->synthesis_model != ALL_PARALLEL)
     {
       casc_next_in = antiresonator(&(globals->rnz),glotout);
@@ -371,12 +369,13 @@ short *output;
       {
 	out = resonator(&(globals->r1c),casc_next_in);
       }
+
     }
-    else
-    {
-      /* we are not using the cascade tract, set out to zero */
-      out = 0; 
-    }
+//     else
+//     {
+//       /* we are not using the cascade tract, set out to zero */
+//       out = 0; 
+//     }
 
     /* Excite parallel F1 and FNP by voicing waveform */
 
@@ -402,6 +401,7 @@ short *output;
     out = resonator(&(globals->r2p),sourc) - out;
 
     outbypas = globals->amp_bypas * sourc;
+
     out = outbypas - out;
 
     if (globals->outsl != 0) 
@@ -433,19 +433,21 @@ short *output;
     }
 
     out = resonator(&(globals->rout),out);
-
     temp = out * globals->amp_gain0;  /* Convert back to integer */
-//     printf("temp %f * %f | %f\n",out,globals->amp_gain0,temp);
 
     if (temp < -32768.0)
     {
+//        printf("-c- cut at neg-max: %f",temp);
       temp = -32768.0;
     }
     
-    if (temp >	32767.0)
+    if (temp > 32767.0)
     {
+//        printf("-c- cut at pos-max: %f",temp);
       temp =  32767.0;
     }
+
+//      printf("-o- %d\n",(short)temp);
 
     *output++ = (short) temp;
   }

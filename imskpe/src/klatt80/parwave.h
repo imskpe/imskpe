@@ -155,7 +155,3 @@ typedef struct
 
 void parwave PROTO((klatt_global_ptr,klatt_frame_ptr,short*));
 void parwave_init PROTO((klatt_global_ptr));
-
-
-
-

@@ -39,6 +39,8 @@
 #include "curves.h"
 #include "cfg.h"
 
+// #include "klatt80/parwave.h"
+
 /** 
  * main
  *
@@ -76,8 +78,8 @@ int main (int argc, char *argv[])
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 #endif
 
-// we need more random!
-  srand(time(NULL));
+// we need less random!
+//  srand(time(NULL));
 
   ConfigLoad();
 

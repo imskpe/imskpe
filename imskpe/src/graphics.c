@@ -978,7 +978,7 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
 	}
 	if(action==MOVE)
 	{
-	  printf("move\n");
+// 	  printf("move\n");
 	  SetMousepressed(1);
 	}
       }

@@ -1,3 +1,14 @@
+2005-01-07  Andreas Madsack  <bolsog@users.sf.net>
+
+	* complete debug of wav-output-procedure:
+	  * fixed wav-write-problems on win32!
+	  * fixed endian-probs on non-intel (hopefully!)
+	  * known issue: to short wav-files (last frame missing)!
+	                 this is caused by silly duration-values (519, 639, ...)
+	                 when added 1 (520, 640, ...) all is fine!
+	* fixed a silly bug in parwav (out was not set to zero when it should be zero!)
+	* few cleanups
+	
 2004-12-20  Andreas Madsack  <bolsog@users.sf.net>
 
 	* beta4 released

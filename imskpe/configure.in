@@ -9,6 +9,9 @@ AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
+dnl Test machine architecture
+AC_C_BIGENDIAN
+
 dnl check for (f)lex
 AM_PROG_LEX
 
@@ -35,7 +38,7 @@ AC_ARG_WITH(win32,
 
    # hide cmd terminal window when not debugging (win32)
    #if test "$debug" != 1; then
-   #   WINGTK_CFLAGS="-mwindows $WINGTK_CFLAGS"
+       WINGTK_CFLAGS="-mwindows $WINGTK_CFLAGS"
    #fi
 
    WINGTK_LDFLAGS="-Wl,--export-dynamic,--export-all-symbols,--add-stdcall-alias"

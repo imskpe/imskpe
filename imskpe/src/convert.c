@@ -112,8 +112,6 @@ gboolean convert(char *filename)
   GList *vl[PARAMETERS];
   int y;
 
-//   printf("convert start\n");
-  
   kglobals.sample_factor = 1.0;
   kglobals.f0_flutter = 0;
   kglobals.natural_samples = naturalGlottalSamples;
@@ -136,12 +134,10 @@ gboolean convert(char *filename)
 //   printf("VS: %d\n",FileGetVoiceSource());
 //   printf("PP: %d\n",FileGetBranches());
 
-  samplesPerFrame=(int)(((double)FileGetUpdateInterval()/1000.0)*
- 			(double)FileGetSamplingRate());
+  samplesPerFrame=(int)((FileGetUpdateInterval()*FileGetSamplingRate())/1000);
   
   /* calculate the number of samples per frame */
-   kglobals.nspfr=(long)((float)FileGetSamplingRate()*
- 			((float)FileGetUpdateInterval()/1000.0));
+  kglobals.nspfr=(long)((FileGetSamplingRate()*FileGetUpdateInterval())/1000);
    parwave_init(&kglobals);
 
   /* calculate the number of samples*/
@@ -157,7 +153,7 @@ gboolean convert(char *filename)
 //   printf("\nframes: %d\n",noFrames);
 //   printf("\nsamples/frame: %d\n",samplesPerFrame);
 
-  outfp = fopen(filename,"w");
+  outfp = fopen(filename,"wb");
   if(outfp==NULL)
   {
     printf("error opening out-file!\n");
@@ -184,7 +180,7 @@ gboolean convert(char *filename)
   fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
   
 
-  waveformDestination = (short *) malloc(sizeof(short)*(samplesPerFrame+1));
+  waveformDestination = (short *) g_malloc(sizeof(short)*(samplesPerFrame+1));
   if(waveformDestination==NULL)
   {
 	perror("malloc failed");
@@ -220,24 +216,30 @@ gboolean convert(char *filename)
 	y=p_pnt[j]->value + (int)((float)(pnt[j]->value-p_pnt[j]->value)/(float)(pnt[j]->time-p_pnt[j]->time)*(float)(i-p_pnt[j]->time));
       }
       *lptr=(long)y;
-//       printf("%5d",y);
       
     }
-//     printf("\n");
 
     /* Change to Klatt's 1/10Hz steps */
     kframe.F0hz10 *=10;
     parwave(&kglobals,&kframe,waveformDestination);
+
+//     printf("S========================================\n");
     
     for(j=0;
 	j<samplesPerFrame;
 	j++)
     {
-//       printf("%5d\n",waveformDestination[j]);
+
+#ifdef WORDS_BIGENDIAN
+      raw_type=1;
+#else
+      raw_type=0;
+#endif
 
       low_byte = waveformDestination[j] & 0xff;
-      high_byte = waveformDestination[j] >> 8;
+      high_byte = (waveformDestination[j] >> 8) & 0xff;
       
+//       printf("%5d: %6d => [%02x%02x | %02x%02x]\n",j,waveformDestination[j],low_byte,high_byte,high_byte,low_byte);
       if(raw_type==1)
       {
 	fprintf(outfp,"%c%c",high_byte,low_byte);
@@ -246,11 +248,9 @@ gboolean convert(char *filename)
       {
 	fprintf(outfp,"%c%c",low_byte,high_byte);
       }
-//       printf("write value %5d [%2x%2x]\n",j,low_byte,high_byte);
     }
-    
+   
   }
-//   printf("convert ended\n");
 
   fclose(outfp);
 
@@ -277,5 +277,7 @@ gboolean convert(char *filename)
 //     printf("%5d | %d\n",i,*dataShortPtr);//(double)/MAXSAMPLE);
 //   }
 
-  printf("done.\n");
+//   printf("done.\n");
 }
+
+
