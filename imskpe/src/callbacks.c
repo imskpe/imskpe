@@ -91,7 +91,7 @@ void Repaint(GtkWidget *d)
 			d->allocation.height);
 */
     /* --- Draw molecule in the background --- */
-//    paint (g);
+/*    paint (g);*/
 
     /* --- The whole screen --- */
     update_rect.x = 0;
@@ -249,7 +249,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     y = event->y;
     state = event->state;
   }
-//  g_printf("%d / %d\n",x,y);
+/*  g_printf("%d / %d\n",x,y); */
   
   /* --- If the mouse button is down --- */
   if (state & GDK_BUTTON1_MASK && g->pixmap != NULL) {
@@ -388,12 +388,13 @@ on_color_selection1_color_changed      (GtkColorSelection *colorselection,
     gdk_color.green = (guint16)(color[1]*65535.0);
     gdk_color.blue = (guint16)(color[2]*65535.0);
 
-//    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
-//    g_printf("%d\n",gtk_notebook_get_current_page(nb));
+/*    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
+      g_printf("%d\n",gtk_notebook_get_current_page(nb));
+*/
     
     GtkWidget *w= lookup_widget (GTK_WIDGET (main_window), "lb_f1");
 
-//    g_printf("%d ?= %d\n",&widget,&w);
+/*    g_printf("%d ?= %d\n",&widget,&w); */
 
     gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &gdk_color);
     gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &gdk_color);
