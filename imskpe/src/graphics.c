@@ -29,12 +29,6 @@
  * \todo subgrouping like in callbacks.c
  *
  * \todo add dynamic scale ... zooming?
- * 
- * \note idea: 
- * - one list for formants (in preferences)
- *   - specify color of label and curves
- * - list of curves (in file-struct)
- *   - inhabits list of points
 */
 
 #ifdef HAVE_CONFIG_H
@@ -58,16 +52,11 @@
 */
 GtkWidget *main_window;
 typGraphics *g = NULL;
-int nScreenWidth = 200;
-int nScreenHeight = 200;
-
-GList *formants = NULL;  // put in preferences ?
 
 int mousepressed=0;
 
 /* ---------------------------------------------------------------------- */
 
-/** \todo put in another file - not graphic relevant! */
 GtkWidget *GetMainWindow()
 {
   return (GtkWidget *)main_window;
@@ -82,82 +71,101 @@ void SetMainWindow(GtkWidget *w)
 
 void GuiSetDuration(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_duration");
-  gtk_spin_button_set_value ((GtkSpinButton *)w,
-			     (float)x);
+  if(GetMainWindow())
+  {
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_duration");
+    gtk_spin_button_set_value ((GtkSpinButton *)w,
+			       (float)x);
+  }
 }
 
 void GuiSetUpdateInterval(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_ui");
-  gtk_spin_button_set_value ((GtkSpinButton *)w,
-			     (float)x);
+  if(GetMainWindow())
+  {
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_ui");
+    gtk_spin_button_set_value ((GtkSpinButton *)w,
+			       (float)x);
+  }
 }
 
 void GuiSetSamplingRate(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_sprate");
-  gtk_spin_button_set_value ((GtkSpinButton *)w,
-			     (float)x);
+  if(GetMainWindow())
+  {
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_sprate");
+    gtk_spin_button_set_value ((GtkSpinButton *)w,
+			       (float)x);
+  }
 }
 
 void GuiSetNumberFormants(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_numF");
-  gtk_spin_button_set_value ((GtkSpinButton *)w,
-			     (float)x);
+  if(GetMainWindow())
+  {
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "spbn_numF");
+    gtk_spin_button_set_value ((GtkSpinButton *)w,
+			       (float)x);
+  }
 }
 
 void GuiSetVoiceSource(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_vs_entry");
-  switch(x)
+  if(GetMainWindow())
   {
-  case 1:
-      gtk_entry_set_text ((GtkEntry *)w,_("impulse"));
-      break;
-  case 2:
-      gtk_entry_set_text ((GtkEntry *)w,_("natural"));
-      break;
-  case 3:
-      gtk_entry_set_text ((GtkEntry *)w,_("sampled"));
-      break;
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_vs_entry");
+
+    switch(x)
+    {
+    case 1:
+	gtk_entry_set_text ((GtkEntry *)w,_("impulse"));
+	break;
+    case 2:
+	gtk_entry_set_text ((GtkEntry *)w,_("natural"));
+	break;
+    case 3:
+	gtk_entry_set_text ((GtkEntry *)w,_("sampled"));
+	break;
+    }
   }
 }
 
 void GuiSetBranches(unsigned int x)
 {
-  GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_cp_entry");
-  switch(x)
+  if(GetMainWindow())
   {
-  case 1:
-      gtk_entry_set_text ((GtkEntry *)w,_("cascade + parallel"));
-      break;
-  case 2:
-      gtk_entry_set_text ((GtkEntry *)w,_("parallel only"));
-      break;
+    GtkWidget *w = lookup_widget (GTK_WIDGET (GetMainWindow()), "cm_cp_entry");
+
+    switch(x)
+    {
+    case 1:
+	gtk_entry_set_text ((GtkEntry *)w,_("cascade + parallel"));
+	break;
+    case 2:
+	gtk_entry_set_text ((GtkEntry *)w,_("parallel only"));
+	break;
+    }
   }
 }
 
 gboolean GuiGetToggleButtonState(char tmp[30])
 {
-  GtkWidget *w = GetMainWindow();
+  GtkWidget *w;
 
-  /* MainWindow isn't initialized yet!  */
-  if(w==NULL)
+  if(GetMainWindow())
   {
-    return FALSE;
-  }
-  w = lookup_widget (GTK_WIDGET (w), tmp);
-
-  if(w!=NULL)
-  {
-    return gtk_toggle_button_get_active ((GtkToggleButton *)w);
-  }
-  else
-  {
-    printf("GuiGetToggleButtonState: %s not found\n",tmp);
-    return FALSE;
+    /* MainWindow isn't initialized yet!  */
+    w = lookup_widget (GTK_WIDGET (GetMainWindow()), tmp);
+    
+    if(w!=NULL)
+    {
+      return gtk_toggle_button_get_active ((GtkToggleButton *)w);
+    }
+    else
+    {
+      printf("GuiGetToggleButtonState: %s not found\n",tmp);
+      return FALSE;
+    }
   }
 }
 
@@ -276,13 +284,13 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
 
     pango_layout_set_font_description (layout, fontdesc); 
     gdk_draw_layout (g->pixmap,GetPenRGB(NULL, 0xffff,0,0),
-		     ((widget->allocation.width-25-10)/xsplits)*i+25-mod, 
+		     ((widget->allocation.width-25-10)*i/xsplits)+25-mod, 
 		     widget->allocation.height-15, layout);
 
     gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0xffff) ,
-		   ((widget->allocation.width-25-10)/xsplits)*i+25, 
+		   ((widget->allocation.width-25-10)*i/xsplits)+25, 
 		   widget->allocation.height-30,
-		   ((widget->allocation.width-25-10)/xsplits)*i+25, 
+		   ((widget->allocation.width-25-10)*i/xsplits)+25, 
 		   widget->allocation.height-20);
     
   }
@@ -330,20 +338,17 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia)
   }
 
   /* --- Existing pixmap?  --- */
-//   if (g->pixmap == NULL) {
+   if (g->pixmap != NULL) {
     
-//     /* --- Free it --- */
-//     gdk_pixmap_unref (g->pixmap);
-//   } 
+     /* --- Free it --- */
+     gdk_pixmap_unref (g->pixmap);
+   } 
 
   /* --- Create a new pixmap --- */
   g->pixmap = gdk_pixmap_new (widget->window,
 			      widget->allocation.width,
 			      widget->allocation.height,
 			      -1);
-  /* --- Get height and width to clear screen --- */
-  nScreenWidth = widget->allocation.width;
-  nScreenHeight = widget->allocation.height;
 
   /* --- Create a new pixmap --- */
   gdk_draw_rectangle (g->pixmap,
@@ -353,7 +358,7 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia)
 		      widget->allocation.width,
 		      widget->allocation.height);
 
-  update_ruler(widget,dia); 
+//  update_ruler(widget,dia); 
   Repaint(widget,dia);
 }
 
@@ -512,6 +517,10 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     char statusbarcurvemessage[100];
     strcpy(statusbarcurvemessage,"\0");
     gboolean statusshown=FALSE;
+    GList *val;
+    int linewidth=1;
+    int mod;
+    char s[80];
 
 //    printf(".. %d\n",cv);
     while(cv)
@@ -520,7 +529,6 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 //      printf("-\n");
       if(c->show==TRUE && c->dia==dia)
       {
-	GList *val;
 // 	printf("show it\n");
 
 	lastx=-1;lasty=-1;x=-1;y=-1;
@@ -548,26 +556,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	  }
 	  if(x>=0 && y>=0)
 	  {
-
-
-// 	    printf ("lastx %d %d %d\n",d->allocation.width-25,xmax,lastx);
-// 	    printf ("    x %d %d %d\n",d->allocation.width-25,xmax,x);
-// 	    printf ("lasty %d %d %d\n",d->allocation.height-25,ymax,lasty);
-// 	    printf ("    y %d %d %d\n",d->allocation.height-25,ymax,y);
-
-// 	    printf ("%d/%d - %d/%d\n",
-// 		 (d->allocation.width-25-10)/xmax*lastx+25,
-// 		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
-// 		 (d->allocation.width-25-10)*x/xmax+25,
-// 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
-
-
-// es reicht den farbwert einmal nachzuschlagen ...
-// auch die 25 sollte ausgelagert werden ...
-
-// wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
-
-	    int linewidth=1;
+	    linewidth=1;
 	    if(MouseEventCheckCurve(c->nr)) {
 	      linewidth=2;
 
@@ -585,10 +574,9 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 		 (d->allocation.width-25-10)*x/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
 	    
-	    int mod=2;
+	    mod=2;
 	    if(MouseEventCheckPoint(lastx,c->nr))
 	    {
-	      char s[80];
 
 	      mod=3;
 	      snprintf(s,15," (%5d/%5d)",lastx,lasty);
@@ -629,7 +617,6 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	    lastx=x;
 	    lasty=y;
 	  }
-//	  printf("%5d / %5d\n",x,y);
 	  val=val->next;
 	}
       }
@@ -640,16 +627,11 @@ void Repaint(GtkWidget *d, diagramTyp dia)
       SetStatusBar ("sb_curve",statusbarcurvemessage);
     }
 
-/* ****************************** */
-    /* --- The whole screen --- */
     update_rect.x = 0;
     update_rect.y = 0;
     update_rect.width = d->allocation.width;
     update_rect.height = d->allocation.height;
 
-    /* --- Call the expose event - which copies the background 
-     *     into the widget
-     */
     gtk_widget_draw (d, &update_rect);
 }
 
@@ -666,8 +648,6 @@ void Redrawpixmap(GtkWidget *w, GdkEventExpose  *event)
 void configure_page(int page)
 {
   GtkWidget *widget;
-
-//   printf("-CP- %d\n",page);
 
   switch(page)
   {
@@ -692,8 +672,6 @@ void redraw_page(int page)
 {
   GtkWidget *widget;
 
-//   printf("-RP- %d\n",page);
-
   switch(page)
   {
   case 0:
@@ -716,22 +694,11 @@ void redraw_page(int page)
 void SetStatusBar(char *sb, gchar *text)
 {
   GtkStatusbar *s;
-//  gchar *tmp;
-//  guint context_id;
-
-//   tmp = g_strdup_printf(text);
   
   s=(GtkStatusbar *) lookup_widget (GTK_WIDGET (GetMainWindow()), sb);
-//  context_id = gtk_statusbar_get_context_id(
-//                          GTK_STATUSBAR (s), "Statusbar example");
 
   gtk_statusbar_pop (s, 0);
-
   gtk_statusbar_push (s, 0, text);
-
-//  printf("%s -> %s\n",sb,text);
-
-//  g_free(tmp);
 }
 
 void SetTitle(gchar *text)
@@ -887,7 +854,6 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	    int yval = (int)((double)p_pnt.value+(grad));
 //  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
 	    
-	    // calc ytol
 	    int ytol=(ymax/100);
 	    if(ytol<10)
 	    ytol=10;
@@ -978,7 +944,6 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
 	}
 	if(action==MOVE)
 	{
-// 	  printf("move\n");
 	  SetMousepressed(1);
 	}
       }

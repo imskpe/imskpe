@@ -658,3 +658,13 @@ on_cb_vs_realize                       (GtkWidget       *widget,
 void
 on_cb_ea_realize                       (GtkWidget       *widget,
                                         gpointer         user_data);
+
+gboolean
+on_draw_wave_configure_event           (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_wave_expose_event              (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data);

@@ -69,11 +69,7 @@ void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  GtkWidget *w;
-  FileInit();
-
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  on_bn_new_clicked(NULL,NULL);
 }
 
 
@@ -163,6 +159,8 @@ on_bn_file_open_ok_clicked             (GtkButton       *button,
   
   w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
   redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+
+  convert("");
 }
 
 
@@ -175,6 +173,10 @@ on_bn_file_save_cancel_clicked         (GtkButton       *button,
   if(loadafter==1)
   {
     InitDialogLoad();
+  }
+  if(loadafter==2)
+  {
+    on_bn_new_clicked(NULL,NULL);
   }
 }
 
@@ -211,6 +213,10 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
     {
       InitDialogLoad();
     }
+    if(loadafter==2)
+    {
+      on_bn_new_clicked(NULL,NULL);
+    }
   }
   else // wav
   {
@@ -228,10 +234,22 @@ on_bn_new_clicked                      (GtkButton       *button,
                                         gpointer         user_data)
 {
   GtkWidget *w;
-//  CurveInitStart();
+
+  if(FileGetIsChanged() && loadafter!=2)
+  {
+    if(DialogYesNo(_("Save changed data?"))==TRUE)
+    {
+      InitDialogSave();
+      loadafter=2;
+      return;
+    }
+  }
+
+  loadafter=0;
+  
   FileInit();
   FileSetIsNew(TRUE);
-
+  
   w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
   redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 }
@@ -2252,10 +2270,11 @@ void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  char *dir;
+//   char *dir;
+  char dir[300];
   char tmp[300];
 
-  dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
+//   dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
   strcpy(dir,filtertoken(ConfigGetString("tmpdir"),"\""));
   strcat(dir,"/imskpe.");
   sprintf(tmp,"%d",getpid());
@@ -2270,7 +2289,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   strcat(dir,tmp);
   system(dir);
 
-  g_free(dir);
+//   g_free(dir);
 }
 
 
@@ -2352,4 +2371,26 @@ on_color_selection1_configure_event    (GtkWidget       *widget,
   return FALSE;
 }
 
+
+
+gboolean
+on_draw_wave_configure_event           (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data)
+{
+  configure_wavarea(widget);
+
+  return FALSE;
+}
+
+
+gboolean
+on_draw_wave_expose_event              (GtkWidget       *widget,
+                                        GdkEventExpose  *event,
+                                        gpointer         user_data)
+{
+  redraw_wave_expose(widget,event);
+
+  return FALSE;
+}
 

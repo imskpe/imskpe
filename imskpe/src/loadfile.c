@@ -384,11 +384,17 @@ void FileInit()
   aFile->curves=NULL;
 
   FileSetDuration(500);
+  GuiSetDuration(500);
   FileSetUpdateInterval(10);
+  GuiSetUpdateInterval(10);
   FileSetSamplingRate(16000);
+  GuiSetSamplingRate(16000);
   FileSetNumberFormants(5);
+  GuiSetNumberFormants(5);
   FileSetVoiceSource(2);
+  GuiSetVoiceSource(2);
   FileSetBranches(1);
+  GuiSetBranches(1);
 
   CurveInitStart();
 

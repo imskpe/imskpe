@@ -1,3 +1,12 @@
+2005-01-09  Andreas Madsack  <bolsog@users.sf.net>
+
+        * beta 5 released
+
+	* wav-draw-area added
+	* convert optimized
+	* fixed ruler bug in drawareas
+	* many cleanups
+
 2005-01-07  Andreas Madsack  <bolsog@users.sf.net>
 
 	* complete debug of wav-output-procedure:

@@ -34,13 +34,14 @@
 #  include <config.h>
 #endif
 
-
-// #include <gtk/gtk.h>
-
-// #include "loadfile.h"
-
-// #include "klatt80/parwave.h"
-
-/* defaults */
+void configure_wavarea(GtkWidget *widget);
+void repaint_wave();
+void redraw_wave_expose(GtkWidget *w,GdkEventExpose  *event);
+void init_wave(GtkWidget *widget);
+void redraw_wave(GtkWidget *widget);
+int width_wave(GtkWidget *widget);
+int height_wave(GtkWidget *widget);
+void drawline_wave(GtkWidget *widget, int x, int y1, int y2);
 
 gboolean convert(char *filename);
+

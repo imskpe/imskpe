@@ -39,6 +39,8 @@
 
 #include "klatt80/parwave.h"
 
+#include "graphics.h"
+
 /* defaults */
 
 #define SAMPLE_FACTOR 0.00001
@@ -82,6 +84,127 @@ static struct waveInfo {
   
 } wfi[] = {{"original",FALSE},{"synthesised",TRUE},{NULL}};
 
+/* globals */
+
+typGraphics *g_wav = NULL;
+
+/* procedures */
+
+void configure_wavarea(GtkWidget *widget)
+{
+  /* --- Structure doesn't exist? --- */
+  if (g_wav == NULL) {
+    
+    /* --- Create one --- */
+    g_wav = NewGraphics ();
+  }
+
+  /* --- Existing pixmap?  --- */
+  if (g_wav->pixmap != NULL) {
+    
+    /* --- Free it --- */
+    gdk_pixmap_unref (g_wav->pixmap);
+  } 
+
+  /* --- Create a new pixmap --- */
+  g_wav->pixmap = gdk_pixmap_new (widget->window,
+				  widget->allocation.width,
+				  widget->allocation.height,
+				  -1);
+
+  gdk_draw_rectangle (g_wav->pixmap,
+		      widget->style->white_gc,
+		      TRUE,
+		      0, 0,
+		      widget->allocation.width,
+		      widget->allocation.height);
+  if(GetMainWindow()!=NULL)
+  repaint_wave();
+}
+
+void repaint_wave()
+{
+  convert("");
+}
+
+void redraw_wave_expose(GtkWidget *w,GdkEventExpose  *event)
+{
+  gdk_draw_pixmap(w->window,
+            w->style->fg_gc[GTK_WIDGET_STATE (w)],
+            g_wav->pixmap,
+            event->area.x, event->area.y,
+            event->area.x, event->area.y,
+            event->area.width, event->area.height);
+}
+
+void init_wave(GtkWidget *widget)
+{
+  gdk_draw_rectangle (g_wav->pixmap,
+		      widget->style->white_gc,
+		      TRUE,
+		      0, 0,
+		      widget->allocation.width,
+		      widget->allocation.height);
+
+  gdk_draw_line (g_wav->pixmap, widget->style->black_gc, 
+		 25, 
+		 widget->allocation.height/2,
+		 widget->allocation.width-10, 
+		 widget->allocation.height/2);
+  gdk_draw_line (g_wav->pixmap, widget->style->black_gc, 
+		 25, 
+		 0,
+		 25, 
+		 widget->allocation.height);
+  gdk_draw_line (g_wav->pixmap, widget->style->black_gc, 
+		 widget->allocation.width-10, 
+		 0,
+		 widget->allocation.width-10, 
+		 widget->allocation.height);
+}
+
+void redraw_wave(GtkWidget *widget)
+{
+  GdkRectangle  update_rect;
+
+  update_rect.x = 0;
+  update_rect.y = 0;
+  update_rect.width = widget->allocation.width;
+  update_rect.height = widget->allocation.height;
+
+  gtk_widget_draw (widget, &update_rect);
+}
+
+int width_wave(GtkWidget *widget)
+{
+  return widget->allocation.width-10-25;
+}
+
+int height_wave(GtkWidget *widget)
+{
+  return widget->allocation.height-2;
+}
+
+void drawline_wave(GtkWidget *widget, int x, int y1, int y2)
+{
+  gdk_draw_line (g_wav->pixmap, 
+		 GetPenRGB (NULL, 0,0, 0xffff), 
+		 x, 
+		 y1,
+		 x, 
+		 y2);
+}
+
+
+/** 
+ * convert par-data to wav-data
+ *
+ * if filename is "", only wav-draw-area is updated
+ * 
+ * @param filename 
+ * 
+ * @return 
+ */
 gboolean convert(char *filename)
 {
   klatt_global_t kglobals;
@@ -127,18 +250,11 @@ gboolean convert(char *filename)
   kglobals.outsl = 0;
   kglobals.f0_flutter = 0;
 
-//   printf("DEBUG: \n");
-//   printf("DU: %d\n",FileGetDuration());
-//   printf("UI: %d\n",FileGetUpdateInterval());
-//   printf("SR: %d\n",FileGetSamplingRate());
-//   printf("VS: %d\n",FileGetVoiceSource());
-//   printf("PP: %d\n",FileGetBranches());
-
   samplesPerFrame=(int)((FileGetUpdateInterval()*FileGetSamplingRate())/1000);
   
   /* calculate the number of samples per frame */
   kglobals.nspfr=(long)((FileGetSamplingRate()*FileGetUpdateInterval())/1000);
-   parwave_init(&kglobals);
+  parwave_init(&kglobals);
 
   /* calculate the number of samples*/
    noFrames=FileGetDuration()/FileGetUpdateInterval();
@@ -150,35 +266,35 @@ gboolean convert(char *filename)
     pnt[j]=(typValueList *)vl[j]->data;
   }
 
-//   printf("\nframes: %d\n",noFrames);
-//   printf("\nsamples/frame: %d\n",samplesPerFrame);
-
-  outfp = fopen(filename,"wb");
-  if(outfp==NULL)
+  // only if filename is set, open file and write header!
+  if(strlen(filename)>0)
   {
-    printf("error opening out-file!\n");
-  }
+    outfp = fopen(filename,"wb");
+    if(outfp==NULL)
+    {
+      printf("error opening out-file!\n");
+    }
 
-  /* write header of wave */
-  /* 'RIFF'+4+'WAVE'+'fmt '+4+fmt(16)+'data'+4 == 44 bytes*/ 
-  fprintf(outfp,"RIFF");
-  size=36+FileGetDuration()*32;
-  fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
-  fprintf(outfp,"WAVEfmt \20%c%c%c%c%c",0,0,0,1,0);
-  i=1;
-  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // always one channel!
-  i=FileGetSamplingRate();
-  fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // samplingrate
-  i=FileGetSamplingRate()*1*2; // Bps=samplerate*channels*samplesize;
-  fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // Bps
-  i=1*2;  // Bpsmp=channels*samplesize
-  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // Bpsmp
-  i=2<<3;
-  fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // samplebits
-  fprintf(outfp,"data");
-  size=FileGetDuration()*32;
-  fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
-  
+    /* write header of wave */
+    /* 'RIFF'+4+'WAVE'+'fmt '+4+fmt(16)+'data'+4 == 44 bytes*/ 
+    fprintf(outfp,"RIFF");
+    size=36+FileGetDuration()*32;
+    fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
+    fprintf(outfp,"WAVEfmt \20%c%c%c%c%c",0,0,0,1,0);
+    i=1;
+    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // always one channel!
+    i=FileGetSamplingRate();
+    fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // samplingrate
+    i=FileGetSamplingRate()*1*2; // Bps=samplerate*channels*samplesize;
+    fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // Bps
+    i=1*2;  // Bpsmp=channels*samplesize
+    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // Bpsmp
+    i=2<<3;
+    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // samplebits
+    fprintf(outfp,"data");
+    size=FileGetDuration()*32;
+    fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
+  }
 
   waveformDestination = (short *) g_malloc(sizeof(short)*(samplesPerFrame+1));
   if(waveformDestination==NULL)
@@ -186,6 +302,22 @@ gboolean convert(char *filename)
 	perror("malloc failed");
         exit(1);
   }
+
+/* 
+   init wave-area
+*/
+  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+  int wavewidth;
+  int waveheight;
+  int waveseg;
+  short val;
+
+  init_wave(w);
+  wavewidth=width_wave(w);
+  waveheight=height_wave(w);
+  waveseg=wavewidth*100/noFrames;
+
+/* par2wav conversation */
 
   for (frame=0;
        frame<noFrames;
@@ -223,8 +355,6 @@ gboolean convert(char *filename)
     kframe.F0hz10 *=10;
     parwave(&kglobals,&kframe,waveformDestination);
 
-//     printf("S========================================\n");
-    
     for(j=0;
 	j<samplesPerFrame;
 	j++)
@@ -238,46 +368,39 @@ gboolean convert(char *filename)
 
       low_byte = waveformDestination[j] & 0xff;
       high_byte = (waveformDestination[j] >> 8) & 0xff;
-      
+
 //       printf("%5d: %6d => [%02x%02x | %02x%02x]\n",j,waveformDestination[j],low_byte,high_byte,high_byte,low_byte);
-      if(raw_type==1)
+      if(strlen(filename)>0)
       {
-	fprintf(outfp,"%c%c",high_byte,low_byte);
-      }
-      else
-      {
+	if(raw_type==1)
+	{
+	  fprintf(outfp,"%c%c",high_byte,low_byte);
+	}
+	else
+	{
 	fprintf(outfp,"%c%c",low_byte,high_byte);
+	}
+      }
+      // display wav
+      val=waveformDestination[j]*(waveheight*2) / 32768;     // correct multiplicator: (waveheight/2)
+                                                             // \todo howto get correct multiplicator?
+      if(j%(100*samplesPerFrame/waveseg)==0)
+      {
+	if(val>0)
+	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), (waveheight/2)-val, waveheight/2);
+	else
+	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), waveheight/2,(waveheight/2)+abs(val));
+// 	printf("%4d | %3d | %3d | %4d \n",frame,j,waveseg,(waveseg*frame)+(j/(samplesPerFrame/waveseg)));
       }
     }
    
   }
 
-  fclose(outfp);
+  if(strlen(filename)>0)
+  {
+    fclose(outfp);
+  }
 
-  // calcs for wav-display
-//   startSample=(int)(0*(float)FileGetSamplingRate());   // with zoom, we don't want to show whole wav?!
-//   endSample=(int)(FileGetDuration()*(float)FileGetSamplingRate());
-//   noSamples=(endSample-startSample);
-  
-//   GsampleStep=1;
-//   while ( ((int)(float)noSamples/(float)GsampleStep)>MAXPOINTS)
-//   {
-//     GsampleStep++;
-//   }
-//   GdisplaySamples=noSamples/GsampleStep;
-//   printf("%5d - %9d - %5d\n",GsampleStep,GdisplaySamples,noSamples);
-
-//   dataShortPtr=waveformDestination; //+startSample;
-// //  dataDoublePtr=wpi->waveD;
-//   for (i=0;
-//        i<GdisplaySamples;
-//        i++,dataShortPtr+=GsampleStep) //,dataDoublePtr++)
-//   {
-// //    *dataDoublePtr=
-//     printf("%5d | %d\n",i,*dataShortPtr);//(double)/MAXSAMPLE);
-//   }
-
-//   printf("done.\n");
+  redraw_wave(w);
 }
-
 

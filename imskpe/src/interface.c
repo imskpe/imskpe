@@ -483,7 +483,7 @@ create_imskpe_main (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spbn_ui), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spbn_ui), GTK_UPDATE_IF_VALID);
 
-  spbn_duration_adj = gtk_adjustment_new (500, 30, 5000, 10, 100, 100);
+  spbn_duration_adj = gtk_adjustment_new (500, 30, 5000, 1, 10, 100);
   spbn_duration = gtk_spin_button_new (GTK_ADJUSTMENT (spbn_duration_adj), 1, 0);
   gtk_widget_show (spbn_duration);
   gtk_table_attach (GTK_TABLE (table14), spbn_duration, 1, 2, 0, 1,
@@ -1114,6 +1114,12 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) bn_examp_siggain, "toggled",
                     G_CALLBACK (on_bn_examp_siggain_toggled),
+                    NULL);
+  g_signal_connect ((gpointer) draw_wave, "configure_event",
+                    G_CALLBACK (on_draw_wave_configure_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_wave, "expose_event",
+                    G_CALLBACK (on_draw_wave_expose_event),
                     NULL);
   g_signal_connect ((gpointer) nb_draw, "switch_page",
                     G_CALLBACK (on_nb_draw_switch_page),

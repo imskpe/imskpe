@@ -333,6 +333,9 @@ void LoadPar(char *filename)
   }
 
   // raises sometimes an error ... :(
-  //  free(filename);
+  if(filename!=NULL)
+  {
+    g_free(filename);
+  }
 
 }
