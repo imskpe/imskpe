@@ -1,3 +1,4 @@
+#  -*- coding: utf-8 -*-
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -7,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
-"POT-Creation-Date: 2004-03-09 15:29+0100\n"
-"PO-Revision-Date: 2004-03-09 15:33+0100\n"
+"POT-Creation-Date: 2004-03-09 15:52+0100\n"
+"PO-Revision-Date: 2004-03-09 15:49+0100\n"
 "Last-Translator: Andreas Madsack <bolsog@users.sf.net>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"

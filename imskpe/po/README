@@ -26,32 +26,44 @@ add this to your .emacs:
           '(lambda ()
               (modify-coding-system-alist 'file "\\.po[tx]?\\'"
                                           'po-find-file-coding-system)))
-(prefer-coding-system 'utf-8)
 
 
 press h for help in po-mode ...
+
+
+encoding of .po files
+---------------------
+
+MUST be UTF-8
+if you use emacs, always add
+#  -*- coding: utf-8 -*-
+as first line in every .po
+
+to convert from another encoding to UTF-8 use:
+C-x C-m f utf-8
+
 
 
 short summary for po-mode in german:
 ------------------------------------
 
 im po-mode kann man nicht einfach so schreiben ...
-etwas ungewÃ¶hnlich, aber man gewÃ¶hnt sich recht schnell daran ...
+etwas ungewöhnlich, aber man gewöhnt sich recht schnell daran ...
 
 * hier die wichtigsten tasten: *
 
 mit RET kann man aktuellen msgstr editieren
 mit # den aktuellen kommentar
-jeweils mit C-c C-c bestÃ¤tigen oder mit C-c C-k abbrechen
+jeweils mit C-c C-c bestätigen oder mit C-c C-k abbrechen
 
-mit u bzw. U kann man Ã¼ber die unÃ¼bersetzten laufen ...
+mit u bzw. U kann man Über die unübersetzten laufen ...
 mit s kann man sich die stelle im source ansehen, 
               in der der String verwendet wird.
 
-mit k kann man eine wert lÃ¶schen
-mit y wieder einfÃ¼gen
-fÃ¼r kommentare K und Y ...
+mit k kann man eine wert löschen
+mit y wieder einfügen
+für kommentare K und Y ...
 
-h gibt eine gute Ãœbersicht Ã¼ber die Tastenkombinationen, 
+h gibt eine gute Übersicht über die Tastenkombinationen, 
     wenn man weiss was man damit soll ... :)
 
