@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-13 23:52+0100\n"
+"POT-Creation-Date: 2005-03-27 00:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -466,7 +466,9 @@ msgid "written by"
 msgstr ""
 
 #: src/interface.c:2231
-msgid "Manuel Kountz (de)"
+msgid ""
+"Manuel Kountz (de)\n"
+"FaVdB (fr)"
 msgstr ""
 
 #: src/interface.c:2233

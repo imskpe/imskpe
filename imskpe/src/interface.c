@@ -2228,7 +2228,7 @@ create_imskpe_credits (void)
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), _);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (_), FALSE);
   gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (_)),
-	_("Manuel Kountz (de)"), -1);
+	_("Manuel Kountz (de)\nFaVdB (fr)"), -1);
 
   label7 = gtk_label_new (_("translators"));
   gtk_widget_show (label7);

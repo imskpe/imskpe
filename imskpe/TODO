@@ -1,20 +1,22 @@
 TODO:
 
-*** first release:
+*** 1.0
+- code-cleanup
 
-OK lines / interpol over GList
-OK open par-files
-OK save par-files
+*** later release
 - open wavfiles
-NOP generate wavfiles (through kpe80 - console tool)
-OK generate wavs internal
-OK bind to klatt80
 - use fft to show a spectrum
+- add libsndfile-support (first do a win32 compile!)
+- maybe play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
+
+
+
+needed Tests:
+
 
 solaris:
 - works only with gtk2.4 / i have no gtk 2.4-solaris machine!
 
-*** final:
-- add libsndfile-support (first do a win32 compile!)
-- maybe play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
+macos:
+- test endieness
 

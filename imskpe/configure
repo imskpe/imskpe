@@ -5813,7 +5813,7 @@ echo "${ECHO_T}no" >&6
 
 fi;
 
-ALL_LINGUAS="de"
+ALL_LINGUAS="de fr"
 # On IRIX 5.3, sys/types and inttypes.h are conflicting.
 
 

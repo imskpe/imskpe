@@ -379,7 +379,7 @@ gboolean convert(char *filename)
 	}
 	else
 	{
-	fprintf(outfp,"%c%c",low_byte,high_byte);
+	  fprintf(outfp,"%c%c",low_byte,high_byte);
 	}
       }
       // display wav
