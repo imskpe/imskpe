@@ -32,6 +32,20 @@ int nScreenHeight = 200;
 
 GtkWidget *main_window;
 
+typedef struct {
+    gint time;
+    gint value;
+} typListeValue;
+
+typedef struct {
+    GList *points;
+    gchar *widget_name; /* name of togglebutton */
+    GdkColor color;
+    gboolean show;
+} typListeCurve;
+
+GList *curves;
+
 /*
  * NewGraphics
  *
@@ -154,18 +168,6 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-}
-
-
-void
-on_button2_clicked                     (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  GdkColor color;
-  GtkWidget *widget= lookup_widget (GTK_WIDGET (button), "lb_f1");
-  gdk_color_parse ("red", &color);
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &color);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &color);
 }
 
 
@@ -346,7 +348,7 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
     y = event->y;
     state = event->state;
   }
-  g_printf("%d / %d\n",x,y);
+  printf("%d / %d\n",x,y);
   
   return TRUE;
 }
@@ -454,5 +456,79 @@ on_bn_fX_color_clicked                 (GtkButton       *button,
 
   /* Make sure the dialog is visible. */
   gtk_window_present (GTK_WINDOW (color));
+}
+
+
+void
+on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data)
+{
+  gint val=gtk_spin_button_get_value_as_int(spinbutton);
+  GtkWidget *w;
+
+  if(val<6)
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f6");
+    gtk_widget_hide (w);
+  }
+  else
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f6");
+    gtk_widget_show (w);
+  }
+
+  if(val<5)
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f5");
+    gtk_widget_hide (w);
+  }
+  else
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f5");
+    gtk_widget_show (w);
+  }
+
+  if(val<4)
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f4");
+    gtk_widget_hide (w);
+  }
+  else
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f4");
+    gtk_widget_show (w);
+  }
+
+  if(val<3)
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f3");
+    gtk_widget_hide (w);
+  }
+  else
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f3");
+    gtk_widget_show (w);
+  }
+
+  if(val<2)
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f2");
+    gtk_widget_hide (w);
+  }
+  else
+  {
+    w = lookup_widget (GTK_WIDGET (spinbutton), "tbl_f2");
+    gtk_widget_show (w);
+  }
+
+}
+
+
+
+void
+on_imskpe_main_activate_default        (GtkWindow       *window,
+                                        gpointer         user_data)
+{
+
 }
 

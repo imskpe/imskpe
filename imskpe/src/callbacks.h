@@ -42,10 +42,6 @@ void
 on_bn_fX_color_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
 
-void
-on_button2_clicked                     (GtkButton       *button,
-                                        gpointer         user_data);
-
 gboolean
 on_draw_freq_configure_event           (GtkWidget       *widget,
                                         GdkEventConfigure *event,
@@ -86,4 +82,12 @@ on_color_selection1_configure_event    (GtkWidget       *widget,
 
 void
 on_color_selection1_color_changed      (GtkColorSelection *colorselection,
+                                        gpointer         user_data);
+
+void
+on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
+                                        gpointer         user_data);
+
+void
+on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data);

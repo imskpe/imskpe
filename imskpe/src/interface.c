@@ -131,10 +131,22 @@ create_imskpe_main (void)
   GtkWidget *bn_nasal_p_amp;
   GtkWidget *lb_nasals;
   GtkWidget *lb_resonators;
-  GtkWidget *empty_notebook_page;
+  GtkWidget *table15;
+  GtkWidget *bn_vs_gopenquot;
+  GtkWidget *bn_vs_breath;
+  GtkWidget *bn_vs_spectilt;
+  GtkWidget *bn_vs_skewness;
+  GtkWidget *bn_vs_fundfreq;
   GtkWidget *lb_voice;
+  GtkWidget *table16;
+  GtkWidget *bn_examp_voice;
+  GtkWidget *bn_examp_asp;
+  GtkWidget *bn_examp_fric;
+  GtkWidget *bn_examp_bypass;
+  GtkWidget *bn_examp_voicepar;
+  GtkWidget *bn_examp_siggain;
   GtkWidget *lb_exc_amp;
-  GtkWidget *button2;
+  GtkWidget *table17;
   GtkWidget *vbox3;
   GtkWidget *nb_draw;
   GtkWidget *draw_freq;
@@ -148,6 +160,9 @@ create_imskpe_main (void)
   GtkWidget *lb_draw_band;
   GtkWidget *statusbar1;
   GtkAccelGroup *accel_group;
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
 
   accel_group = gtk_accel_group_new ();
 
@@ -268,7 +283,7 @@ create_imskpe_main (void)
 
   nb_buttons = gtk_notebook_new ();
   gtk_widget_show (nb_buttons);
-  gtk_box_pack_start (GTK_BOX (vbox2), nb_buttons, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), nb_buttons, FALSE, TRUE, 0);
 
   table14 = gtk_table_new (6, 3, FALSE);
   gtk_widget_show (table14);
@@ -706,27 +721,96 @@ create_imskpe_main (void)
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_buttons), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_buttons), 1), lb_resonators);
   gtk_label_set_justify (GTK_LABEL (lb_resonators), GTK_JUSTIFY_LEFT);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (nb_buttons), empty_notebook_page);
+  table15 = gtk_table_new (5, 3, FALSE);
+  gtk_widget_show (table15);
+  gtk_container_add (GTK_CONTAINER (nb_buttons), table15);
+
+  bn_vs_gopenquot = gtk_toggle_button_new_with_mnemonic (_("glottal open quotient"));
+  gtk_widget_show (bn_vs_gopenquot);
+  gtk_table_attach (GTK_TABLE (table15), bn_vs_gopenquot, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_vs_breath = gtk_toggle_button_new_with_mnemonic (_("breathiness"));
+  gtk_widget_show (bn_vs_breath);
+  gtk_table_attach (GTK_TABLE (table15), bn_vs_breath, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_vs_spectilt = gtk_toggle_button_new_with_mnemonic (_("spectral tilt"));
+  gtk_widget_show (bn_vs_spectilt);
+  gtk_table_attach (GTK_TABLE (table15), bn_vs_spectilt, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_vs_skewness = gtk_toggle_button_new_with_mnemonic (_("skewness"));
+  gtk_widget_show (bn_vs_skewness);
+  gtk_table_attach (GTK_TABLE (table15), bn_vs_skewness, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_vs_skewness, _("skewness (speed quotient) of voiced excitation signal"), NULL);
+
+  bn_vs_fundfreq = gtk_toggle_button_new_with_mnemonic (_("fundamental frequency"));
+  gtk_widget_show (bn_vs_fundfreq);
+  gtk_table_attach (GTK_TABLE (table15), bn_vs_fundfreq, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
 
   lb_voice = gtk_label_new (_("voice src"));
   gtk_widget_show (lb_voice);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_buttons), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_buttons), 2), lb_voice);
   gtk_label_set_justify (GTK_LABEL (lb_voice), GTK_JUSTIFY_LEFT);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (nb_buttons), empty_notebook_page);
+  table16 = gtk_table_new (6, 3, FALSE);
+  gtk_widget_show (table16);
+  gtk_container_add (GTK_CONTAINER (nb_buttons), table16);
+
+  bn_examp_voice = gtk_toggle_button_new_with_mnemonic (_("amp. of voicing"));
+  gtk_widget_show (bn_examp_voice);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_voice, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_examp_asp = gtk_toggle_button_new_with_mnemonic (_("amp. of aspiration"));
+  gtk_widget_show (bn_examp_asp);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_asp, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_examp_fric = gtk_toggle_button_new_with_mnemonic (_("amp. of frication"));
+  gtk_widget_show (bn_examp_fric);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_fric, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  bn_examp_bypass = gtk_toggle_button_new_with_mnemonic (_("amp. of bypass path (par)"));
+  gtk_widget_show (bn_examp_bypass);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_bypass, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_examp_bypass, _("amplitude of bypass path (parallel branch)"), NULL);
+
+  bn_examp_voicepar = gtk_toggle_button_new_with_mnemonic (_("amp. of voicing (par)"));
+  gtk_widget_show (bn_examp_voicepar);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_voicepar, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_examp_voicepar, _("amplitude of voicing (parallel branch)"), NULL);
+
+  bn_examp_siggain = gtk_toggle_button_new_with_mnemonic (_("overall signal gain"));
+  gtk_widget_show (bn_examp_siggain);
+  gtk_table_attach (GTK_TABLE (table16), bn_examp_siggain, 0, 1, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
 
   lb_exc_amp = gtk_label_new (_("exc. amp."));
   gtk_widget_show (lb_exc_amp);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_buttons), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_buttons), 3), lb_exc_amp);
   gtk_label_set_justify (GTK_LABEL (lb_exc_amp), GTK_JUSTIFY_LEFT);
 
-  button2 = gtk_button_new_with_mnemonic (_("button2"));
-  gtk_widget_show (button2);
-  gtk_box_pack_start (GTK_BOX (vbox2), button2, FALSE, FALSE, 0);
+  table17 = gtk_table_new (2, 2, FALSE);
+  gtk_widget_show (table17);
+  gtk_box_pack_start (GTK_BOX (vbox2), table17, FALSE, FALSE, 0);
 
   vbox3 = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox3);
@@ -792,6 +876,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) imskpe_main, "delete_event",
                     G_CALLBACK (on_imskpe_main_delete_event),
                     NULL);
+  g_signal_connect ((gpointer) imskpe_main, "activate_default",
+                    G_CALLBACK (on_imskpe_main_activate_default),
+                    NULL);
   g_signal_connect ((gpointer) new1, "activate",
                     G_CALLBACK (on_new1_activate),
                     NULL);
@@ -822,6 +909,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_delete, "toggled",
                     G_CALLBACK (on_bn_delete_toggled),
                     NULL);
+  g_signal_connect ((gpointer) spbn_numF, "value_changed",
+                    G_CALLBACK (on_spbn_numF_changed),
+                    NULL);
   g_signal_connect ((gpointer) bn_f1_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
@@ -842,9 +932,6 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) bn_nasal_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
-                    NULL);
-  g_signal_connect ((gpointer) button2, "clicked",
-                    G_CALLBACK (on_button2_clicked),
                     NULL);
   g_signal_connect ((gpointer) draw_freq, "configure_event",
                     G_CALLBACK (on_draw_freq_configure_event),
@@ -956,9 +1043,22 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_nasal_p_amp, "bn_nasal_p_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_nasals, "lb_nasals");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_resonators, "lb_resonators");
+  GLADE_HOOKUP_OBJECT (imskpe_main, table15, "table15");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_vs_gopenquot, "bn_vs_gopenquot");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_vs_breath, "bn_vs_breath");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_vs_spectilt, "bn_vs_spectilt");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_vs_skewness, "bn_vs_skewness");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_vs_fundfreq, "bn_vs_fundfreq");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_voice, "lb_voice");
+  GLADE_HOOKUP_OBJECT (imskpe_main, table16, "table16");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_voice, "bn_examp_voice");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_asp, "bn_examp_asp");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_fric, "bn_examp_fric");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_bypass, "bn_examp_bypass");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_voicepar, "bn_examp_voicepar");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_examp_siggain, "bn_examp_siggain");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_exc_amp, "lb_exc_amp");
-  GLADE_HOOKUP_OBJECT (imskpe_main, button2, "button2");
+  GLADE_HOOKUP_OBJECT (imskpe_main, table17, "table17");
   GLADE_HOOKUP_OBJECT (imskpe_main, vbox3, "vbox3");
   GLADE_HOOKUP_OBJECT (imskpe_main, nb_draw, "nb_draw");
   GLADE_HOOKUP_OBJECT (imskpe_main, draw_freq, "draw_freq");
@@ -971,6 +1071,7 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, draw_band, "draw_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_draw_band, "lb_draw_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, statusbar1, "statusbar1");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_main, tooltips, "tooltips");
 
   gtk_window_add_accel_group (GTK_WINDOW (imskpe_main), accel_group);
 
