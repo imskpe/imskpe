@@ -227,6 +227,7 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
   PangoLayout *layout;
   PangoFontDescription *fontdesc;
   gchar *x;
+  char tmp[40];
 
   int xsplits=15;  /* export in preferences */
   int ysplits=10;  /* export in preferences */
@@ -250,8 +251,13 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
 
   x = g_malloc (sizeof (gchar)*10);
   
-  /* \todo choose another font ...  and/or export in preferences */
-  fontdesc = pango_font_description_from_string ("Luxi Mono 6");  
+  strcpy(tmp,ConfigGetString("rulerfont"));
+  if(tmp[0]=='"') // cheat to get rid of starting and ending "
+  {
+    tmp[0]=' '; 
+    tmp[strlen(tmp)-1]=' ';
+  }
+  fontdesc = pango_font_description_from_string (tmp);  
   
 
 /* x-achse */

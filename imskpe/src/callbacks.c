@@ -1823,9 +1823,9 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   sprintf(tmp,"%d",val);
   ConfigInsert("maxband",tmp);
 
-/*   w=lookup_widget (GTK_WIDGET (button), "ent_klatt"); */
-/*   strcpy(tmp,gtk_entry_get_text((GtkEntry *)w)); */
-/*   ConfigInsert("klattcmd",tmp); */
+  w=lookup_widget (GTK_WIDGET (button), "ent_font");
+  sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
+  ConfigInsert("rulerfont",tmp);
 
   w=lookup_widget (GTK_WIDGET (button), "ent_play");
   strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
@@ -1853,6 +1853,17 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   sprintf(tmp,"%d",val);
   ConfigInsert("toolbarstyle",tmp);
   GuiSetToolbarStyle(val);
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit");
+  if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
+  {
+    ConfigInsert("showquitdiag","1");
+  }
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit2");
+  if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
+  {
+    ConfigInsert("showquitdiag","0");
+  }
 
 
   // redraw!!
@@ -2061,16 +2072,20 @@ on_color_selection1_configure_event    (GtkWidget       *widget,
                                         GdkEventConfigure *event,
                                         gpointer         user_data)
 {
-
   return FALSE;
 }
 
 
+/** 
+ * colordialog ok
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_ok_button1_clicked                  (GtkButton       *button,
                                         gpointer         user_data)
 {
-  // colordialog ok:
   gdouble color[3];
   GdkColor gdk_color;
   GtkWidget *w;
@@ -2195,7 +2210,9 @@ void
 on_toolbar1_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  int foo=ConfigGetInteger("toolbarstyle");  
+  int foo;
+
+  foo=ConfigGetInteger("toolbarstyle");  
   gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
 }
 
@@ -2204,7 +2221,9 @@ void
 on_toolbar4_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  int foo=ConfigGetInteger("toolbarstyle");  
+  int foo;
+
+  foo=ConfigGetInteger("toolbarstyle");  
   gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
 }
 
@@ -2213,9 +2232,121 @@ void
 on_toolbar2_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  int foo=ConfigGetInteger("toolbarstyle");  
+  int foo;
+
+  foo=ConfigGetInteger("toolbarstyle");  
   gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
 }
+
+
+
+void
+on_bn_font_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+ static GtkWidget *fontdialog = NULL;
+ GtkWidget *w;
+ char tmp[40];
+
+ if (fontdialog == NULL) 
+ {
+   fontdialog = create_imskpe_font ();
+   /* set the widget pointer to NULL when the widget is destroyed */
+   g_signal_connect (G_OBJECT (fontdialog),
+		     "destroy",
+		     G_CALLBACK (gtk_widget_destroyed),
+		     &fontdialog);
+ 
+   w=lookup_widget (GTK_WIDGET ((GtkWidget *)fontdialog), "font_selection1");
+   strcpy(tmp,ConfigGetString("rulerfont"));
+   if(tmp[0]=='"') // cheat to get rid of starting and ending "
+   {
+     tmp[0]=' '; 
+     tmp[strlen(tmp)-1]=' ';
+   }
+//   printf("-%s-\n",tmp);
+   gtk_font_selection_set_font_name((GtkFontSelection *)w,tmp);
+  
+   /* Make sure the dialog doesn't disappear behind the main window. */
+   gtk_window_set_transient_for (GTK_WINDOW (fontdialog), 
+				 GTK_WINDOW (GetMainWindow()));
+ }
+ 
+ /* Make sure the dialog is visible. */
+ gtk_window_present (GTK_WINDOW (fontdialog));
+
+}
+
+
+void
+on_font_ok_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  // use apply to "save"
+  on_font_apply_clicked (button,user_data);
+
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_font_cancel_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_font_apply_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+//  ConfigInsert("rulerfont_tmp",);
+  GtkWidget *w;
+
+  w=lookup_widget (GTK_WIDGET (prefs), "ent_font");
+  gtk_entry_set_text ((GtkEntry *) w, gtk_font_selection_get_font_name((GtkFontSelection *)lookup_widget (GTK_WIDGET ((GtkWidget *)button), "font_selection1")));
+//ConfigGetString("rulerfont"));
+
+  return;
+}
+
+void
+on_ent_font_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  char tmp[40];
+  strcpy(tmp,ConfigGetString("rulerfont"));
+  if(tmp[0]=='"') // cheat to get rid of starting and ending "
+  {
+    tmp[0]=' '; 
+    tmp[strlen(tmp)-1]=' ';
+  }
+
+  gtk_entry_set_text ((GtkEntry *) widget, tmp);
+}
+
+void
+on_rb_quit_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  if(ConfigGetInteger("showquitdiag")==1)
+  {
+    gtk_toggle_button_set_active ((GtkToggleButton *)widget,TRUE);
+  }
+}
+
+
+void
+on_rb_quit2_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  if(ConfigGetInteger("showquitdiag")==0)
+  {
+    gtk_toggle_button_set_active ((GtkToggleButton *)widget,TRUE);
+  }
+}
+
 
 /** @} */
 
@@ -2303,7 +2434,7 @@ void
 on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data)
 {
- SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
+  SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
 }
 
 
@@ -2312,9 +2443,18 @@ imskpe_quit                            (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data)
 {
-  if(DialogYesNo(_("Really quit?"))==TRUE)
+  if(ConfigGetInteger("showquitdiag")==1)
   {
-    //   FormantListFree();
+    if(DialogYesNo(_("Really quit?"))==TRUE)
+    {
+      CurveListFree(FileGetCurvesPointer());
+      ConfigSave();
+      ConfigFree();
+      gtk_main_quit ();
+    }
+  }
+  else
+  {
     CurveListFree(FileGetCurvesPointer());
     ConfigSave();
     ConfigFree();
@@ -2334,5 +2474,3 @@ on_spn_max_freq_parent_set             (GtkWidget       *widget,
   ;
 
 }
-
-

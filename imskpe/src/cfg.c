@@ -46,6 +46,9 @@ void ConfigLoad()
   char *tmp;
   int homelen;
 
+  // schreibe log messages in debug-file !!!
+
+//   printf("--- start configload\n");
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
@@ -60,8 +63,10 @@ void ConfigLoad()
   }
   else
   {
-    DialogErrorOK (_("get_home_dir failed!"));
+//     DialogErrorOK (_("get_home_dir failed!"));
+    ;
   }
+//   printf("--- end configload\n");
 }
 
 void ConfigInsert(char *name, char *value)
@@ -105,7 +110,11 @@ void ConfigInsert(char *name, char *value)
     j=0;
     for(i=0;i<strlen(value);i++)
     {
+#ifdef WIN32
+      if(isdigit(value[i])==128)
+#else
       if(isdigit(value[i])==2048)
+#endif
       {
 	j++;
       }
@@ -122,7 +131,11 @@ void ConfigInsert(char *name, char *value)
 	j=0;
 	for(i=1;i<8;i++)
 	{
+#ifdef WIN32
+	  if(isxdigit(value[i])==128)
+#else
 	  if(isxdigit(value[i])==4096)
+#endif
 	  {
 	    j++;
 	  }
@@ -157,7 +170,7 @@ void ConfigInsertString(char *name, char *value, unsigned short type)
   char *p_name;
   char *p_value;
 
-//    printf("-1- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
+//   printf("-CIS- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
   p = (typConfig *)g_malloc (sizeof (typConfig));
   p_name = g_malloc (strlen(name)+1);
   p_value = g_malloc (strlen(value)+1);
@@ -214,9 +227,16 @@ int ConfigGetInteger(char *name)
   {
     data=(typConfig *)cl->data;
     
-    if(!strcmp(data->name,name) && data->type==TYPE_INT)
+    if(!strcmp(data->name,name))
     {
-      return atoi(data->value);
+      if(data->type==TYPE_INT)
+      {
+	return atoi(data->value);
+      }
+      else
+      {
+	return 0;  // not the best return value!
+      }
     }
 
     cl = cl->next;
@@ -244,7 +264,12 @@ GdkColor ConfigGetColor(char *name)
 
       for(i=0;i<3;i++)
       {
+	x=0;
+#ifdef WIN32
+ 	if(isdigit(data->value[(i*2)+2])==128)
+#else
  	if(isdigit(data->value[(i*2)+2])==2048)
+#endif
  	{
  	  x=data->value[(i*2)+2]-48;
  	}
@@ -274,7 +299,12 @@ GdkColor ConfigGetColor(char *name)
  	}
 	a[i]=x;
 	
-	if(isdigit(data->value[(i*2)+1])==2048)
+	x=0;
+#ifdef WIN32
+ 	if(isdigit(data->value[(i*2)+1])==128)
+#else
+ 	if(isdigit(data->value[(i*2)+1])==2048)
+#endif
 	{
 	  x=data->value[(i*2)+1]-48;
 	}
@@ -304,6 +334,7 @@ GdkColor ConfigGetColor(char *name)
 	}
 	a[i]+=x*16;
       }
+//       printf("- colorcode: %3d %3d %3d\n",a[0],a[1],a[2]);
       return GetColor((float)a[0]/(float)255,(float)a[1]/(float)255,(float)a[2]/(float)255);
     }
 
@@ -437,6 +468,9 @@ void ConfigNew()
   ConfigInsert("color_ea","#aaaaff");
 
   ConfigInsert("toolbarstyle","0");
+  ConfigInsert("showquitdiag","1");
+  ConfigInsert("rulerfont","\"Sans 6\"");
+
 //  ConfigListInsert("main_window_x","740");
 //  ConfigListInsert("main_window_y","540");
 }

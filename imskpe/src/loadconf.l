@@ -63,10 +63,13 @@
 <confdata>[ ]*               ;
 <confdata>"="                return EQUAL;
 <confdata>":"                return DPOINT;
-<confdata>[-A-Za-z0-9_/#]*     return VALUE;
+<confdata>[-A-Za-z0-9_/#]+   return VALUE;
+<confdata>\"[-A-Za-z0-9_/#\ ]+\"  return VALUE;
 <confdata>"#"                {BEGIN(comment);return COMMENT;}
+<confdata>\r                 ; // win32 needs this?
 <confdata>\n                 {BEGIN(INITIAL);return EOL;}
 
+\r                           ; // win32 needs this?
 .                            {return UNKNOWN;}
 %%
 /** 
@@ -133,7 +136,7 @@ void LoadConf(char *filename)
 	  {
 	      if((strlen(val) > 0) && (strlen(var) > 0))
 	      {
-// 		printf("var: %s = %s\n",var,val);
+//  		printf("var: %s = %s\n",var,val);
 		ConfigInsert(var,val);
 	      }
 	      else

@@ -57,7 +57,12 @@ int main (int argc, char *argv[])
   char *filename;
 
 #ifdef ENABLE_NLS
+#ifdef WIN32
+  bindtextdomain (GETTEXT_PACKAGE, "..\\share\\locale");
+  printf("win32 locale\n");
+#else
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
+#endif
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 #endif
@@ -65,7 +70,11 @@ int main (int argc, char *argv[])
   gtk_set_locale ();
   gtk_init (&argc, &argv);
 
+#ifdef WIN32
+  add_pixmap_directory ("..\\share\\imskpe\\pixmaps");
+#else
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+#endif
 
   ConfigLoad();
 

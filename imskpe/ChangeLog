@@ -1,3 +1,13 @@
+2004-12-04  Andreas Madsack  <bolsog@users.sf.net>
+
+	* beta3 released
+	
+	* Font is now chooseable in preferences
+	* program-quit-question-dialog can be disabled :)
+	* changed minimum-check for gtk from 2.0 to 2.4
+	* fixes for win32 (find pixmaps and locale)
+	* more win32 fixes (in cfg, loadconf, ...)
+	
 2004-12-02  Andreas Madsack  <bolsog@users.sf.net>
 
 	* code-optimize, introduced setcolorlabel / now setting

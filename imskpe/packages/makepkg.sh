@@ -4,10 +4,10 @@
 
 #!/bin/sh
 
-VERSION=1.0beta2
+VERSION=`grep 'AM_INIT_AUTOMAKE(imskpe,' ../configure.in | sed 's/.*, \"//' | sed s/\"\)//`
 TMP=/tmp
 
-cp imskpe.desc $TMP/imskpe-$VERSION-i686-bol.txt
+FOO=`pwd`
 cd ..
 make clean
 sudo rm -rf $TMP/pkg-imskpe
@@ -15,5 +15,7 @@ sudo rm -rf $TMP/pkg-imskpe
 make
 sudo make install-strip DESTDIR=$TMP/pkg-imskpe
 cd $TMP/pkg-imskpe
-tar cfz ../imskpe-$VERSION-i686-bol.tgz .
-
+sudo mkdir install
+sudo cp $FOO/imskpe.desc install/slack-desc
+# tar cfz ../imskpe-$VERSION-i686-bol.tgz .
+sudo /sbin/makepkg ../imskpe-$VERSION-i686-bol.tgz .

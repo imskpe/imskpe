@@ -1501,6 +1501,13 @@ create_imskpe_prefs (void)
   GtkWidget *spn_max_band;
   GtkWidget *label29;
   GtkWidget *drawingarea5;
+  GtkWidget *label33;
+  GtkWidget *ent_font;
+  GtkWidget *bn_font;
+  GtkWidget *alignment3;
+  GtkWidget *hbox6;
+  GtkWidget *image6;
+  GtkWidget *label35;
   GtkWidget *lb_ruler;
   GtkWidget *table20;
   GtkWidget *label25;
@@ -1511,12 +1518,16 @@ create_imskpe_prefs (void)
   GtkWidget *ent_tmp;
   GtkWidget *lb_paths;
   GtkWidget *table22;
-  GtkWidget *label30;
   GtkWidget *label31;
   GtkWidget *drawingarea4;
+  GtkWidget *label34;
+  GtkWidget *rb_quit;
+  GSList *rb_quit_group = NULL;
+  GtkWidget *label30;
   GtkWidget *cm_tool_style;
   GList *cm_tool_style_items = NULL;
   GtkWidget *cme_tool_style;
+  GtkWidget *rb_quit2;
   GtkWidget *lb_misc;
   GtkWidget *dialog_action_area2;
   GtkWidget *bn_prefs_cancel;
@@ -1754,6 +1765,44 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_widget_set_size_request (drawingarea5, 20, -1);
 
+  label33 = gtk_label_new (_("Font: "));
+  gtk_widget_show (label33);
+  gtk_table_attach (GTK_TABLE (table21), label33, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label33), 0, 0.5);
+
+  ent_font = gtk_entry_new ();
+  gtk_widget_show (ent_font);
+  gtk_table_attach (GTK_TABLE (table21), ent_font, 2, 3, 4, 5,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_editable_set_editable (GTK_EDITABLE (ent_font), FALSE);
+  gtk_entry_set_text (GTK_ENTRY (ent_font), _("Sans 6"));
+
+  bn_font = gtk_button_new ();
+  gtk_widget_show (bn_font);
+  gtk_table_attach (GTK_TABLE (table21), bn_font, 2, 3, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_font, _("Change Font"), NULL);
+
+  alignment3 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment3);
+  gtk_container_add (GTK_CONTAINER (bn_font), alignment3);
+
+  hbox6 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox6);
+  gtk_container_add (GTK_CONTAINER (alignment3), hbox6);
+
+  image6 = gtk_image_new_from_stock ("gtk-select-font", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image6);
+  gtk_box_pack_start (GTK_BOX (hbox6), image6, FALSE, FALSE, 0);
+
+  label35 = gtk_label_new_with_mnemonic (_("Change"));
+  gtk_widget_show (label35);
+  gtk_box_pack_start (GTK_BOX (hbox6), label35, FALSE, FALSE, 0);
+
   lb_ruler = gtk_label_new (_("Ruler"));
   gtk_widget_show (lb_ruler);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_prefs), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_prefs), 1), lb_ruler);
@@ -1810,16 +1859,9 @@ create_imskpe_prefs (void)
   gtk_widget_show (lb_paths);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_prefs), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_prefs), 2), lb_paths);
 
-  table22 = gtk_table_new (4, 4, FALSE);
+  table22 = gtk_table_new (5, 4, FALSE);
   gtk_widget_show (table22);
   gtk_container_add (GTK_CONTAINER (nb_prefs), table22);
-
-  label30 = gtk_label_new (_("Value"));
-  gtk_widget_show (label30);
-  gtk_table_attach (GTK_TABLE (table22), label30, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
 
   label31 = gtk_label_new (_("toolbar style:"));
   gtk_widget_show (label31);
@@ -1835,11 +1877,34 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_widget_set_size_request (drawingarea4, 20, -1);
 
+  label34 = gtk_label_new (_("show realy quit dialog: "));
+  gtk_widget_show (label34);
+  gtk_table_attach (GTK_TABLE (table22), label34, 0, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label34), 0, 0.5);
+
+  rb_quit = gtk_radio_button_new_with_mnemonic (NULL, "gtk-yes");
+  gtk_button_set_use_stock (GTK_BUTTON (rb_quit), TRUE);
+  gtk_widget_show (rb_quit);
+  gtk_table_attach (GTK_TABLE (table22), rb_quit, 2, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rb_quit), rb_quit_group);
+  rb_quit_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rb_quit));
+
+  label30 = gtk_label_new (_("Value"));
+  gtk_widget_show (label30);
+  gtk_table_attach (GTK_TABLE (table22), label30, 2, 4, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
+
   cm_tool_style = gtk_combo_new ();
   g_object_set_data (G_OBJECT (GTK_COMBO (cm_tool_style)->popwin),
                      "GladeParentKey", cm_tool_style);
   gtk_widget_show (cm_tool_style);
-  gtk_table_attach (GTK_TABLE (table22), cm_tool_style, 2, 3, 1, 2,
+  gtk_table_attach (GTK_TABLE (table22), cm_tool_style, 2, 4, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   cm_tool_style_items = g_list_append (cm_tool_style_items, (gpointer) _("icons"));
@@ -1850,6 +1915,15 @@ create_imskpe_prefs (void)
 
   cme_tool_style = GTK_COMBO (cm_tool_style)->entry;
   gtk_widget_show (cme_tool_style);
+
+  rb_quit2 = gtk_radio_button_new_with_mnemonic (NULL, "gtk-no");
+  gtk_button_set_use_stock (GTK_BUTTON (rb_quit2), TRUE);
+  gtk_widget_show (rb_quit2);
+  gtk_table_attach (GTK_TABLE (table22), rb_quit2, 3, 4, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_radio_button_set_group (GTK_RADIO_BUTTON (rb_quit2), rb_quit_group);
+  rb_quit_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rb_quit2));
 
   lb_misc = gtk_label_new (_("Misc"));
   gtk_widget_show (lb_misc);
@@ -1936,14 +2010,26 @@ create_imskpe_prefs (void)
   g_signal_connect ((gpointer) spn_max_band, "realize",
                     G_CALLBACK (on_spn_max_band_realize),
                     NULL);
+  g_signal_connect ((gpointer) ent_font, "realize",
+                    G_CALLBACK (on_ent_font_realize),
+                    NULL);
+  g_signal_connect ((gpointer) bn_font, "clicked",
+                    G_CALLBACK (on_bn_font_clicked),
+                    NULL);
   g_signal_connect ((gpointer) ent_play, "realize",
                     G_CALLBACK (on_ent_play_realize),
                     NULL);
   g_signal_connect ((gpointer) ent_tmp, "realize",
                     G_CALLBACK (on_ent_tmp_realize),
                     NULL);
+  g_signal_connect ((gpointer) rb_quit, "realize",
+                    G_CALLBACK (on_rb_quit_realize),
+                    NULL);
   g_signal_connect ((gpointer) cme_tool_style, "realize",
                     G_CALLBACK (on_cme_tool_style_realize),
+                    NULL);
+  g_signal_connect ((gpointer) rb_quit2, "realize",
+                    G_CALLBACK (on_rb_quit2_realize),
                     NULL);
   g_signal_connect ((gpointer) bn_prefs_cancel, "clicked",
                     G_CALLBACK (on_bn_prefs_cancel_clicked),
@@ -1993,6 +2079,13 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_band, "spn_max_band");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label29, "label29");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea5, "drawingarea5");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label33, "label33");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_font, "ent_font");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_font, "bn_font");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, alignment3, "alignment3");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, hbox6, "hbox6");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, image6, "image6");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label35, "label35");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ruler, "lb_ruler");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table20, "table20");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label25, "label25");
@@ -2003,11 +2096,14 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_tmp, "ent_tmp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_paths, "lb_paths");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table22, "table22");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, label30, "label30");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label31, "label31");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea4, "drawingarea4");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label34, "label34");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit, "rb_quit");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label30, "label30");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cm_tool_style, "cm_tool_style");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cme_tool_style, "cme_tool_style");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit2, "rb_quit2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_misc, "lb_misc");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_cancel, "bn_prefs_cancel");
@@ -2445,5 +2541,57 @@ create_imskpe_file_save (void)
 
   gtk_widget_grab_default (bn_file_save_ok);
   return imskpe_file_save;
+}
+
+GtkWidget*
+create_imskpe_font (void)
+{
+  GtkWidget *imskpe_font;
+  GtkWidget *font_ok;
+  GtkWidget *font_cancel;
+  GtkWidget *font_apply;
+  GtkWidget *font_selection1;
+
+  imskpe_font = gtk_font_selection_dialog_new (_("Select Font"));
+  gtk_container_set_border_width (GTK_CONTAINER (imskpe_font), 4);
+  gtk_window_set_modal (GTK_WINDOW (imskpe_font), TRUE);
+  gtk_window_set_type_hint (GTK_WINDOW (imskpe_font), GDK_WINDOW_TYPE_HINT_DIALOG);
+
+  font_ok = GTK_FONT_SELECTION_DIALOG (imskpe_font)->ok_button;
+  gtk_widget_show (font_ok);
+  GTK_WIDGET_SET_FLAGS (font_ok, GTK_CAN_DEFAULT);
+
+  font_cancel = GTK_FONT_SELECTION_DIALOG (imskpe_font)->cancel_button;
+  gtk_widget_show (font_cancel);
+  GTK_WIDGET_SET_FLAGS (font_cancel, GTK_CAN_DEFAULT);
+
+  font_apply = GTK_FONT_SELECTION_DIALOG (imskpe_font)->apply_button;
+  gtk_widget_show (font_apply);
+  GTK_WIDGET_SET_FLAGS (font_apply, GTK_CAN_DEFAULT);
+
+  font_selection1 = GTK_FONT_SELECTION_DIALOG (imskpe_font)->fontsel;
+  gtk_widget_show (font_selection1);
+  gtk_container_set_border_width (GTK_CONTAINER (font_selection1), 4);
+  gtk_font_selection_set_preview_text (GTK_FONT_SELECTION (font_selection1),
+                                       _("0123456789"));
+
+  g_signal_connect ((gpointer) font_ok, "clicked",
+                    G_CALLBACK (on_font_ok_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) font_cancel, "clicked",
+                    G_CALLBACK (on_font_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) font_apply, "clicked",
+                    G_CALLBACK (on_font_apply_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, imskpe_font, "imskpe_font");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, font_ok, "font_ok");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, font_cancel, "font_cancel");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, font_apply, "font_apply");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, font_selection1, "font_selection1");
+
+  return imskpe_font;
 }
 

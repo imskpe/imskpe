@@ -11,12 +11,6 @@ OK generate wavs internal
 OK bind to klatt80
 - use fft to show a spectrum
 
-
-win32 issues:
-OK improve build (find dlls, locale under win32)
-- place configfile in HOME (unter win2k/win xp)
-  -> win98/95/ME use c:\ - later maybe registry
-
 solaris:
 - works only with gtk2.4 / i have no gtk 2.4-solaris machine!
 

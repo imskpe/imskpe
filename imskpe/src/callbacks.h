@@ -619,3 +619,32 @@ on_bn_file_save_cancel_clicked         (GtkButton       *button,
 void
 on_bn_file_save_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_bn_font_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_font_ok_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_font_cancel_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_font_apply_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_ent_font_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+
+void
+on_rb_quit_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_rb_quit2_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
