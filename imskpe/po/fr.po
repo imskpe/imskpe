@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-27 00:02+0100\n"
-"PO-Revision-Date: 2005-03-27 00:04+0100\n"
+"PO-Revision-Date: 2005-03-27 19:01+0200\n"
 "Last-Translator: Franz-Albert Van Den Bussche <franz@favdb.net>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgstr "_Fichier"
 
 #: src/interface.c:237
 msgid "_Sets"
-msgstr "_Ensemble"
+msgstr "_Sets"
 
 #: src/interface.c:244
 msgid "_Add Set"
@@ -48,7 +48,7 @@ msgstr "_Exécuter"
 
 #: src/interface.c:275 src/interface.c:350
 msgid "Convert & Play"
-msgstr "Covertir & jouer"
+msgstr "Convertir & jouer"
 
 #: src/interface.c:284
 msgid "_Help"
@@ -128,7 +128,7 @@ msgstr "débit d'échantillonnage: "
 
 #: src/interface.c:447
 msgid "Num of formants: "
-msgstr "Num des formants: "
+msgstr "Nb des formants: "
 
 #: src/interface.c:454
 msgid "voice source: "
