@@ -1,0 +1,7 @@
+2004-11-21  Andreas Madsack <bolsog@users.sf.net>
+
+	* first Release (beta1)
+	* including: 
+	  - load/save parfiles
+	  - internal wav-generating
+	  - modelling-gui elements
