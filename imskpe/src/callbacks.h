@@ -618,3 +618,43 @@ on_draw_button_release_event           (GtkWidget       *widget,
 void
 on_cb_tool_style_realize               (GtkWidget       *widget,
                                         gpointer         user_data);
+
+void
+on_cb_f1_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_fb_font_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_f2_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_f3_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_f4_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_f5_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_f6_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_nasals_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_vs_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_cb_ea_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);

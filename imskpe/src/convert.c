@@ -42,6 +42,8 @@
 /* defaults */
 
 #define SAMPLE_FACTOR 0.00001
+#define MAXSAMPLE 32767.0
+#define MAXPOINTS 10000
 
 static int naturalGlottalSamples[]=
 {
@@ -89,6 +91,9 @@ gboolean convert(char *filename)
 
   int param,frame,samplesPerFrame,sample,noFrames;
   int startSample,endSample,noSamples;
+  int GsampleStep=1;
+  int GdisplaySamples;
+
   short *dataShortPtr,*waveformDestination,*tmpPtr;
   double *dataDoublePtr;
   struct waveInfo *wpi;
@@ -97,7 +102,7 @@ gboolean convert(char *filename)
   FILE *outfp;
   unsigned char high_byte;
   unsigned char low_byte;
-  short raw_type;
+  short raw_type=0;
   unsigned int size;
 
   long i;
@@ -131,7 +136,7 @@ gboolean convert(char *filename)
 //   printf("VS: %d\n",FileGetVoiceSource());
 //   printf("PP: %d\n",FileGetBranches());
 
-  samplesPerFrame=(int)(((double)FileGetUpdateInterval()/1000.)*
+  samplesPerFrame=(int)(((double)FileGetUpdateInterval()/1000.0)*
  			(double)FileGetSamplingRate());
   
   /* calculate the number of samples per frame */
@@ -150,6 +155,7 @@ gboolean convert(char *filename)
   }
 
 //   printf("\nframes: %d\n",noFrames);
+//   printf("\nsamples/frame: %d\n",samplesPerFrame);
 
   outfp = fopen(filename,"w");
   if(outfp==NULL)
@@ -178,7 +184,7 @@ gboolean convert(char *filename)
   fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
   
 
-  waveformDestination = (int*) malloc(sizeof(int)*20000);  // 20k = MAX_SAM
+  waveformDestination = (short *) malloc(sizeof(short)*(samplesPerFrame+1));
   if(waveformDestination==NULL)
   {
 	perror("malloc failed");
@@ -214,7 +220,7 @@ gboolean convert(char *filename)
 	y=p_pnt[j]->value + (int)((float)(pnt[j]->value-p_pnt[j]->value)/(float)(pnt[j]->time-p_pnt[j]->time)*(float)(i-p_pnt[j]->time));
       }
       *lptr=(long)y;
-//       printf("%d ",y);
+//       printf("%5d",y);
       
     }
 //     printf("\n");
@@ -227,6 +233,8 @@ gboolean convert(char *filename)
 	j<samplesPerFrame;
 	j++)
     {
+//       printf("%5d\n",waveformDestination[j]);
+
       low_byte = waveformDestination[j] & 0xff;
       high_byte = waveformDestination[j] >> 8;
       
@@ -246,21 +254,28 @@ gboolean convert(char *filename)
 
   fclose(outfp);
 
-/* use later for wav-drawarea! */
-//   /* calculate some new waveform display Xcoords */
-//   startSample=(int)(Gstart*(float)GsampleRate);
-//   endSample=(int)(Gend*(float)GsampleRate);
+  // calcs for wav-display
+//   startSample=(int)(0*(float)FileGetSamplingRate());   // with zoom, we don't want to show whole wav?!
+//   endSample=(int)(FileGetDuration()*(float)FileGetSamplingRate());
 //   noSamples=(endSample-startSample);
   
 //   GsampleStep=1;
 //   while ( ((int)(float)noSamples/(float)GsampleStep)>MAXPOINTS)
+//   {
 //     GsampleStep++;
+//   }
 //   GdisplaySamples=noSamples/GsampleStep;
-  
-//   dataShortPtr=wpi->waveS+startSample;
-//   dataDoublePtr=wpi->waveD;
-//   for (sample=0;
-//        sample<GdisplaySamples;
-//        sample++,dataShortPtr+=GsampleStep,dataDoublePtr++)
-//     *dataDoublePtr=(double)*dataShortPtr/MAXSAMPLE;
+//   printf("%5d - %9d - %5d\n",GsampleStep,GdisplaySamples,noSamples);
+
+//   dataShortPtr=waveformDestination; //+startSample;
+// //  dataDoublePtr=wpi->waveD;
+//   for (i=0;
+//        i<GdisplaySamples;
+//        i++,dataShortPtr+=GsampleStep) //,dataDoublePtr++)
+//   {
+// //    *dataDoublePtr=
+//     printf("%5d | %d\n",i,*dataShortPtr);//(double)/MAXSAMPLE);
+//   }
+
+  printf("done.\n");
 }

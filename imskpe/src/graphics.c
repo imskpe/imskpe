@@ -1101,6 +1101,6 @@ char *filtertoken(char str[100], char token[1])
   char s[100]; // not good!
 
   strcpy(s,str);
-  result = strtok( s, token ); 
+  result = (char *)strtok( s, token ); 
   return result;
 }

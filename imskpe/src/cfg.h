@@ -57,6 +57,7 @@ void ConfigInsertInteger(char *name, int value, unsigned short type);
 char *ConfigGetString(char *name);
 int ConfigGetInteger(char *name);
 GdkColor ConfigGetColor(char *name);
+gboolean ConfigInsertColor(GdkColor *color, char *selected_color);
 gboolean ConfigRename(char *name, char *ziel);
 gboolean ConfigFind(char *name);
 gboolean ConfigRemove(char *name);

@@ -5560,9 +5560,9 @@ echo "${ECHO_T}yes" >&6
    CFLAGS=" $CFLAGS -I/opt/cross/include"
 
    # hide cmd terminal window when not debugging (win32)
-   if test "$debug" != 1; then
-      WINGTK_CFLAGS="-mwindows $WINGTK_CFLAGS"
-   fi
+   #if test "$debug" != 1; then
+   #   WINGTK_CFLAGS="-mwindows $WINGTK_CFLAGS"
+   #fi
 
    WINGTK_LDFLAGS="-Wl,--export-dynamic,--export-all-symbols,--add-stdcall-alias"
 

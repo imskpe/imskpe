@@ -264,10 +264,19 @@ void
 on_extra_changed               (GtkComboBox     *combobox,
 				gpointer         user_data)
 {
-  int foo=gtk_combo_box_get_active(combobox);
+  int foo;
   char *tmp;
 
-  tmp=strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/');
+  foo=gtk_combo_box_get_active(combobox);
+  if(strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/')!=NULL)
+  {
+    tmp=strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/');
+  }
+  else
+  {
+    tmp=strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'\\');
+  }
+
   tmp++;
   tmp[strlen(tmp)-strlen(strrchr(tmp, '.'))]=0; /* delete .par at end */
 
@@ -299,7 +308,11 @@ void InitDialogSave()
 		     &filesave);
 
    // search for last /
+#ifdef WIN32
+   tmp=strrchr(FileGetFilename(),'\\');
+#else
    tmp=strrchr(FileGetFilename(),'/');
+#endif
    if(tmp==NULL)
    {
      // there was none, so get complete filename
@@ -1793,17 +1806,6 @@ void
 on_bn_prefs_cancel_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
-/*   ConfigRename("klattcmd","tmp_klatt"); */
-  ConfigRemove("color_f1_tmp");
-  ConfigRemove("color_f2_tmp");
-  ConfigRemove("color_f3_tmp");
-  ConfigRemove("color_f4_tmp");
-  ConfigRemove("color_f5_tmp");
-  ConfigRemove("color_f6_tmp");
-  ConfigRemove("color_nasals_tmp");
-  ConfigRemove("color_vs_tmp");
-  ConfigRemove("color_ea_tmp");
-
   ConfigRemove("prefs_tab1_tmp");
   ConfigRemove("prefs_tab2_tmp");
   ConfigRemove("prefs_tab3_tmp");
@@ -1826,57 +1828,48 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   GtkWidget *w;
   int val;  
   char tmp[100];
+  GdkColor *color;
+
 
   // save values
 //   printf("apply\n");
   if(ConfigFind("prefs_tab1_tmp"))
   {
-    if(ConfigFind("color_f1_tmp"))
-    {
-      ConfigRemove("color_f1");
-      ConfigRename("color_f1_tmp","color_f1");
-    }
-    if(ConfigFind("color_f2_tmp"))
-    {
-      ConfigRemove("color_f2");
-      ConfigRename("color_f2_tmp","color_f2");
-    }
-    if(ConfigFind("color_f3_tmp"))
-    {
-      ConfigRemove("color_f3");
-      ConfigRename("color_f3_tmp","color_f3");
-    }
-    if(ConfigFind("color_f4_tmp"))
-    {
-      ConfigRemove("color_f4");
-      ConfigRename("color_f4_tmp","color_f4");
-    }
-    if(ConfigFind("color_f5_tmp"))
-    {
-      ConfigRemove("color_f5");
-      ConfigRename("color_f5_tmp","color_f5");
-    }
-    if(ConfigFind("color_f6_tmp"))
-    {
-      ConfigRemove("color_f6");
-      ConfigRename("color_f6_tmp","color_f6");
-    }
-    
-    if(ConfigFind("color_nasals_tmp"))
-    {
-      ConfigRemove("color_nasals");
-      ConfigRename("color_nasals_tmp","color_nasals");
-    }
-    if(ConfigFind("color_vs_tmp"))
-    {
-      ConfigRemove("color_vs");
-      ConfigRename("color_vs_tmp","color_vs");
-    }
-    if(ConfigFind("color_vs_tmp"))
-    {
-      ConfigRemove("color_vs");
-      ConfigRename("color_vs_tmp","color_vs");
-    }
+    w=lookup_widget (GTK_WIDGET (button), "cb_f1");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f1");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_f2");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f2");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_f3");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f3");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_f4");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f4");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_f5");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f5");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_f6");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "f6");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_nasals");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "nasals");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_vs");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "vs");
+
+    w=lookup_widget (GTK_WIDGET (button), "cb_ea");
+    gtk_color_button_get_color ((GtkColorButton *)w, color);
+    ConfigInsertColor(color, "ea");
 
     // set colors on gui-labels
     SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f1"),"f1");
@@ -1905,26 +1898,25 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     sprintf(tmp,"%d",val);
     ConfigInsert("maxband",tmp);
 
-    w=lookup_widget (GTK_WIDGET (button), "ent_font");
-    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
+    w=lookup_widget (GTK_WIDGET (button), "fb_font");
+    sprintf(tmp,"\"%s\"",gtk_font_button_get_font_name ((GtkFontButton *)w));
     ConfigInsert("rulerfont",tmp);
   }
 
   if(ConfigFind("prefs_tab3_tmp"))
   {
     w=lookup_widget (GTK_WIDGET (button), "ent_play");
-    strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("playcmd",tmp);
 
     w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
-    strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("tmpdir",tmp);
   }
 
   if(ConfigFind("prefs_tab4_tmp"))
   {
     w=lookup_widget (GTK_WIDGET (button), "cb_tool_style");
-//     strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
     val=gtk_combo_box_get_active((GtkComboBox *)w);
 
     if(val!=-1)
@@ -2016,64 +2008,6 @@ void InitDialogPrefs()
   gtk_window_present (GTK_WINDOW (prefs));
 }
 
-void InitDialogColor(char *searchstring)
-{
-  GtkWidget *w;
-  GdkColor col;
-  char tmp[40];
-
-  strcpy(tmp,"color_");
-  strcat(tmp,searchstring);
-  strcat(tmp,"_tmp");
-  if(ConfigFind(tmp))
-  {
-    strcpy(tmp,searchstring);
-    strcat(tmp,"_tmp");
-//    printf("found: %s\n",tmp);
-    col=ConfigGetColor(tmp);
-  }
-  else
-  {
-    col=ConfigGetColor(searchstring);
-  }
-  GdkColor *xcol;
-
-  xcol=(GdkColor *)malloc(sizeof(GdkColor));
-  xcol->red=col.red;
-  xcol->green=col.green;
-  xcol->blue=col.blue;
-
-  // risky!
-  selected_color=searchstring;
-
-//   printf("%2x %2x %2x\n",xcol->red,xcol->green,xcol->blue);
-
-  if (colordiag == NULL) 
-    {
-      colordiag = create_imskpe_colorsel ();
-      /* set the widget pointer to NULL when the widget is destroyed */
-      g_signal_connect (G_OBJECT (colordiag),
-			"destroy",
-			G_CALLBACK (gtk_widget_destroyed),
-			&colordiag);
-
-      /* Make sure the dialog doesn't disappear behind the main window. */
-      gtk_window_set_transient_for (GTK_WINDOW (colordiag), 
-				    GTK_WINDOW ((GtkWidget *)GetMainWindow()));
-      /* Do not allow user to resize the dialog */
-      gtk_window_set_resizable (GTK_WINDOW (colordiag), FALSE);
-
-      w=lookup_widget (GTK_WIDGET (colordiag), "color_selection1");
-      gtk_color_selection_set_current_color((GtkColorSelection *)w,
-					    xcol);
-
-      g_free(xcol);
-    }
-
-  /* Make sure the dialog is visible. */
-  gtk_window_present (GTK_WINDOW (colordiag));
-}
-
 
 void
 on_spn_max_freq_realize                (GtkWidget       *widget,
@@ -2106,8 +2040,13 @@ void
 on_ent_play_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  char tmp[200];  // not good!
+
   ConfigInsert("prefs_tab3_tmp","1");  // one for each tab (3)
-  gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("playcmd"));
+
+  strcpy(tmp,filtertoken(ConfigGetString("playcmd"),"\""));
+//   printf(">%s< - >%s<\n",tmp,g_utf8_normalize(tmp,strlen(tmp),G_NORMALIZE_DEFAULT));
+  gtk_entry_set_text ((GtkEntry *) widget, g_utf8_normalize(tmp,strlen(tmp),G_NORMALIZE_DEFAULT));
 }
 
 
@@ -2115,7 +2054,10 @@ void
 on_ent_tmp_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("tmpdir"));
+  char tmp[200];  // not good
+
+  strcpy(tmp,filtertoken(ConfigGetString("tmpdir"),"\""));
+  gtk_entry_set_text ((GtkEntry *) widget, g_utf8_normalize(tmp,strlen(tmp),G_NORMALIZE_DEFAULT));
 }
 
 
@@ -2135,138 +2077,6 @@ on_lb_colors_realize                   (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   ConfigInsert("prefs_tab1_tmp","1"); // one for each tab (1)
-
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f1"),"f1");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f2"),"f2");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f3"),"f3");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f4"),"f4");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f5"),"f5");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f6"),"f6");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_nasals"),"nasals");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_vs"),"vs");
-  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_ea"),"ea");
-}
-
-
-/** 
- * colordialog ok
- * 
- * @param button 
- * @param user_data 
- */
-void
-on_ok_button1_clicked                  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gdouble color[3];
-  GdkColor gdk_color;
-  GtkWidget *w;
-  char tmp[30];
-  char tmp2[30];
-
-  strcpy(tmp,"lb_");
-  strcat(tmp,selected_color);
-
-//   printf("-%s-\n",tmp);
-
-  w = lookup_widget (GTK_WIDGET ((GtkWidget *)colordiag), "color_selection1");    
-  gtk_color_selection_get_color ((GtkColorSelection *)w,color);
-    
-  /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
-  gdk_color=GetColor(color[0],color[1],color[2]);
-
-  w = lookup_widget (GTK_WIDGET ((GtkWidget *)prefs), tmp);
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &gdk_color);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &gdk_color);
-
-
-  // \todo farbwerte in #aabbcc umrechnen und abspeichern!
-  sprintf(tmp,"#%02x%02x%02x",(int)(gdk_color.red/256),(int)(gdk_color.green/256),(int)(gdk_color.blue/256));
-
-  strcpy(tmp2,"color_");
-  strcat(tmp2,selected_color);
-  strcat(tmp2,"_tmp");
-//   printf("update ...\n");
-  ConfigInsert(tmp2,tmp);
-
-//   if(selected_color!=NULL)
-//   {
-//     g_free(selected_color);
-//   }
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-//   colordiag=NULL;
-//   printf("color ok end\n");
-}
-
-
-void
-on_bn_color_f1_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f1");
-}
-
-
-void
-on_bn_color_f2_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f2");
-}
-
-void
-on_bn_color_f3_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f3");
-}
-
-void
-on_bn_color_f4_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f4");
-}
-
-
-void
-on_bn_color_f5_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f5");
-}
-
-
-void
-on_bn_color_f6_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("f6");
-}
-
-
-void
-on_bn_color_nasals_clicked             (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("nasals");
-}
-
-
-void
-on_bn_color_vc_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("vs");
-}
-
-
-void
-on_bn_color_ea_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogColor("ea");
 }
 
 void
@@ -2301,72 +2111,111 @@ on_toolbar2_realize                    (GtkWidget       *widget,
   gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
 }
 
-
-
 void
-on_bn_font_clicked                     (GtkButton       *button,
+on_cb_f1_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
- static GtkWidget *fontdialog = NULL;
- GtkWidget *w;
- char tmp[100];
+  GdkColor col;
 
- if (fontdialog == NULL) 
- {
-   fontdialog = create_imskpe_font ();
-   /* set the widget pointer to NULL when the widget is destroyed */
-   g_signal_connect (G_OBJECT (fontdialog),
-		     "destroy",
-		     G_CALLBACK (gtk_widget_destroyed),
-		     &fontdialog);
- 
-   w=lookup_widget (GTK_WIDGET ((GtkWidget *)fontdialog), "font_selection1");
+  col = ConfigGetColor("f1");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
 
-   //   printf("%s\n",filtertoken(ConfigGetString("rulerfont"),"\""));
-   strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
-   gtk_font_selection_set_font_name((GtkFontSelection *)w,tmp);
-  
-   /* Make sure the dialog doesn't disappear behind the main window. */
-   gtk_window_set_transient_for (GTK_WINDOW (fontdialog), 
-				 GTK_WINDOW (GetMainWindow()));
- }
- 
- /* Make sure the dialog is visible. */
- gtk_window_present (GTK_WINDOW (fontdialog));
+void
+on_cb_f2_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
 
+  col = ConfigGetColor("f2");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
 }
 
 
 void
-on_font_ok_clicked                     (GtkButton       *button,
+on_cb_f3_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  // use apply to "save"
-  on_font_apply_clicked (button,user_data);
+  GdkColor col;
 
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  col = ConfigGetColor("f3");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
 }
 
 
 void
-on_font_apply_clicked                  (GtkButton       *button,
+on_cb_f4_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GtkWidget *w;
+  GdkColor col;
 
-  w=lookup_widget (GTK_WIDGET (prefs), "ent_font");
-  gtk_entry_set_text ((GtkEntry *) w, gtk_font_selection_get_font_name((GtkFontSelection *)lookup_widget (GTK_WIDGET ((GtkWidget *)button), "font_selection1")));
-
-  return;
+  col = ConfigGetColor("f4");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
 }
 
+
 void
-on_ent_font_realize                    (GtkWidget       *widget,
+on_cb_f5_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = ConfigGetColor("f5");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
+
+
+void
+on_cb_f6_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = ConfigGetColor("f6");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
+
+
+void
+on_cb_nasals_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = ConfigGetColor("nasals");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
+
+
+void
+on_cb_vs_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = ConfigGetColor("vs");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
+
+
+void
+on_cb_ea_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = ConfigGetColor("ea");
+  gtk_color_button_set_color ((GtkColorButton *)widget, &col);
+}
+
+
+void
+on_fb_font_realize                     (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   char tmp[100];
   strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
-  gtk_entry_set_text ((GtkEntry *) widget, tmp);
+  gtk_font_button_set_font_name((GtkFontButton *)widget, tmp);
 }
 
 void
@@ -2408,8 +2257,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   char tmp[300];
 
   dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
-
-  strcpy(dir,ConfigGetString("tmpdir"));
+  strcpy(dir,filtertoken(ConfigGetString("tmpdir"),"\""));
   strcat(dir,"/imskpe.");
   sprintf(tmp,"%d",getpid());
   strcat(dir,tmp);
@@ -2418,7 +2266,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   strcat(tmp,".wav");
 
   convert(tmp);
-  strcpy(dir,ConfigGetString("playcmd"));
+  strcpy(dir,filtertoken(ConfigGetString("playcmd"),"\""));
   strcat(dir," ");
   strcat(dir,tmp);
   system(dir);

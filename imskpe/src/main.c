@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
 #ifdef ENABLE_NLS
 #ifdef WIN32
   bindtextdomain (GETTEXT_PACKAGE, "..\\share\\locale");
-  printf("win32 locale\n");
+//  printf("win32 locale\n");
 #else
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 #endif
@@ -75,6 +75,9 @@ int main (int argc, char *argv[])
 #else
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 #endif
+
+// we need more random!
+  srand(time(NULL));
 
   ConfigLoad();
 

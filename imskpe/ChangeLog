@@ -1,3 +1,9 @@
+2004-12-19  Andreas Madsack  <bolsog@users.sf.net>
+
+	* fixed a few win32-bugs
+	* fixed unicode-problems with pango
+	* now using gtk2.4 buttons for fonts and colors
+	
 2004-12-16  Andreas Madsack  <bolsog@users.sf.net>
 
 	* improved FileOpenDialog (added filter: all files, par files)

@@ -2375,60 +2375,6 @@
   </child>
 </widget>
 
-<widget class="GtkColorSelectionDialog" id="imskpe_colorsel">
-  <property name="visible">True</property>
-  <property name="title" translatable="yes">Select Color</property>
-  <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">True</property>
-  <property name="resizable">False</property>
-  <property name="destroy_with_parent">False</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-
-  <child internal-child="cancel_button">
-    <widget class="GtkButton" id="cancel_button1">
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-      <signal name="clicked" handler="on_bn_close_allg" last_modification_time="Tue, 07 Dec 2004 10:25:55 GMT"/>
-    </widget>
-  </child>
-
-  <child internal-child="ok_button">
-    <widget class="GtkButton" id="ok_button1">
-      <property name="visible">True</property>
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-      <signal name="clicked" handler="on_ok_button1_clicked" last_modification_time="Sat, 06 Mar 2004 17:59:25 GMT"/>
-    </widget>
-  </child>
-
-  <child internal-child="help_button">
-    <widget class="GtkButton" id="help_button1">
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-    </widget>
-  </child>
-
-  <child internal-child="color_selection">
-    <widget class="GtkColorSelection" id="color_selection1">
-      <property name="visible">True</property>
-      <property name="has_opacity_control">False</property>
-      <property name="has_palette">False</property>
-      <signal name="configure_event" handler="on_color_selection1_configure_event" last_modification_time="Sat, 06 Mar 2004 17:20:08 GMT"/>
-    </widget>
-  </child>
-</widget>
-
 <widget class="GtkDialog" id="imskpe_about">
   <property name="width_request">330</property>
   <property name="height_request">200</property>
@@ -2746,66 +2692,23 @@ imskpe
 	    <widget class="GtkTable" id="table18">
 	      <property name="visible">True</property>
 	      <property name="n_rows">10</property>
-	      <property name="n_columns">3</property>
-	      <property name="homogeneous">True</property>
+	      <property name="n_columns">5</property>
+	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">0</property>
 	      <property name="column_spacing">0</property>
 
 	      <child>
-		<widget class="GtkButton" id="bn_color_f1">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F1</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f1_clicked" last_modification_time="Wed, 03 Nov 2004 22:35:03 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="lb_f1">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Formant 1</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkDrawingArea" id="drawingarea1">
+		<widget class="GtkDrawingArea" id="drawingarea6">
 		  <property name="width_request">20</property>
+		  <property name="height_request">20</property>
 		  <property name="visible">True</property>
 		</widget>
 		<packing>
 		  <property name="left_attach">1</property>
 		  <property name="right_attach">2</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">1</property>
+		  <property name="x_options">fill</property>
 		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
@@ -2825,8 +2728,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">2</property>
 		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
@@ -2849,8 +2752,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">3</property>
 		  <property name="bottom_attach">4</property>
 		  <property name="x_options">fill</property>
@@ -2873,8 +2776,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">4</property>
 		  <property name="bottom_attach">5</property>
 		  <property name="x_options">fill</property>
@@ -2897,8 +2800,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">5</property>
 		  <property name="bottom_attach">6</property>
 		  <property name="x_options">fill</property>
@@ -2921,8 +2824,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">6</property>
 		  <property name="bottom_attach">7</property>
 		  <property name="x_options">fill</property>
@@ -2945,8 +2848,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">7</property>
 		  <property name="bottom_attach">8</property>
 		  <property name="x_options">fill</property>
@@ -2969,8 +2872,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">8</property>
 		  <property name="bottom_attach">9</property>
 		  <property name="x_options">fill</property>
@@ -2993,8 +2896,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
 		  <property name="top_attach">9</property>
 		  <property name="bottom_attach">10</property>
 		  <property name="x_options">fill</property>
@@ -3003,19 +2906,60 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkButton" id="bn_color_f2">
+		<widget class="GtkLabel" id="lb_f1">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F2</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f2_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:36 GMT"/>
+		  <property name="label" translatable="yes">Formant 1</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_f1">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_f1_realize" last_modification_time="Sun, 19 Dec 2004 18:02:57 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_f2">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_f2_realize" last_modification_time="Sun, 19 Dec 2004 18:40:31 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
 		  <property name="top_attach">2</property>
 		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
@@ -3024,145 +2968,17 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkButton" id="bn_color_f4">
+		<widget class="GtkColorButton" id="cb_f3">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F4</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
 		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
+		  <property name="use_alpha">False</property>
 		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f4_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:46 GMT"/>
+		  <signal name="realize" handler="on_cb_f3_realize" last_modification_time="Sun, 19 Dec 2004 18:40:37 GMT"/>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">4</property>
-		  <property name="bottom_attach">5</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_f5">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F5</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f5_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:51 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">5</property>
-		  <property name="bottom_attach">6</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_f6">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F6</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f6_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:55 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">6</property>
-		  <property name="bottom_attach">7</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_nasals">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color Nasals</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_nasals_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:59 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">7</property>
-		  <property name="bottom_attach">8</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_vc">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color voice src</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_vc_clicked" last_modification_time="Thu, 04 Nov 2004 06:44:04 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">8</property>
-		  <property name="bottom_attach">9</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_ea">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color exc. amp.</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_ea_clicked" last_modification_time="Thu, 04 Nov 2004 06:44:09 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">9</property>
-		  <property name="bottom_attach">10</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_color_f3">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Color F3</property>
-		  <property name="can_focus">True</property>
-		  <property name="label" translatable="yes">Color</property>
-		  <property name="use_underline">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_color_f3_clicked" last_modification_time="Thu, 04 Nov 2004 06:43:40 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
 		  <property name="top_attach">3</property>
 		  <property name="bottom_attach">4</property>
 		  <property name="x_options">fill</property>
@@ -3171,26 +2987,160 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_change">
+		<widget class="GtkColorButton" id="cb_f4">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">change</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">True</property>
-		  <property name="justify">GTK_JUSTIFY_CENTER</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_f4_realize" last_modification_time="Sun, 19 Dec 2004 18:40:44 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">4</property>
+		  <property name="bottom_attach">5</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_f5">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_f5_realize" last_modification_time="Sun, 19 Dec 2004 18:40:51 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">5</property>
+		  <property name="bottom_attach">6</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_f6">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_f6_realize" last_modification_time="Sun, 19 Dec 2004 18:40:56 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">6</property>
+		  <property name="bottom_attach">7</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_nasals">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_nasals_realize" last_modification_time="Sun, 19 Dec 2004 18:41:01 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">7</property>
+		  <property name="bottom_attach">8</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_vs">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_vs_realize" last_modification_time="Sun, 19 Dec 2004 18:41:07 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">8</property>
+		  <property name="bottom_attach">9</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkColorButton" id="cb_ea">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Change Color</property>
+		  <property name="can_focus">True</property>
+		  <property name="use_alpha">False</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_cb_ea_realize" last_modification_time="Sun, 19 Dec 2004 18:41:12 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">9</property>
+		  <property name="bottom_attach">10</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea18">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">4</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea17">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">0</property>
+		  <property name="right_attach">1</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea16">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
 		  <property name="right_attach">3</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">1</property>
-		  <property name="x_options"></property>
-		  <property name="y_options"></property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 	    </widget>
@@ -3224,15 +3174,118 @@ imskpe
 	    <widget class="GtkTable" id="table21">
 	      <property name="visible">True</property>
 	      <property name="n_rows">7</property>
-	      <property name="n_columns">4</property>
+	      <property name="n_columns">5</property>
 	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">0</property>
 	      <property name="column_spacing">0</property>
 
 	      <child>
-		<widget class="GtkLabel" id="lb_max_freq">
+		<widget class="GtkFontButton" id="fb_font">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">max frequence</property>
+		  <property name="can_focus">True</property>
+		  <property name="show_style">True</property>
+		  <property name="show_size">True</property>
+		  <property name="use_font">True</property>
+		  <property name="use_size">True</property>
+		  <property name="focus_on_click">True</property>
+		  <signal name="realize" handler="on_fb_font_realize" last_modification_time="Sun, 19 Dec 2004 18:16:36 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">5</property>
+		  <property name="bottom_attach">6</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkSpinButton" id="spn_max_band">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="climb_rate">1</property>
+		  <property name="digits">0</property>
+		  <property name="numeric">False</property>
+		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+		  <property name="snap_to_ticks">False</property>
+		  <property name="wrap">False</property>
+		  <property name="adjustment">2000 500 2000 1 10 10</property>
+		  <signal name="realize" handler="on_spn_max_band_realize" last_modification_time="Mon, 01 Nov 2004 16:00:15 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">4</property>
+		  <property name="bottom_attach">5</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkSpinButton" id="spn_max_amp">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="climb_rate">1</property>
+		  <property name="digits">0</property>
+		  <property name="numeric">False</property>
+		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+		  <property name="snap_to_ticks">False</property>
+		  <property name="wrap">False</property>
+		  <property name="adjustment">100 10 100 1 10 10</property>
+		  <signal name="realize" handler="on_spn_max_amp_realize" last_modification_time="Mon, 01 Nov 2004 16:00:09 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkSpinButton" id="spn_max_freq">
+		  <property name="visible">True</property>
+		  <property name="can_focus">True</property>
+		  <property name="climb_rate">1</property>
+		  <property name="digits">0</property>
+		  <property name="numeric">False</property>
+		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
+		  <property name="snap_to_ticks">False</property>
+		  <property name="wrap">False</property>
+		  <property name="adjustment">5000 1000 5000 1 10 10</property>
+		  <signal name="realize" handler="on_spn_max_freq_realize" last_modification_time="Mon, 01 Nov 2004 15:48:15 GMT"/>
+		  <signal name="parent_set" handler="on_spn_max_freq_parent_set" last_modification_time="Sun, 28 Nov 2004 16:24:04 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea7">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">4</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="label29">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">value:</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3244,8 +3297,8 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">5</property>
 		  <property name="top_attach">1</property>
 		  <property name="bottom_attach">2</property>
 		  <property name="x_options">fill</property>
@@ -3254,9 +3307,9 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="ln_max_amp">
+		<widget class="GtkLabel" id="label33">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">max amplidute</property>
+		  <property name="label" translatable="yes">Font: </property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3268,10 +3321,10 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">2</property>
-		  <property name="bottom_attach">3</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">5</property>
+		  <property name="bottom_attach">6</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
 		</packing>
@@ -3292,86 +3345,19 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">3</property>
-		  <property name="bottom_attach">4</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">4</property>
+		  <property name="bottom_attach">5</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkSpinButton" id="spn_max_freq">
+		<widget class="GtkLabel" id="ln_max_amp">
 		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="climb_rate">1</property>
-		  <property name="digits">0</property>
-		  <property name="numeric">False</property>
-		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-		  <property name="snap_to_ticks">False</property>
-		  <property name="wrap">False</property>
-		  <property name="adjustment">5000 1000 5000 1 10 10</property>
-		  <signal name="realize" handler="on_spn_max_freq_realize" last_modification_time="Mon, 01 Nov 2004 15:48:15 GMT"/>
-		  <signal name="parent_set" handler="on_spn_max_freq_parent_set" last_modification_time="Sun, 28 Nov 2004 16:24:04 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkSpinButton" id="spn_max_amp">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="climb_rate">1</property>
-		  <property name="digits">0</property>
-		  <property name="numeric">False</property>
-		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-		  <property name="snap_to_ticks">False</property>
-		  <property name="wrap">False</property>
-		  <property name="adjustment">100 10 100 1 10 10</property>
-		  <signal name="realize" handler="on_spn_max_amp_realize" last_modification_time="Mon, 01 Nov 2004 16:00:09 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">2</property>
-		  <property name="bottom_attach">3</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkSpinButton" id="spn_max_band">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="climb_rate">1</property>
-		  <property name="digits">0</property>
-		  <property name="numeric">False</property>
-		  <property name="update_policy">GTK_UPDATE_ALWAYS</property>
-		  <property name="snap_to_ticks">False</property>
-		  <property name="wrap">False</property>
-		  <property name="adjustment">2000 500 2000 1 10 10</property>
-		  <signal name="realize" handler="on_spn_max_band_realize" last_modification_time="Mon, 01 Nov 2004 16:00:15 GMT"/>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">3</property>
-		  <property name="bottom_attach">4</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="label29">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">value:</property>
+		  <property name="label" translatable="yes">max amplidute</property>
 		  <property name="use_underline">False</property>
 		  <property name="use_markup">False</property>
 		  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -3383,151 +3369,82 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">4</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">1</property>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="lb_max_freq">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">max frequence</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea8">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">0</property>
+		  <property name="right_attach">1</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 
 	      <child>
 		<widget class="GtkDrawingArea" id="drawingarea5">
 		  <property name="width_request">20</property>
+		  <property name="height_request">20</property>
 		  <property name="visible">True</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">1</property>
-		  <property name="right_attach">2</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">1</property>
+		  <property name="x_options">fill</property>
 		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkLabel" id="label33">
+		<widget class="GtkDrawingArea" id="drawingarea9">
+		  <property name="width_request">20</property>
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Font: </property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">4</property>
-		  <property name="bottom_attach">5</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkEntry" id="ent_font">
-		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="editable">False</property>
-		  <property name="visibility">True</property>
-		  <property name="max_length">0</property>
-		  <property name="text" translatable="yes">Sans 6</property>
-		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
-		  <property name="activates_default">False</property>
-		  <signal name="realize" handler="on_ent_font_realize" last_modification_time="Sun, 05 Dec 2004 20:42:28 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
 		  <property name="right_attach">3</property>
-		  <property name="top_attach">4</property>
-		  <property name="bottom_attach">5</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkButton" id="bn_font">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">Change Font</property>
-		  <property name="can_focus">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <signal name="clicked" handler="on_bn_font_clicked" last_modification_time="Sun, 05 Dec 2004 20:27:11 GMT"/>
-
-		  <child>
-		    <widget class="GtkAlignment" id="alignment3">
-		      <property name="visible">True</property>
-		      <property name="xalign">0.5</property>
-		      <property name="yalign">0.5</property>
-		      <property name="xscale">0</property>
-		      <property name="yscale">0</property>
-		      <property name="top_padding">0</property>
-		      <property name="bottom_padding">0</property>
-		      <property name="left_padding">0</property>
-		      <property name="right_padding">0</property>
-
-		      <child>
-			<widget class="GtkHBox" id="hbox6">
-			  <property name="visible">True</property>
-			  <property name="homogeneous">False</property>
-			  <property name="spacing">2</property>
-
-			  <child>
-			    <widget class="GtkImage" id="image6">
-			      <property name="visible">True</property>
-			      <property name="stock">gtk-select-font</property>
-			      <property name="icon_size">4</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">False</property>
-			      <property name="fill">False</property>
-			    </packing>
-			  </child>
-
-			  <child>
-			    <widget class="GtkLabel" id="label35">
-			      <property name="visible">True</property>
-			      <property name="label" translatable="yes">Change</property>
-			      <property name="use_underline">True</property>
-			      <property name="use_markup">False</property>
-			      <property name="justify">GTK_JUSTIFY_LEFT</property>
-			      <property name="wrap">False</property>
-			      <property name="selectable">False</property>
-			      <property name="xalign">0.5</property>
-			      <property name="yalign">0.5</property>
-			      <property name="xpad">0</property>
-			      <property name="ypad">0</property>
-			    </widget>
-			    <packing>
-			      <property name="padding">0</property>
-			      <property name="expand">False</property>
-			      <property name="fill">False</property>
-			    </packing>
-			  </child>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">5</property>
-		  <property name="bottom_attach">6</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 	    </widget>
@@ -3560,93 +3477,30 @@ imskpe
 	    <widget class="GtkTable" id="table20">
 	      <property name="visible">True</property>
 	      <property name="n_rows">5</property>
-	      <property name="n_columns">4</property>
+	      <property name="n_columns">5</property>
 	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">0</property>
 	      <property name="column_spacing">0</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label25">
+		<widget class="GtkEntry" id="ent_tmp">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">Path</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
+		  <property name="tooltip" translatable="yes">directory for temp-files</property>
+		  <property name="can_focus">True</property>
+		  <property name="editable">True</property>
+		  <property name="visibility">True</property>
+		  <property name="max_length">0</property>
+		  <property name="text" translatable="yes">/tmp</property>
+		  <property name="has_frame">True</property>
+		  <property name="invisible_char" translatable="yes">*</property>
+		  <property name="activates_default">False</property>
+		  <signal name="realize" handler="on_ent_tmp_realize" last_modification_time="Mon, 01 Nov 2004 16:00:32 GMT"/>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
+		  <property name="left_attach">3</property>
 		  <property name="right_attach">4</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">1</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkDrawingArea" id="drawingarea3">
-		  <property name="width_request">20</property>
-		  <property name="visible">True</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">1</property>
-		  <property name="right_attach">2</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="y_options">fill</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="lb_play">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">wav player</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="lb_tmp">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">tmp directory</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">2</property>
-		  <property name="bottom_attach">3</property>
-		  <property name="x_options">fill</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
 		  <property name="y_options"></property>
 		</packing>
 	      </child>
@@ -3666,34 +3520,144 @@ imskpe
 		  <signal name="realize" handler="on_ent_play_realize" last_modification_time="Mon, 01 Nov 2004 16:00:27 GMT"/>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">3</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
 		  <property name="y_options"></property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkEntry" id="ent_tmp">
+		<widget class="GtkLabel" id="label25">
 		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">directory for temp-files</property>
-		  <property name="can_focus">True</property>
-		  <property name="editable">True</property>
-		  <property name="visibility">True</property>
-		  <property name="max_length">0</property>
-		  <property name="text" translatable="yes">/tmp</property>
-		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
-		  <property name="activates_default">False</property>
-		  <signal name="realize" handler="on_ent_tmp_realize" last_modification_time="Mon, 01 Nov 2004 16:00:32 GMT"/>
+		  <property name="label" translatable="yes">Path</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea10">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">4</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="lb_tmp">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">tmp directory</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="lb_play">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">wav player</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea3">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
 		  <property name="right_attach">3</property>
 		  <property name="top_attach">2</property>
 		  <property name="bottom_attach">3</property>
-		  <property name="y_options"></property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea12">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">0</property>
+		  <property name="right_attach">1</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea11">
+		  <property name="width_request">20</property>
+		  <property name="height_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">1</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 	    </widget>
@@ -3726,68 +3690,29 @@ imskpe
 	    <widget class="GtkTable" id="table22">
 	      <property name="visible">True</property>
 	      <property name="n_rows">5</property>
-	      <property name="n_columns">4</property>
+	      <property name="n_columns">6</property>
 	      <property name="homogeneous">False</property>
 	      <property name="row_spacing">0</property>
 	      <property name="column_spacing">0</property>
 
 	      <child>
-		<widget class="GtkLabel" id="label31">
+		<widget class="GtkRadioButton" id="rb_quit2">
 		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">toolbar style:</property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
+		  <property name="can_focus">True</property>
+		  <property name="label">gtk-no</property>
+		  <property name="use_stock">True</property>
+		  <property name="relief">GTK_RELIEF_NORMAL</property>
+		  <property name="focus_on_click">True</property>
+		  <property name="active">False</property>
+		  <property name="inconsistent">False</property>
+		  <property name="draw_indicator">True</property>
+		  <signal name="realize" handler="on_rb_quit2_realize" last_modification_time="Sun, 05 Dec 2004 22:35:48 GMT"/>
 		</widget>
 		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">1</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkDrawingArea" id="drawingarea4">
-		  <property name="width_request">20</property>
-		  <property name="visible">True</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">1</property>
-		  <property name="right_attach">2</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="y_options">fill</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkLabel" id="label34">
-		  <property name="visible">True</property>
-		  <property name="label" translatable="yes">show realy quit dialog: </property>
-		  <property name="use_underline">False</property>
-		  <property name="use_markup">False</property>
-		  <property name="justify">GTK_JUSTIFY_LEFT</property>
-		  <property name="wrap">False</property>
-		  <property name="selectable">False</property>
-		  <property name="xalign">0</property>
-		  <property name="yalign">0.5</property>
-		  <property name="xpad">0</property>
-		  <property name="ypad">0</property>
-		</widget>
-		<packing>
-		  <property name="left_attach">0</property>
-		  <property name="right_attach">2</property>
-		  <property name="top_attach">2</property>
-		  <property name="bottom_attach">3</property>
+		  <property name="left_attach">4</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
 		</packing>
@@ -3804,7 +3729,71 @@ imskpe
 		  <property name="active">False</property>
 		  <property name="inconsistent">False</property>
 		  <property name="draw_indicator">True</property>
+		  <property name="group">rb_quit2</property>
 		  <signal name="realize" handler="on_rb_quit_realize" last_modification_time="Sun, 05 Dec 2004 22:35:40 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="label34">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">show really quit dialog: </property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">3</property>
+		  <property name="bottom_attach">4</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkLabel" id="label31">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">toolbar style:</property>
+		  <property name="use_underline">False</property>
+		  <property name="use_markup">False</property>
+		  <property name="justify">GTK_JUSTIFY_LEFT</property>
+		  <property name="wrap">False</property>
+		  <property name="selectable">False</property>
+		  <property name="xalign">0</property>
+		  <property name="yalign">0.5</property>
+		  <property name="xpad">0</property>
+		  <property name="ypad">0</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">1</property>
+		  <property name="right_attach">2</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea4">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
 		</widget>
 		<packing>
 		  <property name="left_attach">2</property>
@@ -3812,7 +3801,7 @@ imskpe
 		  <property name="top_attach">2</property>
 		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 
@@ -3831,36 +3820,58 @@ imskpe
 		  <property name="ypad">0</property>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">4</property>
-		  <property name="top_attach">0</property>
-		  <property name="bottom_attach">1</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
 		</packing>
 	      </child>
 
 	      <child>
-		<widget class="GtkRadioButton" id="rb_quit2">
+		<widget class="GtkDrawingArea" id="drawingarea15">
+		  <property name="width_request">20</property>
+		  <property name="height_request">20</property>
 		  <property name="visible">True</property>
-		  <property name="can_focus">True</property>
-		  <property name="label">gtk-no</property>
-		  <property name="use_stock">True</property>
-		  <property name="relief">GTK_RELIEF_NORMAL</property>
-		  <property name="focus_on_click">True</property>
-		  <property name="active">False</property>
-		  <property name="inconsistent">False</property>
-		  <property name="draw_indicator">True</property>
-		  <property name="group">rb_quit</property>
-		  <signal name="realize" handler="on_rb_quit2_realize" last_modification_time="Sun, 05 Dec 2004 22:35:48 GMT"/>
 		</widget>
 		<packing>
 		  <property name="left_attach">3</property>
 		  <property name="right_attach">4</property>
+		  <property name="top_attach">0</property>
+		  <property name="bottom_attach">1</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea14">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">5</property>
+		  <property name="right_attach">6</property>
 		  <property name="top_attach">2</property>
 		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
-		  <property name="y_options"></property>
+		  <property name="y_options">fill</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkDrawingArea" id="drawingarea13">
+		  <property name="width_request">20</property>
+		  <property name="visible">True</property>
+		</widget>
+		<packing>
+		  <property name="left_attach">0</property>
+		  <property name="right_attach">1</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 
@@ -3874,11 +3885,10 @@ both
 		  <signal name="realize" handler="on_cb_tool_style_realize" last_modification_time="Thu, 16 Dec 2004 14:42:29 GMT"/>
 		</widget>
 		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">4</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="x_options">fill</property>
+		  <property name="left_attach">3</property>
+		  <property name="right_attach">5</property>
+		  <property name="top_attach">2</property>
+		  <property name="bottom_attach">3</property>
 		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
@@ -4626,68 +4636,6 @@ Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele
 	</packing>
       </child>
     </widget>
-  </child>
-</widget>
-
-<widget class="GtkFontSelectionDialog" id="imskpe_font">
-  <property name="border_width">4</property>
-  <property name="visible">True</property>
-  <property name="title" translatable="yes">Select Font</property>
-  <property name="type">GTK_WINDOW_TOPLEVEL</property>
-  <property name="window_position">GTK_WIN_POS_NONE</property>
-  <property name="modal">True</property>
-  <property name="resizable">True</property>
-  <property name="destroy_with_parent">False</property>
-  <property name="decorated">True</property>
-  <property name="skip_taskbar_hint">False</property>
-  <property name="skip_pager_hint">False</property>
-  <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
-  <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-
-  <child internal-child="cancel_button">
-    <widget class="GtkButton" id="font_cancel">
-      <property name="visible">True</property>
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-      <signal name="clicked" handler="on_bn_close_allg" last_modification_time="Tue, 07 Dec 2004 10:25:37 GMT"/>
-    </widget>
-  </child>
-
-  <child internal-child="apply_button">
-    <widget class="GtkButton" id="font_apply">
-      <property name="visible">True</property>
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-      <signal name="clicked" handler="on_font_apply_clicked" last_modification_time="Sun, 05 Dec 2004 20:23:10 GMT"/>
-    </widget>
-  </child>
-
-  <child internal-child="ok_button">
-    <widget class="GtkButton" id="font_ok">
-      <property name="visible">True</property>
-      <property name="can_default">True</property>
-      <property name="can_focus">True</property>
-      <property name="relief">GTK_RELIEF_NORMAL</property>
-      <property name="focus_on_click">True</property>
-      <signal name="clicked" handler="on_font_ok_clicked" last_modification_time="Sun, 05 Dec 2004 20:23:21 GMT"/>
-    </widget>
-  </child>
-
-  <child internal-child="font_selection">
-    <widget class="GtkFontSelection" id="font_selection1">
-      <property name="border_width">4</property>
-      <property name="visible">True</property>
-      <property name="preview_text" translatable="yes">0123456789</property>
-    </widget>
-    <packing>
-      <property name="padding">0</property>
-      <property name="expand">True</property>
-      <property name="fill">True</property>
-    </packing>
   </child>
 </widget>
 

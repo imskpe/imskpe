@@ -225,6 +225,8 @@ short *output;
     /* Get low-passed random number for aspiration and frication noise */
 
     noise = gen_noise(noise,globals);
+
+//     printf("-1- %f\n",noise);
     /*    
       Amplitude modulate noise (reduce noise amplitude during
       second half of glottal period) if voicing simultaneously present.
@@ -234,11 +236,13 @@ short *output;
     {
       noise *= (double) 0.5;
     }
+//     printf("-2- %f\n",noise);
 
     /* Compute frication noise */
 
     frics = globals->amp_frica * noise;
 
+//     printf("-3- %f\n",frics);
     /*  
       Compute voicing waveform. Run glottal source simulation at 4 
       times normal sample rate to minimize quantization noise in 
@@ -289,7 +293,6 @@ short *output;
     voice = (voice * globals->onemd) + (vlast * globals->decay);
     vlast = voice;
 
-
     /* 
       Add breathiness during glottal open phase. Amount of breathiness 
       determined by parameter Aturb Use nrand rather than noise because 
@@ -302,22 +305,16 @@ short *output;
       voice += globals->amp_breth * globals->nrand;
     }
 
-
     /* Set amplitude of voicing */
 
     glotout = globals->amp_voice * voice;
     par_glotout = globals->par_amp_voice * voice;
-
-
     /* Compute aspiration amplitude and add to voicing source */
-
 
     aspiration = globals->amp_aspir * noise;
     glotout += aspiration;
-  
 
     par_glotout += aspiration;
-
 
     /*  
       Cascade vocal tract, excited by laryngeal sources.
@@ -381,12 +378,9 @@ short *output;
       out = 0; 
     }
 
-
     /* Excite parallel F1 and FNP by voicing waveform */
 
     sourc = par_glotout;        /* Source is voicing plus aspiration */
-
-
 
     /*  
       Standard parallel vocal tract Formants F6,F5,F4,F3,F2, 
@@ -409,7 +403,6 @@ short *output;
 
     outbypas = globals->amp_bypas * sourc;
     out = outbypas - out;
-
 
     if (globals->outsl != 0) 
     {
@@ -991,6 +984,7 @@ klatt_global_ptr globals;
   static double nlast;
 
   temp = (long) getrandom(-8191,8191);
+//   printf("rand: %7d\n",temp);
   globals->nrand = (long) temp;
 
   noise = globals->nrand + (0.75 * nlast);

@@ -164,7 +164,7 @@ void ConfigInsertString(char *name, char *value, unsigned short type)
   char *p_name;
   char *p_value;
 
-//   printf("-CIS- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
+//  printf("-CIS- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
   p = (typConfig *)g_malloc (sizeof (typConfig));
   p_name = g_malloc (strlen(name)+1);
   p_value = g_malloc (strlen(value)+1);
@@ -235,6 +235,19 @@ int ConfigGetInteger(char *name)
 
     cl = cl->next;
   }
+}
+
+gboolean ConfigInsertColor(GdkColor *color, char *selected_color)
+{
+  char tmp[100];  // not good
+  char tmp2[100];  // not good
+
+  sprintf(tmp,"#%02x%02x%02x",(int)(color->red/256),(int)(color->green/256),(int)(color->blue/256));
+  strcpy(tmp2,"color_");
+  strcat(tmp2,selected_color);
+  ConfigInsert(tmp2,tmp);
+
+  return TRUE;
 }
 
 GdkColor ConfigGetColor(char *name)
@@ -383,8 +396,14 @@ void ConfigNew()
   ConfigInsert("maxamp","100");
   ConfigInsert("maxband","2000");
 
-  ConfigInsert("playcmd","play");
-  ConfigInsert("tmpdir","/tmp");
+
+#ifdef WIN32
+  ConfigInsert("playcmd","\"sndrec32 /play /close\"");
+  ConfigInsert("tmpdir","\"c:\\\"");
+#else
+  ConfigInsert("playcmd","\"play\"");
+  ConfigInsert("tmpdir","\"/tmp\"");
+#endif
 
   ConfigInsert("color_f1","#ff0000");
   ConfigInsert("color_f2","#00ff00");
