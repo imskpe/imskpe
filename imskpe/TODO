@@ -8,7 +8,7 @@ OK save par-files
 - open wavfiles
 NOP generate wavfiles (through kpe80 - console tool)
 - generate wavs internal
-- bind to klatt80
+OK bind to klatt80
 - use fft to show a spectrum
 
 

@@ -19,7 +19,9 @@ imskpe_SOURCES = \
 	savefile.c savefile.h \
 	curves.c curves.h \
 	loadconf.l loadconf.h \
-	convert.c
+	convert.c convert.h
+
+nodist_imskpe_SOURCES = klatt80/parwave.c klatt80/proto.h klatt80/parwave.h
 
 imskpe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 

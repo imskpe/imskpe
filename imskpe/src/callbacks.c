@@ -44,6 +44,7 @@
 #include "savefile.h"
 #include "curves.h"
 #include "graphics.h"
+#include "convert.h"
 
 /*  globals  */
 typedef enum {NONE, LOAD, SAVE} lsTyp;
@@ -1690,8 +1691,7 @@ void
 on_convert1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-
-
+  convert();
 }
 
 

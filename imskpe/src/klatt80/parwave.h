@@ -11,7 +11,7 @@ Contains structure definitions used in parwave.c
 #endif
 
 
-#include <gtk/gtk.h>
+#include <gtk/gtk.h>  /* for TRUE / FALSE  */
 #include "proto.h"
 
 #define CASCADE_PARALLEL 1         /* Type of synthesis model */

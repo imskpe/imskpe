@@ -5,7 +5,8 @@ SUBDIRS = src po
 EXTRA_DIST = \
 	autogen.sh \
 	imskpe.glade \
-	imskpe.gladep
+	imskpe.gladep \
+	Doxyfile
 
 install-data-local:
 	@$(NORMAL_INSTALL)
@@ -24,6 +25,14 @@ dist-hook:
 	  for pixmap in pixmaps/*; do \
 	    if test -f $$pixmap; then \
 	      cp -p $$pixmap $(distdir)/pixmaps; \
+	    fi \
+	  done \
+	fi
+	if test -d packages; then \
+	  mkdir $(distdir)/packages; \
+	  for packages in packages/*; do \
+	    if test -f $$packages; then \
+	      cp -p $$packages $(distdir)/packages; \
 	    fi \
 	  done \
 	fi
