@@ -90,7 +90,7 @@ void LoadConf(char *filename)
   if(infp==NULL)
   {
     /// \todo use an error- or info-dialog ?!
-    printf("can't open config file\n");
+    printf("couldn't find configfile / use default!\n");
 
     free(filename);
 

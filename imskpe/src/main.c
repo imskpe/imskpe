@@ -54,6 +54,7 @@
 int main (int argc, char *argv[])
 {
   GtkWidget *imskpe_main;
+  char *filename;
 
 #ifdef ENABLE_NLS
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
@@ -80,6 +81,18 @@ int main (int argc, char *argv[])
   gtk_widget_show (imskpe_main);
 
   SetTitle("unnamed.par");
+
+//   printf("%d %s\n",argc,argv[1]);
+  if(argc>1)
+  {
+    filename=g_malloc (sizeof (char)*(strlen(argv[1])+1));
+    strncpy(filename,argv[1],strlen(argv[1]));
+    filename[strlen(argv[1])]=0;
+//     printf("%d %s\n",strlen(filename),filename);
+    FileOpen(filename);
+  }
+
+
   InitSplash();
 
   gtk_main ();

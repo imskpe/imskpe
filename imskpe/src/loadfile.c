@@ -60,6 +60,7 @@ void FileOpen(char *filename)
     printf("ask for save?\n");
   }
 
+//   printf("loadfile start\n");
 
   if(aFile != NULL)
   {

@@ -34,6 +34,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
+#include <sys/stat.h>
 
 #include "callbacks.h"
 #include "interface.h"
@@ -130,9 +131,11 @@ on_ok_button2_clicked                  (GtkButton       *button,
 {
   char *filename;
   GtkWidget *w;
+  struct stat st;
   
   int len;
 
+// gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
   len = strlen(gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
   filename = (char *) malloc(sizeof(char)*(len+2));
@@ -140,6 +143,22 @@ on_ok_button2_clicked                  (GtkButton       *button,
   filename = (char *) gtk_file_selection_get_filename 
       (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button))));
   
+  // test if file is directory!
+
+//   path_part (file, last_dir, sizeof (last_dir));
+  if (stat (filename, &st) != -1)
+  {
+    if (S_ISDIR (st.st_mode))
+    {
+      if (filename[strlen(filename)-1] != '/')
+      {
+	strcat (filename, "/");
+      }
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))),filename);
+      free (filename);
+      return 0;
+    }
+  }
 
   if(loadorsave==LOAD)
   {
@@ -2210,6 +2229,5 @@ imskpe_quit                            (GtkWidget       *widget,
   ConfigFree();
   gtk_main_quit ();
 }
-
 
 /** @} */

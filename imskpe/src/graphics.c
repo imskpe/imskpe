@@ -989,3 +989,19 @@ void SetMousepressed(int foo)
 {
    mousepressed=foo;
 }
+
+GtkWidget *simpledialog (char *msg)
+{
+  GtkWidget *dialog;
+
+  dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
+				   "%s", msg);
+  g_signal_connect (G_OBJECT (dialog), "response",
+		    G_CALLBACK (gtk_widget_destroy), 0);
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  gtk_widget_show (dialog);
+
+  return dialog;
+}
+

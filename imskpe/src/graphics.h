@@ -84,3 +84,4 @@ void DrawButtonPressed(int rx, int ry,GdkEventButton  *event, diagramTyp dia);
 
 int GetMousepressed();
 void SetMousepressed(int foo);
+GtkWidget *simpledialog (char *msg);

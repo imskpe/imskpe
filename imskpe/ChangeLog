@@ -1,3 +1,11 @@
+2004-11-23  Andreas Madsack  <bolsog@users.sf.net>
+
+	* bugfix in FileSave
+	* added possibility to load filename as program-argument
+	* added information-dialog
+	* added directory-input support in LoadSave-Dialog
+	
+
 2004-11-22  Andreas Madsack  <bolsog@users.sf.net>
 
 	* bug in ConfigInsertString resolved

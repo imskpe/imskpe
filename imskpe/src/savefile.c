@@ -77,9 +77,9 @@ void FileSave(char *filename)
   }
   
   FileSetFilename(tmp);
-  printf("-%s-\n",tmp);    
+//   printf("-%s-\n",tmp);    
 
-  tmp[strlen(tmp)-1]=0;
+  tmp[strlen(tmp)]=0;
 
   outfp = fopen(tmp,"w");
   if(outfp==NULL)

@@ -109,12 +109,12 @@ void LoadPar(char *filename)
     tmp=NULL;
   }
 
-//   printf("%s\n",filename);
+//    printf("loadpar: %s\n",filename);
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
     /** \todo use an errordialog ?! */
-    printf("can't open parameter file");
+    simpledialog (_("Problems open parameter file."));
 
     free(filename);
     return;
@@ -123,7 +123,7 @@ void LoadPar(char *filename)
   /* read from file, line by line */
   while (fgets (buffer, sizeof (buffer), infp)) 
   {
-//    printf("%s",buffer);
+//     printf("%s",buffer);
     // ist es ein kommentar?
     yy_scan_string(buffer);
     while ((toktype = yylex()) != 0) 
@@ -274,8 +274,6 @@ void LoadPar(char *filename)
     tmp->points = pointtmp;
     params[i]=tmp;
   }
-
-//  printf("------\n");
 
 // free ...
   for(i=0;i<PARAMETERS;i++)
