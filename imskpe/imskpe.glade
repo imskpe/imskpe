@@ -13,7 +13,7 @@
   <property name="default_height">400</property>
   <property name="resizable">True</property>
   <property name="destroy_with_parent">False</property>
-  <signal name="delete_event" handler="on_imskpe_main_delete_event" last_modification_time="Sat, 06 Mar 2004 15:33:45 GMT"/>
+  <signal name="delete_event" handler="imskpe_quit" last_modification_time="Wed, 24 Mar 2004 18:03:48 GMT"/>
   <signal name="activate_default" handler="on_imskpe_main_activate_default" last_modification_time="Sun, 07 Mar 2004 20:16:41 GMT"/>
 
   <child>
@@ -82,7 +82,7 @@
 		      <property name="visible">True</property>
 		      <property name="label">gtk-quit</property>
 		      <property name="use_stock">True</property>
-		      <signal name="activate" handler="gtk_main_quit" last_modification_time="Thu, 04 Mar 2004 17:53:44 GMT"/>
+		      <signal name="activate" handler="imskpe_quit" last_modification_time="Wed, 24 Mar 2004 18:03:23 GMT"/>
 		    </widget>
 		  </child>
 		</widget>
@@ -145,7 +145,7 @@
 		  <property name="visible">True</property>
 		  <property name="label">gtk-quit</property>
 		  <property name="use_stock">True</property>
-		  <signal name="clicked" handler="gtk_main_quit" last_modification_time="Thu, 04 Mar 2004 17:53:54 GMT"/>
+		  <signal name="clicked" handler="imskpe_quit" last_modification_time="Wed, 24 Mar 2004 18:03:10 GMT"/>
 		</widget>
 	      </child>
 	    </widget>
@@ -823,6 +823,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <signal name="realize" handler="on_lb_f1_realize" last_modification_time="Wed, 24 Mar 2004 17:58:52 GMT"/>
 			</widget>
 			<packing>
 			  <property name="type">tab</property>
@@ -956,6 +957,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <signal name="realize" handler="on_lb_f2_realize" last_modification_time="Wed, 24 Mar 2004 17:59:01 GMT"/>
 			</widget>
 			<packing>
 			  <property name="type">tab</property>
@@ -1089,6 +1091,7 @@
 			  <property name="yalign">0.5</property>
 			  <property name="xpad">0</property>
 			  <property name="ypad">0</property>
+			  <signal name="realize" handler="on_lb_f3_realize" last_modification_time="Wed, 24 Mar 2004 17:59:08 GMT"/>
 			</widget>
 			<packing>
 			  <property name="type">tab</property>

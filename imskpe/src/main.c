@@ -10,6 +10,7 @@
 #include <gtk/gtk.h>
 
 #include "interface.h"
+#include "callbacks.h"
 #include "support.h"
 #include "locale.h"
 
@@ -28,6 +29,9 @@ main (int argc, char *argv[])
   gtk_init (&argc, &argv);
 
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
+
+  // init FormantList
+  FormantListInit();
 
   /*
    * The following code was added by Glade to create one of each component

@@ -874,7 +874,7 @@ create_imskpe_main (void)
   gtk_box_pack_start (GTK_BOX (vbox1), statusbar1, FALSE, FALSE, 0);
 
   g_signal_connect ((gpointer) imskpe_main, "delete_event",
-                    G_CALLBACK (on_imskpe_main_delete_event),
+                    G_CALLBACK (imskpe_quit),
                     NULL);
   g_signal_connect ((gpointer) imskpe_main, "activate_default",
                     G_CALLBACK (on_imskpe_main_activate_default),
@@ -892,13 +892,13 @@ create_imskpe_main (void)
                     G_CALLBACK (on_save_as1_activate),
                     NULL);
   g_signal_connect ((gpointer) quit1, "activate",
-                    G_CALLBACK (gtk_main_quit),
+                    G_CALLBACK (imskpe_quit),
                     NULL);
   g_signal_connect ((gpointer) about1, "activate",
                     G_CALLBACK (on_about1_activate),
                     NULL);
   g_signal_connect ((gpointer) bn_quit, "clicked",
-                    G_CALLBACK (gtk_main_quit),
+                    G_CALLBACK (imskpe_quit),
                     NULL);
   g_signal_connect ((gpointer) bn_move, "toggled",
                     G_CALLBACK (on_bn_move_toggled),
@@ -915,11 +915,20 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_f1_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
+  g_signal_connect ((gpointer) lb_f1, "realize",
+                    G_CALLBACK (on_lb_f1_realize),
+                    NULL);
   g_signal_connect ((gpointer) bn_f2_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
+  g_signal_connect ((gpointer) lb_f2, "realize",
+                    G_CALLBACK (on_lb_f2_realize),
+                    NULL);
   g_signal_connect ((gpointer) bn_f3_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) lb_f3, "realize",
+                    G_CALLBACK (on_lb_f3_realize),
                     NULL);
   g_signal_connect ((gpointer) bn_f4_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),

@@ -15,4 +15,5 @@ final:
 
 
 nice to have:
-
+- fuzzy-gettext einträge auch in die .mo ?!?!
+  (--use-fuzzy ... aber wie bekomme ich das per autoconf ?!)

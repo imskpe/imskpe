@@ -3,12 +3,18 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
 #include <glib/gprintf.h>
 
 #include "callbacks.h"
 #include "interface.h"
 #include "support.h"
 
+/*** procedures:
+
+*/
+GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue);
+GdkColor FormantListGetColor (gchar *searchstring);
 
 /***
 
@@ -32,24 +38,141 @@ int nScreenHeight = 200;
 
 GtkWidget *main_window;
 
+/* ------------------------------------------------ */
+
+/*
+idea: 
+- one list for formants
+  - specify color of label and curves
+- list of curves
+  - inhabits list of points
+*/
+
 typedef struct {
     gint time;
     gint value;
-} typListeValue;
+} typListValue;
 
 typedef struct {
     GList *points;
     gchar *widget_name; /* name of togglebutton */
     
     gboolean show;
-} typListeCurve;
+} typListCurve;
 
 typedef struct {
   gchar *formantname;
   GdkColor color;    
-} typListeFormants;
+} typListFormants;
 
-GList *curves;
+GList *curves = NULL;
+GList *formants = NULL;
+
+
+void FormantListInit ()
+{
+  typListFormants *oneformant;
+  gchar *x;
+
+/* F1 */
+  oneformant = g_malloc (sizeof (typListFormants));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"F1");
+
+  oneformant->color=GetColor(1.0,0,0);
+
+  formants = g_list_append (formants, oneformant);
+
+/* F2 */
+  oneformant = g_malloc (sizeof (typListFormants));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"F2");
+
+  oneformant->color=GetColor(0,0,1.0);
+
+  formants = g_list_append (formants, oneformant);
+
+/* F3 */
+  oneformant = g_malloc (sizeof (typListFormants));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"F3");
+
+  oneformant->color=GetColor(0,1.0,0);
+
+  formants = g_list_append (formants, oneformant);
+
+
+}
+
+GdkColor FormantListGetColor (gchar *searchstring)
+{
+  typListFormants *oneformant;  
+
+/*  printf("%d\n",g_list_length (formants));
+  printf ("%s\n",searchstring);
+*/
+  while(formants)
+  {	
+    gchar *fname;
+    fname = g_malloc (sizeof (gchar)*5);
+
+    oneformant = g_malloc (sizeof (typListFormants));
+    oneformant = formants->data;
+
+    strcpy(fname,oneformant->formantname);
+    if(!strcmp(fname,searchstring))
+    {
+/*      printf("found %s",fname);*/
+      return oneformant->color;
+    }
+
+    formants=formants->next;
+
+    free(fname);
+    free(oneformant);
+  }
+
+  /* return FALSE?? */
+}
+
+
+void FormantListCleanup()
+{
+  typListFormants *oneformant;  
+
+  while(formants)
+  {	
+    gchar *fname;
+    fname = g_malloc (sizeof (gchar)*5);
+
+    oneformant = g_malloc (sizeof (typListFormants));
+    oneformant = formants->data;
+
+    if(oneformant->formantname!=NULL)
+      free(oneformant->formantname);
+    if(oneformant!=NULL)
+      free(oneformant);
+    if(formants->data!=NULL)
+      free(formants->data);
+    formants=formants->next;
+  }
+  g_list_free(formants);
+}
+
+/* ------------------------------------------------ */
+
+/*
+  manage curves
+*/
+
+
+
+
+/* ------------------------------------------------ */
+
 
 /*
  * NewGraphics
@@ -95,6 +218,17 @@ GdkGC *GetPen (int nRed, int nGreen, int nBlue)
     gdk_gc_set_foreground (gc, c);
 
     return (gc);
+}
+
+GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
+{
+  GdkColor col;
+
+  col.red = (guint16)(Red*65535.0);
+  col.green = (guint16)(Green*65535.0);
+  col.blue = (guint16)(Blue*65535.0);
+  
+  return col;
 }
 
 void Repaint(GtkWidget *d)
@@ -161,14 +295,6 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 
 
 void
-on_quit1_activate                      (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-
-}
-
-
-void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
@@ -180,6 +306,14 @@ on_draw_freq_configure_event           (GtkWidget       *widget,
                                         GdkEventConfigure *event,
                                         gpointer         user_data)
 {
+  gint duration;
+  int i;
+  PangoLayout *layout;
+  PangoFontDescription *fontdesc;
+  gchar *x;
+
+  main_window = lookup_widget (GTK_WIDGET (widget), "imskpe_main");
+
   /* --- Structure doesn't exist? --- */
   if (g == NULL) {
     
@@ -212,8 +346,79 @@ on_draw_freq_configure_event           (GtkWidget       *widget,
 		      widget->allocation.width,
 		      widget->allocation.height);
 
-  /* --- Redraw molecule --- */
-  Repaint (widget);
+// make own rulers
+  duration = gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
+
+  x = g_malloc (sizeof (gchar)*10);
+  fontdesc = pango_font_description_from_string ("Luxi Mono 6");
+
+/* x-achse */
+  gdk_draw_line (g->pixmap, GetPen (0, 0, 0) ,
+		 20, 
+		 widget->allocation.height-25,
+		 widget->allocation.width, 
+		 widget->allocation.height-25);
+  for(i=0;i<=10;i++)
+  {
+    int mod=10;
+    if(i==0)
+    mod=3;
+    if(i==1)
+    mod=7;
+
+    sprintf(x,"%d",i*duration/10);
+    layout = gtk_widget_create_pango_layout (widget, x);
+
+    pango_layout_set_font_description (layout, fontdesc); 
+    gdk_draw_layout (g->pixmap,GetPen(0xffff,0,0),
+		     ((widget->allocation.width-25)/10)*i+25-mod, 
+		     widget->allocation.height-15, layout);
+
+    gdk_draw_line (g->pixmap, GetPen (0, 0, 0xffff) ,
+		   ((widget->allocation.width-25)/10)*i+25, 
+		   widget->allocation.height-30,
+		   ((widget->allocation.width-25)/10)*i+25, 
+		   widget->allocation.height-20);
+    
+  }
+
+/* y-achse */
+  gdk_draw_line (g->pixmap, GetPen (0, 0, 0) ,
+		 25, 
+		 0,
+		 25, 
+		 widget->allocation.height-20);
+
+  for(i=0;i<=10;i++)
+  {
+    sprintf(x,"%d",(10-i)*(3000)/10);   /* parameterize maxvalue!!*/
+
+    layout = gtk_widget_create_pango_layout (widget, x);
+
+    pango_layout_set_font_description (layout, fontdesc); 
+    gdk_draw_layout (g->pixmap,GetPen(0xffff,0,0),
+		     0, 
+		     ((widget->allocation.height-25)/10)*i, layout);
+
+    gdk_draw_line (g->pixmap, GetPen (0, 0, 0xffff) ,
+		   20,
+		   ((widget->allocation.height-25)*i)/10,
+		   30,
+		   ((widget->allocation.height-25)*i)/10
+		   );
+/*
+		   ((widget->allocation.width-25)/10)*i+25, 
+		   widget->allocation.height-30,
+		   ((widget->allocation.width-25)/10)*i+25, 
+		   widget->allocation.height-20);*/
+    
+  }
+
+  pango_font_description_free (fontdesc);
+  g_object_unref (layout);
+  free(x);
+  
+  Repaint(widget);
 
   return TRUE;
 
@@ -328,8 +533,6 @@ on_imskpe_main_delete_event            (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data)
 {
-  gtk_main_quit ();
-  return FALSE;
 }
 
 gboolean
@@ -390,10 +593,8 @@ on_color_selection1_color_changed      (GtkColorSelection *colorselection,
     gtk_color_selection_get_color (colorselection,color);
     
   /* Fit to a unsigned 16 bit integer (0..65535) and insert into the GdkColor structure */
+    gdk_color=GetColor(color[0],color[1],color[2]);
 
-    gdk_color.red = (guint16)(color[0]*65535.0);
-    gdk_color.green = (guint16)(color[1]*65535.0);
-    gdk_color.blue = (guint16)(color[2]*65535.0);
 
 /*    g_printf("%d / %d / %d\n",gdk_color.red,gdk_color.green,gdk_color.blue);
       g_printf("%d\n",gtk_notebook_get_current_page(nb));
@@ -534,5 +735,53 @@ on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data)
 {
 
+}
+
+
+void
+on_lb_f1_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = FormantListGetColor("F1");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+void
+on_lb_f2_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = FormantListGetColor("F2");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+void
+on_lb_f3_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = FormantListGetColor("F3");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+gboolean
+imskpe_quit                            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+  FormantListCleanup();
+
+  gtk_main_quit ();
+  return FALSE;
 }
 

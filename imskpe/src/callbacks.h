@@ -91,3 +91,61 @@ on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
 void
 on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data);
+
+
+// formant init ...
+void FormantListInit ();
+
+gboolean
+on_lb_f1_configure_event               (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
+                                        gpointer         user_data);
+
+gboolean
+on_lb_f1_visibility_notify_event       (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+void
+on_lb_f1_show                          (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f1_populate_popup                (GtkLabel        *label,
+                                        GtkMenu         *menu,
+                                        gpointer         user_data);
+
+gboolean
+on_lb_resonators_button_press_event    (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_lb_resonators_show                  (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_nb_resonators_select_page           (GtkNotebook     *notebook,
+                                        gboolean         move_focus,
+                                        gpointer         user_data);
+
+void
+on_lb_f1_parent_set                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f1_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f2_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f3_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+imskpe_quit                            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
