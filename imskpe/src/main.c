@@ -70,10 +70,6 @@ int main (int argc, char *argv[])
 
   SetMainWindow(NULL);
 
-  /** init formant list 
-      \todo init complete start-file (maybe start.par)
-   */
-//   FormantListInit();
   FileInit();
 
   MouseEventInit();

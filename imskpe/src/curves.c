@@ -469,8 +469,6 @@ gboolean PointInsert(typCurveList *cl, int time, int value)
  *
  * using DU from File-struct to get 2nd point!
  * setting no other values, except curve!
- * 
- * @param curves 
  */
 void CurveInitStart()
 {

@@ -26,16 +26,15 @@
  * 
  * \todo maybe put part of functions in other files 
  *       (formant-routines, math-stuff, statusbar, ...)
+ * \todo subgrouping like in callbacks.c
+ *
+ * \todo add dynamic scale ... zooming?
  * 
  * \note idea: 
  * - one list for formants (in preferences)
  *   - specify color of label and curves
  * - list of curves (in file-struct)
  *   - inhabits list of points
- * 
- * -  skala muss flexibler werden .. 
- *    und die daten müssen abgreifbar sein ...
- *
 */
 
 #ifdef HAVE_CONFIG_H
@@ -202,11 +201,9 @@ int CalcRealY(int dy, int maxy,diagramTyp dia)
 
 /** 
  * draw ruler
- *
- * \todo export values to preferences!
- * \todo use dia for y-values (Hz, dB, ...)
  * 
  * @param widget 
+ * @param dia 
  */
 void update_ruler(GtkWidget *widget, diagramTyp dia)
 {
@@ -366,9 +363,6 @@ typGraphics *NewGraphics ()
 }
 
 /** 
- * 
- * GetPen
- *
  * Get a GdkGC (pen) based on the colors passed 
  * in.  This is used to change the color of the 
  * items being drawn.
@@ -406,10 +400,8 @@ GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue)
 }
 
 /** 
- * GetPenGdkColor
+ * used to add GdkColor as foreground-color to an GdkGC
  * 
- * (not used?!)
- *
  * @param gc 
  * @param col 
  * 
@@ -445,14 +437,13 @@ GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
 }
 
 /** 
- * Repaint
- * 
  * \todo 
  * - calculation of virtualcoordinates in extra function
  * - split in a few functions
- * - many values must be put in preferences
- *
+ * - put more values in preferences
+ * 
  * @param d 
+ * @param dia 
  */
 void Repaint(GtkWidget *d, diagramTyp dia)
 {
@@ -657,10 +648,6 @@ void Redrawpixmap(GtkWidget *w, GdkEventExpose  *event)
             event->area.width, event->area.height);
 }
 
-/** 
-  \todo repaint only actual drawable .. 
-*/
-
 void configure_page(int page)
 {
   GtkWidget *widget;
@@ -771,8 +758,6 @@ void SetToggleButton(MouseActionTyp typ)
 }
 
 /** 
- * DrawAreaMotion
- *
  * draw values on motion (incl. hovering ...)
  * 
  * @param rx 

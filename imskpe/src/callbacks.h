@@ -37,11 +37,6 @@ void InitDialogPrefs();
 
 
 
-gboolean
-on_imskpe_main_delete_event            (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
 void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data);

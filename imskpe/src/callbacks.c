@@ -1,4 +1,4 @@
-/*
+\name/*
     callbacks.c - Part of IMSKPE
 
     Copyright (C) 2004 Andreas Madsack
@@ -46,8 +46,10 @@
 #include "graphics.h"
 #include "convert.h"
 
-/*  globals  */
-
+/* ---------------------------------------------------------------------- */
+/**
+   @name load/save dialog
+   @{ */
 
 /** loadsaveType - maybe not the best solution */
 typedef enum {NONE, LOAD, SAVE} lsTyp;
@@ -55,22 +57,7 @@ typedef enum {NONE, LOAD, SAVE} lsTyp;
 /** default value for loadsave */
 lsTyp loadorsave=NONE;
 
-/** bad style trick variable ... */
-char *selected_color;
-
-/** pointer to colordialog */
-GtkWidget *colordiag = NULL;
-/** pointer to prefs dialog */
-GtkWidget *prefs = NULL;
-
-
-/*** procedures:
-
-***/
-
 /** 
- * on_new1_activate
- *
  * init new file, redraw drawarea
  * 
  * @param menuitem 
@@ -88,14 +75,9 @@ on_new1_activate                       (GtkMenuItem     *menuitem,
 }
 
 
-/** 
- * on_open1_activate
- *
+/**
  * start fileopen dialog
  * 
- * \defgroup imskpe_loadsave load/save dialog
- * \addtogroup imskpe_loadsave
- *
  * @param menuitem 
  * @param user_data 
  */
@@ -107,14 +89,10 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
 }
 
 
-/** 
- * on_save1_activate
- *
+/**
  * start filesave dialog
  * if file is new, ask for new filename else use default in aFile-struct
  * 
- * \addtogroup imskpe_loadsave
- *
  * @param menuitem 
  * @param user_data 
  */
@@ -134,12 +112,8 @@ on_save1_activate                      (GtkMenuItem     *menuitem,
 }
 
 /** 
- * on_save_as1_activate
- *
  * start filesave dialog for filename asking
  * 
- * \addtogroup imskpe_loadsave
- *
  * @param menuitem 
  * @param user_data 
  */
@@ -150,13 +124,156 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
   InitDialogSave();
 }
 
+void
+on_ok_button2_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  char *filename;
+  GtkWidget *w;
+  
+  int len;
+
+  len = strlen(gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+
+  filename = (char *) malloc(sizeof(char)*(len+2));
+    
+  filename = (char *) gtk_file_selection_get_filename 
+      (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+  
+
+  if(loadorsave==LOAD)
+  {
+    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+    
+    // and start import ...
+    SetTitle(filename);
+    FileOpen(filename);
+
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+    redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  }
+  else if(loadorsave==SAVE)
+  {
+    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+    SetTitle(filename);
+    FileSave(filename);
+  }
+}
+
+
+void
+on_cancel_button2_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+void
+on_bn_new_clicked                      (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  GtkWidget *w;
+//  CurveInitStart();
+  FileInit();
+  FileSetIsNew(TRUE);
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+}
+
+
+void
+on_bn_open_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogLoad();
+}
+
+
+void InitDialogSave()
+{
+ static GtkWidget *fileopen = NULL;
+
+ loadorsave=SAVE;
+
+ if (fileopen == NULL) 
+ {
+   fileopen = create_imskpe_file ();
+   /* set the widget pointer to NULL when the widget is destroyed */
+   g_signal_connect (G_OBJECT (fileopen),
+		     "destroy",
+		     G_CALLBACK (gtk_widget_destroyed),
+		     &fileopen);
+   
+   /* Make sure the dialog doesn't disappear behind the main window. */
+   gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
+				 GTK_WINDOW (GetMainWindow()));
+ }
+ 
+ /* Make sure the dialog is visible. */
+ gtk_window_present (GTK_WINDOW (fileopen));
+}
+
+
+void InitDialogLoad()
+{
+ static GtkWidget *fileopen = NULL;
+
+ loadorsave=LOAD;
+
+ if (fileopen == NULL) 
+ {
+   fileopen = create_imskpe_file ();
+   /* set the widget pointer to NULL when the widget is destroyed */
+   g_signal_connect (G_OBJECT (fileopen),
+		     "destroy",
+		     G_CALLBACK (gtk_widget_destroyed),
+		     &fileopen);
+   
+   /* Make sure the dialog doesn't disappear behind the main window. */
+   gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
+				 GTK_WINDOW (GetMainWindow()));
+ }
+ 
+ /* Make sure the dialog is visible. */
+ gtk_window_present (GTK_WINDOW (fileopen));
+}
+
+void
+on_bn_save_clicked                     (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  if(FileGetIsNew())
+  {
+    InitDialogSave();
+  }
+  else
+  {
+    // "" means use filename in aFile-struct
+    FileSave("");
+  }
+}
+
+
+void
+on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  InitDialogSave();
+}
+
+/** @} */
+
+/* ---------------------------------------------------------------------- */
+
+/**
+ @name about dialog
+ @{ */ 
 
 /** 
- * on_about1_activate
+ * activates about dialog
  *
- * \defgroup imskpe_about about dialog
- * \addtogroup imskpe_about
- * 
  * @param menuitem 
  * @param user_data 
  */
@@ -179,7 +296,6 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 
 
       w = lookup_widget (GTK_WIDGET (about), "about_label");    
-      /** is snprintf really portable? */
       snprintf(buf,sizeof(buf),
 	       "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
 	       "\n\n"
@@ -198,21 +314,81 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
   gtk_window_present (GTK_WINDOW (about));
 }
 
+/** 
+ * close about dialog (with cancel)
+ *
+ * @param button 
+ * @param user_data 
+ */
+void
+on_bn_about_close_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
 
 /** 
- * on_draw_freq_configure_event
+ * close about dialog (with ok)
  *
+ * @param button 
+ * @param user_data 
+ */
+void
+on_bn_credits_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+/** 
+ * activate credits-dialog
+ *
+ * @param button 
+ * @param user_data 
+ */
+void
+on_bn_about_credits_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+ static GtkWidget *credits = NULL;
+
+  if (credits == NULL) 
+    {
+      credits = create_imskpe_credits ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (credits),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&credits);
+
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (credits), 
+				    GTK_WINDOW (GetMainWindow()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (credits));
+}
+
+/** @} */
+
+/* ---------------------------------------------------------------------- */
+
+/**
+ @name drawarea parts
+ @{ */ 
+
+/** 
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
- * \defgroup imskpe_drawareas drawarea parts
- * \addtogroup imskpe_drawareas
- *
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_freq_configure_event           (GtkWidget       *widget,
@@ -235,18 +411,14 @@ on_draw_freq_configure_event           (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_amp_configure_event
- *
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
- * \addtogroup imskpe_drawareas
- *
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_amp_configure_event            (GtkWidget       *widget,
@@ -270,18 +442,14 @@ on_draw_amp_configure_event            (GtkWidget       *widget,
 
 
 /** 
- * on_draw_band_configure_event
- *
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
- * \addtogroup imskpe_drawareas
- *
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_band_configure_event           (GtkWidget       *widget,
@@ -305,17 +473,13 @@ on_draw_band_configure_event           (GtkWidget       *widget,
 
 
 /** 
- * on_draw_freq_expose_event
- *
  * redraw after resize of the window
  * 
- * \addtogroup imskpe_drawareas
- *
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_freq_expose_event              (GtkWidget       *widget,
@@ -328,18 +492,13 @@ on_draw_freq_expose_event              (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_amp_expose_event
- *
  * redraw after resize of the window
- * 
- * \addtogroup imskpe_drawareas
- *
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_amp_expose_event               (GtkWidget       *widget,
@@ -352,17 +511,13 @@ on_draw_amp_expose_event               (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_band_expose_event
- *
  * redraw after resize of the window
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_band_expose_event              (GtkWidget       *widget,
@@ -375,17 +530,13 @@ on_draw_band_expose_event              (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_freq_motion_notify_event
- *
  * refresh on mousemotion the activated drawarea (incl. hovering)
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_freq_motion_notify_event       (GtkWidget       *widget,
@@ -418,17 +569,13 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_amp_motion_notify_event
- *
  * refresh on mousemotion the activated drawarea (incl. hovering)
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_amp_motion_notify_event        (GtkWidget       *widget,
@@ -461,17 +608,13 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_band_motion_notify_event
- *
  * refresh on mousemotion the activated drawarea (incl. hovering)
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_band_motion_notify_event       (GtkWidget       *widget,
@@ -504,17 +647,13 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_freq_button_press_event
- *
  * choose action for buttonpressed
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_freq_button_press_event        (GtkWidget       *widget,
@@ -538,17 +677,13 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_amp_button_press_event
- *
  * choose action for buttonpressed
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_amp_button_press_event         (GtkWidget       *widget,
@@ -572,17 +707,13 @@ on_draw_amp_button_press_event         (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_band_button_press_event
- *
  * choose action for buttonpressed
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_band_button_press_event        (GtkWidget       *widget,
@@ -607,17 +738,13 @@ on_draw_band_button_press_event        (GtkWidget       *widget,
 
 
 /** 
- * on_draw_freq_button_release_event
- *
  * set buttonpressedvar to 0
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_freq_button_release_event      (GtkWidget       *widget,
@@ -630,17 +757,13 @@ on_draw_freq_button_release_event      (GtkWidget       *widget,
 }
 
 /** 
- * on_draw_amp_button_release_event
- *
  * set buttonpressedvar to 0
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_amp_button_release_event       (GtkWidget       *widget,
@@ -653,17 +776,13 @@ on_draw_amp_button_release_event       (GtkWidget       *widget,
 }
 
 /** 
- * on_amp_freq_button_release_event
- *
  * set buttonpressedvar to 0
- * 
- * \addtogroup imskpe_drawareas
  * 
  * @param widget 
  * @param event 
  * @param user_data 
  * 
- * @return 
+ * @return TRUE
  */
 gboolean
 on_draw_band_button_release_event      (GtkWidget       *widget,
@@ -676,17 +795,217 @@ on_draw_band_button_release_event      (GtkWidget       *widget,
 }
 
 
-
-gboolean
-on_imskpe_main_delete_event            (GtkWidget       *widget,
-                                        GdkEvent        *event,
+void
+on_pm_move_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+  SetToggleButton(MOVE);
 }
 
+
+void
+on_pm_insert_activate                  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  SetToggleButton(INSERT);
+}
+
+
+void
+on_pm_delete_activate                  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  SetToggleButton(DELETE);
+}
+
+
+void
+on_bn_move_toggled                     (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(MOVE);
+   }
+}
+
+
+void
+on_bn_insert_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(INSERT);
+   }
+}
+
+
+void
+on_bn_delete_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(DELETE);
+   }
+}
+
+
 /** 
- * on_spbn_numF_changed
- *
+ * activate move-edit-dialog, for more accurate input
+ * 
+ * @param menuitem 
+ * @param user_data 
+ */
+void
+on_pm_movediag_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+ static GtkWidget *movediag = NULL;
+ GtkWidget *w;
+
+ int dia=1;
+ int ymax=5000;
+
+ typCurveList *cl=CurveSearchByNr(FileGetCurvesPointer(),MouseEventGetCurve());
+ GList *vl=(GList *)g_list_first(cl->points);
+ typValueList *v,*v2;  
+ int ui=FileGetUpdateInterval();
+ typValueList p_pnt;  
+ typValueList pnt;  
+ typValueList n_pnt;  
+ int v2time;
+
+ if (movediag == NULL) 
+ {
+   movediag = create_imskpe_move ();
+   /* set the widget pointer to NULL when the widget is destroyed */
+   g_signal_connect (G_OBJECT (movediag),
+		     "destroy",
+		     G_CALLBACK (gtk_widget_destroyed),
+		     &movediag);
+   
+   
+   p_pnt.time=0;
+   n_pnt.time=-1;
+   pnt.time=MouseEventGetPoint();
+   pnt.value=-1;
+   
+   while(vl)
+   {
+     v=vl->data;
+     if(v->time==pnt.time)
+     { 
+       if(vl->next!=NULL)
+       {
+	 v2=vl->next->data;
+	 v2time=v2->time-ui;
+       }
+       {
+	 v2time=pnt.time;
+       }
+       n_pnt.time=v2time;
+       if(pnt.time!=0)
+       {
+	 p_pnt.time+=ui;
+       }
+       pnt.value=v->value;
+       break;
+     }
+     else
+     {
+       p_pnt.time=v->time;
+       p_pnt.value=v->value;
+       vl=vl->next;
+     }
+   }
+   
+   w=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "nb_draw");
+   dia=gtk_notebook_get_current_page((GtkNotebook *)w)+1;
+
+   switch(dia)
+   {
+   case FREQUENCIES:
+       ymax=ConfigGetInteger("maxfreq");
+       break;
+   case AMPLITUDE:
+       ymax=ConfigGetInteger("maxamp");
+       break;
+   case BANDWIDTH:
+       ymax=ConfigGetInteger("maxband");
+       break;
+   }    
+   
+      // set values 
+   w=lookup_widget (GTK_WIDGET (movediag), "spn_value");
+   gtk_spin_button_set_range ((GtkSpinButton *) w, 0, ymax);
+   gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.value);
+   
+   w=lookup_widget (GTK_WIDGET (movediag), "spn_time");
+   if(pnt.time==n_pnt.time)
+   {
+     p_pnt.time=n_pnt.time;  // don't change time of last point!
+   }
+   gtk_spin_button_set_range ((GtkSpinButton *) w, p_pnt.time, n_pnt.time);
+   gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.time);
+   
+   
+//       SetMainWindow(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
+   /* Make sure the dialog doesn't disappear behind the main window. */
+   gtk_window_set_transient_for (GTK_WINDOW (movediag), 
+				 GTK_WINDOW (GetMainWindow()));
+ }
+ 
+ /* Make sure the dialog is visible. */
+ gtk_window_present (GTK_WINDOW (movediag));
+ 
+}
+
+
+void
+on_bn_move_cancel_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  GtkWidget *w;
+
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+}
+
+
+void
+on_bn_move_ok_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  GtkWidget *w;
+  int val, time;
+
+  // set Point
+  w=lookup_widget (GTK_WIDGET (button), "spn_value");
+  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+  w=lookup_widget (GTK_WIDGET (button), "spn_time");
+  time=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+
+  PointMove(CurveSearchByNr(FileGetCurvesPointer(),MouseEventGetCurve()),MouseEventGetPoint(),time,val);
+
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+}
+
+/** @} */
+
+/* ---------------------------------------------------------------------- */
+
+/**
+ @name gui control elements
+ @{ */ 
+
+/** 
  * number of formants changed -> decrease visible tabs
  * 
  * @param spinbutton 
@@ -760,15 +1079,6 @@ on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
 }
 
 
-
-void
-on_imskpe_main_activate_default        (GtkWindow       *window,
-                                        gpointer         user_data)
-{
-  SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
-}
-
-
 void
 on_lb_f1_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
@@ -805,18 +1115,6 @@ on_lb_f3_realize                       (GtkWidget       *widget,
 }
 
 
-gboolean
-imskpe_quit                            (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data)
-{
-//   FormantListFree();
-  CurveListFree(FileGetCurvesPointer());
-  ConfigSave();
-  ConfigFree();
-  gtk_main_quit ();
-}
-
 
 void
 on_nb_draw_switch_page                 (GtkNotebook     *notebook,
@@ -828,77 +1126,6 @@ on_nb_draw_switch_page                 (GtkNotebook     *notebook,
   redraw_page(page_num);
 //   printf("--> tab: %2d\n",page_num);
 }
-
-
-
-void
-on_ok_button2_clicked                  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  char *filename;
-  GtkWidget *w;
-  
-  int len;
-
-  len = strlen(gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
-
-  filename = (char *) malloc(sizeof(char)*(len+2));
-    
-  filename = (char *) gtk_file_selection_get_filename 
-      (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button))));
-  
-
-  if(loadorsave==LOAD)
-  {
-    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-    
-    // and start import ...
-    SetTitle(filename);
-    FileOpen(filename);
-
-    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-    redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-  }
-  else if(loadorsave==SAVE)
-  {
-    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-
-    SetTitle(filename);
-    FileSave(filename);
-  }
-}
-
-
-void
-on_cancel_button2_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-/** 
- * on_bn_about_close_clicked
- *
- * \addtogroup imskpe_about
- * 
- * @param button 
- * @param user_data 
- */
-void
-on_bn_about_close_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-void
-on_bn_open_clicked                     (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogLoad();
-}
-
 
 void
 on_lb_f4_realize                       (GtkWidget       *widget,
@@ -1010,20 +1237,6 @@ on_spbn_ui_value_changed               (GtkSpinButton   *spinbutton,
 
 
 void
-on_bn_new_clicked                      (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  GtkWidget *w;
-//  CurveInitStart();
-  FileInit();
-  FileSetIsNew(TRUE);
-
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-}
-
-
-void
 on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
@@ -1038,13 +1251,6 @@ on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
   FileSetDuration((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
 }
 
-
-void
-on_bn_prefs_clicked                    (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  InitDialogPrefs();
-}
 
 void
 on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
@@ -1364,113 +1570,34 @@ on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
   SetCurveShow("bn_examp_siggain");
 }
 
+/** @} */
+
+/* ---------------------------------------------------------------------- */
 
 /** 
- * on_bn_credits_ok_clicked
- *
- * \addtogroup imskpe_about
+    @name preferences parts 
+    @{ */
+
+/** 
+ * init preferences dialog
  * 
  * @param button 
  * @param user_data 
  */
 void
-on_bn_credits_ok_clicked               (GtkButton       *button,
+on_bn_prefs_clicked                    (GtkButton       *button,
                                         gpointer         user_data)
 {
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  InitDialogPrefs();
 }
 
-
 /** 
- * on_bn_about_credits_clicked
- *
- * \addtogroup imskpe_about
+ * close preferences dialog (with cancel)
+ * remove all temporary savings from config-list
  * 
  * @param button 
  * @param user_data 
  */
-void
-on_bn_about_credits_clicked            (GtkButton       *button,
-                                        gpointer         user_data)
-{
- static GtkWidget *credits = NULL;
-
-  if (credits == NULL) 
-    {
-      credits = create_imskpe_credits ();
-      /* set the widget pointer to NULL when the widget is destroyed */
-      g_signal_connect (G_OBJECT (credits),
-			"destroy",
-			G_CALLBACK (gtk_widget_destroyed),
-			&credits);
-
-      /* Make sure the dialog doesn't disappear behind the main window. */
-      gtk_window_set_transient_for (GTK_WINDOW (credits), 
-				    GTK_WINDOW (GetMainWindow()));
-    }
-
-  /* Make sure the dialog is visible. */
-  gtk_window_present (GTK_WINDOW (credits));
-}
-
-
-void
-on_pm_move_activate                    (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  SetToggleButton(MOVE);
-}
-
-
-void
-on_pm_insert_activate                  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  SetToggleButton(INSERT);
-}
-
-
-void
-on_pm_delete_activate                  (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  SetToggleButton(DELETE);
-}
-
-
-void
-on_bn_move_toggled                     (GtkToggleToolButton *toggletoolbutton,
-                                        gpointer         user_data)
-{
-   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
-   {
-     SetToggleButton(MOVE);
-   }
-}
-
-
-void
-on_bn_insert_toggled                   (GtkToggleToolButton *toggletoolbutton,
-                                        gpointer         user_data)
-{
-   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
-   {
-     SetToggleButton(INSERT);
-   }
-}
-
-
-void
-on_bn_delete_toggled                   (GtkToggleToolButton *toggletoolbutton,
-                                        gpointer         user_data)
-{
-   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
-   {
-     SetToggleButton(DELETE);
-   }
-}
-
-
 void
 on_bn_prefs_cancel_clicked             (GtkButton       *button,
                                         gpointer         user_data)
@@ -1490,6 +1617,12 @@ on_bn_prefs_cancel_clicked             (GtkButton       *button,
 }
 
 
+/** 
+ * save all temporary savings by remove-old and rename-to-old
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_bn_prefs_apply_clicked              (GtkButton       *button,
                                         gpointer         user_data)
@@ -1583,6 +1716,12 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
 }
 
 
+/** 
+ * close preferences dialog and use apply-function to save all values
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
@@ -1595,210 +1734,11 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
   printf("prefs_ok end\n");     
 }
 
-
-
-void
-on_pm_movediag_activate                (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
- static GtkWidget *movediag = NULL;
- GtkWidget *w;
-
- int dia=1;
- int ymax=5000;
-
- typCurveList *cl=CurveSearchByNr(FileGetCurvesPointer(),MouseEventGetCurve());
- GList *vl=(GList *)g_list_first(cl->points);
- typValueList *v,*v2;  
- int ui=FileGetUpdateInterval();
- typValueList p_pnt;  
- typValueList pnt;  
- typValueList n_pnt;  
- int v2time;
-
- if (movediag == NULL) 
- {
-   movediag = create_imskpe_move ();
-   /* set the widget pointer to NULL when the widget is destroyed */
-   g_signal_connect (G_OBJECT (movediag),
-		     "destroy",
-		     G_CALLBACK (gtk_widget_destroyed),
-		     &movediag);
-   
-   
-   p_pnt.time=0;
-   n_pnt.time=-1;
-   pnt.time=MouseEventGetPoint();
-   pnt.value=-1;
-   
-   while(vl)
-   {
-     v=vl->data;
-     if(v->time==pnt.time)
-     { 
-       if(vl->next!=NULL)
-       {
-	 v2=vl->next->data;
-	 v2time=v2->time-ui;
-       }
-       {
-	 v2time=pnt.time;
-       }
-       n_pnt.time=v2time;
-       if(pnt.time!=0)
-       {
-	 p_pnt.time+=ui;
-       }
-       pnt.value=v->value;
-       break;
-     }
-     else
-     {
-       p_pnt.time=v->time;
-       p_pnt.value=v->value;
-       vl=vl->next;
-     }
-   }
-   
-   w=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "nb_draw");
-   dia=gtk_notebook_get_current_page((GtkNotebook *)w)+1;
-
-   switch(dia)
-   {
-   case FREQUENCIES:
-       ymax=ConfigGetInteger("maxfreq");
-       break;
-   case AMPLITUDE:
-       ymax=ConfigGetInteger("maxamp");
-       break;
-   case BANDWIDTH:
-       ymax=ConfigGetInteger("maxband");
-       break;
-   }    
-   
-      // set values 
-   w=lookup_widget (GTK_WIDGET (movediag), "spn_value");
-   gtk_spin_button_set_range ((GtkSpinButton *) w, 0, ymax);
-   gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.value);
-   
-   w=lookup_widget (GTK_WIDGET (movediag), "spn_time");
-   if(pnt.time==n_pnt.time)
-   {
-     p_pnt.time=n_pnt.time;  // don't change time of last point!
-   }
-   gtk_spin_button_set_range ((GtkSpinButton *) w, p_pnt.time, n_pnt.time);
-   gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.time);
-   
-   
-//       SetMainWindow(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
-   /* Make sure the dialog doesn't disappear behind the main window. */
-   gtk_window_set_transient_for (GTK_WINDOW (movediag), 
-				 GTK_WINDOW (GetMainWindow()));
- }
- 
- /* Make sure the dialog is visible. */
- gtk_window_present (GTK_WINDOW (movediag));
- 
-}
-
-
-void
-on_bn_move_cancel_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  GtkWidget *w;
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-}
-
-
-void
-on_bn_move_ok_clicked                  (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  GtkWidget *w;
-  int val, time;
-
-  // set Point
-  w=lookup_widget (GTK_WIDGET (button), "spn_value");
-  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-  w=lookup_widget (GTK_WIDGET (button), "spn_time");
-  time=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-
-  PointMove(CurveSearchByNr(FileGetCurvesPointer(),MouseEventGetCurve()),MouseEventGetPoint(),time,val);
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-}
-
-/* 
-----------------------------------------------------------------------
-
-dialog initializers 
-
-----------------------------------------------------------------------
-*/
-
-void InitDialogSave()
-{
- static GtkWidget *fileopen = NULL;
-
- loadorsave=SAVE;
-
- if (fileopen == NULL) 
- {
-   fileopen = create_imskpe_file ();
-   /* set the widget pointer to NULL when the widget is destroyed */
-   g_signal_connect (G_OBJECT (fileopen),
-		     "destroy",
-		     G_CALLBACK (gtk_widget_destroyed),
-		     &fileopen);
-   
-   /* Make sure the dialog doesn't disappear behind the main window. */
-   gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
-				 GTK_WINDOW (GetMainWindow()));
- }
- 
- /* Make sure the dialog is visible. */
- gtk_window_present (GTK_WINDOW (fileopen));
-}
-
-
-void InitDialogLoad()
-{
- static GtkWidget *fileopen = NULL;
-
- loadorsave=LOAD;
-
- if (fileopen == NULL) 
- {
-   fileopen = create_imskpe_file ();
-   /* set the widget pointer to NULL when the widget is destroyed */
-   g_signal_connect (G_OBJECT (fileopen),
-		     "destroy",
-		     G_CALLBACK (gtk_widget_destroyed),
-		     &fileopen);
-   
-   /* Make sure the dialog doesn't disappear behind the main window. */
-   gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
-				 GTK_WINDOW (GetMainWindow()));
- }
- 
- /* Make sure the dialog is visible. */
- gtk_window_present (GTK_WINDOW (fileopen));
-}
-
-
 void InitDialogPrefs()
 {
   if (prefs == NULL) 
     {
-      prefs = create_imskpe_prefs ();
+      prefs = create_preferences parts ();
       /* set the widget pointer to NULL when the widget is destroyed */
       g_signal_connect (G_OBJECT (prefs),
 			"destroy",
@@ -1874,99 +1814,6 @@ void InitDialogColor(char *searchstring)
 
 
 void
-on_bn_save_clicked                     (GtkToolButton   *toolbutton,
-                                        gpointer         user_data)
-{
-  if(FileGetIsNew())
-  {
-    InitDialogSave();
-  }
-  else
-  {
-    // "" means use filename in aFile-struct
-    FileSave("");
-  }
-}
-
-
-void
-on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
-                                        gpointer         user_data)
-{
-  InitDialogSave();
-}
-
-/* ------------------------------ 
-   convert / execute
-   ------------------------------ */
-
-
-void
-on_convert1_activate                   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  convert();
-}
-
-
-void
-on_execute1_activate                   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  char *dir;
-  char tmp[300];
-
-
-  return;
-
-  dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
-
-  strcpy(dir,ConfigGetString("tmpdir"));
-  strcat(dir,"/imskpe.");
-  sprintf(tmp,"%d",getpid());
-  strcat(dir,tmp);
-  printf("%s\n",dir);
-
-  strcpy(tmp,ConfigGetString("klattcmd"));
-  strcpy(tmp,"/home/bol/imskpe/klatt80/klatt");
-  strcat(tmp," -i ");
-  strcat(tmp,dir);
-  strcat(tmp,".par -o ");
-  strcat(tmp,dir);
-  strcat(tmp,".wav");
-
-  strcat(dir,".par");
-  dir[strlen(dir)]=0;
-
-  FileSave(dir);
-
-//   system(tmp);
-
-  g_free(dir);
-}
-
-
-void
-on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
-                                        gpointer         user_data)
-{
-  on_convert1_activate(NULL,NULL);
-}
-
-
-void
-on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
-                                        gpointer         user_data)
-{
-
-  on_execute1_activate(NULL,NULL);
-
-}
-
-// --------------------------------------------------
-
-
-void
 on_spn_max_freq_realize                (GtkWidget       *widget,
                                         gpointer         user_data)
 {
@@ -2014,9 +1861,6 @@ on_ent_tmp_realize                     (GtkWidget       *widget,
 {
   gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("tmpdir"));
 }
-
-
-// --------------------------------------------------
 
 
 void
@@ -2211,3 +2055,105 @@ on_bn_color_f3_clicked                 (GtkButton       *button,
   InitDialogColor("f3");
 }
 
+/** @} */
+
+/* ---------------------------------------------------------------------- */
+
+/** 
+    @name execute convert
+    @{
+ */
+
+void
+on_convert1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  convert();
+}
+
+
+void
+on_execute1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  char *dir;
+  char tmp[300];
+
+
+  return;
+
+  dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
+
+  strcpy(dir,ConfigGetString("tmpdir"));
+  strcat(dir,"/imskpe.");
+  sprintf(tmp,"%d",getpid());
+  strcat(dir,tmp);
+  printf("%s\n",dir);
+
+  strcpy(tmp,ConfigGetString("klattcmd"));
+  strcpy(tmp,"/home/bol/imskpe/klatt80/klatt");
+  strcat(tmp," -i ");
+  strcat(tmp,dir);
+  strcat(tmp,".par -o ");
+  strcat(tmp,dir);
+  strcat(tmp,".wav");
+
+  strcat(dir,".par");
+  dir[strlen(dir)]=0;
+
+  FileSave(dir);
+
+//   system(tmp);
+
+  g_free(dir);
+}
+
+
+void
+on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  on_convert1_activate(NULL,NULL);
+}
+
+
+void
+on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+
+  on_execute1_activate(NULL,NULL);
+
+}
+
+/** @} */
+
+/* ---------------------------------------------------------------------- */
+
+/** 
+    @name activate and quit imskpe
+    @{
+ */
+
+void
+on_imskpe_main_activate_default        (GtkWindow       *window,
+                                        gpointer         user_data)
+{
+  SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
+}
+
+
+gboolean
+imskpe_quit                            (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+//   FormantListFree();
+  CurveListFree(FileGetCurvesPointer());
+  ConfigSave();
+  ConfigFree();
+  gtk_main_quit ();
+}
+
+
+/** @} */
