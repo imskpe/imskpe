@@ -1,22 +1,27 @@
-# build with: rpmbuild -ba imskpe.spec
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
 Version: 1.0beta1
-Release: 2
+Release: 3
 License: GPL
 Group: Applications/Sound
 URL: http://imskpe.sf.net
 Source0: %{name}-%{version}.tar.gz
-Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
+#Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Buildroot: /tmp/bol
 Requires:        gtk+ >= @GTK_REQUIRED@
 BuildRequires:   gtk+-devel >= @GTK_REQUIRED@
+prefix: /usr/local
+
+# cheats
+%define _unpackaged_files_terminate_build 0 
+%define _missing_doc_files_terminate_build 0
 
 %description 
 imskpe is gui for formantsynthesis based on algorthms by Dennis Klatt.
 %prep
 %setup -q
 %build 
-./configure --prefix=%{_prefix}
+./configure --prefix=%{prefix}
 make
 
 %install 
@@ -30,9 +35,10 @@ make DESTDIR=%{buildroot} install
 
 %files 
 %defattr(-,root,root) 
-%{_prefix}/bin/imskpe
-%{_datadir}/* 
-%doc AUTHORS ChangeLog INSTALL README NEWS TODO
+%{prefix}/bin/imskpe
+%{prefix}/share/locale/* 
+%{prefix}/share/imskpe/pixmaps/* 
+#%doc AUTHORS ChangeLog INSTALL README NEWS TODO
 
 %changelog 
 
