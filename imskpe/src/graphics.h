@@ -85,4 +85,9 @@ void DrawButtonPressed(int rx, int ry,GdkEventButton  *event, diagramTyp dia);
 
 int GetMousepressed();
 void SetMousepressed(int foo);
-GtkWidget *simpledialog (char *msg);
+
+void SetLabelColor(GtkWidget *w, char *cfgstr);
+gboolean DialogYesNo (char *msg);
+GtkWidget *DialogInfoOK (char *msg);
+GtkWidget *DialogErrorOK (char *msg);
+GtkWidget *DialogOK (char *msg, GtkMessageType mt);

@@ -60,7 +60,7 @@ void ConfigLoad()
   }
   else
   {
-    simpledialog (_("get_home_dir failed!"));
+    DialogErrorOK (_("get_home_dir failed!"));
   }
 }
 
@@ -464,7 +464,7 @@ void ConfigSave()
     outfp = fopen(tmp,"w");
     if(outfp==NULL)
     {
-      simpledialog (_("Problems saving config-file!"));
+      DialogErrorOK (_("Problems saving config-file!"));
       
       free(tmp);
       return;
@@ -489,7 +489,7 @@ void ConfigSave()
   }
   else
   {
-    simpledialog (_("get_home_dir failed!"));
+    DialogErrorOK (_("get_home_dir failed!"));
     return;
   }
 

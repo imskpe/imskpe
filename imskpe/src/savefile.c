@@ -77,15 +77,14 @@ void FileSave(char *filename)
     strncpy(tmp,FileGetFilename(),strlen(FileGetFilename()));
   }
   
+  tmp[strlen(tmp)]=0;
   FileSetFilename(tmp);
 //   printf("-%s-\n",tmp);    
-
-  tmp[strlen(tmp)]=0;
 
   outfp = fopen(tmp,"w");
   if(outfp==NULL)
   {
-    simpledialog (_("Can't open output parameter file."));
+    DialogErrorOK (_("Can't open output parameter file."));
 
     free(tmp);
     return;

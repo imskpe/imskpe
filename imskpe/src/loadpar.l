@@ -113,11 +113,11 @@ void LoadPar(char *filename)
     tmp=NULL;
   }
 
-//    printf("loadpar: %s\n",filename);
+/*   printf("loadpar: %s\n",filename); */
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    simpledialog (_("Problems open parameter file."));
+    DialogErrorOK (_("Problems open parameter file."));
 
     free(filename);
     return;
@@ -138,7 +138,7 @@ void LoadPar(char *filename)
       if(firstrun==1 && !(toktype==IMSKPE || toktype==KPE))
       {
 	fclose(infp);
-	simpledialog (_("no parameter file."));
+	DialogInfoOK (_("no parameter file."));
 	return;
       }
       if(firstrun==1)
@@ -236,7 +236,7 @@ void LoadPar(char *filename)
 	    ptime=atoi(x);
 	    if(optime>ptime)
 	    {
-	      simpledialog (_("Parameterfile has loops?"));
+	      DialogInfoOK (_("Parameterfile has loops?"));
 	    }
 	    break;
 	case DITEM:
@@ -331,5 +331,8 @@ void LoadPar(char *filename)
      }
     free(tmp);
   }
-  free(filename);
+
+  // raises sometimes an error ... :(
+  //  free(filename);
+
 }

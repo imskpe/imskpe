@@ -91,7 +91,10 @@ int main (int argc, char *argv[])
 //     printf("%d %s\n",strlen(filename),filename);
     FileOpen(filename);
   }
-
+  else
+  {
+    FileInit();
+  }
 
   InitSplash();
 

@@ -603,3 +603,19 @@ on_spn_max_freq_parent_set             (GtkWidget       *widget,
 void
 on_bn_prefs_default_clicked            (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_bn_file_open_cancel_clicked         (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_file_open_ok_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_file_save_cancel_clicked         (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_file_save_ok_clicked             (GtkButton       *button,
+                                        gpointer         user_data);

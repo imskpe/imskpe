@@ -1029,11 +1029,32 @@ void SetMousepressed(int foo)
    mousepressed=foo;
 }
 
-GtkWidget *simpledialog (char *msg)
+
+void SetLabelColor(GtkWidget *w, char *cfgstr)
+{
+  GdkColor col;
+
+  col = ConfigGetColor(cfgstr);
+  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
+}
+
+
+GtkWidget *DialogInfoOK(char *msg)
+{
+  return DialogOK(msg, GTK_MESSAGE_INFO);
+}
+
+GtkWidget *DialogErrorOK(char *msg)
+{
+  return DialogOK(msg, GTK_MESSAGE_ERROR);
+}
+
+GtkWidget *DialogOK (char *msg, GtkMessageType mt)
 {
   GtkWidget *dialog;
-// GTK_MESSAGE_ERROR
-  dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
+
+  dialog = gtk_message_dialog_new (NULL, 0, mt, GTK_BUTTONS_OK,
 				   "%s", msg);
   g_signal_connect (G_OBJECT (dialog), "response",
 		    G_CALLBACK (gtk_widget_destroy), 0);
@@ -1044,3 +1065,23 @@ GtkWidget *simpledialog (char *msg)
   return dialog;
 }
 
+
+gboolean DialogYesNo (char *msg)
+{
+  GtkWidget *dialog;
+  gint foo;
+
+  dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_QUESTION, GTK_BUTTONS_YES_NO,
+				   "%s", msg);
+
+  foo=gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);   
+  switch(foo)
+  {
+  case GTK_RESPONSE_YES:
+    return TRUE;
+  case GTK_RESPONSE_NO:
+    return FALSE;
+  }
+  return FALSE;
+}

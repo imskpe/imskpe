@@ -4,10 +4,11 @@
 
 GtkWidget* create_imskpe_main (void);
 GtkWidget* create_imskpe_colorsel (void);
-GtkWidget* create_imskpe_file (void);
 GtkWidget* create_imskpe_about (void);
 GtkWidget* create_imskpe_prefs (void);
 GtkWidget* create_imskpe_credits (void);
 GtkWidget* create_pmenu (void);
 GtkWidget* create_imskpe_move (void);
 GtkWidget* create_imskpe_splash (void);
+GtkWidget* create_imskpe_file_open (void);
+GtkWidget* create_imskpe_file_save (void);

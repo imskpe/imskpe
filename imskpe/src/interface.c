@@ -1380,40 +1380,6 @@ create_imskpe_colorsel (void)
 }
 
 GtkWidget*
-create_imskpe_file (void)
-{
-  GtkWidget *imskpe_file;
-  GtkWidget *ok_button2;
-  GtkWidget *cancel_button2;
-
-  imskpe_file = gtk_file_selection_new (_("Select File"));
-  gtk_container_set_border_width (GTK_CONTAINER (imskpe_file), 12);
-  gtk_window_set_type_hint (GTK_WINDOW (imskpe_file), GDK_WINDOW_TYPE_HINT_DIALOG);
-
-  ok_button2 = GTK_FILE_SELECTION (imskpe_file)->ok_button;
-  gtk_widget_show (ok_button2);
-  GTK_WIDGET_SET_FLAGS (ok_button2, GTK_CAN_DEFAULT);
-
-  cancel_button2 = GTK_FILE_SELECTION (imskpe_file)->cancel_button;
-  gtk_widget_show (cancel_button2);
-  GTK_WIDGET_SET_FLAGS (cancel_button2, GTK_CAN_DEFAULT);
-
-  g_signal_connect ((gpointer) ok_button2, "clicked",
-                    G_CALLBACK (on_ok_button2_clicked),
-                    NULL);
-  g_signal_connect ((gpointer) cancel_button2, "clicked",
-                    G_CALLBACK (on_cancel_button2_clicked),
-                    NULL);
-
-  /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file, imskpe_file, "imskpe_file");
-  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file, ok_button2, "ok_button2");
-  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file, cancel_button2, "cancel_button2");
-
-  return imskpe_file;
-}
-
-GtkWidget*
 create_imskpe_about (void)
 {
   GtkWidget *imskpe_about;
@@ -1566,11 +1532,10 @@ create_imskpe_prefs (void)
   tooltips = gtk_tooltips_new ();
 
   imskpe_prefs = gtk_dialog_new ();
-  gtk_widget_set_size_request (imskpe_prefs, 450, 400);
+  gtk_widget_set_size_request (imskpe_prefs, -1, 400);
   gtk_window_set_title (GTK_WINDOW (imskpe_prefs), _("Preferences"));
   gtk_window_set_modal (GTK_WINDOW (imskpe_prefs), TRUE);
   gtk_window_set_resizable (GTK_WINDOW (imskpe_prefs), FALSE);
-  gtk_window_set_type_hint (GTK_WINDOW (imskpe_prefs), GDK_WINDOW_TYPE_HINT_DIALOG);
 
   dialog_vbox2 = GTK_DIALOG (imskpe_prefs)->vbox;
   gtk_widget_show (dialog_vbox2);
@@ -1886,13 +1851,12 @@ create_imskpe_prefs (void)
   cme_tool_style = GTK_COMBO (cm_tool_style)->entry;
   gtk_widget_show (cme_tool_style);
 
-  lb_misc = gtk_label_new (_("misc"));
+  lb_misc = gtk_label_new (_("Misc"));
   gtk_widget_show (lb_misc);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_prefs), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_prefs), 3), lb_misc);
 
   dialog_action_area2 = GTK_DIALOG (imskpe_prefs)->action_area;
   gtk_widget_show (dialog_action_area2);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area2), GTK_BUTTONBOX_END);
 
   bn_prefs_cancel = gtk_button_new_from_stock ("gtk-cancel");
   gtk_widget_show (bn_prefs_cancel);
@@ -2387,5 +2351,99 @@ create_imskpe_splash (void)
   GLADE_HOOKUP_OBJECT (imskpe_splash, splash_close, "splash_close");
 
   return imskpe_splash;
+}
+
+GtkWidget*
+create_imskpe_file_open (void)
+{
+  GtkWidget *imskpe_file_open;
+  GtkWidget *dialog_vbox6;
+  GtkWidget *dialog_action_area6;
+  GtkWidget *bn_file_open_cancel;
+  GtkWidget *bn_file_open_ok;
+
+  imskpe_file_open = gtk_file_chooser_dialog_new (_("Open File"), NULL, GTK_FILE_CHOOSER_ACTION_OPEN, NULL);
+  gtk_window_set_modal (GTK_WINDOW (imskpe_file_open), TRUE);
+
+  dialog_vbox6 = GTK_DIALOG (imskpe_file_open)->vbox;
+  gtk_widget_show (dialog_vbox6);
+
+  dialog_action_area6 = GTK_DIALOG (imskpe_file_open)->action_area;
+  gtk_widget_show (dialog_action_area6);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area6), GTK_BUTTONBOX_END);
+
+  bn_file_open_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_file_open_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_open), bn_file_open_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_file_open_cancel, GTK_CAN_DEFAULT);
+
+  bn_file_open_ok = gtk_button_new_from_stock ("gtk-open");
+  gtk_widget_show (bn_file_open_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_open), bn_file_open_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_file_open_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_file_open_cancel, "clicked",
+                    G_CALLBACK (on_bn_file_open_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_file_open_ok, "clicked",
+                    G_CALLBACK (on_bn_file_open_ok_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_open, imskpe_file_open, "imskpe_file_open");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_open, dialog_vbox6, "dialog_vbox6");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_open, dialog_action_area6, "dialog_action_area6");
+  GLADE_HOOKUP_OBJECT (imskpe_file_open, bn_file_open_cancel, "bn_file_open_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_file_open, bn_file_open_ok, "bn_file_open_ok");
+
+  gtk_widget_grab_default (bn_file_open_ok);
+  return imskpe_file_open;
+}
+
+GtkWidget*
+create_imskpe_file_save (void)
+{
+  GtkWidget *imskpe_file_save;
+  GtkWidget *dialog_vbox7;
+  GtkWidget *dialog_action_area7;
+  GtkWidget *bn_file_save_cancel;
+  GtkWidget *bn_file_save_ok;
+
+  imskpe_file_save = gtk_file_chooser_dialog_new (_("Save File"), NULL, GTK_FILE_CHOOSER_ACTION_SAVE, NULL);
+  gtk_window_set_modal (GTK_WINDOW (imskpe_file_save), TRUE);
+
+  dialog_vbox7 = GTK_DIALOG (imskpe_file_save)->vbox;
+  gtk_widget_show (dialog_vbox7);
+
+  dialog_action_area7 = GTK_DIALOG (imskpe_file_save)->action_area;
+  gtk_widget_show (dialog_action_area7);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area7), GTK_BUTTONBOX_END);
+
+  bn_file_save_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_file_save_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_save), bn_file_save_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_file_save_cancel, GTK_CAN_DEFAULT);
+
+  bn_file_save_ok = gtk_button_new_from_stock ("gtk-open");
+  gtk_widget_show (bn_file_save_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_save), bn_file_save_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_file_save_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_file_save_cancel, "clicked",
+                    G_CALLBACK (on_bn_file_save_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_file_save_ok, "clicked",
+                    G_CALLBACK (on_bn_file_save_ok_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_save, imskpe_file_save, "imskpe_file_save");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_save, dialog_vbox7, "dialog_vbox7");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file_save, dialog_action_area7, "dialog_action_area7");
+  GLADE_HOOKUP_OBJECT (imskpe_file_save, bn_file_save_cancel, "bn_file_save_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_file_save, bn_file_save_ok, "bn_file_save_ok");
+
+  gtk_widget_grab_default (bn_file_save_ok);
+  return imskpe_file_save;
 }
 

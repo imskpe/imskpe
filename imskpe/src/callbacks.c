@@ -51,12 +51,13 @@
 /**
    @name load/save dialog
    @{ */
+/* /\** pointer to open dialog *\/ */
+/* GtkWidget *fileopen = NULL; */
 
-/** loadsaveType - maybe not the best solution */
-typedef enum {NONE, LOAD, SAVE} lsTyp;
+/* /\** pointer to save dialog *\/ */
+/* GtkWidget *filesave = NULL; */
 
-/** default value for loadsave */
-lsTyp loadorsave=NONE;
+gint loadafter;
 
 /** 
  * init new file, redraw drawarea
@@ -86,7 +87,21 @@ void
 on_open1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  InitDialogLoad();
+  loadafter=0;
+
+  if(FileGetIsChanged())
+  {
+    if(DialogYesNo(_("Save changed data?"))==TRUE)
+    {
+      InitDialogSave();
+      loadafter=1;
+    }
+  }
+
+  if(loadafter==0)
+  {
+    InitDialogLoad();
+  }
 }
 
 
@@ -126,66 +141,79 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 }
 
 void
-on_ok_button2_clicked                  (GtkButton       *button,
+on_bn_file_open_cancel_clicked         (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_file_open_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
   char *filename;
   GtkWidget *w;
-  struct stat st;
-  
   int len;
-
-// gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_selector));
-  len = strlen(gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+  
+  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
   filename = (char *) malloc(sizeof(char)*(len+2));
     
-  filename = (char *) gtk_file_selection_get_filename 
-      (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button))));
-  
-  // test if file is directory!
+  filename = (char *) gtk_file_chooser_get_filename 
+      (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
 
-//   path_part (file, last_dir, sizeof (last_dir));
-  if (stat (filename, &st) != -1)
-  {
-    if (S_ISDIR (st.st_mode))
-    {
-      if (filename[strlen(filename)-1] != '/')
-      {
-	strcat (filename, "/");
-      }
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))),filename);
-      free (filename);
-      return;
-    }
-  }
-
-  if(loadorsave==LOAD)
-  {
-    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
     
-    // and start import ...
-    SetTitle(filename);
-    FileOpen(filename);
+  // and start import ...
+  SetTitle(filename);
+  FileOpen(filename);
+  
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+}
 
-    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-    redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-  }
-  else if(loadorsave==SAVE)
+
+void
+on_bn_file_save_cancel_clicked         (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+  if(loadafter==1)
   {
-    gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-
-    SetTitle(filename);
-    FileSave(filename);
+    InitDialogLoad();
   }
 }
 
 
 void
-on_cancel_button2_clicked              (GtkButton       *button,
+on_bn_file_save_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
+  char *filename;
+  GtkWidget *w;
+  int len;
+  
+  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+
+  filename = (char *) malloc(sizeof(char)*(len+2));
+    
+  filename = (char *) gtk_file_chooser_get_filename 
+      (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+    
+  SetTitle(filename);
+  FileSave(filename);
+  
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+
+  if(loadafter==1)
+  {
+    InitDialogLoad();
+  }
 }
 
 void
@@ -206,32 +234,43 @@ void
 on_bn_open_clicked                     (GtkButton       *button,
                                         gpointer         user_data)
 {
-  InitDialogLoad();
-}
+  loadafter=0;
 
+  if(FileGetIsChanged())
+  {
+    if(DialogYesNo(_("Save changed data?"))==TRUE)
+    {
+      InitDialogSave();
+      loadafter=1;
+    }
+  }
+
+  if(loadafter==0)
+  {
+    InitDialogLoad();
+  }
+}
 
 void InitDialogSave()
 {
- static GtkWidget *fileopen = NULL;
+ static GtkWidget *filesave = NULL;
 
- loadorsave=SAVE;
-
- if (fileopen == NULL) 
+ if (filesave == NULL) 
  {
-   fileopen = create_imskpe_file ();
+   filesave = create_imskpe_file_save ();
    /* set the widget pointer to NULL when the widget is destroyed */
-   g_signal_connect (G_OBJECT (fileopen),
+   g_signal_connect (G_OBJECT (filesave),
 		     "destroy",
 		     G_CALLBACK (gtk_widget_destroyed),
-		     &fileopen);
+		     &filesave);
    
    /* Make sure the dialog doesn't disappear behind the main window. */
-   gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
+   gtk_window_set_transient_for (GTK_WINDOW (filesave), 
 				 GTK_WINDOW (GetMainWindow()));
  }
  
  /* Make sure the dialog is visible. */
- gtk_window_present (GTK_WINDOW (fileopen));
+ gtk_window_present (GTK_WINDOW (filesave));
 }
 
 
@@ -239,11 +278,9 @@ void InitDialogLoad()
 {
  static GtkWidget *fileopen = NULL;
 
- loadorsave=LOAD;
-
  if (fileopen == NULL) 
  {
-   fileopen = create_imskpe_file ();
+   fileopen = create_imskpe_file_open ();
    /* set the widget pointer to NULL when the widget is destroyed */
    g_signal_connect (G_OBJECT (fileopen),
 		     "destroy",
@@ -1172,44 +1209,6 @@ on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
 
 }
 
-
-void
-on_lb_f1_realize                       (GtkWidget       *widget,
-                                        gpointer         user_data)
-{
-  GdkColor col;
-
-  col = ConfigGetColor("f1");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
-}
-
-
-void
-on_lb_f2_realize                       (GtkWidget       *widget,
-                                        gpointer         user_data)
-{
-  GdkColor col;
-
-  col = ConfigGetColor("f2");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
-}
-
-
-void
-on_lb_f3_realize                       (GtkWidget       *widget,
-                                        gpointer         user_data)
-{
-  GdkColor col;
-
-  col = ConfigGetColor("f3");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
-}
-
-
-
 void
 on_nb_draw_switch_page                 (GtkNotebook     *notebook,
                                         GtkNotebookPage *page,
@@ -1222,14 +1221,33 @@ on_nb_draw_switch_page                 (GtkNotebook     *notebook,
 }
 
 void
+on_lb_f1_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  SetLabelColor(widget,"f1");
+}
+
+
+void
+on_lb_f2_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  SetLabelColor(widget,"f2");
+}
+
+
+void
+on_lb_f3_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  SetLabelColor(widget,"f3");
+}
+
+void
 on_lb_f4_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor col;
-
-  col = ConfigGetColor("f4");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+  SetLabelColor(widget,"f4");
 }
 
 
@@ -1237,11 +1255,7 @@ void
 on_lb_f5_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor col;
-
-  col = ConfigGetColor("f5");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+  SetLabelColor(widget,"f5");
 }
 
 
@@ -1249,11 +1263,7 @@ void
 on_lb_f6_realize                       (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor col;
-
-  col = ConfigGetColor("f6");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+  SetLabelColor(widget,"f6");
 }
 
 
@@ -1261,11 +1271,7 @@ void
 on_lb_nasals_realize                   (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor col;
-
-  col = ConfigGetColor("nasals");
-  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+  SetLabelColor(widget,"nasals");
 }
 
 
@@ -1791,6 +1797,16 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     ConfigRename("color_vs_tmp","color_vs");
   }
 
+  // set colors on gui-labels
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f1"),"f1");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f2"),"f2");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f3"),"f3");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f4"),"f4");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f5"),"f5");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f6"),"f6");
+  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_nasals"),"nasals");
+
+
   w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
   val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
   sprintf(tmp,"%d",val);
@@ -1876,9 +1892,11 @@ void
 on_bn_prefs_default_clicked            (GtkButton       *button,
                                         gpointer         user_data)
 {
-  printf("first ask for ok!\n");
-  ConfigFree();
-  ConfigNew();
+  if(DialogYesNo(_("Really reset preferences?"))==TRUE)
+  {
+    ConfigFree();
+    ConfigNew();
+  }
 }
 
 void InitDialogPrefs()
@@ -2026,54 +2044,15 @@ void
 on_lb_colors_realize                   (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  GdkColor col;
-  GtkWidget *w;
-
-  col = ConfigGetColor("f1");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f1");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("f2");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f2");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("f3");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f3");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("f4");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f4");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("f5");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f5");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("f6");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_f6");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("nasals");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_nasals");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("vs");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_vs");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-
-  col = ConfigGetColor("ea");
-  w=lookup_widget (GTK_WIDGET (widget), "lb_ea");
-  gtk_widget_modify_fg (w, GTK_STATE_ACTIVE, &col);
-  gtk_widget_modify_fg (w, GTK_STATE_NORMAL, &col);
-  
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f1"),"f1");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f2"),"f2");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f3"),"f3");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f4"),"f4");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f5"),"f5");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f6"),"f6");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_nasals"),"nasals");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_vs"),"vs");
+  SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_ea"),"ea");
 }
 
 
@@ -2333,11 +2312,14 @@ imskpe_quit                            (GtkWidget       *widget,
                                         GdkEvent        *event,
                                         gpointer         user_data)
 {
-//   FormantListFree();
-  CurveListFree(FileGetCurvesPointer());
-  ConfigSave();
-  ConfigFree();
-  gtk_main_quit ();
+  if(DialogYesNo(_("Really quit?"))==TRUE)
+  {
+    //   FormantListFree();
+    CurveListFree(FileGetCurvesPointer());
+    ConfigSave();
+    ConfigFree();
+    gtk_main_quit ();
+  }
 }
 
 /** @} */
@@ -2352,4 +2334,5 @@ on_spn_max_freq_parent_set             (GtkWidget       *widget,
   ;
 
 }
+
 

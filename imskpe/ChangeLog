@@ -1,3 +1,13 @@
+2004-12-02  Andreas Madsack  <bolsog@users.sf.net>
+
+	* code-optimize, introduced setcolorlabel / now setting
+   	  preferences colors after apply/ok in gui, too
+	* set default values if argv[1] is not an parfile
+	* introducing Error/Info/YesNo-Dialog-Procedures
+	* added MessageDialogs at program-quit, file-was-changed
+	* introduced GTK2.4 File-Selector-Dialogs for open and save.
+	* updated german (de.po) translations
+
 2004-11-30  Andreas Madsack  <bolsog@users.sf.net>
 
 	* middle mousebutton now inserts a new point

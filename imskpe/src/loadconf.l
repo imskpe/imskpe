@@ -90,7 +90,7 @@ void LoadConf(char *filename)
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    simpledialog (_("couldn't find configfile / use default!"));
+    DialogInfoOK (_("couldn't find configfile / use default!"));
 
     free(filename);
 

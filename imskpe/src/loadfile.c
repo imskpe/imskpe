@@ -34,8 +34,14 @@
 #include <gtk/gtk.h>
 #include <stdio.h>
 
+#include "support.h"
+
 #include "loadfile.h"
 #include "loadpar.h"
+
+/* only for InitDialogSave :( */
+#include "callbacks.h"
+
 
 /** global-File-struct */
 typFile *aFile=NULL;
@@ -50,14 +56,6 @@ typFile *aFile=NULL;
  */
 void FileOpen(char *filename)
 {
-  /** \todo look if old file isChanged and needs to be saved. 
-            insert dialog !!
-   */
-  if(FileGetIsChanged())
-  {
-    printf("ask for save?\n");
-  }
-
   LoadPar(filename);
 }
 
