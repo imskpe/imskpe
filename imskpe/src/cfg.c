@@ -309,11 +309,13 @@ gboolean ConfigFind(char *name)
     
     if(!strcmp(data->name,name))
     {
+//       printf("T %s\n",name);
       return TRUE;
     }
 
     cl = cl->next;
   }
+//   printf("F %s\n",name);
   return FALSE;
 }
 

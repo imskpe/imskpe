@@ -22,8 +22,6 @@
  * @author Andreas Madsack
  * 
  * @brief  callback-ifdef
- * 
- * \todo problem with 'realize'-event and notebook-widgets! - realize isn't raised for notebook-tabs!=1 until selected!
  */
 
 
@@ -1732,128 +1730,141 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   char tmp[100];
 
   // save values
-  printf("apply\n");
-  if(ConfigFind("color_f1_tmp"))
+//   printf("apply\n");
+  if(ConfigFind("prefs_tab1_tmp"))
   {
-    ConfigRemove("color_f1");
-    ConfigRename("color_f1_tmp","color_f1");
-  }
-  if(ConfigFind("color_f2_tmp"))
-  {
-    ConfigRemove("color_f2");
-    ConfigRename("color_f2_tmp","color_f2");
-  }
-  if(ConfigFind("color_f3_tmp"))
-  {
-    ConfigRemove("color_f3");
-    ConfigRename("color_f3_tmp","color_f3");
-  }
-  if(ConfigFind("color_f4_tmp"))
-  {
-    ConfigRemove("color_f4");
-    ConfigRename("color_f4_tmp","color_f4");
-  }
-  if(ConfigFind("color_f5_tmp"))
-  {
-    ConfigRemove("color_f5");
-    ConfigRename("color_f5_tmp","color_f5");
-  }
-  if(ConfigFind("color_f6_tmp"))
-  {
-    ConfigRemove("color_f6");
-    ConfigRename("color_f6_tmp","color_f6");
+    if(ConfigFind("color_f1_tmp"))
+    {
+      ConfigRemove("color_f1");
+      ConfigRename("color_f1_tmp","color_f1");
+    }
+    if(ConfigFind("color_f2_tmp"))
+    {
+      ConfigRemove("color_f2");
+      ConfigRename("color_f2_tmp","color_f2");
+    }
+    if(ConfigFind("color_f3_tmp"))
+    {
+      ConfigRemove("color_f3");
+      ConfigRename("color_f3_tmp","color_f3");
+    }
+    if(ConfigFind("color_f4_tmp"))
+    {
+      ConfigRemove("color_f4");
+      ConfigRename("color_f4_tmp","color_f4");
+    }
+    if(ConfigFind("color_f5_tmp"))
+    {
+      ConfigRemove("color_f5");
+      ConfigRename("color_f5_tmp","color_f5");
+    }
+    if(ConfigFind("color_f6_tmp"))
+    {
+      ConfigRemove("color_f6");
+      ConfigRename("color_f6_tmp","color_f6");
+    }
+    
+    if(ConfigFind("color_nasals_tmp"))
+    {
+      ConfigRemove("color_nasals");
+      ConfigRename("color_nasals_tmp","color_nasals");
+    }
+    if(ConfigFind("color_vs_tmp"))
+    {
+      ConfigRemove("color_vs");
+      ConfigRename("color_vs_tmp","color_vs");
+    }
+    if(ConfigFind("color_vs_tmp"))
+    {
+      ConfigRemove("color_vs");
+      ConfigRename("color_vs_tmp","color_vs");
+    }
+
+    // set colors on gui-labels
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f1"),"f1");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f2"),"f2");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f3"),"f3");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f4"),"f4");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f5"),"f5");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f6"),"f6");
+    SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_nasals"),"nasals");
+    ConfigRemove("prefs_tab1_tmp");
   }
 
-  if(ConfigFind("color_nasals_tmp"))
+  if(ConfigFind("prefs_tab2_tmp"))
   {
-    ConfigRemove("color_nasals");
-    ConfigRename("color_nasals_tmp","color_nasals");
-  }
-  if(ConfigFind("color_vs_tmp"))
-  {
-    ConfigRemove("color_vs");
-    ConfigRename("color_vs_tmp","color_vs");
-  }
-  if(ConfigFind("color_vs_tmp"))
-  {
-    ConfigRemove("color_vs");
-    ConfigRename("color_vs_tmp","color_vs");
-  }
+    w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
+    val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+    sprintf(tmp,"%d",val);
+    ConfigInsert("maxfreq",tmp);
+    
+    w=lookup_widget (GTK_WIDGET (button), "spn_max_amp");
+    val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+    sprintf(tmp,"%d",val);
+    ConfigInsert("maxamp",tmp);
+    
+    w=lookup_widget (GTK_WIDGET (button), "spn_max_band");
+    val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+    sprintf(tmp,"%d",val);
+    ConfigInsert("maxband",tmp);
 
-  // set colors on gui-labels
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f1"),"f1");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f2"),"f2");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f3"),"f3");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f4"),"f4");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f5"),"f5");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f6"),"f6");
-  SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_nasals"),"nasals");
-
-
-  w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
-  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-  sprintf(tmp,"%d",val);
-  printf("max_freq: %d\n",val);
-  ConfigInsert("maxfreq",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "spn_max_amp");
-  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-  sprintf(tmp,"%d",val);
-  ConfigInsert("maxamp",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "spn_max_band");
-  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-  sprintf(tmp,"%d",val);
-  ConfigInsert("maxband",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "ent_font");
-  sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
-  ConfigInsert("rulerfont",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "ent_play");
-  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
-  ConfigInsert("playcmd",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
-  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
-  ConfigInsert("tmpdir",tmp);
-
-  w=lookup_widget (GTK_WIDGET (button), "cme_tool_style");
-  strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
-
-  if(!strcmp(_("icons"),tmp))
-  {
-    val=GTK_TOOLBAR_ICONS;
-  }
-  if(!strcmp(_("text"),tmp))
-  {
-    val=GTK_TOOLBAR_TEXT;
-  }
-  if(!strcmp(_("both"),tmp))
-  {
-    val=GTK_TOOLBAR_BOTH;
-  }
-  sprintf(tmp,"%d",val);
-  ConfigInsert("toolbarstyle",tmp);
-  GuiSetToolbarStyle(val);
-
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit");
-  if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
-  {
-    ConfigInsert("showquitdiag","1");
-  }
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit2");
-  if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
-  {
-    ConfigInsert("showquitdiag","0");
+    w=lookup_widget (GTK_WIDGET (button), "ent_font");
+    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
+    ConfigInsert("rulerfont",tmp);
+    ConfigRemove("prefs_tab2_tmp");
   }
 
+  if(ConfigFind("prefs_tab3_tmp"))
+  {
+    w=lookup_widget (GTK_WIDGET (button), "ent_play");
+    strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+    ConfigInsert("playcmd",tmp);
+
+    w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
+    strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+    ConfigInsert("tmpdir",tmp);
+    ConfigRemove("prefs_tab3_tmp");
+  }
+
+  if(ConfigFind("prefs_tab4_tmp"))
+  {
+    w=lookup_widget (GTK_WIDGET (button), "cme_tool_style");
+    strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
+
+    if(!strcmp(_("icons"),tmp))
+    {
+      val=GTK_TOOLBAR_ICONS;
+    }
+    if(!strcmp(_("text"),tmp))
+    {
+      val=GTK_TOOLBAR_TEXT;
+    }
+    if(!strcmp(_("both"),tmp))
+    {
+      val=GTK_TOOLBAR_BOTH;
+    }
+    sprintf(tmp,"%d",val);
+    ConfigInsert("toolbarstyle",tmp);
+    GuiSetToolbarStyle(val);
+
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit");
+    if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
+    {
+      ConfigInsert("showquitdiag","1");
+    }
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit2");
+    if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
+    {
+      ConfigInsert("showquitdiag","0");
+    }
+    ConfigRemove("prefs_tab4_tmp");
+  }
 
   // redraw!!
   w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
   redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 
-  printf("apply end\n");     
+//   printf("apply end\n");     
   return;
 }
 
@@ -1976,6 +1987,7 @@ void
 on_spn_max_freq_realize                (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  ConfigInsert("prefs_tab2_tmp","1"); // one for each tab (2)
   gtk_spin_button_set_value ((GtkSpinButton *) widget, ConfigGetInteger("maxfreq"));
 }
 
@@ -2002,6 +2014,7 @@ void
 on_ent_play_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  ConfigInsert("prefs_tab3_tmp","1");  // one for each tab (3)
   gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("playcmd"));
 }
 
@@ -2017,6 +2030,7 @@ void
 on_cme_tool_style_realize              (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  ConfigInsert("prefs_tab4_tmp","1"); // one for each tab (4)
   int foo=ConfigGetInteger("toolbarstyle");  
 
   switch(foo)
@@ -2038,6 +2052,8 @@ void
 on_lb_colors_realize                   (GtkWidget       *widget,
                                         gpointer         user_data)
 {
+  ConfigInsert("prefs_tab1_tmp","1"); // one for each tab (1)
+
   SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f1"),"f1");
   SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f2"),"f2");
   SetLabelColor(lookup_widget (GTK_WIDGET (widget), "lb_f3"),"f3");
@@ -2088,7 +2104,7 @@ on_ok_button1_clicked                  (GtkButton       *button,
   strcpy(tmp2,"color_");
   strcat(tmp2,selected_color);
   strcat(tmp2,"_tmp");
-  printf("update ...\n");
+//   printf("update ...\n");
   ConfigInsert(tmp2,tmp);
 
 //   if(selected_color!=NULL)
@@ -2098,7 +2114,7 @@ on_ok_button1_clicked                  (GtkButton       *button,
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 //   colordiag=NULL;
-  printf("color ok end\n");
+//   printf("color ok end\n");
 }
 
 
