@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-10 23:51+0100\n"
+"POT-Creation-Date: 2005-02-13 23:52+0100\n"
 "PO-Revision-Date: 2005-02-10 23:53+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
@@ -142,23 +142,23 @@ msgstr "Zweige"
 msgid "samp/sec"
 msgstr "Samples/Sek"
 
-#: src/interface.c:491 src/callbacks.c:1386 src/graphics.c:121
+#: src/interface.c:491 src/callbacks.c:1389 src/graphics.c:121
 msgid "impulse"
 msgstr "Impulse"
 
-#: src/interface.c:492 src/callbacks.c:1390 src/graphics.c:124
+#: src/interface.c:492 src/callbacks.c:1393 src/graphics.c:124
 msgid "natural"
 msgstr "naturgetreu"
 
-#: src/interface.c:493 src/callbacks.c:1394 src/graphics.c:127
+#: src/interface.c:493 src/callbacks.c:1397 src/graphics.c:127
 msgid "sampled"
 msgstr "digitalisiert"
 
-#: src/interface.c:508 src/callbacks.c:1408 src/graphics.c:142
+#: src/interface.c:508 src/callbacks.c:1411 src/graphics.c:142
 msgid "cascade + parallel"
 msgstr "kaskade + parallel"
 
-#: src/interface.c:509 src/callbacks.c:1413 src/graphics.c:145
+#: src/interface.c:509 src/callbacks.c:1416 src/graphics.c:145
 msgid "parallel only"
 msgstr "nur parallel"
 
@@ -560,57 +560,57 @@ msgstr "Welches Set wollen Sie löschen?"
 msgid "choose"
 msgstr "auswählen"
 
-#: src/callbacks.c:90 src/callbacks.c:240 src/callbacks.c:266
+#: src/callbacks.c:90 src/callbacks.c:243 src/callbacks.c:269
 msgid "Save changed data?"
 msgstr "Veränderungen speichern?"
 
-#: src/callbacks.c:226
+#: src/callbacks.c:229
 msgid " written"
 msgstr " geschrieben"
 
-#: src/callbacks.c:347
+#: src/callbacks.c:350
 msgid "Filetype: "
 msgstr "Dateityp: "
 
-#: src/callbacks.c:390
+#: src/callbacks.c:393
 msgid "All Files"
 msgstr "alle Dateien"
 
-#: src/callbacks.c:395
+#: src/callbacks.c:398
 msgid "par-Files"
 msgstr "par-Dateien"
 
-#: src/callbacks.c:470
+#: src/callbacks.c:473
 msgid "Compiled"
 msgstr "kompiliert"
 
-#: src/callbacks.c:541
+#: src/callbacks.c:544
 msgid "write bugreports here: "
 msgstr "Fehlermeldungen bitte hier schreiben: "
 
-#: src/callbacks.c:542
+#: src/callbacks.c:545
 msgid "get announcements:"
 msgstr "Um bei neuen Versionen benachrichtigt zu werden:"
 
-#: src/callbacks.c:758 src/callbacks.c:850
+#: src/callbacks.c:761 src/callbacks.c:853
 #, c-format
 msgid "%d ms - %d Hz "
 msgstr "%d ms - %d Hz "
 
-#: src/callbacks.c:804
+#: src/callbacks.c:807
 #, c-format
 msgid "%d ms - %d dB "
 msgstr "%d ms - %d dB "
 
-#: src/callbacks.c:1992
+#: src/callbacks.c:1995
 msgid "Really reset preferences?"
 msgstr "Wirklich die Einstellungen zurücksetzen?"
 
-#: src/callbacks.c:2361
+#: src/callbacks.c:2364
 msgid "You need insert a name for the set!"
 msgstr "Sie muessen dem Set einen Namen geben."
 
-#: src/callbacks.c:2536
+#: src/callbacks.c:2539
 msgid "Really quit?"
 msgstr "Wirklich Beenden?"
 
