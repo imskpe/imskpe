@@ -1,7 +1,8 @@
 /* For Emacs: -*-c-*- */
 /*
     loadpar.l - Part of IMSKPE
-    Copyright (c) 2004  
+
+    Copyright (c) 2004 Andreas Madsack
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +18,21 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
+
+/**
+ * @file   loadpar.c
+ * @author Andreas Madsack
+ * 
+ * @brief  parser for PAR-Files (flex generated)
+ * 
+ * 
+ */
+
 %{
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -25,6 +40,8 @@
 #include <gdk/gdk.h>
 
 #include "loadpar.h"
+#include "loadfile.h"
+#include "support.h"
 
   int datanr;
 
@@ -36,28 +53,26 @@
 
 %%
 
-"/*"                    {BEGIN(comment);return COMMENT;}
-<comment>[ :]           ;
-<comment>[A-Z]+         return VARNAME;
-<comment>[0-9]+         return VALUE;
-<comment>"*"+[^*/\n]*   return EOC;
-<comment>\n             ;
-<comment>"*"+"/"        {BEGIN(INITIAL);}
+"/*"                            {BEGIN(comment);return COMMENT;}
+<comment>[ :]                   ;
+<comment>[A-Z]+                 return VARNAME;
+<comment>[0-9]+                 return VALUE;
+<comment>"*"+[^*/\n]*           return EOC;
+<comment>\n                     return EOL;
+<comment>"*"+"/"                {BEGIN(INITIAL);}
+<comment>Produced[ ]by[ ]kpe80  return KPE;
 
-^[ ]+                   {BEGIN(paramdata);}
-<paramdata>[0-9]+":"    return LINEID;
-<paramdata>[ ]+         datanr++;
-<paramdata>[0-9]+       return DITEM;
-<paramdata>\n           {datanr=0;BEGIN(INITIAL);}
-.                       {return UNKNOWN;}
+^[ ]+                           {BEGIN(paramdata);}
+<paramdata>[0-9]+":"            return LINEID;
+<paramdata>[ ]+                 datanr++;
+<paramdata>[0-9]+               return DITEM;
+<paramdata>\n                   {datanr=0;BEGIN(INITIAL);}
+
+.                               {return UNKNOWN;}
 %%
 /** 
  * LoadPar loads a PAR-File in curves-List 
  * 
- * \todo remember filename and path in a struct?; what more? 
- *       an is_changed bool ... ?
- *       all global infos
- *
  * @param filename 
  */
 void LoadPar(char *filename)
@@ -70,15 +85,16 @@ void LoadPar(char *filename)
   int ptime;
   int pvalue;
   int i;
+  char var[3];
 
   void *params[PARARMETERS];
   GList *pointtmp=NULL;
 
   typParList *tmp;
-  typListValue *point;
+  typValueList *point;
 
   // init
-  for(i=1;i<PARARMETERS;i++)
+  for(i=0;i<PARARMETERS;i++)
   {
     tmp = g_malloc (sizeof (typParList));
     tmp->last1=-1;
@@ -94,7 +110,7 @@ void LoadPar(char *filename)
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    /// \todo use an errordialog ?!
+    /** \todo use an errordialog ?! */
     printf("can't open parameter file");
 
     free(filename);
@@ -116,25 +132,76 @@ void LoadPar(char *filename)
       {
 	
 	/* part1 commentinfo */
-
-/*  DU:      duration of (selected) waveform
-    UI:      update interval for parameter reset
-    SR:      sampling frequency
-    NF:      number of formants
-    SS:      voice source; 1 = impulse, 2 = natural, 3 = sampled
-    CP:      1 = cascade + parallel branches, 2 = parallel only
-*/
-	
+      case KPE:
       case COMMENT:
+      case EOL:
 	  break;
       case VARNAME:
-	  printf("var: %s ",yytext);
+	  // copy only first 2 chars!
+	  strncpy(var,yytext,2);
+	  var[2]=0;
 	  break;
       case VALUE:
-	  printf(" = %s\n",yytext);
+ 	  if(!strcmp(var,"DU"))
+	  {
+	    if(FileSetDuration(atoi(yytext))==FALSE)
+	    {
+	      printf(_("PAR-Import-Error: "));
+	      printf(_("DU not integer\n"));
+	    }
+	  }
+ 	  else 
+	  if (!strcmp(var,"UI"))
+	  {
+ 	    if(FileSetUpdateInterval(atoi(yytext))==FALSE)
+ 	    {
+ 	      printf(_("PAR-Import-Error: "));
+ 	      printf(_("UI not integer\n"));
+ 	    }
+	  }
+	  else
+	  if (!strcmp(var,"SR"))
+	  {
+ 	    if(FileSetSamplingRate(atoi(yytext))==FALSE)
+ 	    {
+ 	      printf(_("PAR-Import-Error: "));
+ 	      printf(_("SR not integer\n"));
+ 	    }
+	  }
+	  else
+	  if (!strcmp(var,"NF"))
+	  {
+ 	    if(FileSetNumberFormants(atoi(yytext))==FALSE)
+ 	    {
+ 	      printf(_("PAR-Import-Error: "));
+ 	      printf(_("NF not integer\n"));
+ 	    }
+	  }
+	  else
+	  if (!strcmp(var,"SS"))
+	  {
+ 	    if(FileSetVoiceSource(atoi(yytext))==FALSE)
+ 	    {
+ 	      printf(_("PAR-Import-Error: "));
+ 	      printf(_("SS not integer\n"));
+ 	    }
+	  }
+	  else
+	  if (!strcmp(var,"CP"))
+	  {
+ 	    if(FileSetBranches(atoi(yytext))==FALSE)
+ 	    {
+ 	      printf(_("PAR-Import-Error: "));
+ 	      printf(_("CP not integer\n"));
+ 	    }
+	  }
+	  else
+	  {
+	    printf(_("not recognized variable in PAR-File: %s [%s]\n"),var,yytext);
+	  }
 	  break;
+
 	  /* part2 parameters */
-	  
       case LINEID:
 	  // new parameterline
 	  pcount=0;
@@ -142,7 +209,6 @@ void LoadPar(char *filename)
 	  ptime=atoi(x);
 	  break;
       case DITEM:
-	  pcount++;
 	  pvalue = atoi(yytext);
 	  
 	  tmp = params[pcount];
@@ -173,11 +239,12 @@ void LoadPar(char *filename)
 	    ;  /* it's not necessary! => don't append it */
 	  }
 	  /* aktual point; save it temporarily */
-	  tmp->ptmp = (typListValue *) PointInsert(ptime,pvalue);
+	  tmp->ptmp = (typValueList *) PointInsert(ptime,pvalue);
 	  
 	  /* write back list of points*/
 	  tmp->points = pointtmp;
 	  params[pcount]=tmp;
+	  pcount++;
 	  break;
       case UNKNOWN:
 	  break;
@@ -187,7 +254,7 @@ void LoadPar(char *filename)
   fclose(infp);
 
 // insert last values:
-  for(i=1;i<PARARMETERS;i++)
+  for(i=0;i<PARARMETERS;i++)
   {
     tmp=params[i];
     pointtmp = (GList *) tmp->points;
@@ -199,23 +266,36 @@ void LoadPar(char *filename)
 //  printf("------\n");
 
 // free ...
-  for(i=1;i<PARARMETERS;i++)
+  for(i=0;i<PARARMETERS;i++)
   {
     tmp=params[i];
     pointtmp = (GList *) g_list_first (tmp->points);
 //    printf ("%2d / %3d\n",i,g_list_length (pointtmp));
-    while(pointtmp)
-    {	
 
-      point = (typListValue *) pointtmp->data;
 
-//      printf("%4d %4d %2d\n",point->time,point->value,i); 
+/* par->curves:
+   - curves auslagern in extra .c
+   - getcurves in loadfile benutzen!
+   - use curves searchfor (par, formant, button)
+   - copy points ? (einfach pointer nehmen und nicht free-n)?
+   
+   - formants weg -> preferences colortable her!!
+
+*/
+    printf("X-\n");
+    CurveInsert(FileGetCurvesPointer(),i,pointtmp);
+
+//     while(pointtmp)
+//     {	
+//       point = (typValueList *) pointtmp->data;
+
+//       printf("%4d %4d %2d\n",point->time,point->value,i); 
       
-      if(point!=NULL)
-      free(point);
+//       if(point!=NULL)
+//       free(point);
 
-      pointtmp = g_list_remove(pointtmp,point);
-    }
+//       pointtmp = g_list_remove(pointtmp,point);
+//     }
     free(tmp);
   }
   free(filename);

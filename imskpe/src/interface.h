@@ -5,3 +5,4 @@
 GtkWidget* create_imskpe_main (void);
 GtkWidget* create_imskpe_colorsel (void);
 GtkWidget* create_imskpe_file (void);
+GtkWidget* create_imskpe_about (void);

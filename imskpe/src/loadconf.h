@@ -16,41 +16,21 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-/**
- * @file   loadpar.h
- * @author Andreas Madsack
- * 
- * @brief  parser for PAR-Files
- * 
- * 
- */
-
-
-// #include <gtk/gtk.h>
-#include "curves.h" // for typValueList
-
 /*
-procedures
+defines
 */
 
 #define COMMENT 257
 #define EOC 258
 #define VARNAME 259
 #define VALUE 260
-#define LINEID 261
-#define DITEM 262
+#define EQUAL 261
+#define DPOINT 262
 #define EOL 263
-#define KPE 264
 #define UNKNOWN 299
 
-#define PARARMETERS 40
+/*
+procedures
+*/
 
-typedef struct {
-    int last1;
-    int last2;
-    GList *points;  // typValueList Liste
-    typValueList *ptmp; // maybe next to insert
-} typParList;
-
-
-void LoadPar (char *filename);
+void LoadConf (char *filename);

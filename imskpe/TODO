@@ -11,7 +11,7 @@ OK open par-files
 final:
 - bind to libklatt
 - generate wavs internal
-
+- play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
 
 nice to have:
 - fuzzy-gettext einträge auch in die .mo ?!?!
@@ -32,6 +32,13 @@ OK - die callbacks.h aufräumen
     - und eine init-funktion für new mit den schwa werten ...
       = start.par
   - wenn schon vorhanden wieder einblenden
+OK loadfile einführen
+  - globales struct für ein File?
+    - darin folgende daten:
+      - filename, ischanged, pointer auf formants-GList
+  - darin: 
+    - laden der par-files
+    - laden eines eigenen optimaleren formats [nice to have]
 - speichern der preferences
   - preferences dialog
   - auch speichern der formantfarben

@@ -144,9 +144,12 @@ imskpe_SOURCES = \
 	graphics.c graphics.h \
 	callbacks.c callbacks.h \
 	cfg.c cfg.h \
-	loadpar.l loadpar.h
+	loadpar.l loadpar.h \
+	loadfile.c loadfile.h \
+	curves.c curves.h
 
 
+#	loadconf.l loadconf.h
 imskpe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -158,7 +161,7 @@ PROGRAMS = $(bin_PROGRAMS)
 
 am_imskpe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
 	graphics.$(OBJEXT) callbacks.$(OBJEXT) cfg.$(OBJEXT) \
-	loadpar.$(OBJEXT)
+	loadpar.$(OBJEXT) loadfile.$(OBJEXT) curves.$(OBJEXT)
 imskpe_OBJECTS = $(am_imskpe_OBJECTS)
 imskpe_DEPENDENCIES =
 imskpe_LDFLAGS =
@@ -167,7 +170,8 @@ DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 @AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/callbacks.Po ./$(DEPDIR)/cfg.Po \
-@AMDEP_TRUE@	./$(DEPDIR)/graphics.Po ./$(DEPDIR)/interface.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/curves.Po ./$(DEPDIR)/graphics.Po \
+@AMDEP_TRUE@	./$(DEPDIR)/interface.Po ./$(DEPDIR)/loadfile.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/loadpar.Po ./$(DEPDIR)/main.Po \
 @AMDEP_TRUE@	./$(DEPDIR)/support.Po
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -224,8 +228,10 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callbacks.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cfg.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/curves.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/graphics.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loadfile.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/loadpar.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/support.Po@am__quote@

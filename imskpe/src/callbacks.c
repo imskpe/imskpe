@@ -1,4 +1,6 @@
 /*
+    callbacks.c - Part of IMSKPE
+
     Copyright (C) 2004 Andreas Madsack
 
     This program is free software; you can redistribute it and/or modify
@@ -15,6 +17,15 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
+/**
+ * @file   callbacks.c
+ * @author Andreas Madsack
+ * 
+ * @brief  callback-functions
+ * 
+ * 
+ */
+
 
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
@@ -30,6 +41,8 @@
 
 #include "cfg.h"
 #include "graphics.h"
+#include "loadfile.h"
+#include "curves.h"
 
 
 /*** procedures:
@@ -44,6 +57,7 @@ void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+
 
 }
 
@@ -94,6 +108,38 @@ void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+ static GtkWidget *about = NULL;
+ GtkWidget *w;
+ char buf[512];
+
+  if (about == NULL) 
+    {
+      about = create_imskpe_about ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (about),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&about);
+
+
+      w = lookup_widget (GTK_WIDGET (about), "about_label");    
+      /** is snprintf really portable? */
+      snprintf(buf,sizeof(buf),
+	       "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
+	       "\n\n"
+	       "<b>%s</b>: %s\n\n"
+	       "<small>\302\251 2004 Andreas Madsack &lt;bolsog@users.sf.net></small>",VERSION,_("Compiled"),__DATE__
+	  );
+      gtk_label_set_markup (GTK_LABEL (w), buf);  
+
+      set_main_window(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (about), 
+				    GTK_WINDOW (get_main_window()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (about));
 }
 
 
@@ -453,7 +499,6 @@ on_lb_f2_realize                       (GtkWidget       *widget,
   GdkColor col;
 
   col = GetFormantListColor("f2");
-//  col = FormantListGetColor("F2");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -466,7 +511,6 @@ on_lb_f3_realize                       (GtkWidget       *widget,
   GdkColor col;
 
   col = GetFormantListColor("f3");
-//  col = FormantListGetColor("F3");
   gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
   gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
@@ -479,6 +523,7 @@ imskpe_quit                            (GtkWidget       *widget,
 {
   FormantListFree();
   ConfigListFree();
+  CurveListFree(FileGetCurvesPointer());
 
   gtk_main_quit ();
   return FALSE;
@@ -521,7 +566,8 @@ on_ok_button2_clicked                  (GtkButton       *button,
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
   // and start import ...
-  LoadPar(filename);
+  SetStatusBar("sb_file", filename);
+  FileOpen(filename);
 }
 
 
@@ -530,5 +576,95 @@ on_cancel_button2_clicked              (GtkButton       *button,
                                         gpointer         user_data)
 {
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_about_close_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_open_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+ static GtkWidget *fileopen = NULL;
+
+  if (fileopen == NULL) 
+    {
+      fileopen = create_imskpe_file ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (fileopen),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&fileopen);
+
+      set_main_window(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
+				    GTK_WINDOW (get_main_window()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (fileopen));
+}
+
+
+void
+on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_lb_f4_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = GetFormantListColor("f4");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+void
+on_lb_f5_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = GetFormantListColor("f5");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+void
+on_lb_f6_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = GetFormantListColor("f6");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
+}
+
+
+void
+on_lb_nasals_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  GdkColor col;
+
+  col = GetFormantListColor("nasals");
+  gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &col);
+  gtk_widget_modify_fg (widget, GTK_STATE_NORMAL, &col);
 }
 

@@ -47,6 +47,7 @@ create_imskpe_main (void)
   GtkWidget *hbox2;
   GtkWidget *toolbar1;
   GtkWidget *bn_quit;
+  GtkWidget *bn_open;
   GtkWidget *toolbar2;
   GtkWidget *bn_move;
   GtkWidget *bn_insert;
@@ -155,7 +156,9 @@ create_imskpe_main (void)
   GtkWidget *lb_draw_amp;
   GtkWidget *draw_band;
   GtkWidget *lb_draw_band;
-  GtkWidget *statusbar1;
+  GtkWidget *hbox3;
+  GtkWidget *sb_file;
+  GtkWidget *sb_add;
   GtkAccelGroup *accel_group;
   GtkTooltips *tooltips;
 
@@ -236,6 +239,12 @@ create_imskpe_main (void)
                                 NULL,
                                 NULL, NULL, NULL, -1);
   gtk_widget_show (bn_quit);
+
+  bn_open = gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar1),
+                                "gtk-open",
+                                NULL,
+                                NULL, NULL, NULL, -1);
+  gtk_widget_show (bn_open);
 
   toolbar2 = gtk_toolbar_new ();
   gtk_widget_show (toolbar2);
@@ -824,9 +833,18 @@ create_imskpe_main (void)
   gtk_widget_show (lb_draw_band);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_draw), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_draw), 2), lb_draw_band);
 
-  statusbar1 = gtk_statusbar_new ();
-  gtk_widget_show (statusbar1);
-  gtk_box_pack_start (GTK_BOX (vbox1), statusbar1, FALSE, FALSE, 0);
+  hbox3 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_show (hbox3);
+  gtk_box_pack_start (GTK_BOX (vbox1), hbox3, FALSE, FALSE, 0);
+
+  sb_file = gtk_statusbar_new ();
+  gtk_widget_show (sb_file);
+  gtk_box_pack_start (GTK_BOX (hbox3), sb_file, TRUE, TRUE, 0);
+  gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (sb_file), FALSE);
+
+  sb_add = gtk_statusbar_new ();
+  gtk_widget_show (sb_add);
+  gtk_box_pack_start (GTK_BOX (hbox3), sb_add, TRUE, TRUE, 0);
 
   g_signal_connect ((gpointer) imskpe_main, "delete_event",
                     G_CALLBACK (imskpe_quit),
@@ -855,6 +873,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_quit, "clicked",
                     G_CALLBACK (imskpe_quit),
                     NULL);
+  g_signal_connect ((gpointer) bn_open, "clicked",
+                    G_CALLBACK (on_bn_open_clicked),
+                    NULL);
   g_signal_connect ((gpointer) bn_move, "toggled",
                     G_CALLBACK (on_bn_move_toggled),
                     NULL);
@@ -870,8 +891,14 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) spbn_duration, "changed",
                     G_CALLBACK (on_spbn_duration_changed),
                     NULL);
+  g_signal_connect ((gpointer) spbn_duration, "value_changed",
+                    G_CALLBACK (on_spbn_duration_changed),
+                    NULL);
   g_signal_connect ((gpointer) bn_f1_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_f1_freq, "toggled",
+                    G_CALLBACK (on_bn_f1_freq_toggled),
                     NULL);
   g_signal_connect ((gpointer) lb_f1, "realize",
                     G_CALLBACK (on_lb_f1_realize),
@@ -891,14 +918,26 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_f4_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
+  g_signal_connect ((gpointer) lb_f4, "realize",
+                    G_CALLBACK (on_lb_f4_realize),
+                    NULL);
   g_signal_connect ((gpointer) bn_f5_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) lb_f5, "realize",
+                    G_CALLBACK (on_lb_f5_realize),
                     NULL);
   g_signal_connect ((gpointer) bn_f6_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
+  g_signal_connect ((gpointer) lb_f6, "realize",
+                    G_CALLBACK (on_lb_f6_realize),
+                    NULL);
   g_signal_connect ((gpointer) bn_nasal_color, "clicked",
                     G_CALLBACK (on_bn_fX_color_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) lb_nasals, "realize",
+                    G_CALLBACK (on_lb_nasals_realize),
                     NULL);
   g_signal_connect ((gpointer) nb_draw, "switch_page",
                     G_CALLBACK (on_nb_draw_switch_page),
@@ -950,6 +989,7 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, hbox2, "hbox2");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar1, "toolbar1");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_quit, "bn_quit");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_open, "bn_open");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_move, "bn_move");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_insert, "bn_insert");
@@ -1052,7 +1092,9 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_draw_amp, "lb_draw_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, draw_band, "draw_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_draw_band, "lb_draw_band");
-  GLADE_HOOKUP_OBJECT (imskpe_main, statusbar1, "statusbar1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, hbox3, "hbox3");
+  GLADE_HOOKUP_OBJECT (imskpe_main, sb_file, "sb_file");
+  GLADE_HOOKUP_OBJECT (imskpe_main, sb_add, "sb_add");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_main, tooltips, "tooltips");
 
   gtk_window_add_accel_group (GTK_WINDOW (imskpe_main), accel_group);
@@ -1144,5 +1186,80 @@ create_imskpe_file (void)
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_file, cancel_button2, "cancel_button2");
 
   return imskpe_file;
+}
+
+GtkWidget*
+create_imskpe_about (void)
+{
+  GtkWidget *imskpe_about;
+  GtkWidget *dialog_vbox1;
+  GtkWidget *about_label;
+  GtkWidget *dialog_action_area1;
+  GtkWidget *bn_about_credits;
+  GtkWidget *alignment1;
+  GtkWidget *hbox4;
+  GtkWidget *image1;
+  GtkWidget *label5;
+  GtkWidget *bn_about_close;
+
+  imskpe_about = gtk_dialog_new ();
+  gtk_widget_set_size_request (imskpe_about, 330, 200);
+  gtk_window_set_title (GTK_WINDOW (imskpe_about), _("About"));
+
+  dialog_vbox1 = GTK_DIALOG (imskpe_about)->vbox;
+  gtk_widget_show (dialog_vbox1);
+
+  about_label = gtk_label_new (_("\n\n\nimskpe \n\n\n\n\n(c) 2004 by Andreas Madsack"));
+  gtk_widget_show (about_label);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox1), about_label, FALSE, FALSE, 0);
+  gtk_label_set_justify (GTK_LABEL (about_label), GTK_JUSTIFY_CENTER);
+
+  dialog_action_area1 = GTK_DIALOG (imskpe_about)->action_area;
+  gtk_widget_show (dialog_action_area1);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area1), GTK_BUTTONBOX_EDGE);
+
+  bn_about_credits = gtk_button_new ();
+  gtk_widget_show (bn_about_credits);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_about), bn_about_credits, GTK_RESPONSE_CLOSE);
+  GTK_WIDGET_SET_FLAGS (bn_about_credits, GTK_CAN_DEFAULT);
+
+  alignment1 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment1);
+  gtk_container_add (GTK_CONTAINER (bn_about_credits), alignment1);
+
+  hbox4 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox4);
+  gtk_container_add (GTK_CONTAINER (alignment1), hbox4);
+
+  image1 = gtk_image_new_from_stock ("gtk-dialog-info", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image1);
+  gtk_box_pack_start (GTK_BOX (hbox4), image1, FALSE, FALSE, 0);
+
+  label5 = gtk_label_new_with_mnemonic (_("Credits"));
+  gtk_widget_show (label5);
+  gtk_box_pack_start (GTK_BOX (hbox4), label5, FALSE, FALSE, 0);
+
+  bn_about_close = gtk_button_new_from_stock ("gtk-close");
+  gtk_widget_show (bn_about_close);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_about), bn_about_close, GTK_RESPONSE_CLOSE);
+  GTK_WIDGET_SET_FLAGS (bn_about_close, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_about_close, "clicked",
+                    G_CALLBACK (on_bn_about_close_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_about, imskpe_about, "imskpe_about");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_about, dialog_vbox1, "dialog_vbox1");
+  GLADE_HOOKUP_OBJECT (imskpe_about, about_label, "about_label");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_about, dialog_action_area1, "dialog_action_area1");
+  GLADE_HOOKUP_OBJECT (imskpe_about, bn_about_credits, "bn_about_credits");
+  GLADE_HOOKUP_OBJECT (imskpe_about, alignment1, "alignment1");
+  GLADE_HOOKUP_OBJECT (imskpe_about, hbox4, "hbox4");
+  GLADE_HOOKUP_OBJECT (imskpe_about, image1, "image1");
+  GLADE_HOOKUP_OBJECT (imskpe_about, label5, "label5");
+  GLADE_HOOKUP_OBJECT (imskpe_about, bn_about_close, "bn_about_close");
+
+  return imskpe_about;
 }
 

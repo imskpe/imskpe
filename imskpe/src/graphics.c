@@ -1,4 +1,6 @@
 /*
+    graphics.c - Part of IMSKPE
+
     Copyright (C) 2004 Andreas Madsack
 
     This program is free software; you can redistribute it and/or modify
@@ -16,6 +18,40 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/**
+ * @file   graphics.c
+ * @author Andreas Madsack
+ * 
+ * @brief  all visual routines of IMSKPE
+ * 
+ * \todo put part of functions in other files (formant/curves-routines, math-stuff, statusbar, ...)
+ * 
+ * \todo color muss auch in Curves ... -> keine formantsliste mehr ... / abspeichern der farbwerte in den preferences ... 
+ *
+ * \note idea: 
+ * - one list for formants (in preferences)
+ *   - specify color of label and curves
+ * - list of curves (in file-struct)
+ *   - inhabits list of points
+ * 
+ * -  skala muss flexibler werden .. 
+ *    und die daten müssen abgreifbar sein ...
+ *
+ * - routine, die die linien im repaint malt ...
+ *   incl. rechtecken auf den punkten ...
+ *   sofern diese show=TRUE haben ...
+ * 
+ * - garbage collector für die ganze schose ...
+ * 
+ * - eventroutinen 
+ *   - wenn maus drüber linie dicker
+ *   - wenn maus über punkt, dann auch dot dicker
+ *   - aktuelle koordinaten in status-right anzeigen
+ *   - aktuelle kurve in status-left (oder neuer middle) anzeigen
+ *   - file evt. in title ...
+ *
+*/
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -29,14 +65,8 @@
 #include "support.h"
 #include "graphics.h"
 #include "cfg.h"
+#include "curves.h"
 
-/**
-idea: 
-- one list for formants
-  - specify color of label and curves
-- list of curves
-  - inhabits list of points
-*/
 
 /*
   global variables
@@ -45,9 +75,11 @@ GtkWidget *main_window;
 typGraphics *g = NULL;
 int nScreenWidth = 200;
 int nScreenHeight = 200;
-GList *curves = NULL;
-GList *formants = NULL;
 
+//GList *curves = NULL;  // put in file struct!!
+GList *formants = NULL;  // put in preferences ?
+
+/** \todo put in another file - not graphic relevant! */
 GtkWidget *get_main_window()
 {
   return (GtkWidget *)main_window;
@@ -56,15 +88,17 @@ GtkWidget *get_main_window()
 void set_main_window(GtkWidget *w)
 {
   main_window=(GtkWidget *)w;
+
+  return;
 }
 
 void FormantListInit ()
 {
-  typListFormants *oneformant;
+  typFormantList *oneformant;
   gchar *x;
 
 /* F1 */
-  oneformant = g_malloc (sizeof (typListFormants));
+  oneformant = g_malloc (sizeof (typFormantList));
 
   oneformant->formantname = g_malloc (sizeof (gchar)*5);
   strcpy(oneformant->formantname,"f1");
@@ -74,7 +108,7 @@ void FormantListInit ()
   formants = g_list_append (formants, oneformant);
 
 /* F2 */
-  oneformant = g_malloc (sizeof (typListFormants));
+  oneformant = g_malloc (sizeof (typFormantList));
 
   oneformant->formantname = g_malloc (sizeof (gchar)*5);
   strcpy(oneformant->formantname,"f2");
@@ -84,7 +118,7 @@ void FormantListInit ()
   formants = g_list_append (formants, oneformant);
 
 /* F3 */
-  oneformant = g_malloc (sizeof (typListFormants));
+  oneformant = g_malloc (sizeof (typFormantList));
 
   oneformant->formantname = g_malloc (sizeof (gchar)*5);
   strcpy(oneformant->formantname,"f3");
@@ -93,17 +127,58 @@ void FormantListInit ()
 
   formants = g_list_append (formants, oneformant);
 
+/* F4 */
+  oneformant = g_malloc (sizeof (typFormantList));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"f4");
+
+  oneformant->color=GetColor(1.0,1.0,0);
+
+  formants = g_list_append (formants, oneformant);
+
+/* F5 */
+  oneformant = g_malloc (sizeof (typFormantList));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"f5");
+
+  oneformant->color=GetColor(0,1.0,1.0);
+
+  formants = g_list_append (formants, oneformant);
+
+/* F6 */
+  oneformant = g_malloc (sizeof (typFormantList));
+
+  oneformant->formantname = g_malloc (sizeof (gchar)*5);
+  strcpy(oneformant->formantname,"f6");
+
+  oneformant->color=GetColor(1.0,0,1.0);
+
+  formants = g_list_append (formants, oneformant);
+
+/* nasals */
+  oneformant = g_malloc (sizeof (typFormantList));
+
+  /** \todo save maxsize of of formantname!! */
+  oneformant->formantname = g_malloc (sizeof (gchar)*(strlen("nasals")+1));
+  strcpy(oneformant->formantname,"nasals");
+
+  oneformant->color=GetColor(0.5,0.5,1.0);
+
+  formants = g_list_append (formants, oneformant);
+
 
 /* wohin mit dieser initroutine?! */
   LoadConfig();
 
 /* not best position ... :) */
-  CurveListInit ();
+//  CurveListInit ();
 }
 
 GdkColor GetFormantListColor (gchar *searchstring)
 {
-  typListFormants *oneformant;  
+  typFormantList *oneformant;  
 
 /*  printf ("%s\n",searchstring);*/
 /*  printf("--\nsearch: %s\n",searchstring);*/
@@ -111,12 +186,12 @@ GdkColor GetFormantListColor (gchar *searchstring)
   while(formants)
   {	
     gchar *fname;
-    fname = g_malloc (sizeof (gchar)*5);
+    fname = g_malloc (sizeof (gchar)*8);
 
-//    oneformant = g_malloc (sizeof (typListFormants));
+//    oneformant = g_malloc (sizeof (typFormantList));
     oneformant = formants->data;
 
-    strcpy(fname,oneformant->formantname);
+    strncpy(fname,oneformant->formantname,8);
     if(!strcmp(fname,searchstring))   /* strCASEcmp under win32? */
     {
       printf("found %s\n",fname);
@@ -136,12 +211,12 @@ GdkColor GetFormantListColor (gchar *searchstring)
 
 void FormantListFree()
 {
-  typListFormants *data;
+  typFormantList *data;
 
   formants=g_list_first (formants);
   while(formants)
   {	
-    data=(typListFormants *)formants->data;
+    data=(typFormantList *)formants->data;
     
     if(data->formantname!=NULL)
       free(data->formantname);
@@ -156,103 +231,10 @@ void FormantListFree()
 
 /* ------------------------------------------------ */
 
-/// \todo curvesFree !!!!
-
-
-/*
-  manage curves
-*/
-void CurveListInit ()
-{
-  typListCurve *curve;
-  gchar *x;
-  GList *points=NULL;
-
-  curve = g_malloc (sizeof (typListCurve));
-
-  points = g_list_append(points, (typListValue *)PointInsert(0,100));
-  points = g_list_append(points, (typListValue *)PointInsert(70,100));
-  points = g_list_append(points, (typListValue *)PointInsert(100,170));
-  points = g_list_append(points, (typListValue *)PointInsert(150,170));
-  points = g_list_append(points, (typListValue *)PointInsert(300,400));
-  points = g_list_append(points, (typListValue *)PointInsert(500,410));
-  
-  curve->points=points;
-  curve->widget_name = g_malloc (sizeof (gchar)*40);
-  strcpy(curve->widget_name,"bn_f1_bandp");
-  curve->show=TRUE;
-
-  strtok(curve->widget_name,"_");    /* evt. probleme unter windows !? */
-  x=g_malloc (sizeof (gchar)*10);
-  strcpy(x,(gchar *)strtok(NULL,"_"));
-  curve->formant=x;
-
-  curves = g_list_append (curves, curve);  
-
-  curve = g_malloc (sizeof (typListCurve));
-
-  points = NULL;
-  points = g_list_append(points, (typListValue *)PointInsert(0,400));
-  points = g_list_append(points, (typListValue *)PointInsert(500,400));
-  
-  curve->points=points;
-  curve->widget_name = g_malloc (sizeof (gchar)*40);
-  strcpy(curve->widget_name,"bn_f2_bandp");
-  curve->show=TRUE;
-
-  strtok(curve->widget_name,"_");    /* evt. probleme unter windows !? */
-  x=g_malloc (sizeof (gchar)*10);
-  strcpy(x,(gchar *)strtok(NULL,"_"));
-  curve->formant=x;
-
-  curves = g_list_append (curves, curve);  
-
-  printf("%s\n",curve->formant);
-
-/* 
-next:
--  skala muss flexibler werden .. 
-   und die daten müssen abgreifbar sein ...
-
-- routine, die die linien im repaint malt ...
-incl. rechtecken auf den punkten ...
-sofern diese show=TRUE haben ...
-
-- garbage collector für die ganze schose ...
-
-- eventroutinen 
-  - wenn maus drüber linie dicker
-  - wenn maus über punkt, dann auch dot dicker
-
-*/
-
-}
-
-
-/** 
- * Inserts a Point in an typListValue and 
- * returns the pointer to it.
- *
- * @param t 
- * @param v 
- * 
- * @return 
- */
-typListValue *PointInsert (gint t, gint v)
-{
-  typListValue *vl;
-
-  vl = g_malloc (sizeof (typListValue));
-  vl->time=t;
-  vl->value=v;
-  return vl;
-}
-
-
-/* ------------------------------------------------ */
-
 /** 
  * draw ruler
+ *
+ * \todo export values to preferences!
  * 
  * @param widget 
  */
@@ -264,16 +246,18 @@ void update_ruler(GtkWidget *widget)
   PangoFontDescription *fontdesc;
   gchar *x;
 
-  int xsplits=15;  /// export in preferences
-  int ysplits=10;  /// export in preferences
-//  int ymax=3000;   /// put in preferences and/or calculate it!
-  int ymax=500;   /// put in preferences and/or calculate it!
+  int xsplits=15;  /* export in preferences */
+  int ysplits=10;  /* export in preferences */
+//  int ymax=3000;   /* put in preferences and/or calculate it! */
+  int ymax=500;   /* put in preferences and/or calculate it! */
 
   duration = gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
 
   x = g_malloc (sizeof (gchar)*10);
-  fontdesc = pango_font_description_from_string ("Luxi Mono 6");  /// choose another font ...
-                                                                  /// and/or export in preferences
+  
+  /* \todo choose another font ...  and/or export in preferences */
+  fontdesc = pango_font_description_from_string ("Luxi Mono 6");  
+  
 
 /* x-achse */
   gdk_draw_line (g->pixmap, GetPenRGB (0, 0, 0) ,
@@ -284,7 +268,7 @@ void update_ruler(GtkWidget *widget)
 
   for(i=0;i<=xsplits;i++)
   {
-    int mod=5;
+    int mod=5;  /* -> preferences  */
 /*
     int mod=xsplits;
     if(i==0)
@@ -465,19 +449,29 @@ GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
   return col;
 }
 
+/** 
+ * Repaint
+ * 
+ * \todo 
+ * - calculation of virtualcoordinates in extra function
+ * - split in a few functions
+ * - many values must be put in preferences
+ *
+ * @param d 
+ */
 void Repaint(GtkWidget *d)
 {
     GdkRectangle  update_rect;
-    typListCurve *c;
+    typCurveList *c;
     int lastx=-1,lasty=-1;
     int x=-1,y=-1;
-    typListValue *v;
-    GList *cv=g_list_first (curves);
+    typValueList *v;
+//    GList *cv=g_list_first (curves);
 
-/// muss alles ausgelagert werden:
-    int xsplits=15;  /// export in preferences
-    int ysplits=10;  /// export in preferences
-    int ymax=500;   /// put in preferences and/or calculate it!
+/* muss alles ausgelagert werden: */
+    int xsplits=15;  /**< export in preferences */
+    int ysplits=10;  /**< export in preferences */
+    int ymax=500;   /**< put in preferences and/or calculate it! */
 
     int xmax = gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
 
@@ -499,7 +493,7 @@ void Repaint(GtkWidget *d)
     ****************************************/
     
     printf("repaint\n");
-
+/*
 //    printf(".. %d\n",cv);
     while(cv)
     {	
@@ -535,6 +529,8 @@ void Repaint(GtkWidget *d)
 	  }
 	  if(x>0 && y>0)
 	  {
+*/
+
 /*	    printf ("lastx %d %d %d\n",d->allocation.width-25,xmax,lastx);
 	    printf ("    x %d %d %d\n",d->allocation.width-25,xmax,x);
 	    printf ("lasty %d %d %d\n",d->allocation.height-25,ymax,lasty);
@@ -551,7 +547,7 @@ void Repaint(GtkWidget *d)
 // auch die 25 sollte ausgelagert werden ...
 // nun fehlt noch das rechteck ...
 // wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
-	    gdk_draw_line 
+/*	    gdk_draw_line 
 	    (g->pixmap, GetPenGdkColor (GetFormantListColor(c->formant)) ,
 		 (d->allocation.width-25)*lastx/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
@@ -566,7 +562,7 @@ void Repaint(GtkWidget *d)
       }
       cv=cv->next;
     }
-
+*/
 
 /* ****************************** */
     /* --- The whole screen --- */
@@ -607,4 +603,26 @@ void redraw_all_drawareas()
 
   widget=(GtkWidget *)lookup_widget (GTK_WIDGET (main_window), "draw_band");
   Repaint(widget);
+}
+
+
+void SetStatusBar(char *sb, gchar *text)
+{
+  GtkStatusbar *s;
+//  gchar *tmp;
+//  guint context_id;
+
+//   tmp = g_strdup_printf(text);
+  
+  s=(GtkStatusbar *) lookup_widget (GTK_WIDGET (get_main_window()), sb);
+//  context_id = gtk_statusbar_get_context_id(
+//                          GTK_STATUSBAR (s), "Statusbar example");
+
+  gtk_statusbar_pop (s, 0);
+
+  gtk_statusbar_push (s, 0, text);
+
+  printf("%s -> %s\n",sb,text);
+
+//  g_free(tmp);
 }

@@ -16,6 +16,17 @@
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+/**
+ * @file   callbacks.h
+ * @author Andreas Madsack
+ * 
+ * @brief  callback-functions
+ * 
+ * 
+ */
+
+
+
 #include <gtk/gtk.h>
 
 
@@ -173,4 +184,32 @@ on_ok_button2_clicked                  (GtkButton       *button,
 
 void
 on_cancel_button2_clicked              (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_about_close_clicked              (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_open_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_lb_f4_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f5_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_f6_realize                       (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_lb_nasals_realize                   (GtkWidget       *widget,
                                         gpointer         user_data);
