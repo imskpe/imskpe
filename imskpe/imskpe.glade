@@ -516,7 +516,7 @@
 		      <child>
 			<widget class="GtkLabel" id="lb_msec1">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">msec</property>
+			  <property name="label" translatable="yes">ms</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -540,7 +540,7 @@
 		      <child>
 			<widget class="GtkLabel" id="label3">
 			  <property name="visible">True</property>
-			  <property name="label" translatable="yes">msec</property>
+			  <property name="label" translatable="yes">ms</property>
 			  <property name="use_underline">False</property>
 			  <property name="use_markup">False</property>
 			  <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -961,7 +961,7 @@
 			    <widget class="GtkToggleButton" id="bn_f1_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -983,7 +983,7 @@
 			    <widget class="GtkToggleButton" id="bn_f1_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1084,7 +1084,7 @@
 			    <widget class="GtkToggleButton" id="bn_f2_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1106,7 +1106,7 @@
 			    <widget class="GtkToggleButton" id="bn_f2_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1207,7 +1207,7 @@
 			    <widget class="GtkToggleButton" id="bn_f3_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1229,7 +1229,7 @@
 			    <widget class="GtkToggleButton" id="bn_f3_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1330,7 +1330,7 @@
 			    <widget class="GtkToggleButton" id="bn_f4_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1352,7 +1352,7 @@
 			    <widget class="GtkToggleButton" id="bn_f4_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1453,7 +1453,7 @@
 			    <widget class="GtkToggleButton" id="bn_f5_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1475,7 +1475,7 @@
 			    <widget class="GtkToggleButton" id="bn_f5_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1576,7 +1576,7 @@
 			    <widget class="GtkToggleButton" id="bn_f6_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">frequencies</property>
+			      <property name="label" translatable="yes">frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1598,7 +1598,7 @@
 			    <widget class="GtkToggleButton" id="bn_f6_amp">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">amplitudes</property>
+			      <property name="label" translatable="yes">amplitude</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1699,7 +1699,7 @@
 			    <widget class="GtkToggleButton" id="bn_nasal_z_freq">
 			      <property name="visible">True</property>
 			      <property name="can_focus">True</property>
-			      <property name="label" translatable="yes">zero frequencies</property>
+			      <property name="label" translatable="yes">zero frequency</property>
 			      <property name="use_underline">True</property>
 			      <property name="relief">GTK_RELIEF_NORMAL</property>
 			      <property name="focus_on_click">True</property>
@@ -1866,44 +1866,23 @@
 		      <property name="column_spacing">0</property>
 
 		      <child>
-			<widget class="GtkToggleButton" id="bn_vs_gopenquot">
+			<widget class="GtkToggleButton" id="bn_vs_skewness">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">skewness (speed quotient) of voiced excitation signal</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">glottal open quotient</property>
+			  <property name="label" translatable="yes">skewness</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_vs_gopenquot_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:33 GMT"/>
+			  <signal name="toggled" handler="on_bn_vs_skewness_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:43 GMT"/>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkToggleButton" id="bn_vs_breath">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">breathiness</property>
-			  <property name="use_underline">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-			  <property name="focus_on_click">True</property>
-			  <property name="active">False</property>
-			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_vs_breath_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:36 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
+			  <property name="top_attach">4</property>
+			  <property name="bottom_attach">5</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -1924,6 +1903,28 @@
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
+			  <property name="top_attach">3</property>
+			  <property name="bottom_attach">4</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkToggleButton" id="bn_vs_breath">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">breathiness</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <signal name="toggled" handler="on_bn_vs_breath_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:36 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
 			  <property name="top_attach">2</property>
 			  <property name="bottom_attach">3</property>
 			  <property name="x_options">fill</property>
@@ -1932,23 +1933,22 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkToggleButton" id="bn_vs_skewness">
+			<widget class="GtkToggleButton" id="bn_vs_gopenquot">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">skewness (speed quotient) of voiced excitation signal</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">skewness</property>
+			  <property name="label" translatable="yes">glottal open quotient</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_vs_skewness_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:43 GMT"/>
+			  <signal name="toggled" handler="on_bn_vs_gopenquot_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:33 GMT"/>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">3</property>
-			  <property name="bottom_attach">4</property>
+			  <property name="top_attach">1</property>
+			  <property name="bottom_attach">2</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -1969,8 +1969,8 @@
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">4</property>
-			  <property name="bottom_attach">5</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -2011,66 +2011,23 @@
 		      <property name="column_spacing">0</property>
 
 		      <child>
-			<widget class="GtkToggleButton" id="bn_examp_voice">
+			<widget class="GtkToggleButton" id="bn_examp_voicepar">
 			  <property name="visible">True</property>
+			  <property name="tooltip" translatable="yes">amplitude of voicing (parallel branch)</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">amp. of voicing</property>
+			  <property name="label" translatable="yes">amp. of voicing (par)</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_examp_voice_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:53 GMT"/>
+			  <signal name="toggled" handler="on_bn_examp_voicepar_toggled" last_modification_time="Fri, 20 Aug 2004 16:22:06 GMT"/>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">0</property>
-			  <property name="bottom_attach">1</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkToggleButton" id="bn_examp_asp">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">amp. of aspiration</property>
-			  <property name="use_underline">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-			  <property name="focus_on_click">True</property>
-			  <property name="active">False</property>
-			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_examp_asp_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:56 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">1</property>
-			  <property name="bottom_attach">2</property>
-			  <property name="x_options">fill</property>
-			  <property name="y_options"></property>
-			</packing>
-		      </child>
-
-		      <child>
-			<widget class="GtkToggleButton" id="bn_examp_fric">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">amp. of frication</property>
-			  <property name="use_underline">True</property>
-			  <property name="relief">GTK_RELIEF_NORMAL</property>
-			  <property name="focus_on_click">True</property>
-			  <property name="active">False</property>
-			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_examp_fric_toggled" last_modification_time="Fri, 20 Aug 2004 16:22:00 GMT"/>
-			</widget>
-			<packing>
-			  <property name="left_attach">0</property>
-			  <property name="right_attach">1</property>
-			  <property name="top_attach">2</property>
-			  <property name="bottom_attach">3</property>
+			  <property name="top_attach">5</property>
+			  <property name="bottom_attach">6</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -2092,6 +2049,28 @@
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
+			  <property name="top_attach">4</property>
+			  <property name="bottom_attach">5</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkToggleButton" id="bn_examp_fric">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">amp. of frication</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <signal name="toggled" handler="on_bn_examp_fric_toggled" last_modification_time="Fri, 20 Aug 2004 16:22:00 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
 			  <property name="top_attach">3</property>
 			  <property name="bottom_attach">4</property>
 			  <property name="x_options">fill</property>
@@ -2100,23 +2079,44 @@
 		      </child>
 
 		      <child>
-			<widget class="GtkToggleButton" id="bn_examp_voicepar">
+			<widget class="GtkToggleButton" id="bn_examp_asp">
 			  <property name="visible">True</property>
-			  <property name="tooltip" translatable="yes">amplitude of voicing (parallel branch)</property>
 			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">amp. of voicing (par)</property>
+			  <property name="label" translatable="yes">amp. of aspiration</property>
 			  <property name="use_underline">True</property>
 			  <property name="relief">GTK_RELIEF_NORMAL</property>
 			  <property name="focus_on_click">True</property>
 			  <property name="active">False</property>
 			  <property name="inconsistent">False</property>
-			  <signal name="toggled" handler="on_bn_examp_voicepar_toggled" last_modification_time="Fri, 20 Aug 2004 16:22:06 GMT"/>
+			  <signal name="toggled" handler="on_bn_examp_asp_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:56 GMT"/>
 			</widget>
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">4</property>
-			  <property name="bottom_attach">5</property>
+			  <property name="top_attach">2</property>
+			  <property name="bottom_attach">3</property>
+			  <property name="x_options">fill</property>
+			  <property name="y_options"></property>
+			</packing>
+		      </child>
+
+		      <child>
+			<widget class="GtkToggleButton" id="bn_examp_voice">
+			  <property name="visible">True</property>
+			  <property name="can_focus">True</property>
+			  <property name="label" translatable="yes">amp. of voicing</property>
+			  <property name="use_underline">True</property>
+			  <property name="relief">GTK_RELIEF_NORMAL</property>
+			  <property name="focus_on_click">True</property>
+			  <property name="active">False</property>
+			  <property name="inconsistent">False</property>
+			  <signal name="toggled" handler="on_bn_examp_voice_toggled" last_modification_time="Fri, 20 Aug 2004 16:21:53 GMT"/>
+			</widget>
+			<packing>
+			  <property name="left_attach">0</property>
+			  <property name="right_attach">1</property>
+			  <property name="top_attach">1</property>
+			  <property name="bottom_attach">2</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -2137,8 +2137,8 @@
 			<packing>
 			  <property name="left_attach">0</property>
 			  <property name="right_attach">1</property>
-			  <property name="top_attach">5</property>
-			  <property name="bottom_attach">6</property>
+			  <property name="top_attach">0</property>
+			  <property name="bottom_attach">1</property>
 			  <property name="x_options">fill</property>
 			  <property name="y_options"></property>
 			</packing>
@@ -2236,7 +2236,8 @@
 		      <signal name="expose_event" handler="on_draw_freq_expose_event" last_modification_time="Thu, 04 Mar 2004 22:57:17 GMT"/>
 		      <signal name="motion_notify_event" handler="on_draw_freq_motion_notify_event" last_modification_time="Thu, 04 Mar 2004 22:57:25 GMT"/>
 		      <signal name="button_press_event" handler="on_draw_freq_button_press_event" last_modification_time="Sat, 11 Sep 2004 12:22:15 GMT"/>
-		      <signal name="button_release_event" handler="on_draw_freq_button_release_event" last_modification_time="Sun, 03 Oct 2004 23:11:07 GMT"/>
+		      <signal name="button_release_event" handler="on_draw_button_release_event" last_modification_time="Wed, 08 Dec 2004 22:57:33 GMT"/>
+		      <signal name="scroll_event" handler="on_draw_scroll_event" last_modification_time="Wed, 08 Dec 2004 22:53:09 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2248,7 +2249,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="lb_draw_freq">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">frequencies</property>
+		      <property name="label" translatable="yes">frequency</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>
@@ -2272,7 +2273,8 @@
 		      <signal name="configure_event" handler="on_draw_amp_configure_event" last_modification_time="Thu, 08 Apr 2004 19:25:37 GMT"/>
 		      <signal name="expose_event" handler="on_draw_amp_expose_event" last_modification_time="Thu, 08 Apr 2004 19:25:44 GMT"/>
 		      <signal name="button_press_event" handler="on_draw_amp_button_press_event" last_modification_time="Mon, 01 Nov 2004 16:36:41 GMT"/>
-		      <signal name="button_release_event" handler="on_draw_amp_button_release_event" last_modification_time="Mon, 01 Nov 2004 16:36:45 GMT"/>
+		      <signal name="button_release_event" handler="on_draw_button_release_event" last_modification_time="Wed, 08 Dec 2004 22:57:39 GMT"/>
+		      <signal name="scroll_event" handler="on_draw_scroll_event" last_modification_time="Wed, 08 Dec 2004 22:53:28 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2308,7 +2310,8 @@
 		      <signal name="expose_event" handler="on_draw_band_expose_event" last_modification_time="Thu, 08 Apr 2004 19:26:00 GMT"/>
 		      <signal name="motion_notify_event" handler="on_draw_band_motion_notify_event" last_modification_time="Thu, 08 Apr 2004 19:26:15 GMT"/>
 		      <signal name="button_press_event" handler="on_draw_band_button_press_event" last_modification_time="Mon, 01 Nov 2004 16:36:51 GMT"/>
-		      <signal name="button_release_event" handler="on_draw_band_button_release_event" last_modification_time="Mon, 01 Nov 2004 16:36:54 GMT"/>
+		      <signal name="button_release_event" handler="on_draw_button_release_event" last_modification_time="Wed, 08 Dec 2004 22:57:45 GMT"/>
+		      <signal name="scroll_event" handler="on_draw_scroll_event" last_modification_time="Wed, 08 Dec 2004 22:53:39 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2320,7 +2323,7 @@
 		  <child>
 		    <widget class="GtkLabel" id="lb_draw_band">
 		      <property name="visible">True</property>
-		      <property name="label" translatable="yes">bandwidths</property>
+		      <property name="label" translatable="yes">bandwidth</property>
 		      <property name="use_underline">False</property>
 		      <property name="use_markup">False</property>
 		      <property name="justify">GTK_JUSTIFY_LEFT</property>

@@ -437,11 +437,6 @@ void
 on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
 
-gboolean
-on_draw_freq_button_release_event      (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
 void
 on_pm_movediag_activate                (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
@@ -453,8 +448,6 @@ on_bn_move_cancel_clicked              (GtkButton       *button,
 void
 on_bn_move_ok_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
-
-
 
 
 void
@@ -507,17 +500,7 @@ on_draw_amp_button_press_event         (GtkWidget       *widget,
                                         gpointer         user_data);
 
 gboolean
-on_draw_amp_button_release_event       (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
 on_draw_band_button_press_event        (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data);
-
-gboolean
-on_draw_band_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);
 
@@ -631,4 +614,15 @@ on_rb_quit2_realize                    (GtkWidget       *widget,
 
 void
 on_bn_close_allg                       (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+gboolean
+on_draw_scroll_event                   (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_button_release_event           (GtkWidget       *widget,
+                                        GdkEventButton  *event,
                                         gpointer         user_data);

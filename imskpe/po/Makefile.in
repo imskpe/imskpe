@@ -32,7 +32,7 @@ gnulocaledir = $(datadir)/locale
 gettextsrcdir = $(datadir)/glib-2.0/gettext/po
 subdir = po
 
-INSTALL = /usr/bin/install -c
+INSTALL = /usr/bin/ginstall -c
 INSTALL_DATA = ${INSTALL} -m 644
 MKINSTALLDIRS = $(top_srcdir)/./mkinstalldirs
 

@@ -1,3 +1,10 @@
+2004-12-08  Andreas Madsack  <bolsog@users.sf.net>
+
+	* translation corrections (de.po)
+	* optimize: is(x)digit-usage (char(hex) -> int)
+	* enable using Scrollwheel to switch mode
+	* code optimizes
+
 2004-12-07  Andreas Madsack  <bolsog@users.sf.net>
 
 	* better solution for eliminating tokens in strings

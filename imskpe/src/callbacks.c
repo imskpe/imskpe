@@ -842,7 +842,7 @@ on_draw_band_button_press_event        (GtkWidget       *widget,
  * @return TRUE
  */
 gboolean
-on_draw_freq_button_release_event      (GtkWidget       *widget,
+on_draw_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data)
 {
@@ -850,45 +850,6 @@ on_draw_freq_button_release_event      (GtkWidget       *widget,
 
   return TRUE;
 }
-
-/** 
- * set buttonpressedvar to 0
- * 
- * @param widget 
- * @param event 
- * @param user_data 
- * 
- * @return TRUE
- */
-gboolean
-on_draw_amp_button_release_event       (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-  SetMousepressed(0);
-
-  return TRUE;
-}
-
-/** 
- * set buttonpressedvar to 0
- * 
- * @param widget 
- * @param event 
- * @param user_data 
- * 
- * @return TRUE
- */
-gboolean
-on_draw_band_button_release_event      (GtkWidget       *widget,
-                                        GdkEventButton  *event,
-                                        gpointer         user_data)
-{
-  SetMousepressed(0);
-
-  return TRUE;
-}
-
 
 void
 on_pm_move_activate                    (GtkMenuItem     *menuitem,
@@ -1090,6 +1051,64 @@ on_bn_move_ok_clicked                  (GtkButton       *button,
 
   w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
   redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+}
+
+
+/** 
+ * change mode with scrollwheel of 3+-button-mouse
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
+gboolean
+on_draw_scroll_event              (GtkWidget       *widget,
+                                        GdkEvent        *event,
+                                        gpointer         user_data)
+{
+
+  if(gtk_toggle_tool_button_get_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_move")))
+  {
+    if(event->scroll.direction==0)
+    {
+      SetToggleButton(DELETE);
+    }
+    else
+    {
+      SetToggleButton(INSERT);
+    }
+    return TRUE;
+  }
+  
+  if(gtk_toggle_tool_button_get_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_insert")))
+  {
+    if(event->scroll.direction==0)
+    {
+      SetToggleButton(MOVE);
+    }
+    else
+    {
+      SetToggleButton(DELETE);
+    }
+    return TRUE;
+  }
+  
+  if(gtk_toggle_tool_button_get_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_delete")))
+  {
+    if(event->scroll.direction==0)
+    {
+      SetToggleButton(INSERT);
+    }
+    else
+    {
+      SetToggleButton(MOVE);
+    }
+    return TRUE;
+  }
+
+  return FALSE;
 }
 
 /** @} */
@@ -2031,15 +2050,6 @@ on_lb_colors_realize                   (GtkWidget       *widget,
 }
 
 
-gboolean
-on_color_selection1_configure_event    (GtkWidget       *widget,
-                                        GdkEventConfigure *event,
-                                        gpointer         user_data)
-{
-  return FALSE;
-}
-
-
 /** 
  * colordialog ok
  * 
@@ -2399,6 +2409,12 @@ imskpe_quit                            (GtkWidget       *widget,
 
 /** @} */
 
+void
+on_bn_close_allg                       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
 
 
 void
@@ -2410,10 +2426,13 @@ on_spn_max_freq_parent_set             (GtkWidget       *widget,
 
 }
 
-void
-on_bn_close_allg                       (GtkButton       *button,
+
+gboolean
+on_color_selection1_configure_event    (GtkWidget       *widget,
+                                        GdkEventConfigure *event,
                                         gpointer         user_data)
 {
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  return FALSE;
 }
+
 

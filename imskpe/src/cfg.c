@@ -33,6 +33,8 @@
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
 
+#include <ctype.h>
+
 #include "support.h"
 #include "curves.h"
 #include "graphics.h"
@@ -110,11 +112,7 @@ void ConfigInsert(char *name, char *value)
     j=0;
     for(i=0;i<strlen(value);i++)
     {
-#ifdef WIN32
-      if(isdigit(value[i])==128)
-#else
-      if(isdigit(value[i])==2048)
-#endif
+      if(isdigit(value[i])>0)
       {
 	j++;
       }
@@ -131,11 +129,7 @@ void ConfigInsert(char *name, char *value)
 	j=0;
 	for(i=1;i<8;i++)
 	{
-#ifdef WIN32
-	  if(isxdigit(value[i])==128)
-#else
-	  if(isxdigit(value[i])==4096)
-#endif
+	  if(hexdigit_value(value[i])!=-1)
 	  {
 	    j++;
 	  }
@@ -264,75 +258,8 @@ GdkColor ConfigGetColor(char *name)
 
       for(i=0;i<3;i++)
       {
-	x=0;
-#ifdef WIN32
- 	if(isdigit(data->value[(i*2)+2])==128)
-#else
- 	if(isdigit(data->value[(i*2)+2])==2048)
-#endif
- 	{
- 	  x=data->value[(i*2)+2]-48;
- 	}
- 	else
- 	{
-	  switch(data->value[(i*2)+2])
-	  {
-	  case 'a':case 'A':
-	      x=10;
-	      break;
-	  case 'b':case 'B':
-	      x=11;
-	      break;
-	  case 'c':case 'C':
-	      x=12;
-	    break;
-	  case 'd':case 'D':
-	      x=13;
-	      break;
-	  case 'e':case 'E':
-	      x=14;
-	      break;
-	  case 'f':case 'F':
-	      x=15;
-	      break;
-	  }
- 	}
-	a[i]=x;
-	
-	x=0;
-#ifdef WIN32
- 	if(isdigit(data->value[(i*2)+1])==128)
-#else
- 	if(isdigit(data->value[(i*2)+1])==2048)
-#endif
-	{
-	  x=data->value[(i*2)+1]-48;
-	}
-	else
-	{
-	  switch(data->value[(i*2)+1])
-	  {
-	  case 'a':case 'A':
-	      x=10;
-	      break;
-	  case 'b':case 'B':
-	      x=11;
-	      break;
-	  case 'c':case 'C':
-	      x=12;
-	    break;
-	  case 'd':case 'D':
-	      x=13;
-	      break;
-	  case 'e':case 'E':
-	      x=14;
-	      break;
-	  case 'f':case 'F':
-	      x=15;
-	      break;
-	  }
-	}
-	a[i]+=x*16;
+	a[i]=hexdigit_value(data->value[(i*2)+2]);
+	a[i]+=(hexdigit_value(data->value[(i*2)+1]))*16;
       }
 //       printf("- colorcode: %3d %3d %3d\n",a[0],a[1],a[2]);
       return GetColor((float)a[0]/(float)255,(float)a[1]/(float)255,(float)a[2]/(float)255);
@@ -527,4 +454,13 @@ void ConfigSave()
     return;
   }
 
+}
+
+int hexdigit_value(unsigned char digit)
+{
+    return isxdigit(digit)
+               ? isdigit(digit)
+                    ? digit - '0'
+                    : tolower(digit) - 'a' + 10    /* Don't forget + 10 */
+               : -1;
 }

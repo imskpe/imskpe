@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-06 01:28+0100\n"
+"POT-Creation-Date: 2004-12-08 22:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgid "duration: "
 msgstr ""
 
 #: src/interface.c:391 src/interface.c:398
-msgid "msec"
+msgid "ms"
 msgstr ""
 
 #: src/interface.c:405
@@ -136,23 +136,23 @@ msgstr ""
 msgid "samp/sec"
 msgstr ""
 
-#: src/interface.c:463 src/callbacks.c:1285 src/graphics.c:117
+#: src/interface.c:463 src/callbacks.c:1249 src/graphics.c:117
 msgid "impulse"
 msgstr ""
 
-#: src/interface.c:464 src/callbacks.c:1289 src/graphics.c:120
+#: src/interface.c:464 src/callbacks.c:1253 src/graphics.c:120
 msgid "natural"
 msgstr ""
 
-#: src/interface.c:465 src/callbacks.c:1293 src/graphics.c:123
+#: src/interface.c:465 src/callbacks.c:1257 src/graphics.c:123
 msgid "sampled"
 msgstr ""
 
-#: src/interface.c:480 src/callbacks.c:1307 src/graphics.c:134
+#: src/interface.c:480 src/callbacks.c:1271 src/graphics.c:134
 msgid "cascade + parallel"
 msgstr ""
 
-#: src/interface.c:481 src/callbacks.c:1312 src/graphics.c:137
+#: src/interface.c:481 src/callbacks.c:1276 src/graphics.c:137
 msgid "parallel only"
 msgstr ""
 
@@ -162,17 +162,19 @@ msgstr ""
 
 #: src/interface.c:527 src/interface.c:560 src/interface.c:592
 #: src/interface.c:624 src/interface.c:656 src/interface.c:688
-#: src/interface.c:864 src/interface.c:867
-msgid "frequencies"
+#: src/interface.c:867
+msgid "frequency"
 msgstr ""
 
 #: src/interface.c:533 src/interface.c:566 src/interface.c:598
 #: src/interface.c:630 src/interface.c:662 src/interface.c:694
-msgid "amplitudes"
+#: src/interface.c:875 src/interface.c:878
+msgid "amplitude"
 msgstr ""
 
 #: src/interface.c:539 src/interface.c:572 src/interface.c:604
 #: src/interface.c:636 src/interface.c:668 src/interface.c:700
+#: src/interface.c:889
 msgid "bandwidth"
 msgstr ""
 
@@ -206,7 +208,7 @@ msgid "F6"
 msgstr ""
 
 #: src/interface.c:720
-msgid "zero frequencies"
+msgid "zero frequency"
 msgstr ""
 
 #: src/interface.c:726
@@ -234,23 +236,23 @@ msgid "resonators"
 msgstr ""
 
 #: src/interface.c:762
-msgid "glottal open quotient"
-msgstr ""
-
-#: src/interface.c:768
-msgid "breathiness"
-msgstr ""
-
-#: src/interface.c:774
-msgid "spectral tilt"
-msgstr ""
-
-#: src/interface.c:780
 msgid "skewness"
 msgstr ""
 
-#: src/interface.c:785
+#: src/interface.c:767
 msgid "skewness (speed quotient) of voiced excitation signal"
+msgstr ""
+
+#: src/interface.c:769
+msgid "spectral tilt"
+msgstr ""
+
+#: src/interface.c:775
+msgid "breathiness"
+msgstr ""
+
+#: src/interface.c:781
+msgid "glottal open quotient"
 msgstr ""
 
 #: src/interface.c:787
@@ -262,31 +264,31 @@ msgid "voice src"
 msgstr ""
 
 #: src/interface.c:801
-msgid "amp. of voicing"
-msgstr ""
-
-#: src/interface.c:807
-msgid "amp. of aspiration"
-msgstr ""
-
-#: src/interface.c:813
-msgid "amp. of frication"
-msgstr ""
-
-#: src/interface.c:819
-msgid "amp. of bypass path (par)"
-msgstr ""
-
-#: src/interface.c:824
-msgid "amplitude of bypass path (parallel branch)"
-msgstr ""
-
-#: src/interface.c:826
 msgid "amp. of voicing (par)"
 msgstr ""
 
-#: src/interface.c:831
+#: src/interface.c:806
 msgid "amplitude of voicing (parallel branch)"
+msgstr ""
+
+#: src/interface.c:808
+msgid "amp. of bypass path (par)"
+msgstr ""
+
+#: src/interface.c:813
+msgid "amplitude of bypass path (parallel branch)"
+msgstr ""
+
+#: src/interface.c:815
+msgid "amp. of frication"
+msgstr ""
+
+#: src/interface.c:821
+msgid "amp. of aspiration"
+msgstr ""
+
+#: src/interface.c:827
+msgid "amp. of voicing"
 msgstr ""
 
 #: src/interface.c:833
@@ -297,11 +299,11 @@ msgstr ""
 msgid "exc. amp."
 msgstr ""
 
-#: src/interface.c:875 src/interface.c:878
-msgid "amplitude"
+#: src/interface.c:864
+msgid "frequencies"
 msgstr ""
 
-#: src/interface.c:886 src/interface.c:889
+#: src/interface.c:886
 msgid "bandwidths"
 msgstr ""
 
@@ -487,15 +489,15 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: src/interface.c:1910 src/callbacks.c:1841 src/callbacks.c:2042
+#: src/interface.c:1910 src/callbacks.c:1805 src/callbacks.c:2006
 msgid "icons"
 msgstr ""
 
-#: src/interface.c:1911 src/callbacks.c:1845 src/callbacks.c:2045
+#: src/interface.c:1911 src/callbacks.c:1809 src/callbacks.c:2009
 msgid "text"
 msgstr ""
 
-#: src/interface.c:1912 src/callbacks.c:1849 src/callbacks.c:2048
+#: src/interface.c:1912 src/callbacks.c:1813 src/callbacks.c:2012
 msgid "both"
 msgstr ""
 
@@ -579,42 +581,42 @@ msgstr ""
 msgid "0123456789"
 msgstr ""
 
-#: src/callbacks.c:94 src/callbacks.c:241
+#: src/callbacks.c:94 src/callbacks.c:233
 msgid "Save changed data?"
 msgstr ""
 
-#: src/callbacks.c:359
+#: src/callbacks.c:351
 msgid "Compiled"
 msgstr ""
 
-#: src/callbacks.c:458
+#: src/callbacks.c:422
 msgid "write bugreports here: "
 msgstr ""
 
-#: src/callbacks.c:459
+#: src/callbacks.c:423
 msgid "get announcements:"
 msgstr ""
 
-#: src/callbacks.c:675 src/callbacks.c:767
+#: src/callbacks.c:639 src/callbacks.c:731
 #, c-format
 msgid "%d ms - %d Hz "
 msgstr ""
 
-#: src/callbacks.c:721
+#: src/callbacks.c:685
 #, c-format
 msgid "%d ms - %d dB "
 msgstr ""
 
-#: src/callbacks.c:1906
+#: src/callbacks.c:1870
 msgid "Really reset preferences?"
 msgstr ""
 
 #. wav-file written
-#: src/callbacks.c:2374
+#: src/callbacks.c:2309
 msgid " written"
 msgstr ""
 
-#: src/callbacks.c:2448
+#: src/callbacks.c:2383
 msgid "Really quit?"
 msgstr ""
 

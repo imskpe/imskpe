@@ -63,3 +63,4 @@ gboolean ConfigRemove(char *name);
 void ConfigFree();
 void ConfigNew();
 void ConfigSave();
+int hexdigit_value(unsigned char digit);
