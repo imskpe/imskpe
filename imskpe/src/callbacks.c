@@ -152,6 +152,8 @@ on_bn_file_open_ok_clicked             (GtkButton       *button,
       (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+  filename[len]=0;
     
   // and start import ...
   SetTitle(filename);
@@ -193,11 +195,12 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
 
   len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
-  filename = (char *) malloc(sizeof(char)*(len+1));
+   filename = (char *) malloc(sizeof(char)*(len+1));
     
-  filename = (char *) gtk_file_chooser_get_filename 
-      (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
-  filename[strlen(filename)]=0;
+   filename = (char *) gtk_file_chooser_get_filename 
+       (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+
+  filename[len]=0;
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
     

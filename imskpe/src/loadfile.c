@@ -74,7 +74,8 @@ gboolean FilePrepare(char *filename)
   
   tmp=g_malloc (sizeof (char)*(strlen(filename)+1));
   strncpy(tmp,filename,strlen(filename));
-  
+  tmp[strlen(filename)]=0;
+
   aFile->filename=tmp;
   aFile->ischanged=FALSE;
   aFile->isnew=FALSE;
