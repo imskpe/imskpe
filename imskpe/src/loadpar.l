@@ -245,7 +245,7 @@ void LoadPar(char *filename)
 	    ;  /* it's not necessary! => don't append it */
 	  }
 	  /* aktual point; save it temporarily */
-	  tmp->ptmp = (typValueList *) PointInsert(ptime,pvalue);
+	  tmp->ptmp = (typValueList *) GenPoint(ptime,pvalue);
 	  
 	  /* write back list of points*/
 	  tmp->points = pointtmp;

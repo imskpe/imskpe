@@ -234,7 +234,7 @@
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
 		  <property name="active">True</property>
-		  <signal name="toggled" handler="on_bn_move_toggled" last_modification_time="Sat, 06 Mar 2004 14:42:15 GMT"/>
+		  <signal name="toggled" handler="on_bn_move_toggled" last_modification_time="Sat, 11 Sep 2004 13:13:47 GMT"/>
 		</widget>
 		<packing>
 		  <property name="expand">False</property>
@@ -251,7 +251,7 @@
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
 		  <property name="active">False</property>
-		  <signal name="toggled" handler="on_bn_insert_toggled" last_modification_time="Sat, 06 Mar 2004 14:52:50 GMT"/>
+		  <signal name="toggled" handler="on_bn_insert_toggled" last_modification_time="Sat, 11 Sep 2004 13:13:58 GMT"/>
 		</widget>
 		<packing>
 		  <property name="expand">False</property>
@@ -268,7 +268,7 @@
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
 		  <property name="active">False</property>
-		  <signal name="toggled" handler="on_bn_delete_toggled" last_modification_time="Sat, 06 Mar 2004 14:52:55 GMT"/>
+		  <signal name="toggled" handler="on_bn_delete_toggled" last_modification_time="Sat, 11 Sep 2004 13:14:03 GMT"/>
 		</widget>
 		<packing>
 		  <property name="expand">False</property>
@@ -2196,10 +2196,11 @@
 		  <child>
 		    <widget class="GtkDrawingArea" id="draw_freq">
 		      <property name="visible">True</property>
-		      <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK</property>
+		      <property name="events">GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK</property>
 		      <signal name="configure_event" handler="on_draw_freq_configure_event" last_modification_time="Thu, 04 Mar 2004 22:57:07 GMT"/>
 		      <signal name="expose_event" handler="on_draw_freq_expose_event" last_modification_time="Thu, 04 Mar 2004 22:57:17 GMT"/>
 		      <signal name="motion_notify_event" handler="on_draw_freq_motion_notify_event" last_modification_time="Thu, 04 Mar 2004 22:57:25 GMT"/>
+		      <signal name="button_press_event" handler="on_draw_freq_button_press_event" last_modification_time="Sat, 11 Sep 2004 12:22:15 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2648,7 +2649,7 @@ imskpe
 	  <property name="layout_style">GTK_BUTTONBOX_END</property>
 
 	  <child>
-	    <widget class="GtkButton" id="cancelbutton1">
+	    <widget class="GtkButton" id="bn_prefs_cancel">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2657,11 +2658,12 @@ imskpe
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-6</property>
+	      <signal name="clicked" handler="on_bn_prefs_cancel_clicked" last_modification_time="Sun, 12 Sep 2004 17:07:34 GMT"/>
 	    </widget>
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="applybutton1">
+	    <widget class="GtkButton" id="bn_prefs_apply">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2670,11 +2672,12 @@ imskpe
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-10</property>
+	      <signal name="clicked" handler="on_bn_prefs_apply_clicked" last_modification_time="Sun, 12 Sep 2004 17:07:23 GMT"/>
 	    </widget>
 	  </child>
 
 	  <child>
-	    <widget class="GtkButton" id="okbutton1">
+	    <widget class="GtkButton" id="bn_prefs_ok">
 	      <property name="visible">True</property>
 	      <property name="can_default">True</property>
 	      <property name="can_focus">True</property>
@@ -2683,6 +2686,7 @@ imskpe
 	      <property name="relief">GTK_RELIEF_NORMAL</property>
 	      <property name="focus_on_click">True</property>
 	      <property name="response_id">-5</property>
+	      <signal name="clicked" handler="on_bn_prefs_ok_clicked" last_modification_time="Sun, 12 Sep 2004 17:07:09 GMT"/>
 	    </widget>
 	  </child>
 	</widget>
@@ -3151,6 +3155,36 @@ Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele
 	  <property name="fill">True</property>
 	</packing>
       </child>
+    </widget>
+  </child>
+</widget>
+
+<widget class="GtkMenu" id="pmenu">
+
+  <child>
+    <widget class="GtkMenuItem" id="pm_move">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">move</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_pm_move_activate" last_modification_time="Fri, 10 Sep 2004 21:19:24 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="pm_insert">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">insert</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_pm_insert_activate" last_modification_time="Fri, 10 Sep 2004 21:20:17 GMT"/>
+    </widget>
+  </child>
+
+  <child>
+    <widget class="GtkMenuItem" id="pm_delete">
+      <property name="visible">True</property>
+      <property name="label" translatable="yes">delete</property>
+      <property name="use_underline">True</property>
+      <signal name="activate" handler="on_pm_delete_activate" last_modification_time="Fri, 10 Sep 2004 21:20:17 GMT"/>
     </widget>
   </child>
 </widget>

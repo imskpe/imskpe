@@ -209,7 +209,8 @@ void CurveListFree(GList *curves)
 /** 
  * CurveSearchWidgetName
  *
- * returns searched element in curve-list
+ * returns searched element in curve-list with correct WidgetName
+ * if not found returns NULL
  * 
  * @param curve 
  * @param wn 
@@ -218,9 +219,6 @@ void CurveListFree(GList *curves)
  */
 typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
 {
-  // über liste traversieren und das richtige element suchen ..
-  // wenn gefunden zurückliefern, sonst NULL
-  
   typCurveList *thiscurve;  
   GList *cl;
   char tmp[30];
@@ -232,10 +230,8 @@ typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
     thiscurve = cl->data;
 
     strncpy(tmp,thiscurve->widget_name,30);
-//     printf("------------- -%s-\n",thiscurve->widget_name);
     if(!strcasecmp(tmp,wn))
     {
-//        printf("found %s\n",wn);
       return thiscurve;
     }
 
@@ -245,7 +241,46 @@ typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
 
 }
 
+/** 
+ * CurveSearchByNr
+ *
+ * searches searched element in curvelist with correct nr
+ * if not found returns NULL
+ * 
+ * @param curve 
+ * @param nr 
+ * 
+ * @return (typCurveList *)
+ */
+typCurveList *CurveSearchByNr(GList *curve,int nr)
+{
+  
+  typCurveList *thiscurve;  
+  GList *cl;
 
+  cl=g_list_first (curve);
+
+  while(cl)
+  {	
+    thiscurve = cl->data;
+
+    if(nr==thiscurve->nr)
+    {
+      return thiscurve;
+    }
+
+    cl=cl->next;
+  }
+  return NULL;
+}
+
+/** 
+ * SetCurveShow
+ * 
+ * @param wn 
+ * 
+ * @return 
+ */
 gboolean SetCurveShow(char *wn)
 {
   GtkWidget *w;
@@ -279,6 +314,8 @@ gboolean SetCurveShow(char *wn)
 
 
 /** 
+ * GenPoint
+ *
  * Inserts a Point in an typCurveList/typParList and 
  * returns the pointer to it.
  *
@@ -287,7 +324,7 @@ gboolean SetCurveShow(char *wn)
  * 
  * @return 
  */
-typValueList *PointInsert (gint t, gint v)
+typValueList *GenPoint (gint t, gint v)
 {
   typValueList *vl;
 
@@ -296,6 +333,64 @@ typValueList *PointInsert (gint t, gint v)
   vl->value=v;
   return vl;
 }
+
+/** 
+ * PointDelete
+ *
+ * deletes an point in value-list
+ * 
+ * @param cl 
+ * @param time 
+ */
+void PointDelete (typCurveList *cl, int time)
+{
+  GList *vl=(GList *)g_list_first(cl->points);
+  typValueList *v;  
+
+  while(vl)
+  {
+    v=vl->data;
+    if(v->time==time)
+    {    
+      if(v!=NULL)
+      {
+	free(v);
+      }
+      
+      vl = g_list_remove(vl,v);
+    }
+    else
+    {
+      vl=vl->next;
+    }
+  }
+
+}
+
+void PointInsert(typCurveList *cl, int time, int value)
+{
+//   GList *vl=(GList *)g_list_first(cl->points);
+//   typValueList *v;  
+
+//   while(vl)
+//   {
+//     v=vl->data;
+//     if(v->time==time)
+//     {    
+//       if(v!=NULL)
+//       {
+// 	free(v);
+//       }
+      
+//       vl = g_list_remove(vl,v);
+//     }
+//     else
+//     {
+//       vl=vl->next;
+//     }
+//   }
+}
+
 
 /** 
  * Init default Curve
@@ -330,9 +425,84 @@ void CurveInitStart()
   {
     printf("- %2d - %4d\n",i,starttable[i]);
     points=NULL;
-    points = g_list_append(points, (typValueList *)PointInsert(0,starttable[i]));
-    points = g_list_append(points, (typValueList *)PointInsert(du,starttable[i]));
+    points = g_list_append(points, (typValueList *)GenPoint(0,starttable[i]));
+    points = g_list_append(points, (typValueList *)GenPoint(du,starttable[i]));
     CurveInsert((GList *)FileGetCurvesPointer(), i, points);
   }
 
 }
+
+
+/* MouseEventStructureFunctions ...  */
+
+MouseEventData mouseevent;
+
+
+void MouseEventInit()
+{
+  mouseevent.thiscurve=-1;
+  mouseevent.thispoint=-1;
+  
+  mouseevent.thisaction=MOVE;
+}
+
+int MouseEventGetCurve()
+{
+  return mouseevent.thiscurve;
+}
+
+int MouseEventGetPoint()
+{
+  return mouseevent.thispoint;
+}
+
+void MouseEventSetAction(MouseActionTyp typ)
+{
+  mouseevent.thisaction=typ;
+}
+
+MouseActionTyp MouseEventGetAction()
+{
+  return mouseevent.thisaction;
+}
+
+gboolean MouseEventSetCurve (int curve)
+{
+  if(mouseevent.thiscurve!=curve) {
+    mouseevent.thiscurve=curve;
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+gboolean MouseEventCheckCurve(int curve)
+{
+  if(curve==mouseevent.thiscurve)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+gboolean MouseEventSetPoint (int x, int curve)
+{
+  if(mouseevent.thispoint!=x) {
+    mouseevent.thispoint=x;
+//    mouseevent.thiscurve=curve;
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+gboolean MouseEventCheckPoint(int x, int curve)
+{
+  if(x==mouseevent.thispoint && curve==mouseevent.thiscurve)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+

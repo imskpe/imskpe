@@ -28,6 +28,9 @@
 /** the 3 diagram-types */
 typedef enum {FREQUENCIES=1, AMPLITUDE=2, BANDWIDTH=3} diagramTyp;
 
+/** MouseActionTypes (move, insert, delete)*/
+typedef enum {MOVE=1, INSERT=2, DELETE=3} MouseActionTyp;
+
 
 /** struct for points on curves */
 typedef struct {
@@ -72,10 +75,35 @@ struct CurveMapping {
     GdkLineStyle ls;
 };
 
+/** structure for mouseeventdata */
+typedef struct {
+    int thiscurve;
+    int thispoint;
 
+    MouseActionTyp thisaction;
+
+// int hovercurve = -1;
+// int hoverpoint = -1;
+} MouseEventData;
+
+/* curve-functions  */
 void CurveInsert(GList *curves,int parid, GList *points);
 void CurveListFree(GList *curves);
 typCurveList *CurveSearchWidgetName(GList *curve,char *wn);
+typCurveList *CurveSearchByNr(GList *curve,int nr);
 gboolean SetCurveShow(char *wn);
-typValueList *PointInsert (gint t, gint v);
+typValueList *GenPoint (gint t, gint v);
+void PointDelete (typCurveList *vallist, int time);
 void CurveInitStart();
+
+/* mouseevent-functions  */
+
+void MouseEventInit();
+int MouseEventGetCurve();
+int MouseEventGetPoint();
+void MouseEventSetAction(MouseActionTyp typ);
+MouseActionTyp MouseEventGetAction();
+gboolean MouseEventSetCurve (int curve);
+gboolean MouseEventCheckCurve(int curve);
+gboolean MouseEventCheckPoint (int x, int curve);
+gboolean MouseEventSetPoint(int x, int curve);

@@ -817,7 +817,7 @@ create_imskpe_main (void)
   gtk_container_add (GTK_CONTAINER (nb_draw), draw_freq);
   gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_freq,
                                     _("frequencies"));
-  gtk_widget_set_events (draw_freq, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK);
+  gtk_widget_set_events (draw_freq, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK);
 
   lb_draw_freq = gtk_label_new (_("frequencies"));
   gtk_widget_show (lb_draw_freq);
@@ -1101,6 +1101,9 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) draw_freq, "motion_notify_event",
                     G_CALLBACK (on_draw_freq_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_freq, "button_press_event",
+                    G_CALLBACK (on_draw_freq_button_press_event),
                     NULL);
   g_signal_connect ((gpointer) draw_amp, "motion_notify_event",
                     G_CALLBACK (on_draw_amp_motion_notify_event),
@@ -1444,9 +1447,9 @@ create_imskpe_prefs (void)
   GtkWidget *lb_paths;
   GtkWidget *lb_misc;
   GtkWidget *dialog_action_area2;
-  GtkWidget *cancelbutton1;
-  GtkWidget *applybutton1;
-  GtkWidget *okbutton1;
+  GtkWidget *bn_prefs_cancel;
+  GtkWidget *bn_prefs_apply;
+  GtkWidget *bn_prefs_ok;
 
   imskpe_prefs = gtk_dialog_new ();
   gtk_widget_set_size_request (imskpe_prefs, 350, 400);
@@ -1532,20 +1535,30 @@ create_imskpe_prefs (void)
   gtk_widget_show (dialog_action_area2);
   gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area2), GTK_BUTTONBOX_END);
 
-  cancelbutton1 = gtk_button_new_from_stock ("gtk-cancel");
-  gtk_widget_show (cancelbutton1);
-  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), cancelbutton1, GTK_RESPONSE_CANCEL);
-  GTK_WIDGET_SET_FLAGS (cancelbutton1, GTK_CAN_DEFAULT);
+  bn_prefs_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_prefs_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), bn_prefs_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_prefs_cancel, GTK_CAN_DEFAULT);
 
-  applybutton1 = gtk_button_new_from_stock ("gtk-apply");
-  gtk_widget_show (applybutton1);
-  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), applybutton1, GTK_RESPONSE_APPLY);
-  GTK_WIDGET_SET_FLAGS (applybutton1, GTK_CAN_DEFAULT);
+  bn_prefs_apply = gtk_button_new_from_stock ("gtk-apply");
+  gtk_widget_show (bn_prefs_apply);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), bn_prefs_apply, GTK_RESPONSE_APPLY);
+  GTK_WIDGET_SET_FLAGS (bn_prefs_apply, GTK_CAN_DEFAULT);
 
-  okbutton1 = gtk_button_new_from_stock ("gtk-ok");
-  gtk_widget_show (okbutton1);
-  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), okbutton1, GTK_RESPONSE_OK);
-  GTK_WIDGET_SET_FLAGS (okbutton1, GTK_CAN_DEFAULT);
+  bn_prefs_ok = gtk_button_new_from_stock ("gtk-ok");
+  gtk_widget_show (bn_prefs_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), bn_prefs_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_prefs_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_prefs_cancel, "clicked",
+                    G_CALLBACK (on_bn_prefs_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_prefs_apply, "clicked",
+                    G_CALLBACK (on_bn_prefs_apply_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_prefs_ok, "clicked",
+                    G_CALLBACK (on_bn_prefs_ok_clicked),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, imskpe_prefs, "imskpe_prefs");
@@ -1562,9 +1575,9 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_paths, "lb_paths");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_misc, "lb_misc");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_action_area2, "dialog_action_area2");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, cancelbutton1, "cancelbutton1");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, applybutton1, "applybutton1");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, okbutton1, "okbutton1");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_cancel, "bn_prefs_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_apply, "bn_prefs_apply");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_ok, "bn_prefs_ok");
 
   return imskpe_prefs;
 }
@@ -1680,5 +1693,46 @@ create_imskpe_credits (void)
   GLADE_HOOKUP_OBJECT (imskpe_credits, bn_credits_ok, "bn_credits_ok");
 
   return imskpe_credits;
+}
+
+GtkWidget*
+create_pmenu (void)
+{
+  GtkWidget *pmenu;
+  GtkWidget *pm_move;
+  GtkWidget *pm_insert;
+  GtkWidget *pm_delete;
+
+  pmenu = gtk_menu_new ();
+
+  pm_move = gtk_menu_item_new_with_mnemonic (_("move"));
+  gtk_widget_show (pm_move);
+  gtk_container_add (GTK_CONTAINER (pmenu), pm_move);
+
+  pm_insert = gtk_menu_item_new_with_mnemonic (_("insert"));
+  gtk_widget_show (pm_insert);
+  gtk_container_add (GTK_CONTAINER (pmenu), pm_insert);
+
+  pm_delete = gtk_menu_item_new_with_mnemonic (_("delete"));
+  gtk_widget_show (pm_delete);
+  gtk_container_add (GTK_CONTAINER (pmenu), pm_delete);
+
+  g_signal_connect ((gpointer) pm_move, "activate",
+                    G_CALLBACK (on_pm_move_activate),
+                    NULL);
+  g_signal_connect ((gpointer) pm_insert, "activate",
+                    G_CALLBACK (on_pm_insert_activate),
+                    NULL);
+  g_signal_connect ((gpointer) pm_delete, "activate",
+                    G_CALLBACK (on_pm_delete_activate),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (pmenu, pmenu, "pmenu");
+  GLADE_HOOKUP_OBJECT (pmenu, pm_move, "pm_move");
+  GLADE_HOOKUP_OBJECT (pmenu, pm_insert, "pm_insert");
+  GLADE_HOOKUP_OBJECT (pmenu, pm_delete, "pm_delete");
+
+  return pmenu;
 }
 

@@ -36,6 +36,7 @@
 #include "support.h"
 #include "locale.h"
 #include "loadfile.h"
+#include "curves.h"
 
 /** 
  * main
@@ -71,6 +72,8 @@ int main (int argc, char *argv[])
    */
   FormantListInit();
   FileInit();
+
+  MouseEventInit();
 
   imskpe_main = create_imskpe_main ();
   gtk_widget_show (imskpe_main);

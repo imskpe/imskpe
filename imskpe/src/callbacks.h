@@ -56,18 +56,6 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_bn_move_toggled                     (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
-on_bn_insert_toggled                   (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
-on_bn_delete_toggled                   (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
 on_bn_fX_color_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
 
@@ -428,13 +416,42 @@ on_bn_prefs_clicked                    (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_bn_move_toggled                     (GtkToggleButton *togglebutton,
+on_pm_move_activate                    (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_bn_insert_toggled                   (GtkToggleButton *togglebutton,
+on_pm_insert_activate                  (GtkMenuItem     *menuitem,
                                         gpointer         user_data);
 
 void
-on_bn_delete_toggled                   (GtkToggleButton *togglebutton,
+on_pm_delete_activate                  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_freq_button_press_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_bn_move_toggled                     (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_insert_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_delete_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_prefs_cancel_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_prefs_apply_clicked              (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data);

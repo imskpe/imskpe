@@ -295,8 +295,9 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 {
   int x, y;
   int rx,ry;
-  char tmp[80];
   GdkModifierType state;
+  char tmp[80];
+
 
   if (event->is_hint)
     gdk_window_get_pointer (event->window, &x, &y, &state);
@@ -322,8 +323,11 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     GList *cv=(GList *)FileGetCurvesPointer();
     typCurveList *c;
     int dia=1;
-    int setc=0;
     int setp=0;
+    int setc=0;
+
+    int lastpoint=MouseEventGetPoint();
+    int lastcurve=MouseEventGetCurve();
 
     while(cv)
     {	
@@ -392,7 +396,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 // 	    printf("%5d %5d | %5d\n",yval,ry,rx);
 	    if(yval>ry-50 && yval<ry+50)
 	    {
-	      if(HoverCurve(c->nr)) {
+	      if(MouseEventSetCurve(c->nr)) {
 // 		printf("--r--\n");
 		redraw_page(dia-1);
 	      }
@@ -400,13 +404,12 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 	    }
 	    if((pnt.value>ry-20 && pnt.value<ry+20) && (rx>pnt.time-20 && rx<pnt.time+20))
 	    {
-	      if(HoverPoint(pnt.time)) {
+	      if(MouseEventSetPoint(pnt.time,c->nr)) {
 // 		printf("--r--\n");
 		redraw_page(dia-1);
 	      }
 	      setp++;
 	    }
-	    
 
 // 	    printf("\n");
 	  }
@@ -417,17 +420,19 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
       }
       cv=cv->next;
     }
-    if(setc==0)
+/** \todo solve redrawproblem / check for mouse not overline or not over point */
+    if(lastcurve!=-1 && setc==0)
     {
-      if(HoverCurve(-1)) {
-// 	printf("--r2--\n");
-	redraw_page(dia-1);
+      if(MouseEventSetCurve(-1)) {
+ 	printf("c ");
+ 	redraw_page(dia-1);
       }
     }
+// MouseEventCheckPoint(lastpoint,lastcurve) && 
     if(setp==0)
     {
-      if(HoverPoint(-1)) {
-// 	printf("--r2--\n");
+      if(MouseEventSetPoint(-1,-1)) {
+ 	printf("p ");
 	redraw_page(dia-1);
       }
     }
@@ -436,6 +441,88 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 
   return TRUE;
 }
+
+gboolean
+on_draw_freq_button_press_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+  GtkWidget *pmenu;
+  int point,curve;
+  MouseActionTyp action;
+  int dia=1;
+
+  if (event->type == GDK_BUTTON_PRESS && event->button==1) {
+    point=MouseEventGetPoint();
+    curve=MouseEventGetCurve();
+    action=MouseEventGetAction();
+
+    if(curve>0)
+    {
+      if(point==-1)
+      {
+	// only insert available:
+	if(action==INSERT)
+	{
+	  int x, y;
+	  int rx,ry;
+	  GdkModifierType state;
+
+// 	  if (event->is_hint)
+// 	  gdk_window_get_pointer (event->window, &x, &y, &state);
+// 	  else
+// 	  {
+	    x = event->x;
+	    y = event->y;
+// 	    state = event->state;
+// 	  }
+	  
+	  rx=CalcRealX(x, widget->allocation.width);  
+	  ry=CalcRealY(y, widget->allocation.height);  
+// 	  PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),point,);
+// 	  redraw_page(dia-1);
+	  printf("%d / %d\n",rx,ry);
+	  printf("insert\n");
+	}
+      }
+      else
+      {
+	if(action==DELETE)
+	{
+	  PointDelete(CurveSearchByNr(FileGetCurvesPointer(),curve),point);
+	  redraw_page(dia-1);
+	  printf("delete\n");
+	}
+	if(action==MOVE)
+	{
+	  printf("move\n");
+	}
+      }
+    }
+  }
+
+  if (event->type == GDK_BUTTON_PRESS && event->button==3) {
+    
+    pmenu=create_pmenu();
+//       if(point==-1)
+//       {
+// 	gtk_widget_hide ((GtkWidget*)lookup_widget (GTK_WIDGET (pmenu), "pm_delete"));
+// 	gtk_widget_hide ((GtkWidget*)lookup_widget (GTK_WIDGET (pmenu), "pm_move"));
+//       }
+//       else
+//       {
+// 	gtk_widget_hide ((GtkWidget*)lookup_widget (GTK_WIDGET (pmenu), "pm_insert"));
+//       }
+
+    GdkEventButton *bevent = (GdkEventButton *) event;       
+    gtk_menu_popup (GTK_MENU (pmenu), NULL, NULL, NULL, NULL,
+		      bevent->button, bevent->time);
+    return TRUE;
+  }
+
+  return TRUE;
+}
+
 
 gboolean
 on_draw_amp_motion_notify_event        (GtkWidget       *widget,
@@ -488,54 +575,6 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
   SetStatusBar("sb_add",tmp);
   return TRUE;
 }
-
-void
-on_bn_move_toggled                     (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if(gtk_toggle_button_get_active (togglebutton) == TRUE)
-  {
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_insert"),FALSE);
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_delete"),FALSE);
-  }
-/*  else
-  {
-    gtk_toggle_button_set_active(togglebutton,TRUE);
-    }*/
-}
-
-
-void
-on_bn_insert_toggled                   (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if(gtk_toggle_button_get_active (togglebutton) == TRUE)
-  {
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_move"),FALSE);
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_delete"),FALSE);
-  }
-/*  else
-  {
-    gtk_toggle_button_set_active(togglebutton,TRUE);
-    }*/
-}
-
-
-void
-on_bn_delete_toggled                   (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-  if(gtk_toggle_button_get_active (togglebutton) == TRUE)
-  {
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_insert"),FALSE);
-    gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (togglebutton), "bn_move"),FALSE);
-  }
-/*  else
-  {
-    gtk_toggle_button_set_active(togglebutton,TRUE);
-    }*/
-}
-
 
 gboolean
 on_imskpe_main_delete_event            (GtkWidget       *widget,
@@ -1367,5 +1406,86 @@ on_bn_about_credits_clicked            (GtkButton       *button,
 
   /* Make sure the dialog is visible. */
   gtk_window_present (GTK_WINDOW (credits));
+}
+
+
+void
+on_pm_move_activate                    (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  SetToggleButton(MOVE);
+}
+
+
+void
+on_pm_insert_activate                  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  SetToggleButton(INSERT);
+}
+
+
+void
+on_pm_delete_activate                  (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  SetToggleButton(DELETE);
+}
+
+
+void
+on_bn_move_toggled                     (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(MOVE);
+   }
+}
+
+
+void
+on_bn_insert_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(INSERT);
+   }
+}
+
+
+void
+on_bn_delete_toggled                   (GtkToggleToolButton *toggletoolbutton,
+                                        gpointer         user_data)
+{
+   if(gtk_toggle_tool_button_get_active (toggletoolbutton) == TRUE)
+   {
+     SetToggleButton(DELETE);
+   }
+}
+
+
+void
+on_bn_prefs_cancel_clicked             (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_prefs_apply_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+}
+
+
+void
+on_bn_prefs_ok_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 

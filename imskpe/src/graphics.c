@@ -77,49 +77,6 @@ int nScreenHeight = 200;
 
 GList *formants = NULL;  // put in preferences ?
 
-int hovercurve = -1;
-int hoverpoint = -1;
-
-gboolean HoverCurve (int curve)
-{
-  if(hovercurve!=curve) {
-    hovercurve=curve;
-    return TRUE;
-  } else {
-    return FALSE;
-  }
-}
-
-gboolean GetHoverCurve(int curve)
-{
-  if(curve==hovercurve)
-  {
-    return TRUE;
-  }
-  return FALSE;
-}
-
-gboolean HoverPoint (int x)
-{
-  if(hoverpoint!=x) {
-    hoverpoint=x;
-    return TRUE;
-  } else {
-    return FALSE;
-  }
-}
-
-gboolean GetHoverPoint(int x)
-{
-  if(x==hoverpoint)
-  {
-    return TRUE;
-  }
-  return FALSE;
-}
-
-
-
 /* ---------------------------------------------------------------------- */
 
 /** \todo put in another file - not graphic relevant! */
@@ -705,7 +662,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 // wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
 
 	    int linewidth=1;
-	    if(GetHoverCurve(c->nr)) {
+	    if(MouseEventCheckCurve(c->nr)) {
 	      linewidth=2;
 	    }
 	    GdkGC *gc=GetPenGdkColor (NULL,GetFormantListColor(c->formant));
@@ -719,7 +676,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
 	    
 	    int mod=2;
-	    if(GetHoverPoint(lastx) && GetHoverCurve(c->nr))
+	    if(MouseEventCheckPoint(lastx,c->nr))
 	    {
 	      mod=3;
 	    }
@@ -865,4 +822,29 @@ void SetTitle(gchar *text)
 
   gtk_window_set_title (w,tmp);
 
+}
+
+void SetToggleButton(MouseActionTyp typ)
+{
+  switch(typ)
+  {
+  case MOVE:
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_move"),TRUE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_insert"),FALSE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_delete"),FALSE);
+      MouseEventSetAction(MOVE);
+      break;
+  case INSERT:
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_move"),FALSE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_insert"),TRUE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_delete"),FALSE);
+      MouseEventSetAction(INSERT);
+      break;
+  case DELETE:
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_insert"),FALSE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_move"),FALSE);
+      gtk_toggle_tool_button_set_active((GtkToggleToolButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), "bn_delete"),TRUE);
+      MouseEventSetAction(DELETE);
+      break;
+  }
 }
