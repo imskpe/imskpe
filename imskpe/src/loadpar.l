@@ -141,28 +141,34 @@ void LoadPar(char *filename)
 	simpledialog (_("no parameter file."));
 	return;
       }
-      switch(toktype)
-      {
-	
-	/* part1 commentinfo */
-      case IMSKPE:
-      case KPE:
-      case COMMENT:
-      case EOL:
-	  break;
-      case VARNAME:
-	  // copy only first 2 chars!
-	  strncpy(var,yytext,2);
-	  var[2]=0;
-	  break;
-      case VALUE:
- 	  if(!strcmp(var,"DU"))
-	  {
-	    if(FileSetDuration(atoi(yytext))==FALSE)
+      if(firstrun==1)
+	{
+	  FilePrepare(filename);	  
+	}
+      if(firstrun>1)
+	{
+	  switch(toktype)
 	    {
-	      printf(_("PAR-Import-Error: "));
-	      printf(_("DU not integer\n"));
-	    }
+	      
+	      /* part1 commentinfo */
+	    case IMSKPE:
+	    case KPE:
+	    case COMMENT:
+	    case EOL:
+	      break;
+	    case VARNAME:
+	      // copy only first 2 chars!
+	      strncpy(var,yytext,2);
+	      var[2]=0;
+	      break;
+	    case VALUE:
+	      if(!strcmp(var,"DU"))
+		{
+		  if(FileSetDuration(atoi(yytext))==FALSE)
+		    {
+		      printf(_("PAR-Import-Error: "));
+		      printf(_("DU not integer\n"));
+		    }
 	    GuiSetDuration(atoi(yytext));
 	  }
  	  else 
@@ -276,6 +282,7 @@ void LoadPar(char *filename)
       default:
 	  break;
       }
+    }
     }
   }
   fclose(infp);

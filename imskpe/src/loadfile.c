@@ -50,8 +50,6 @@ typFile *aFile=NULL;
  */
 void FileOpen(char *filename)
 {
-  char *tmp;
-  
   /** \todo look if old file isChanged and needs to be saved. 
             insert dialog !!
    */
@@ -60,33 +58,29 @@ void FileOpen(char *filename)
     printf("ask for save?\n");
   }
 
-//   printf("loadfile start\n");
+  LoadPar(filename);
+}
 
+gboolean FilePrepare(char *filename)
+{
+  char *tmp;
   if(aFile != NULL)
-  {
-    g_free(aFile->filename);
-    g_free(aFile);
-    // free curves!!
-    CurveListFree(aFile->curves);
-  }
-
+    {
+      g_free(aFile->filename);
+      g_free(aFile);
+      // free curves!!
+      CurveListFree(aFile->curves);
+    }
+  
   aFile=g_malloc (sizeof (typFile));
-
+  
   tmp=g_malloc (sizeof (char)*(strlen(filename)+1));
   strncpy(tmp,filename,strlen(filename));
-
+  
   aFile->filename=tmp;
   aFile->ischanged=FALSE;
   aFile->isnew=FALSE;
   aFile->curves=NULL;
-
-  /** \todo test for filename extension!! */
-  LoadPar(filename);
-
-//   printf("%s\n",aFile->filename);
-
-//  printf("x- %d\n",aFile->duration);
-  /** \todo free aFile at quit! -> in need of FileGetFilename*/
 }
 
 gboolean FileIsDefined()

@@ -633,11 +633,18 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
-  SetStatusBar("sb_add",tmp);
+  if(rx>=0 && ry>=0)
+    {
+      snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
+      SetStatusBar("sb_add",tmp);
 
-  DrawAreaMotion(rx, ry, state, dia);
-
+      DrawAreaMotion(rx, ry, state, dia);
+    }
+  else
+    {
+      snprintf(tmp,30,"");
+      SetStatusBar("sb_add",tmp);
+    }
   return TRUE;
 }
 
@@ -672,11 +679,18 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,_("%d ms - %d dB "),rx,ry);
-  SetStatusBar("sb_add",tmp);
+  if(rx>=0 && ry>=0)
+    {
+      snprintf(tmp,30,_("%d ms - %d dB "),rx,ry);
+      SetStatusBar("sb_add",tmp);
 
-  DrawAreaMotion(rx, ry, state, dia);
-
+      DrawAreaMotion(rx, ry, state, dia);
+    }
+  else
+    {
+      snprintf(tmp,30,"");
+      SetStatusBar("sb_add",tmp);
+    }
   return TRUE;
 }
 
@@ -711,11 +725,18 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
-  SetStatusBar("sb_add",tmp);
+  if(rx>=0 && ry>=0)
+    {
+      snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
+      SetStatusBar("sb_add",tmp);
 
-  DrawAreaMotion(rx, ry, state, dia);
-
+      DrawAreaMotion(rx, ry, state, dia);
+    }
+  else
+    {
+      snprintf(tmp,30,"");
+      SetStatusBar("sb_add",tmp);
+    }
   return TRUE;
 }
 

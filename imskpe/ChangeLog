@@ -1,5 +1,12 @@
+2004-11-29  Andreas Madsack  <bolsog@users.sf.net>
+
+	* free file data after LoadPar-File-Check
+	* don't draw x/y-coord when x or y is negative
+
 2004-11-28  Andreas Madsack  <bolsog@users.sf.net>
 
+	* beta2 released
+	
 	* MAJOR IMPROVEMENT: point-moving 
 	  without interference with other points or curves
 	* updated german (de.po) translations

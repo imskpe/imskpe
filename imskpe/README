@@ -36,9 +36,9 @@ start with ~/bin/imskpe
 
 (2) win32
 
-to make win32-exe I use gcc under linux and do crosscompiling
+for making win32-exe I use gcc under linux and crosscompile ...
 
-for this you need mingw, msys, gtk2 and many more compiled unter linux for win32 ...
+for this you need mingw, msys, gtk2 and many more compiled under linux for win32 ...
 (mail me for my package - 95MB)
 
 to build it run:
