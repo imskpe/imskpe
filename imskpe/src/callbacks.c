@@ -376,7 +376,7 @@ on_color_selection1_color_changed      (GtkColorSelection *colorselection,
     GtkNotebook *nb=(GtkNotebook*) lookup_widget (GTK_WIDGET (main_window), "nb_resonators");
     GtkWidget *child=gtk_notebook_get_nth_page(nb, gtk_notebook_get_current_page(nb));
     GtkWidget *widget=gtk_notebook_get_tab_label(nb,child);
-    
+    GtkWidget *w= lookup_widget (GTK_WIDGET (main_window), "lb_f1");    
 
 /* Get current color */
     
@@ -392,8 +392,6 @@ on_color_selection1_color_changed      (GtkColorSelection *colorselection,
       g_printf("%d\n",gtk_notebook_get_current_page(nb));
 */
     
-    GtkWidget *w= lookup_widget (GTK_WIDGET (main_window), "lb_f1");
-
 /*    g_printf("%d ?= %d\n",&widget,&w); */
 
     gtk_widget_modify_fg (widget, GTK_STATE_ACTIVE, &gdk_color);
