@@ -1,0 +1,19 @@
+TODO:
+
+first release:
+- lines / interpol over GList
+- open/save par-files
+- open wavfiles
+- generate wavfiles (through kpe80 - console tool)
+- use fft to show a spectrum
+- initialize colors for formants
+- hide formant-tabs if 'num of formants' < 6
+
+
+final:
+- bind to libklatt
+- generate wavs internal
+
+
+nice to have:
+
