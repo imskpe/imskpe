@@ -141,8 +141,8 @@ void ConfigInsertString(char *name, char *value, unsigned short type)
 
 //    printf("-1- %d - %s[%d] / %s[%d] / %d \n",sizeof(typConfig),name,strlen(name),value,strlen(value),type);
   p = (typConfig *)g_malloc (sizeof (typConfig));
-  p_name = g_malloc (strlen(name));
-  p_value = g_malloc (strlen(value));
+  p_name = g_malloc (strlen(name)+1);
+  p_value = g_malloc (strlen(value)+1);
 
   strcpy(p_value,value);
   strcpy(p_name,name);
@@ -403,7 +403,6 @@ void ConfigNew()
   ConfigInsert("maxamp","100");
   ConfigInsert("maxband","2000");
 
-  ConfigInsert("klattcmd","klatt");
   ConfigInsert("playcmd","play");
   ConfigInsert("tmpdir","/tmp");
 

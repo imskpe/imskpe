@@ -1,7 +1,8 @@
+# build with: rpmbuild -ba imskpe.spec
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
 Version: 1.0beta1
-Release: 1
+Release: 2
 License: GPL
 Group: Applications/Sound
 URL: http://imskpe.sf.net

@@ -1,3 +1,8 @@
+2004-11-22  Andreas Madsack  <bolsog@users.sf.net>
+
+	* bug in ConfigInsertString resolved
+	* klatt-entry field in preferences and events removed
+
 2004-11-21  Andreas Madsack <bolsog@users.sf.net>
 
 	* first Release (beta1)

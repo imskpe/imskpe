@@ -1757,9 +1757,9 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   sprintf(tmp,"%d",val);
   ConfigInsert("maxband",tmp);
 
-  w=lookup_widget (GTK_WIDGET (button), "ent_klatt");
-  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
-  ConfigInsert("klattcmd",tmp);
+/*   w=lookup_widget (GTK_WIDGET (button), "ent_klatt"); */
+/*   strcpy(tmp,gtk_entry_get_text((GtkEntry *)w)); */
+/*   ConfigInsert("klattcmd",tmp); */
 
   w=lookup_widget (GTK_WIDGET (button), "ent_play");
   strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
@@ -1901,13 +1901,6 @@ on_spn_max_band_realize                (GtkWidget       *widget,
 
 }
 
-
-void
-on_ent_klatt_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data)
-{
-  gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("klattcmd"));
-}
 
 void
 on_ent_play_realize                    (GtkWidget       *widget,

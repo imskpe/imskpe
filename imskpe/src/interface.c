@@ -1521,12 +1521,10 @@ create_imskpe_prefs (void)
   GtkWidget *label29;
   GtkWidget *lb_ruler;
   GtkWidget *table20;
-  GtkWidget *lb_klatt;
+  GtkWidget *label25;
+  GtkWidget *drawingarea3;
   GtkWidget *lb_play;
   GtkWidget *lb_tmp;
-  GtkWidget *label25;
-  GtkWidget *ent_klatt;
-  GtkWidget *drawingarea3;
   GtkWidget *ent_play;
   GtkWidget *ent_tmp;
   GtkWidget *lb_paths;
@@ -1764,41 +1762,12 @@ create_imskpe_prefs (void)
   gtk_widget_show (table20);
   gtk_container_add (GTK_CONTAINER (nb_prefs), table20);
 
-  lb_klatt = gtk_label_new (_("klatt80 binary"));
-  gtk_widget_show (lb_klatt);
-  gtk_table_attach (GTK_TABLE (table20), lb_klatt, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_klatt), 0, 0.5);
-
-  lb_play = gtk_label_new (_("wav player"));
-  gtk_widget_show (lb_play);
-  gtk_table_attach (GTK_TABLE (table20), lb_play, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_play), 0, 0.5);
-
-  lb_tmp = gtk_label_new (_("tmp directory"));
-  gtk_widget_show (lb_tmp);
-  gtk_table_attach (GTK_TABLE (table20), lb_tmp, 0, 1, 3, 4,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (lb_tmp), 0, 0.5);
-
   label25 = gtk_label_new (_("Path"));
   gtk_widget_show (label25);
   gtk_table_attach (GTK_TABLE (table20), label25, 2, 4, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label25), 0, 0.5);
-
-  ent_klatt = gtk_entry_new ();
-  gtk_widget_show (ent_klatt);
-  gtk_table_attach (GTK_TABLE (table20), ent_klatt, 2, 3, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  gtk_tooltips_set_tip (tooltips, ent_klatt, _("command for klattbinary"), NULL);
-  gtk_entry_set_text (GTK_ENTRY (ent_klatt), _("klatt"));
 
   drawingarea3 = gtk_drawing_area_new ();
   gtk_widget_show (drawingarea3);
@@ -1807,9 +1776,23 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
   gtk_widget_set_size_request (drawingarea3, 10, -1);
 
+  lb_play = gtk_label_new (_("wav player"));
+  gtk_widget_show (lb_play);
+  gtk_table_attach (GTK_TABLE (table20), lb_play, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_play), 0, 0.5);
+
+  lb_tmp = gtk_label_new (_("tmp directory"));
+  gtk_widget_show (lb_tmp);
+  gtk_table_attach (GTK_TABLE (table20), lb_tmp, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_tmp), 0, 0.5);
+
   ent_play = gtk_entry_new ();
   gtk_widget_show (ent_play);
-  gtk_table_attach (GTK_TABLE (table20), ent_play, 2, 3, 2, 3,
+  gtk_table_attach (GTK_TABLE (table20), ent_play, 2, 3, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_tooltips_set_tip (tooltips, ent_play, _("playcommand"), NULL);
@@ -1817,7 +1800,7 @@ create_imskpe_prefs (void)
 
   ent_tmp = gtk_entry_new ();
   gtk_widget_show (ent_tmp);
-  gtk_table_attach (GTK_TABLE (table20), ent_tmp, 2, 3, 3, 4,
+  gtk_table_attach (GTK_TABLE (table20), ent_tmp, 2, 3, 2, 3,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_tooltips_set_tip (tooltips, ent_tmp, _("directory for temp-files"), NULL);
@@ -1893,9 +1876,6 @@ create_imskpe_prefs (void)
   g_signal_connect ((gpointer) spn_max_band, "realize",
                     G_CALLBACK (on_spn_max_band_realize),
                     NULL);
-  g_signal_connect ((gpointer) ent_klatt, "realize",
-                    G_CALLBACK (on_ent_klatt_realize),
-                    NULL);
   g_signal_connect ((gpointer) ent_play, "realize",
                     G_CALLBACK (on_ent_play_realize),
                     NULL);
@@ -1948,12 +1928,10 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label29, "label29");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ruler, "lb_ruler");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table20, "table20");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_klatt, "lb_klatt");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label25, "label25");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea3, "drawingarea3");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_play, "lb_play");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_tmp, "lb_tmp");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, label25, "label25");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_klatt, "ent_klatt");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea3, "drawingarea3");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_play, "ent_play");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_tmp, "ent_tmp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_paths, "lb_paths");

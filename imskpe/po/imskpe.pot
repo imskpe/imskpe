@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-21 21:08+0100\n"
+"POT-Creation-Date: 2004-11-22 18:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,11 +72,11 @@ msgstr ""
 msgid "Save File As"
 msgstr ""
 
-#: src/interface.c:305 src/interface.c:1545
+#: src/interface.c:305 src/interface.c:1543
 msgid "Preferences"
 msgstr ""
 
-#: src/interface.c:315 src/interface.c:2094
+#: src/interface.c:315 src/interface.c:2072
 msgid "move"
 msgstr ""
 
@@ -84,7 +84,7 @@ msgstr ""
 msgid "Move Point"
 msgstr ""
 
-#: src/interface.c:325 src/interface.c:2098
+#: src/interface.c:325 src/interface.c:2076
 msgid "insert"
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Insert Point"
 msgstr ""
 
-#: src/interface.c:334 src/interface.c:2102
+#: src/interface.c:334 src/interface.c:2080
 msgid "delete"
 msgstr ""
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "fundamental frequency"
 msgstr ""
 
-#: src/interface.c:788 src/interface.c:1632
+#: src/interface.c:788 src/interface.c:1630
 msgid "voice src"
 msgstr ""
 
@@ -293,7 +293,7 @@ msgstr ""
 msgid "overall signal gain"
 msgstr ""
 
-#: src/interface.c:834 src/interface.c:1639
+#: src/interface.c:834 src/interface.c:1637
 msgid "exc. amp."
 msgstr ""
 
@@ -329,173 +329,161 @@ msgid ""
 "(c) 2004 by Andreas Madsack"
 msgstr ""
 
-#: src/interface.c:1452 src/interface.c:1989
+#: src/interface.c:1452 src/interface.c:1967
 msgid "Credits"
 msgstr ""
 
-#: src/interface.c:1561 src/interface.c:1646 src/interface.c:1653
-#: src/interface.c:1660 src/interface.c:1667 src/interface.c:1674
-#: src/interface.c:1681 src/interface.c:1688 src/interface.c:1695
+#: src/interface.c:1559 src/interface.c:1644 src/interface.c:1651
+#: src/interface.c:1658 src/interface.c:1665 src/interface.c:1672
+#: src/interface.c:1679 src/interface.c:1686 src/interface.c:1693
 msgid "Color"
 msgstr ""
 
-#: src/interface.c:1566
+#: src/interface.c:1564
 msgid "Change Color F1"
 msgstr ""
 
-#: src/interface.c:1568
+#: src/interface.c:1566
 msgid "Formant 1"
 msgstr ""
 
-#: src/interface.c:1581
+#: src/interface.c:1579
 msgid "change"
 msgstr ""
 
-#: src/interface.c:1590
+#: src/interface.c:1588
 msgid "Formant 2"
 msgstr ""
 
-#: src/interface.c:1597
+#: src/interface.c:1595
 msgid "Formant 3"
 msgstr ""
 
-#: src/interface.c:1604
+#: src/interface.c:1602
 msgid "Formant 4"
 msgstr ""
 
-#: src/interface.c:1611
+#: src/interface.c:1609
 msgid "Formant 5"
 msgstr ""
 
-#: src/interface.c:1618
+#: src/interface.c:1616
 msgid "Formant 6"
 msgstr ""
 
-#: src/interface.c:1625
+#: src/interface.c:1623
 msgid "Nasals"
 msgstr ""
 
-#: src/interface.c:1651
+#: src/interface.c:1649
 msgid "Change Color F2"
 msgstr ""
 
-#: src/interface.c:1658
+#: src/interface.c:1656
 msgid "Change Color F4"
 msgstr ""
 
-#: src/interface.c:1665
+#: src/interface.c:1663
 msgid "Change Color F5"
 msgstr ""
 
-#: src/interface.c:1672
+#: src/interface.c:1670
 msgid "Change Color F6"
 msgstr ""
 
-#: src/interface.c:1679
+#: src/interface.c:1677
 msgid "Change Color Nasals"
 msgstr ""
 
-#: src/interface.c:1686
+#: src/interface.c:1684
 msgid "Change Color voice src"
 msgstr ""
 
-#: src/interface.c:1693
+#: src/interface.c:1691
 msgid "Change Color exc. amp."
 msgstr ""
 
-#: src/interface.c:1700
+#: src/interface.c:1698
 msgid "Change Color F3"
 msgstr ""
 
-#: src/interface.c:1702
+#: src/interface.c:1700
 msgid "Colors"
 msgstr ""
 
-#: src/interface.c:1710
+#: src/interface.c:1708
 msgid "max frequence"
 msgstr ""
 
-#: src/interface.c:1717
+#: src/interface.c:1715
 msgid "max amplidute"
 msgstr ""
 
-#: src/interface.c:1724
+#: src/interface.c:1722
 msgid "max bandwidth"
 msgstr ""
 
-#: src/interface.c:1752
+#: src/interface.c:1750
 msgid "value:"
 msgstr ""
 
-#: src/interface.c:1759
+#: src/interface.c:1757
 msgid "Ruler"
 msgstr ""
 
-#: src/interface.c:1767
-msgid "klatt80 binary"
-msgstr ""
-
-#: src/interface.c:1774
-msgid "wav player"
-msgstr ""
-
-#: src/interface.c:1781
-msgid "tmp directory"
-msgstr ""
-
-#: src/interface.c:1788
+#: src/interface.c:1765
 msgid "Path"
 msgstr ""
 
-#: src/interface.c:1800
-msgid "command for klattbinary"
+#: src/interface.c:1779
+msgid "wav player"
 msgstr ""
 
-#: src/interface.c:1801
-msgid "klatt"
+#: src/interface.c:1786
+msgid "tmp directory"
 msgstr ""
 
-#: src/interface.c:1815
+#: src/interface.c:1798
 msgid "playcommand"
 msgstr ""
 
-#: src/interface.c:1816
+#: src/interface.c:1799
 msgid "play"
 msgstr ""
 
-#: src/interface.c:1823
+#: src/interface.c:1806
 msgid "directory for temp-files"
 msgstr ""
 
-#: src/interface.c:1824
+#: src/interface.c:1807
 msgid "/tmp"
 msgstr ""
 
-#: src/interface.c:1826
+#: src/interface.c:1809
 msgid "Paths"
 msgstr ""
 
-#: src/interface.c:1834
+#: src/interface.c:1817
 msgid "misc"
 msgstr ""
 
-#: src/interface.c:2012
+#: src/interface.c:1990
 msgid "Andreas Madsack <bolsog@users.sf.net>"
 msgstr ""
 
-#: src/interface.c:2014
+#: src/interface.c:1992
 msgid "written by"
 msgstr ""
 
-#: src/interface.c:2028
+#: src/interface.c:2006
 msgid "Manuel Kountz (de)"
 msgstr ""
 
-#: src/interface.c:2030
+#: src/interface.c:2008
 msgid "translators"
 msgstr ""
 
-#: src/interface.c:2045
+#: src/interface.c:2023
 msgid ""
 "Dennis Klatt \n"
 "(for klatt-formant-synthesis-algorithm)\n"
@@ -507,39 +495,39 @@ msgid ""
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
 
-#: src/interface.c:2047
+#: src/interface.c:2025
 msgid "thanks to"
 msgstr ""
 
-#: src/interface.c:2106
+#: src/interface.c:2084
 msgid "move dialog"
 msgstr ""
 
-#: src/interface.c:2152
+#: src/interface.c:2130
 msgid "imskpe - Move"
 msgstr ""
 
-#: src/interface.c:2166
+#: src/interface.c:2144
 msgid "Value: "
 msgstr ""
 
-#: src/interface.c:2180
+#: src/interface.c:2158
 msgid "Hz"
 msgstr ""
 
-#: src/interface.c:2188
+#: src/interface.c:2166
 msgid "Time:"
 msgstr ""
 
-#: src/interface.c:2195
+#: src/interface.c:2173
 msgid "sec"
 msgstr ""
 
-#: src/interface.c:2258
+#: src/interface.c:2236
 msgid "IMSKPE - Information"
 msgstr ""
 
-#: src/interface.c:2270
+#: src/interface.c:2248
 msgid "IMSKPE-Splash"
 msgstr ""
 

@@ -498,10 +498,6 @@ on_spn_max_freq_realize                (GtkWidget       *widget,
                                         gpointer         user_data);
 
 void
-on_ent_klatt_realize                   (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
 on_spn_max_amp_realize                 (GtkWidget       *widget,
                                         gpointer         user_data);
 
