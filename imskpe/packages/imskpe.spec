@@ -7,7 +7,8 @@ Group: Applications/Sound
 URL: http://imskpe.sf.net
 Source0: %{name}-%{version}.tar.gz
 Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
-Requires: GTK+-2.4.0
+Requires:        gtk+ >= @GTK_REQUIRED@
+BuildRequires:   gtk+-devel >= @GTK_REQUIRED@
 
 %description 
 imskpe is gui for formantsynthesis based on algorthms by Dennis Klatt.
