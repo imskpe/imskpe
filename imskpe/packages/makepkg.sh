@@ -4,7 +4,7 @@
 
 #!/bin/sh
 
-VERSION=1.0beta1
+VERSION=1.0beta2
 TMP=/tmp
 
 cp imskpe.desc $TMP/imskpe-$VERSION-i686-bol.txt
