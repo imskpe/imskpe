@@ -7,7 +7,7 @@ first release:
 - generate wavfiles (through kpe80 - console tool)
 - use fft to show a spectrum
 - initialize colors for formants (from GtkPreview, oder GtkDrawingArea)?
-
+  (save by change in Curve-List; and initialize this List!!)
 
 final:
 - bind to libklatt
