@@ -16,8 +16,9 @@ imskpe_SOURCES = \
 	cfg.c cfg.h \
 	loadpar.l loadpar.h \
 	loadfile.c loadfile.h \
-	curves.c curves.h
-#	loadconf.l loadconf.h
+	savefile.c savefile.h \
+	curves.c curves.h \
+	loadconf.l loadconf.h
 
 imskpe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 

@@ -41,9 +41,10 @@ procedures
 #define DITEM 262
 #define EOL 263
 #define KPE 264
+#define IMSKPE 265
 #define UNKNOWN 299
 
-#define PARARMETERS 40
+#define PARAMETERS 40
 
 typedef struct {
     int last1;

@@ -53,6 +53,11 @@ void FileOpen(char *filename)
   char *tmp;
   
   /** \todo look if old file isChanged and needs to be saved. */
+  if(FileGetIsChanged())
+  {
+    printf("ask for save?\n");
+  }
+
 
   if(aFile != NULL)
   {
@@ -69,6 +74,7 @@ void FileOpen(char *filename)
 
   aFile->filename=tmp;
   aFile->ischanged=FALSE;
+  aFile->isnew=FALSE;
   aFile->curves=NULL;
 
   /** \todo test for filename extension!! */
@@ -79,6 +85,51 @@ void FileOpen(char *filename)
 //  printf("x- %d\n",aFile->duration);
   /** \todo free aFile at quit! -> in need of FileGetFilename*/
 }
+
+gboolean FileIsDefined()
+{
+  if(aFile!=NULL)
+  {
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
+
+char *FileGetFilename()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->filename;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+gboolean FileSetFilename(char *foo)
+{
+  char *tmp;
+
+  if(aFile!=NULL)
+  {
+    free(aFile->filename);
+    tmp=g_malloc (sizeof (char)*(strlen(foo)+1));
+    strncpy(tmp,foo,strlen(foo));
+
+    aFile->filename=tmp;
+    return TRUE;
+  }
+  else
+  {
+    return FALSE;
+  }
+}
+
 
 gboolean FileSetDuration(unsigned int d)
 {
@@ -264,6 +315,22 @@ unsigned int FileGetBranches()
   else
   {
     return 0;
+  }
+}
+
+void FileSetIsNew(gboolean b)
+{
+  if(aFile!=NULL)
+  {
+    aFile->isnew=b;
+  }
+}
+
+gboolean FileGetIsNew()
+{
+  if(aFile!=NULL)
+  {
+    return aFile->isnew;
   }
 }
 

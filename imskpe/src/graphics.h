@@ -62,7 +62,7 @@ void GuiSetBranches(unsigned int x);
 gboolean GuiGetToggleButtonState(char tmp[30]);
 
 int CalcRealX(int dx, int maxx);
-int CalcRealY(int dy, int maxy);
+int CalcRealY(int dy, int maxy,diagramTyp dia);
 void update_ruler(GtkWidget *widget, diagramTyp dia);
 void configure_drawarea(GtkWidget *widget, diagramTyp dia);
 GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue);
@@ -80,3 +80,8 @@ void redraw_page(int page);
 void SetStatusBar(char *sb, gchar *text);
 void SetTitle(gchar *text);
 void SetToggleButton(MouseActionTyp typ);
+void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia);
+void DrawButtonPressed(int rx, int ry,GdkEventButton  *event, diagramTyp dia);
+
+int GetMousepressed();
+void SetMousepressed(int foo);

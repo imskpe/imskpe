@@ -21,7 +21,19 @@
     along with this program; if not, write to the Free Software
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
+/**
+ * @file   loadconf.c
+ * @author Andreas Madsack
+ * 
+ * @brief  parser for .imskpe (flex generated)
+ * 
+ * 
+ */
 %{
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 // #include <stdlib.h>
 // #include <string.h>
 #include <stdio.h>
@@ -29,10 +41,13 @@
 // #include <gdk/gdk.h>
 
 #include "loadconf.h"
+#include "cfg.h"
 
 %}
 
 %option noyywrap
+%option prefix="cfg"
+%option outfile="lex.yy.c"
 %x comment
 %x confdata
 
@@ -72,12 +87,13 @@ void LoadConf(char *filename)
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    /// \todo use an errordialog ?!
-    printf("can't open config file");
-
-    /// or touch a new one?
+    /// \todo use an error- or info-dialog ?!
+    printf("can't open config file\n");
 
     free(filename);
+
+    ConfigNew();
+
     return;
   }
 
@@ -142,9 +158,4 @@ void LoadConf(char *filename)
     }
   }
   fclose(infp);
-}
-
-int main()
-{
-  LoadConf("/home/bol/.imskpe");
 }

@@ -35,13 +35,9 @@ typedef enum {BOTH, PARALLEL} branchTyp;
 typedef struct {
     char *filename;	   /**< Name of File (incl. Path) */
     gboolean ischanged;    /**< if (file is changed): TRUE else FALSE */
+    gboolean isnew;        /**< if (file is new): TRUE else FALSE */
     GList *curves;         /**< data for curves */
 
-    /** \note are formants (the list) file data or preferences data?
-     *        i think no -> formants list data must become cfg-data! 
-     */
-    /*    GList *formants;      // -> put in preferences ?! */
-    
     /** DU, duration in ms, range: 0+, default: 500 */
     unsigned int duration;
     /** UI, update interval in ms, range: 2-20, default: 10 */
@@ -61,6 +57,11 @@ typedef struct {
 
 void FileOpen(char *filename);
 
+gboolean FileIsDefined();
+
+char *FileGetFilename();
+gboolean FileSetFilename(char *foo);
+
 gboolean FileSetDuration(unsigned int d);
 unsigned int FileGetDuration();
 gboolean FileSetUpdateInterval(unsigned int ui);
@@ -73,10 +74,12 @@ gboolean FileSetVoiceSource(unsigned int vs);
 unsigned int FileGetVoiceSource();
 gboolean FileSetBranches(unsigned int cp);
 unsigned int FileGetBranches();
+
+void FileSetIsNew(gboolean b);
+gboolean FileGetIsNew();
 void FileSetIsChanged(gboolean b);
 gboolean FileGetIsChanged();
 
 void FileSetCurvesPointer(GList *curves);
 GList *FileGetCurvesPointer();
-//GList *FileGetFormantsPointer();
 void FileInit();

@@ -82,8 +82,9 @@ typedef struct {
 
     MouseActionTyp thisaction;
 
-// int hovercurve = -1;
-// int hoverpoint = -1;
+// only for move   
+    gboolean Button1Pressed;
+
 } MouseEventData;
 
 /* curve-functions  */

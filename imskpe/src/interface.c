@@ -41,6 +41,9 @@ create_imskpe_main (void)
   GtkWidget *separatormenuitem1;
   GtkWidget *quit1;
   GtkWidget *menuitem3;
+  GtkWidget *menuitem3_menu;
+  GtkWidget *convert1;
+  GtkWidget *execute1;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *about1;
@@ -50,12 +53,17 @@ create_imskpe_main (void)
   GtkWidget *bn_quit;
   GtkWidget *bn_open;
   GtkWidget *bn_new;
+  GtkWidget *bn_save;
+  GtkWidget *bn_saveas;
   GtkWidget *bn_prefs;
   GtkWidget *toolbar2;
   GtkWidget *tmp_image;
   GtkWidget *bn_move;
   GtkWidget *bn_insert;
   GtkWidget *bn_delete;
+  GtkWidget *toolbar4;
+  GtkWidget *separatortoolitem1;
+  GtkWidget *bn_info;
   GtkWidget *hbox1;
   GtkWidget *vbox2;
   GtkWidget *nb_buttons;
@@ -86,49 +94,42 @@ create_imskpe_main (void)
   GtkWidget *lb_global;
   GtkWidget *nb_resonators;
   GtkWidget *tbl_f1;
-  GtkWidget *bn_f1_color;
   GtkWidget *bn_f1_freq;
   GtkWidget *bn_f1_amp;
   GtkWidget *bn_f1_band;
   GtkWidget *bn_f1_bandp;
   GtkWidget *lb_f1;
   GtkWidget *tbl_f2;
-  GtkWidget *bn_f2_color;
   GtkWidget *bn_f2_freq;
   GtkWidget *bn_f2_amp;
   GtkWidget *bn_f2_band;
   GtkWidget *bn_f2_bandp;
   GtkWidget *lb_f2;
   GtkWidget *tbl_f3;
-  GtkWidget *bn_f3_color;
   GtkWidget *bn_f3_freq;
   GtkWidget *bn_f3_amp;
   GtkWidget *bn_f3_band;
   GtkWidget *bn_f3_bandp;
   GtkWidget *lb_f3;
   GtkWidget *tbl_f4;
-  GtkWidget *bn_f4_color;
   GtkWidget *bn_f4_freq;
   GtkWidget *bn_f4_amp;
   GtkWidget *bn_f4_band;
   GtkWidget *bn_f4_bandp;
   GtkWidget *lb_f4;
   GtkWidget *tbl_f5;
-  GtkWidget *bn_f5_color;
   GtkWidget *bn_f5_freq;
   GtkWidget *bn_f5_amp;
   GtkWidget *bn_f5_band;
   GtkWidget *bn_f5_bandp;
   GtkWidget *lb_f5;
   GtkWidget *tbl_f6;
-  GtkWidget *bn_f6_color;
   GtkWidget *bn_f6_freq;
   GtkWidget *bn_f6_amp;
   GtkWidget *bn_f6_band;
   GtkWidget *bn_f6_bandp;
   GtkWidget *lb_f6;
   GtkWidget *tbl_nasal;
-  GtkWidget *bn_nasal_color;
   GtkWidget *bn_nasal_z_freq;
   GtkWidget *bn_nasal_z_band;
   GtkWidget *bn_nasal_p_freq;
@@ -153,6 +154,11 @@ create_imskpe_main (void)
   GtkWidget *lb_exc_amp;
   GtkWidget *table17;
   GtkWidget *vbox3;
+  GtkWidget *hbox5;
+  GtkWidget *drawingarea2;
+  GtkWidget *toolbar3;
+  GtkWidget *bn_convert;
+  GtkWidget *bn_execute;
   GtkWidget *nb_draw;
   GtkWidget *draw_freq;
   GtkWidget *lb_draw_freq;
@@ -178,6 +184,7 @@ create_imskpe_main (void)
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox1);
   gtk_container_add (GTK_CONTAINER (imskpe_main), vbox1);
+  gtk_widget_set_size_request (vbox1, 740, 540);
 
   menubar1 = gtk_menu_bar_new ();
   gtk_widget_show (menubar1);
@@ -206,7 +213,7 @@ create_imskpe_main (void)
   gtk_widget_show (save_as1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), save_as1);
 
-  separatormenuitem1 = gtk_menu_item_new ();
+  separatormenuitem1 = gtk_separator_menu_item_new ();
   gtk_widget_show (separatormenuitem1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), separatormenuitem1);
   gtk_widget_set_sensitive (separatormenuitem1, FALSE);
@@ -215,9 +222,20 @@ create_imskpe_main (void)
   gtk_widget_show (quit1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), quit1);
 
-  menuitem3 = gtk_menu_item_new_with_mnemonic (_("_View"));
+  menuitem3 = gtk_menu_item_new_with_mnemonic (_("_Actions"));
   gtk_widget_show (menuitem3);
   gtk_container_add (GTK_CONTAINER (menubar1), menuitem3);
+
+  menuitem3_menu = gtk_menu_new ();
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem3), menuitem3_menu);
+
+  convert1 = gtk_image_menu_item_new_from_stock ("gtk-convert", accel_group);
+  gtk_widget_show (convert1);
+  gtk_container_add (GTK_CONTAINER (menuitem3_menu), convert1);
+
+  execute1 = gtk_image_menu_item_new_from_stock ("gtk-execute", accel_group);
+  gtk_widget_show (execute1);
+  gtk_container_add (GTK_CONTAINER (menuitem3_menu), execute1);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_show (menuitem4);
@@ -237,7 +255,7 @@ create_imskpe_main (void)
   toolbar1 = gtk_toolbar_new ();
   gtk_widget_show (toolbar1);
   gtk_box_pack_start (GTK_BOX (hbox2), toolbar1, FALSE, FALSE, 0);
-  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_ICONS);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar1), GTK_TOOLBAR_BOTH);
   gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar1), FALSE);
   tmp_toolbar_icon_size = gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar1));
 
@@ -255,6 +273,16 @@ create_imskpe_main (void)
   gtk_widget_show (bn_new);
   gtk_container_add (GTK_CONTAINER (toolbar1), bn_new);
   gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_new), tooltips, _("New File"), NULL);
+
+  bn_save = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-save");
+  gtk_widget_show (bn_save);
+  gtk_container_add (GTK_CONTAINER (toolbar1), bn_save);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_save), tooltips, _("Save File"), NULL);
+
+  bn_saveas = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-save-as");
+  gtk_widget_show (bn_saveas);
+  gtk_container_add (GTK_CONTAINER (toolbar1), bn_saveas);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_saveas), tooltips, _("Save File As"), NULL);
 
   bn_prefs = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-preferences");
   gtk_widget_show (bn_prefs);
@@ -275,7 +303,7 @@ create_imskpe_main (void)
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_move), tmp_image);
   gtk_widget_show (bn_move);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_move);
-  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_move), tooltips, _("move point"), NULL);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_move), tooltips, _("Move Point"), NULL);
   gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (bn_move), TRUE);
 
   bn_insert = (GtkWidget*) gtk_toggle_tool_button_new ();
@@ -285,7 +313,7 @@ create_imskpe_main (void)
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_insert), tmp_image);
   gtk_widget_show (bn_insert);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_insert);
-  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_insert), tooltips, _("insert point"), NULL);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_insert), tooltips, _("Insert Point"), NULL);
 
   bn_delete = (GtkWidget*) gtk_toggle_tool_button_new ();
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (bn_delete), _("delete"));
@@ -294,7 +322,21 @@ create_imskpe_main (void)
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (bn_delete), tmp_image);
   gtk_widget_show (bn_delete);
   gtk_container_add (GTK_CONTAINER (toolbar2), bn_delete);
-  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_delete), tooltips, _("delete point"), NULL);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_delete), tooltips, _("Delete Point"), NULL);
+
+  toolbar4 = gtk_toolbar_new ();
+  gtk_box_pack_start (GTK_BOX (hbox2), toolbar4, FALSE, FALSE, 0);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar4), GTK_TOOLBAR_BOTH);
+  gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar4), FALSE);
+  tmp_toolbar_icon_size = gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar4));
+
+  separatortoolitem1 = (GtkWidget*) gtk_separator_tool_item_new ();
+  gtk_widget_show (separatortoolitem1);
+  gtk_container_add (GTK_CONTAINER (toolbar4), separatortoolitem1);
+
+  bn_info = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-dialog-info");
+  gtk_widget_show (bn_info);
+  gtk_container_add (GTK_CONTAINER (toolbar4), bn_info);
 
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);
@@ -455,12 +497,6 @@ create_imskpe_main (void)
   gtk_widget_show (tbl_f1);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f1);
 
-  bn_f1_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f1_color);
-  gtk_table_attach (GTK_TABLE (tbl_f1), bn_f1_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
   bn_f1_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f1_freq);
   gtk_table_attach (GTK_TABLE (tbl_f1), bn_f1_freq, 0, 1, 0, 1,
@@ -494,12 +530,6 @@ create_imskpe_main (void)
   gtk_widget_show (tbl_f2);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f2);
 
-  bn_f2_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f2_color);
-  gtk_table_attach (GTK_TABLE (tbl_f2), bn_f2_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
   bn_f2_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f2_freq);
   gtk_table_attach (GTK_TABLE (tbl_f2), bn_f2_freq, 0, 1, 0, 1,
@@ -531,12 +561,6 @@ create_imskpe_main (void)
   tbl_f3 = gtk_table_new (4, 3, FALSE);
   gtk_widget_show (tbl_f3);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f3);
-
-  bn_f3_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f3_color);
-  gtk_table_attach (GTK_TABLE (tbl_f3), bn_f3_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
 
   bn_f3_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f3_freq);
@@ -570,12 +594,6 @@ create_imskpe_main (void)
   gtk_widget_show (tbl_f4);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f4);
 
-  bn_f4_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f4_color);
-  gtk_table_attach (GTK_TABLE (tbl_f4), bn_f4_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
   bn_f4_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f4_freq);
   gtk_table_attach (GTK_TABLE (tbl_f4), bn_f4_freq, 0, 1, 0, 1,
@@ -607,12 +625,6 @@ create_imskpe_main (void)
   tbl_f5 = gtk_table_new (4, 3, FALSE);
   gtk_widget_show (tbl_f5);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f5);
-
-  bn_f5_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f5_color);
-  gtk_table_attach (GTK_TABLE (tbl_f5), bn_f5_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
 
   bn_f5_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f5_freq);
@@ -646,12 +658,6 @@ create_imskpe_main (void)
   gtk_widget_show (tbl_f6);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_f6);
 
-  bn_f6_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_f6_color);
-  gtk_table_attach (GTK_TABLE (tbl_f6), bn_f6_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
   bn_f6_freq = gtk_toggle_button_new_with_mnemonic (_("frequencies"));
   gtk_widget_show (bn_f6_freq);
   gtk_table_attach (GTK_TABLE (tbl_f6), bn_f6_freq, 0, 1, 0, 1,
@@ -683,12 +689,6 @@ create_imskpe_main (void)
   tbl_nasal = gtk_table_new (5, 3, FALSE);
   gtk_widget_show (tbl_nasal);
   gtk_container_add (GTK_CONTAINER (nb_resonators), tbl_nasal);
-
-  bn_nasal_color = gtk_button_new_from_stock ("gtk-select-color");
-  gtk_widget_show (bn_nasal_color);
-  gtk_table_attach (GTK_TABLE (tbl_nasal), bn_nasal_color, 2, 3, 0, 1,
-                    (GtkAttachOptions) (GTK_SHRINK | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
 
   bn_nasal_z_freq = gtk_toggle_button_new_with_mnemonic (_("zero frequencies"));
   gtk_widget_show (bn_nasal_z_freq);
@@ -821,6 +821,32 @@ create_imskpe_main (void)
   gtk_widget_show (vbox3);
   gtk_box_pack_start (GTK_BOX (hbox1), vbox3, TRUE, TRUE, 0);
 
+  hbox5 = gtk_hbox_new (FALSE, 0);
+  gtk_widget_show (hbox5);
+  gtk_box_pack_start (GTK_BOX (vbox3), hbox5, FALSE, TRUE, 0);
+
+  drawingarea2 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea2);
+  gtk_box_pack_start (GTK_BOX (hbox5), drawingarea2, TRUE, TRUE, 0);
+
+  toolbar3 = gtk_toolbar_new ();
+  gtk_widget_show (toolbar3);
+  gtk_box_pack_start (GTK_BOX (hbox5), toolbar3, FALSE, FALSE, 0);
+  gtk_toolbar_set_style (GTK_TOOLBAR (toolbar3), GTK_TOOLBAR_ICONS);
+  gtk_toolbar_set_orientation (GTK_TOOLBAR (toolbar3), GTK_ORIENTATION_VERTICAL);
+  gtk_toolbar_set_show_arrow (GTK_TOOLBAR (toolbar3), FALSE);
+  tmp_toolbar_icon_size = gtk_toolbar_get_icon_size (GTK_TOOLBAR (toolbar3));
+
+  bn_convert = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-convert");
+  gtk_widget_show (bn_convert);
+  gtk_container_add (GTK_CONTAINER (toolbar3), bn_convert);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_convert), tooltips, _("par -> wav"), NULL);
+
+  bn_execute = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-execute");
+  gtk_widget_show (bn_execute);
+  gtk_container_add (GTK_CONTAINER (toolbar3), bn_execute);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_execute), tooltips, _("Convert & Play"), NULL);
+
   nb_draw = gtk_notebook_new ();
   gtk_widget_show (nb_draw);
   gtk_box_pack_start (GTK_BOX (vbox3), nb_draw, TRUE, TRUE, 0);
@@ -899,6 +925,12 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) quit1, "activate",
                     G_CALLBACK (imskpe_quit),
                     NULL);
+  g_signal_connect ((gpointer) convert1, "activate",
+                    G_CALLBACK (on_convert1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) execute1, "activate",
+                    G_CALLBACK (on_execute1_activate),
+                    NULL);
   g_signal_connect ((gpointer) about1, "activate",
                     G_CALLBACK (on_about1_activate),
                     NULL);
@@ -910,6 +942,12 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) bn_new, "clicked",
                     G_CALLBACK (on_bn_new_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_save, "clicked",
+                    G_CALLBACK (on_bn_save_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_saveas, "clicked",
+                    G_CALLBACK (on_bn_saveas_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_prefs, "clicked",
                     G_CALLBACK (on_bn_prefs_clicked),
@@ -941,9 +979,6 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) spbn_duration, "value_changed",
                     G_CALLBACK (on_spbn_duration_value_changed),
                     NULL);
-  g_signal_connect ((gpointer) bn_f1_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
-                    NULL);
   g_signal_connect ((gpointer) bn_f1_freq, "toggled",
                     G_CALLBACK (on_bn_f1_freq_toggled),
                     NULL);
@@ -958,9 +993,6 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) lb_f1, "realize",
                     G_CALLBACK (on_lb_f1_realize),
-                    NULL);
-  g_signal_connect ((gpointer) bn_f2_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_f2_freq, "toggled",
                     G_CALLBACK (on_bn_f2_freq_toggled),
@@ -977,9 +1009,6 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) lb_f2, "realize",
                     G_CALLBACK (on_lb_f2_realize),
                     NULL);
-  g_signal_connect ((gpointer) bn_f3_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
-                    NULL);
   g_signal_connect ((gpointer) bn_f3_freq, "toggled",
                     G_CALLBACK (on_bn_f3_freq_toggled),
                     NULL);
@@ -994,9 +1023,6 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) lb_f3, "realize",
                     G_CALLBACK (on_lb_f3_realize),
-                    NULL);
-  g_signal_connect ((gpointer) bn_f4_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_f4_freq, "toggled",
                     G_CALLBACK (on_bn_f4_freq_toggled),
@@ -1013,9 +1039,6 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) lb_f4, "realize",
                     G_CALLBACK (on_lb_f4_realize),
                     NULL);
-  g_signal_connect ((gpointer) bn_f5_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
-                    NULL);
   g_signal_connect ((gpointer) bn_f5_freq, "toggled",
                     G_CALLBACK (on_bn_f5_freq_toggled),
                     NULL);
@@ -1031,9 +1054,6 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) lb_f5, "realize",
                     G_CALLBACK (on_lb_f5_realize),
                     NULL);
-  g_signal_connect ((gpointer) bn_f6_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
-                    NULL);
   g_signal_connect ((gpointer) bn_f6_freq, "toggled",
                     G_CALLBACK (on_bn_f6_freq_toggled),
                     NULL);
@@ -1048,9 +1068,6 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) lb_f6, "realize",
                     G_CALLBACK (on_lb_f6_realize),
-                    NULL);
-  g_signal_connect ((gpointer) bn_nasal_color, "clicked",
-                    G_CALLBACK (on_bn_fX_color_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_nasal_z_freq, "toggled",
                     G_CALLBACK (on_bn_nasal_z_freq_toggled),
@@ -1103,6 +1120,12 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_examp_siggain, "toggled",
                     G_CALLBACK (on_bn_examp_siggain_toggled),
                     NULL);
+  g_signal_connect ((gpointer) bn_convert, "clicked",
+                    G_CALLBACK (on_bn_convert_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_execute, "clicked",
+                    G_CALLBACK (on_bn_execute_clicked),
+                    NULL);
   g_signal_connect ((gpointer) nb_draw, "switch_page",
                     G_CALLBACK (on_nb_draw_switch_page),
                     NULL);
@@ -1130,6 +1153,12 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) draw_amp, "expose_event",
                     G_CALLBACK (on_draw_amp_expose_event),
                     NULL);
+  g_signal_connect ((gpointer) draw_amp, "button_press_event",
+                    G_CALLBACK (on_draw_amp_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_amp, "button_release_event",
+                    G_CALLBACK (on_draw_amp_button_release_event),
+                    NULL);
   g_signal_connect ((gpointer) draw_band, "configure_event",
                     G_CALLBACK (on_draw_band_configure_event),
                     NULL);
@@ -1138,6 +1167,12 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) draw_band, "motion_notify_event",
                     G_CALLBACK (on_draw_band_motion_notify_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_band, "button_press_event",
+                    G_CALLBACK (on_draw_band_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_band, "button_release_event",
+                    G_CALLBACK (on_draw_band_button_release_event),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -1153,6 +1188,9 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, separatormenuitem1, "separatormenuitem1");
   GLADE_HOOKUP_OBJECT (imskpe_main, quit1, "quit1");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3, "menuitem3");
+  GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3_menu, "menuitem3_menu");
+  GLADE_HOOKUP_OBJECT (imskpe_main, convert1, "convert1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, execute1, "execute1");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, about1, "about1");
@@ -1161,11 +1199,16 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_quit, "bn_quit");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_open, "bn_open");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_new, "bn_new");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_save, "bn_save");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_saveas, "bn_saveas");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_prefs, "bn_prefs");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_move, "bn_move");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_insert, "bn_insert");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_delete, "bn_delete");
+  GLADE_HOOKUP_OBJECT (imskpe_main, toolbar4, "toolbar4");
+  GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem1, "separatortoolitem1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_info, "bn_info");
   GLADE_HOOKUP_OBJECT (imskpe_main, hbox1, "hbox1");
   GLADE_HOOKUP_OBJECT (imskpe_main, vbox2, "vbox2");
   GLADE_HOOKUP_OBJECT (imskpe_main, nb_buttons, "nb_buttons");
@@ -1190,49 +1233,42 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_global, "lb_global");
   GLADE_HOOKUP_OBJECT (imskpe_main, nb_resonators, "nb_resonators");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f1, "tbl_f1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f1_color, "bn_f1_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f1_freq, "bn_f1_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f1_amp, "bn_f1_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f1_band, "bn_f1_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f1_bandp, "bn_f1_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f1, "lb_f1");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f2, "tbl_f2");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f2_color, "bn_f2_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f2_freq, "bn_f2_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f2_amp, "bn_f2_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f2_band, "bn_f2_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f2_bandp, "bn_f2_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f2, "lb_f2");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f3, "tbl_f3");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f3_color, "bn_f3_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f3_freq, "bn_f3_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f3_amp, "bn_f3_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f3_band, "bn_f3_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f3_bandp, "bn_f3_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f3, "lb_f3");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f4, "tbl_f4");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f4_color, "bn_f4_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f4_freq, "bn_f4_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f4_amp, "bn_f4_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f4_band, "bn_f4_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f4_bandp, "bn_f4_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f4, "lb_f4");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f5, "tbl_f5");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f5_color, "bn_f5_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f5_freq, "bn_f5_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f5_amp, "bn_f5_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f5_band, "bn_f5_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f5_bandp, "bn_f5_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f5, "lb_f5");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_f6, "tbl_f6");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_f6_color, "bn_f6_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f6_freq, "bn_f6_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f6_amp, "bn_f6_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f6_band, "bn_f6_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_f6_bandp, "bn_f6_bandp");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_f6, "lb_f6");
   GLADE_HOOKUP_OBJECT (imskpe_main, tbl_nasal, "tbl_nasal");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_nasal_color, "bn_nasal_color");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_nasal_z_freq, "bn_nasal_z_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_nasal_z_band, "bn_nasal_z_band");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_nasal_p_freq, "bn_nasal_p_freq");
@@ -1257,6 +1293,11 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_exc_amp, "lb_exc_amp");
   GLADE_HOOKUP_OBJECT (imskpe_main, table17, "table17");
   GLADE_HOOKUP_OBJECT (imskpe_main, vbox3, "vbox3");
+  GLADE_HOOKUP_OBJECT (imskpe_main, hbox5, "hbox5");
+  GLADE_HOOKUP_OBJECT (imskpe_main, drawingarea2, "drawingarea2");
+  GLADE_HOOKUP_OBJECT (imskpe_main, toolbar3, "toolbar3");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_convert, "bn_convert");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_execute, "bn_execute");
   GLADE_HOOKUP_OBJECT (imskpe_main, nb_draw, "nb_draw");
   GLADE_HOOKUP_OBJECT (imskpe_main, draw_freq, "draw_freq");
   GLADE_HOOKUP_OBJECT (imskpe_main, lb_draw_freq, "lb_draw_freq");
@@ -1452,20 +1493,58 @@ create_imskpe_prefs (void)
   GtkWidget *dialog_vbox2;
   GtkWidget *nb_prefs;
   GtkWidget *table18;
-  GtkWidget *button2;
+  GtkWidget *bn_color_f1;
   GtkWidget *lb_formant1;
   GtkWidget *drawingarea1;
-  GtkWidget *button3;
   GtkWidget *lb_change;
+  GtkWidget *lb_formant2;
+  GtkWidget *lb_formant3;
+  GtkWidget *lb_formant4;
+  GtkWidget *lb_formant5;
+  GtkWidget *lb_formant6;
+  GtkWidget *lb_nasals;
+  GtkWidget *lb_vc;
+  GtkWidget *lb_ea;
+  GtkWidget *bn_color_f2;
+  GtkWidget *bn_color_f4;
+  GtkWidget *bn_color_f5;
+  GtkWidget *bn_color_f6;
+  GtkWidget *bn_color_nasals;
+  GtkWidget *bn_color_vc;
+  GtkWidget *bn_color_ea;
+  GtkWidget *bn_color_f3;
   GtkWidget *lb_colors;
-  GtkWidget *empty_notebook_page;
+  GtkWidget *table21;
+  GtkWidget *lb_max_freq;
+  GtkWidget *ln_max_amp;
+  GtkWidget *lb_max_band;
+  GtkObject *spn_max_freq_adj;
+  GtkWidget *spn_max_freq;
+  GtkObject *spn_max_amp_adj;
+  GtkWidget *spn_max_amp;
+  GtkObject *spn_max_band_adj;
+  GtkWidget *spn_max_band;
+  GtkWidget *label29;
   GtkWidget *lb_ruler;
+  GtkWidget *table20;
+  GtkWidget *lb_klatt;
+  GtkWidget *lb_play;
+  GtkWidget *lb_tmp;
+  GtkWidget *label25;
+  GtkWidget *ent_klatt;
+  GtkWidget *drawingarea3;
+  GtkWidget *ent_play;
+  GtkWidget *ent_tmp;
   GtkWidget *lb_paths;
+  GtkWidget *empty_notebook_page;
   GtkWidget *lb_misc;
   GtkWidget *dialog_action_area2;
   GtkWidget *bn_prefs_cancel;
   GtkWidget *bn_prefs_apply;
   GtkWidget *bn_prefs_ok;
+  GtkTooltips *tooltips;
+
+  tooltips = gtk_tooltips_new ();
 
   imskpe_prefs = gtk_dialog_new ();
   gtk_widget_set_size_request (imskpe_prefs, 350, 400);
@@ -1481,15 +1560,16 @@ create_imskpe_prefs (void)
   gtk_widget_show (nb_prefs);
   gtk_box_pack_start (GTK_BOX (dialog_vbox2), nb_prefs, TRUE, TRUE, 0);
 
-  table18 = gtk_table_new (9, 4, TRUE);
+  table18 = gtk_table_new (10, 4, TRUE);
   gtk_widget_show (table18);
   gtk_container_add (GTK_CONTAINER (nb_prefs), table18);
 
-  button2 = gtk_button_new_with_mnemonic (_("Color"));
-  gtk_widget_show (button2);
-  gtk_table_attach (GTK_TABLE (table18), button2, 2, 3, 1, 2,
+  bn_color_f1 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f1);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f1, 2, 3, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f1, _("Change Color F1"), NULL);
 
   lb_formant1 = gtk_label_new (_("Formant 1"));
   gtk_widget_show (lb_formant1);
@@ -1504,12 +1584,6 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  button3 = gtk_button_new_with_mnemonic (_("Linestyle"));
-  gtk_widget_show (button3);
-  gtk_table_attach (GTK_TABLE (table18), button3, 3, 4, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-
   lb_change = gtk_label_new (_("change"));
   gtk_widget_show (lb_change);
   gtk_table_attach (GTK_TABLE (table18), lb_change, 2, 4, 0, 1,
@@ -1519,21 +1593,241 @@ create_imskpe_prefs (void)
   gtk_misc_set_alignment (GTK_MISC (lb_change), 0, 0.5);
   gtk_misc_set_padding (GTK_MISC (lb_change), 60, 0);
 
+  lb_formant2 = gtk_label_new (_("Formant 2"));
+  gtk_widget_show (lb_formant2);
+  gtk_table_attach (GTK_TABLE (table18), lb_formant2, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_formant2), 0, 0.5);
+
+  lb_formant3 = gtk_label_new (_("Formant 3"));
+  gtk_widget_show (lb_formant3);
+  gtk_table_attach (GTK_TABLE (table18), lb_formant3, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_formant3), 0, 0.5);
+
+  lb_formant4 = gtk_label_new (_("Formant 4"));
+  gtk_widget_show (lb_formant4);
+  gtk_table_attach (GTK_TABLE (table18), lb_formant4, 0, 1, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_formant4), 0, 0.5);
+
+  lb_formant5 = gtk_label_new (_("Formant 5"));
+  gtk_widget_show (lb_formant5);
+  gtk_table_attach (GTK_TABLE (table18), lb_formant5, 0, 1, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_formant5), 0, 0.5);
+
+  lb_formant6 = gtk_label_new (_("Formant 6"));
+  gtk_widget_show (lb_formant6);
+  gtk_table_attach (GTK_TABLE (table18), lb_formant6, 0, 1, 6, 7,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_formant6), 0, 0.5);
+
+  lb_nasals = gtk_label_new (_("Nasals"));
+  gtk_widget_show (lb_nasals);
+  gtk_table_attach (GTK_TABLE (table18), lb_nasals, 0, 1, 7, 8,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_nasals), 0, 0.5);
+
+  lb_vc = gtk_label_new (_("voice src"));
+  gtk_widget_show (lb_vc);
+  gtk_table_attach (GTK_TABLE (table18), lb_vc, 0, 1, 8, 9,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_vc), 0, 0.5);
+
+  lb_ea = gtk_label_new (_("exc. amp."));
+  gtk_widget_show (lb_ea);
+  gtk_table_attach (GTK_TABLE (table18), lb_ea, 0, 1, 9, 10,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_ea), 0, 0.5);
+
+  bn_color_f2 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f2);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f2, 2, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f2, _("Change Color F2"), NULL);
+
+  bn_color_f4 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f4);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f4, 2, 3, 4, 5,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f4, _("Change Color F4"), NULL);
+
+  bn_color_f5 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f5);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f5, 2, 3, 5, 6,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f5, _("Change Color F5"), NULL);
+
+  bn_color_f6 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f6);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f6, 2, 3, 6, 7,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f6, _("Change Color F6"), NULL);
+
+  bn_color_nasals = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_nasals);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_nasals, 2, 3, 7, 8,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_nasals, _("Change Color Nasals"), NULL);
+
+  bn_color_vc = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_vc);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_vc, 2, 3, 8, 9,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_vc, _("Change Color voice src"), NULL);
+
+  bn_color_ea = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_ea);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_ea, 2, 3, 9, 10,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_ea, _("Change Color exc. amp."), NULL);
+
+  bn_color_f3 = gtk_button_new_with_mnemonic (_("Color"));
+  gtk_widget_show (bn_color_f3);
+  gtk_table_attach (GTK_TABLE (table18), bn_color_f3, 2, 3, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, bn_color_f3, _("Change Color F3"), NULL);
+
   lb_colors = gtk_label_new (_("Colors"));
   gtk_widget_show (lb_colors);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_prefs), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_prefs), 0), lb_colors);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (nb_prefs), empty_notebook_page);
+  table21 = gtk_table_new (7, 4, FALSE);
+  gtk_widget_show (table21);
+  gtk_container_add (GTK_CONTAINER (nb_prefs), table21);
+
+  lb_max_freq = gtk_label_new (_("max frequence"));
+  gtk_widget_show (lb_max_freq);
+  gtk_table_attach (GTK_TABLE (table21), lb_max_freq, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_max_freq), 0, 0.5);
+
+  ln_max_amp = gtk_label_new (_("max amplidute"));
+  gtk_widget_show (ln_max_amp);
+  gtk_table_attach (GTK_TABLE (table21), ln_max_amp, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (ln_max_amp), 0, 0.5);
+
+  lb_max_band = gtk_label_new (_("max bandwidth"));
+  gtk_widget_show (lb_max_band);
+  gtk_table_attach (GTK_TABLE (table21), lb_max_band, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_max_band), 0, 0.5);
+
+  spn_max_freq_adj = gtk_adjustment_new (1, 0, 5000, 1, 10, 10);
+  spn_max_freq = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_freq_adj), 1, 0);
+  gtk_widget_show (spn_max_freq);
+  gtk_table_attach (GTK_TABLE (table21), spn_max_freq, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  spn_max_amp_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spn_max_amp = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_amp_adj), 1, 0);
+  gtk_widget_show (spn_max_amp);
+  gtk_table_attach (GTK_TABLE (table21), spn_max_amp, 2, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  spn_max_band_adj = gtk_adjustment_new (1, 0, 2000, 1, 10, 10);
+  spn_max_band = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_band_adj), 1, 0);
+  gtk_widget_show (spn_max_band);
+  gtk_table_attach (GTK_TABLE (table21), spn_max_band, 2, 3, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  label29 = gtk_label_new (_("value:"));
+  gtk_widget_show (label29);
+  gtk_table_attach (GTK_TABLE (table21), label29, 2, 4, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label29), 0, 0.5);
 
   lb_ruler = gtk_label_new (_("Ruler"));
   gtk_widget_show (lb_ruler);
   gtk_notebook_set_tab_label (GTK_NOTEBOOK (nb_prefs), gtk_notebook_get_nth_page (GTK_NOTEBOOK (nb_prefs), 1), lb_ruler);
 
-  empty_notebook_page = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show (empty_notebook_page);
-  gtk_container_add (GTK_CONTAINER (nb_prefs), empty_notebook_page);
+  table20 = gtk_table_new (5, 4, FALSE);
+  gtk_widget_show (table20);
+  gtk_container_add (GTK_CONTAINER (nb_prefs), table20);
+
+  lb_klatt = gtk_label_new (_("klatt80 binary"));
+  gtk_widget_show (lb_klatt);
+  gtk_table_attach (GTK_TABLE (table20), lb_klatt, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_klatt), 0, 0.5);
+
+  lb_play = gtk_label_new (_("wav player"));
+  gtk_widget_show (lb_play);
+  gtk_table_attach (GTK_TABLE (table20), lb_play, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_play), 0, 0.5);
+
+  lb_tmp = gtk_label_new (_("tmp directory"));
+  gtk_widget_show (lb_tmp);
+  gtk_table_attach (GTK_TABLE (table20), lb_tmp, 0, 1, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (lb_tmp), 0, 0.5);
+
+  label25 = gtk_label_new (_("Path"));
+  gtk_widget_show (label25);
+  gtk_table_attach (GTK_TABLE (table20), label25, 2, 4, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label25), 0, 0.5);
+
+  ent_klatt = gtk_entry_new ();
+  gtk_widget_show (ent_klatt);
+  gtk_table_attach (GTK_TABLE (table20), ent_klatt, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, ent_klatt, _("command for klattbinary"), NULL);
+  gtk_entry_set_text (GTK_ENTRY (ent_klatt), _("klatt"));
+
+  drawingarea3 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea3);
+  gtk_table_attach (GTK_TABLE (table20), drawingarea3, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea3, 10, -1);
+
+  ent_play = gtk_entry_new ();
+  gtk_widget_show (ent_play);
+  gtk_table_attach (GTK_TABLE (table20), ent_play, 2, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, ent_play, _("playcommand"), NULL);
+  gtk_entry_set_text (GTK_ENTRY (ent_play), _("play"));
+
+  ent_tmp = gtk_entry_new ();
+  gtk_widget_show (ent_tmp);
+  gtk_table_attach (GTK_TABLE (table20), ent_tmp, 2, 3, 3, 4,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_tooltips_set_tip (tooltips, ent_tmp, _("directory for temp-files"), NULL);
+  gtk_entry_set_text (GTK_ENTRY (ent_tmp), _("/tmp"));
 
   lb_paths = gtk_label_new (_("Paths"));
   gtk_widget_show (lb_paths);
@@ -1566,6 +1860,24 @@ create_imskpe_prefs (void)
   gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_prefs), bn_prefs_ok, GTK_RESPONSE_OK);
   GTK_WIDGET_SET_FLAGS (bn_prefs_ok, GTK_CAN_DEFAULT);
 
+  g_signal_connect ((gpointer) spn_max_freq, "realize",
+                    G_CALLBACK (on_spn_max_freq_realize),
+                    NULL);
+  g_signal_connect ((gpointer) spn_max_amp, "realize",
+                    G_CALLBACK (on_spn_max_amp_realize),
+                    NULL);
+  g_signal_connect ((gpointer) spn_max_band, "realize",
+                    G_CALLBACK (on_spn_max_band_realize),
+                    NULL);
+  g_signal_connect ((gpointer) ent_klatt, "realize",
+                    G_CALLBACK (on_ent_klatt_realize),
+                    NULL);
+  g_signal_connect ((gpointer) ent_play, "realize",
+                    G_CALLBACK (on_ent_play_realize),
+                    NULL);
+  g_signal_connect ((gpointer) ent_tmp, "realize",
+                    G_CALLBACK (on_ent_tmp_realize),
+                    NULL);
   g_signal_connect ((gpointer) bn_prefs_cancel, "clicked",
                     G_CALLBACK (on_bn_prefs_cancel_clicked),
                     NULL);
@@ -1581,19 +1893,52 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_vbox2, "dialog_vbox2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, nb_prefs, "nb_prefs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table18, "table18");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, button2, "button2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f1, "bn_color_f1");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant1, "lb_formant1");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea1, "drawingarea1");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, button3, "button3");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_change, "lb_change");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant2, "lb_formant2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant3, "lb_formant3");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant4, "lb_formant4");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant5, "lb_formant5");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_formant6, "lb_formant6");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_nasals, "lb_nasals");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_vc, "lb_vc");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ea, "lb_ea");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f2, "bn_color_f2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f4, "bn_color_f4");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f5, "bn_color_f5");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f6, "bn_color_f6");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_nasals, "bn_color_nasals");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_vc, "bn_color_vc");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_ea, "bn_color_ea");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_color_f3, "bn_color_f3");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_colors, "lb_colors");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, table21, "table21");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_max_freq, "lb_max_freq");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, ln_max_amp, "ln_max_amp");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_max_band, "lb_max_band");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_freq, "spn_max_freq");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_amp, "spn_max_amp");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_band, "spn_max_band");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label29, "label29");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ruler, "lb_ruler");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, table20, "table20");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_klatt, "lb_klatt");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_play, "lb_play");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_tmp, "lb_tmp");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, label25, "label25");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_klatt, "ent_klatt");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea3, "drawingarea3");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_play, "ent_play");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_tmp, "ent_tmp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_paths, "lb_paths");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_misc, "lb_misc");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_cancel, "bn_prefs_cancel");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_apply, "bn_prefs_apply");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_ok, "bn_prefs_ok");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, tooltips, "tooltips");
 
   return imskpe_prefs;
 }
@@ -1718,6 +2063,7 @@ create_pmenu (void)
   GtkWidget *pm_move;
   GtkWidget *pm_insert;
   GtkWidget *pm_delete;
+  GtkWidget *pm_movediag;
 
   pmenu = gtk_menu_new ();
 
@@ -1733,6 +2079,10 @@ create_pmenu (void)
   gtk_widget_show (pm_delete);
   gtk_container_add (GTK_CONTAINER (pmenu), pm_delete);
 
+  pm_movediag = gtk_menu_item_new_with_mnemonic (_("move dialog"));
+  gtk_widget_show (pm_movediag);
+  gtk_container_add (GTK_CONTAINER (pmenu), pm_movediag);
+
   g_signal_connect ((gpointer) pm_move, "activate",
                     G_CALLBACK (on_pm_move_activate),
                     NULL);
@@ -1742,13 +2092,131 @@ create_pmenu (void)
   g_signal_connect ((gpointer) pm_delete, "activate",
                     G_CALLBACK (on_pm_delete_activate),
                     NULL);
+  g_signal_connect ((gpointer) pm_movediag, "activate",
+                    G_CALLBACK (on_pm_movediag_activate),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (pmenu, pmenu, "pmenu");
   GLADE_HOOKUP_OBJECT (pmenu, pm_move, "pm_move");
   GLADE_HOOKUP_OBJECT (pmenu, pm_insert, "pm_insert");
   GLADE_HOOKUP_OBJECT (pmenu, pm_delete, "pm_delete");
+  GLADE_HOOKUP_OBJECT (pmenu, pm_movediag, "pm_movediag");
 
   return pmenu;
+}
+
+GtkWidget*
+create_imskpe_move (void)
+{
+  GtkWidget *imskpe_move;
+  GtkWidget *dialog_vbox4;
+  GtkWidget *table19;
+  GtkWidget *label9;
+  GtkObject *spn_value_adj;
+  GtkWidget *spn_value;
+  GtkWidget *move_type;
+  GtkWidget *label11;
+  GtkWidget *label12;
+  GtkObject *spn_time_adj;
+  GtkWidget *spn_time;
+  GtkWidget *dialog_action_area4;
+  GtkWidget *bn_move_cancel;
+  GtkWidget *bn_move_ok;
+
+  imskpe_move = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (imskpe_move), _("imskpe - Move"));
+  gtk_window_set_position (GTK_WINDOW (imskpe_move), GTK_WIN_POS_MOUSE);
+  gtk_window_set_modal (GTK_WINDOW (imskpe_move), TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (imskpe_move), FALSE);
+  gtk_window_set_type_hint (GTK_WINDOW (imskpe_move), GDK_WINDOW_TYPE_HINT_DIALOG);
+
+  dialog_vbox4 = GTK_DIALOG (imskpe_move)->vbox;
+  gtk_widget_show (dialog_vbox4);
+  gtk_widget_set_size_request (dialog_vbox4, 330, -1);
+
+  table19 = gtk_table_new (2, 3, TRUE);
+  gtk_widget_show (table19);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox4), table19, TRUE, TRUE, 0);
+
+  label9 = gtk_label_new (_("Value: "));
+  gtk_widget_show (label9);
+  gtk_table_attach (GTK_TABLE (table19), label9, 0, 1, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label9), 0, 0.5);
+
+  spn_value_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spn_value = gtk_spin_button_new (GTK_ADJUSTMENT (spn_value_adj), 1, 0);
+  gtk_widget_show (spn_value);
+  gtk_table_attach (GTK_TABLE (table19), spn_value, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  move_type = gtk_label_new (_("Hz"));
+  gtk_widget_show (move_type);
+  gtk_table_attach (GTK_TABLE (table19), move_type, 2, 3, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_label_set_justify (GTK_LABEL (move_type), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (move_type), 0, 0.5);
+
+  label11 = gtk_label_new (_("Time:"));
+  gtk_widget_show (label11);
+  gtk_table_attach (GTK_TABLE (table19), label11, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label11), 0, 0.5);
+
+  label12 = gtk_label_new (_("sec"));
+  gtk_widget_show (label12);
+  gtk_table_attach (GTK_TABLE (table19), label12, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label12), 0, 0.5);
+
+  spn_time_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spn_time = gtk_spin_button_new (GTK_ADJUSTMENT (spn_time_adj), 1, 0);
+  gtk_widget_show (spn_time);
+  gtk_table_attach (GTK_TABLE (table19), spn_time, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  dialog_action_area4 = GTK_DIALOG (imskpe_move)->action_area;
+  gtk_widget_show (dialog_action_area4);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area4), GTK_BUTTONBOX_END);
+
+  bn_move_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_move_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_move), bn_move_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_move_cancel, GTK_CAN_DEFAULT);
+
+  bn_move_ok = gtk_button_new_from_stock ("gtk-ok");
+  gtk_widget_show (bn_move_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_move), bn_move_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_move_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_move_cancel, "clicked",
+                    G_CALLBACK (on_bn_move_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_move_ok, "clicked",
+                    G_CALLBACK (on_bn_move_ok_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_move, imskpe_move, "imskpe_move");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_move, dialog_vbox4, "dialog_vbox4");
+  GLADE_HOOKUP_OBJECT (imskpe_move, table19, "table19");
+  GLADE_HOOKUP_OBJECT (imskpe_move, label9, "label9");
+  GLADE_HOOKUP_OBJECT (imskpe_move, spn_value, "spn_value");
+  GLADE_HOOKUP_OBJECT (imskpe_move, move_type, "move_type");
+  GLADE_HOOKUP_OBJECT (imskpe_move, label11, "label11");
+  GLADE_HOOKUP_OBJECT (imskpe_move, label12, "label12");
+  GLADE_HOOKUP_OBJECT (imskpe_move, spn_time, "spn_time");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_move, dialog_action_area4, "dialog_action_area4");
+  GLADE_HOOKUP_OBJECT (imskpe_move, bn_move_cancel, "bn_move_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_move, bn_move_ok, "bn_move_ok");
+
+  return imskpe_move;
 }
 

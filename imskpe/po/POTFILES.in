@@ -8,3 +8,7 @@ src/graphics.c
 src/cfg.c
 src/loadfile.c
 src/loadpar.c
+src/savefile.c
+src/loadconf.c
+
+

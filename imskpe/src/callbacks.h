@@ -30,6 +30,13 @@
 #include <gtk/gtk.h>
 
 
+/* dialog inits*/
+void InitDialogSave();
+void InitDialogLoad();
+void InitDialogPrefs();
+
+
+
 gboolean
 on_imskpe_main_delete_event            (GtkWidget       *widget,
                                         GdkEvent        *event,
@@ -458,5 +465,88 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
 
 gboolean
 on_draw_freq_button_release_event      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_pm_movediag_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_bn_move_cancel_clicked              (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_move_ok_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+
+
+void
+on_bn_save_clicked                     (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_convert1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_execute1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);
+
+void
+on_spn_max_freq_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_ent_klatt_realize                   (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_spn_max_amp_realize                 (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_spn_max_band_realize                (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_ent_play_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_ent_tmp_realize                     (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_amp_button_press_event         (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_amp_button_release_event       (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_band_button_press_event        (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);
+
+gboolean
+on_draw_band_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
                                         gpointer         user_data);

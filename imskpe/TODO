@@ -84,3 +84,18 @@ OK     also ob ein redraw erforderlich ist, oder nicht ...
    - play/synthesize it
       - buttons dafür
       - preferences einträge für die pfade zu klatt80 / einem wav-player
+   - optimieren der move-interaktion
+      - erkennen, ob ein anderer punkt nun bewegt wird
+          und dies nur erlauben, wenn vorher die maustaste losgelassen wurde
+   - sprachproblematik bei den dropdowns!
+
+
+GtkHScale
+
+gtk_hscale_new_with_range ()
+
+http://developer.gnome.org/doc/API/2.0/gtk/GtkHScale.html
+
+GtkSpinButton
+
+http://developer.gnome.org/doc/API/2.0/gtk/GtkSpinButton.html#gtk-spin-button-set-adjustment

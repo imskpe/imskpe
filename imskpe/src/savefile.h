@@ -1,4 +1,7 @@
+/* For Emacs: -*-c-*- */
 /*
+    savefile.h - Part of IMSKPE
+
     Copyright (C) 2004 Andreas Madsack
 
     This program is free software; you can redistribute it and/or modify
@@ -17,44 +20,10 @@
 */
 
 /**
- * @file   cfg.h
+ * @file   savefile.h
  * @author Andreas Madsack
- * 
- * @brief  listsystem for internal cfg-list (headerfile)
+
+ * @brief  header for savefile-wrapper
  */
 
-
-#include <gtk/gtk.h>
-
-/*
-  structs
-*/
-
-typedef struct {
-    char *name;
-    char *value;
-    unsigned short type;
-//    int length;
-} typConfig;
-
-/*
-  constants
-*/
-
-#define TYPE_STR 0
-#define TYPE_INT 1
-#define TYPE_BOOL 2
-
-/*
-procedures
-*/
-
-void ConfigLoad();
-void ConfigListInsert(char *name, char *value);
-void ConfigListInsertString(char *name, char *value, unsigned short type);
-void ConfigListInsertInteger(char *name, int value, unsigned short type);
-char *ConfigGetString(char *name);
-int ConfigGetInteger(char *name);
-void ConfigListFree();
-void ConfigNew();
-void ConfigSave();
+void FileSave(char *filename);

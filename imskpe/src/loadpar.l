@@ -48,6 +48,8 @@
 %}
 
 %option noyywrap
+%option prefix="par"
+%option outfile="lex.yy.c"
 %x comment
 %x paramdata
 
@@ -61,6 +63,7 @@
 <comment>\n                     return EOL;
 <comment>"*"+"/"                {BEGIN(INITIAL);}
 <comment>Produced[ ]by[ ]kpe80  return KPE;
+<comment>Produced[ ]by[ ]imskpe  return IMSKPE;
 
 ^[ ]+                           {BEGIN(paramdata);}
 <paramdata>[0-9]+":"            return LINEID;
@@ -87,14 +90,14 @@ void LoadPar(char *filename)
   int i;
   char var[3];
 
-  void *params[PARARMETERS];
+  void *params[PARAMETERS];
   GList *pointtmp=NULL;
 
   typParList *tmp;
   typValueList *point;
 
   // init
-  for(i=0;i<PARARMETERS;i++)
+  for(i=0;i<PARAMETERS;i++)
   {
     tmp = g_malloc (sizeof (typParList));
     tmp->last1=-1;
@@ -132,6 +135,7 @@ void LoadPar(char *filename)
       {
 	
 	/* part1 commentinfo */
+      case IMSKPE:
       case KPE:
       case COMMENT:
       case EOL:
@@ -254,13 +258,15 @@ void LoadPar(char *filename)
 	  break;
       case UNKNOWN:
 	  break;
+      default:
+	  break;
       }
     }
   }
   fclose(infp);
 
 // insert last values:
-  for(i=0;i<PARARMETERS;i++)
+  for(i=0;i<PARAMETERS;i++)
   {
     tmp=params[i];
     pointtmp = (GList *) tmp->points;
@@ -272,7 +278,7 @@ void LoadPar(char *filename)
 //  printf("------\n");
 
 // free ...
-  for(i=0;i<PARARMETERS;i++)
+  for(i=0;i<PARAMETERS;i++)
   {
     tmp=params[i];
     pointtmp = (GList *) g_list_first (tmp->points);
@@ -295,7 +301,7 @@ void LoadPar(char *filename)
      {	
        point = (typValueList *) pointtmp->data;
 
-        printf("%4d %4d %2d\n",point->time,point->value,i); 
+//        printf("%4d %4d %2d\n",point->time,point->value,i); 
       
 //       if(point!=NULL)
 //       free(point);
@@ -307,15 +313,3 @@ void LoadPar(char *filename)
   }
   free(filename);
 }
-
-/*typParValue *ParamInsert (int t, int v, int pcnt)
-{
-  typParValue *pl;
-
-  pl = g_malloc (sizeof (typParValue));
-  pl->time=t;
-  pl->value=v;
-  pl->pcount=pcnt;
-  return pl;
-}
-*/

@@ -24,7 +24,8 @@
  * 
  * @brief  all visual routines of IMSKPE
  * 
- * \todo put part of functions in other files (formant-routines, math-stuff, statusbar, ...)
+ * \todo maybe put part of functions in other files 
+ *       (formant-routines, math-stuff, statusbar, ...)
  * 
  * \note idea: 
  * - one list for formants (in preferences)
@@ -34,19 +35,6 @@
  * 
  * -  skala muss flexibler werden .. 
  *    und die daten müssen abgreifbar sein ...
- *
- * - routine, die die linien im repaint malt ...
- *   incl. rechtecken auf den punkten ...
- *   sofern diese show=TRUE haben ...
- * 
- * - garbage collector für die ganze schose ...
- * 
- * - eventroutinen 
- *   - wenn maus drüber linie dicker
- *   - wenn maus über punkt, dann auch dot dicker
- *   - aktuelle koordinaten in status-right anzeigen
- *   - aktuelle kurve in status-left (oder neuer middle) anzeigen
- *   - file evt. in title ...
  *
 */
 
@@ -64,6 +52,7 @@
 #include "curves.h"
 #include "graphics.h"
 #include "cfg.h"
+#include "loadfile.h"
 
 /*
   global variables
@@ -74,6 +63,8 @@ int nScreenWidth = 200;
 int nScreenHeight = 200;
 
 GList *formants = NULL;  // put in preferences ?
+
+int mousepressed=0;
 
 /* ---------------------------------------------------------------------- */
 
@@ -124,13 +115,13 @@ void GuiSetVoiceSource(unsigned int x)
   switch(x)
   {
   case 1:
-      gtk_entry_set_text ((GtkEntry *)w,"impulse");
+      gtk_entry_set_text ((GtkEntry *)w,_("impulse"));
       break;
   case 2:
-      gtk_entry_set_text ((GtkEntry *)w,"natural");
+      gtk_entry_set_text ((GtkEntry *)w,_("natural"));
       break;
   case 3:
-      gtk_entry_set_text ((GtkEntry *)w,"sampled");
+      gtk_entry_set_text ((GtkEntry *)w,_("sampled"));
       break;
   }
 }
@@ -141,10 +132,10 @@ void GuiSetBranches(unsigned int x)
   switch(x)
   {
   case 1:
-      gtk_entry_set_text ((GtkEntry *)w,"cascade + parallel");
+      gtk_entry_set_text ((GtkEntry *)w,_("cascade + parallel"));
       break;
   case 2:
-      gtk_entry_set_text ((GtkEntry *)w,"parallel only");
+      gtk_entry_set_text ((GtkEntry *)w,_("parallel only"));
       break;
   }
 }
@@ -250,11 +241,6 @@ void FormantListInit ()
   oneformant->color=GetColor(0.5,0.5,1.0);
 
   formants = g_list_append (formants, oneformant);
-
-/* wohin mit dieser initroutine?! */
-/* sollte in main() */
-  LoadConfig();
-
 }
 
 GdkColor GetFormantListColor (gchar *searchstring)
@@ -280,6 +266,7 @@ GdkColor GetFormantListColor (gchar *searchstring)
 
     free(fname);
   }
+  return GetColor(1.0,0.0,0.0);
 }
 
 
@@ -309,20 +296,32 @@ void FormantListFree()
 int CalcRealX(int dx, int maxx)
 {
   int du=FileGetDuration();
-//  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
-//   int x=(max-25)*dx/du+25;
-  int ox=(int)((double)((dx-25)*du)/(double)(maxx-25-10));
+  int rulerdiff=25;
+
+  int ox=(int)((double)((dx-rulerdiff)*du)/(double)(maxx-rulerdiff-10));
 
   return ox;
 }
 
-int CalcRealY(int dy, int maxy)
+int CalcRealY(int dy, int maxy,diagramTyp dia)
 {
   int du=FileGetDuration();
-//  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
-//  d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
-  int oy=(int)((double)((-dy+maxy-25)*5000)/(double)(maxy-25));
-//  int oy=((dy-25)*500)/(maxy-25);    // 500 -> preferences!
+  int rulerdiff=25;
+  int max=5000;
+  switch(dia)
+  {
+  case FREQUENCIES:
+	max=ConfigGetInteger("maxfreq");
+	break;
+  case AMPLITUDE:
+  	max=ConfigGetInteger("maxamp");
+	break;
+  case BANDWIDTH:
+  	max=ConfigGetInteger("maxband");
+	break;
+  }    
+
+  int oy=(int)((double)((-dy+maxy-25)*max)/(double)(maxy-rulerdiff));
 
   return oy;
 }
@@ -346,7 +345,21 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
 
   int xsplits=15;  /* export in preferences */
   int ysplits=10;  /* export in preferences */
-  int ymax=5000;   /* put in preferences and/or calculate it! */
+
+  int ymax=5000;   
+  switch(dia)
+  {
+  case FREQUENCIES:
+	ymax=ConfigGetInteger("maxfreq");
+	break;
+  case AMPLITUDE:
+  	ymax=ConfigGetInteger("maxamp");
+	break;
+  case BANDWIDTH:
+  	ymax=ConfigGetInteger("maxband");
+	break;
+  }    
+
 
   duration = FileGetDuration();
 
@@ -432,11 +445,11 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia)
   }
 
   /* --- Existing pixmap?  --- */
-  if (g->pixmap == NULL) {
+//   if (g->pixmap == NULL) {
     
-    /* --- Free it --- */
-    gdk_pixmap_unref (g->pixmap);
-  } 
+//     /* --- Free it --- */
+//     gdk_pixmap_unref (g->pixmap);
+//   } 
 
   /* --- Create a new pixmap --- */
   g->pixmap = gdk_pixmap_new (widget->window,
@@ -455,11 +468,8 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia)
 		      widget->allocation.width,
 		      widget->allocation.height);
 
-
   update_ruler(widget,dia); 
-  
   Repaint(widget,dia);
-
 }
 
 
@@ -584,7 +594,21 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 /* muss alles ausgelagert werden: */
     int xsplits=15;  /**< export in preferences */
     int ysplits=10;  /**< export in preferences */
-    int ymax=5000;   /**< put in preferences and/or calculate it! */
+    int ymax=5000;
+
+  switch(dia)
+  {
+  case FREQUENCIES:
+	ymax=ConfigGetInteger("maxfreq");
+	break;
+  case AMPLITUDE:
+  	ymax=ConfigGetInteger("maxamp");
+	break;
+  case BANDWIDTH:
+  	ymax=ConfigGetInteger("maxband");
+	break;
+  }    
+
 
     int xmax = FileGetDuration();
 
@@ -603,7 +627,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
       erst hier, dann auslagern ... 
     ****************************************/
     
-    printf("repaint\n");
+//    printf("repaint\n");
 
     int ui=FileGetUpdateInterval();
     char statusbarcurvemessage[100];
@@ -863,4 +887,240 @@ void SetToggleButton(MouseActionTyp typ)
       MouseEventSetAction(DELETE);
       break;
   }
+}
+
+/** 
+ * DrawAreaMotion
+ *
+ * draw values on motion (incl. hovering ...)
+ * 
+ * @param rx 
+ * @param ry 
+ * @param state 
+ * @param dia 
+ */
+void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
+{
+  GList *cv=(GList *)FileGetCurvesPointer();
+  typCurveList *c;
+  int setp=0;
+  int setc=0;
+
+  int ymax=5000;
+  switch(dia)
+  {
+  case FREQUENCIES:
+	ymax=ConfigGetInteger("maxfreq");
+	break;
+  case AMPLITUDE:
+  	ymax=ConfigGetInteger("maxamp");
+	break;
+  case BANDWIDTH:
+  	ymax=ConfigGetInteger("maxband");
+	break;
+  }    
+
+  
+  int lastpoint=MouseEventGetPoint();
+  int lastcurve=MouseEventGetCurve();
+  
+  while(cv)
+  {	
+    c=cv->data;
+    if(c->show==TRUE && c->dia==dia)
+    {
+      GList *val;
+      typValueList p_pnt;
+      typValueList pp_pnt;
+      typValueList pnt;
+      typValueList n_pnt;
+      typValueList *v;
+      typValueList *v2;
+      
+      pp_pnt.time=-1;
+      p_pnt.time=-1;
+      pnt.time=-1;
+      n_pnt.time=-1;
+      
+      val=c->points;
+      val=g_list_first(val);
+      while(val)
+      {	
+	v=val->data;
+	if(pp_pnt.time<0) {
+	  if(p_pnt.time<0) {
+	    if(pnt.time<0) {
+	      pnt.time=v->time;
+	      pnt.value=v->value;
+	    }
+	    else {
+	      p_pnt.time=pnt.time;
+	      p_pnt.value=pnt.value;
+	      pnt.time=v->time;
+	      pnt.value=v->value;
+	    }
+	  }
+	  else {
+	    pp_pnt.time=p_pnt.time;
+	    pp_pnt.value=p_pnt.value;
+	    p_pnt.time=pnt.time;
+	    p_pnt.value=pnt.value;
+	    pnt.time=v->time;
+	    pnt.value=v->value;
+	  }
+	}
+	else {
+	  pp_pnt.time=p_pnt.time;
+	  pp_pnt.value=p_pnt.value;
+	  p_pnt.time=pnt.time;
+	  p_pnt.value=pnt.value;
+	  pnt.time=v->time;
+	  pnt.value=v->value;
+	}
+	
+
+	if(val->next!=NULL)
+	{
+	  v2=val->next->data;
+	  n_pnt.time=v2->time;
+	}
+	
+	if(rx>p_pnt.time && rx<n_pnt.time) { // +/- ui ??
+	  
+	  double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
+	  int yval = (int)((double)p_pnt.value+(grad));
+//  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
+	  
+	  // calc ytol
+	  int ytol=(ymax/100);
+	  if(ytol<10)
+	  ytol=10;
+
+	  if(yval>ry-ytol && yval<ry+ytol) // +abs((int)grad))
+	  {
+	    if(MouseEventSetCurve(c->nr)) {
+	      redraw_page(dia-1);
+	    }
+	    setc++;
+	  }
+	  
+	  if((pnt.value>ry-ytol && pnt.value<ry+ytol) && (rx>pnt.time-25 && rx<pnt.time+25))
+	  {
+	    
+	    if(state & GDK_BUTTON1_MASK)
+	    {
+	      if(MouseEventGetAction()==MOVE)
+	      {
+		PointMove(CurveSearchByNr(FileGetCurvesPointer(),c->nr),pnt.time,rx,ry);
+		MouseEventSetPoint(rx,c->nr);
+		setp++;
+	      }
+	    }
+	    
+	    if(MouseEventSetCurve(c->nr)) {
+	      redraw_page(dia-1);
+	    }
+	    setc++;
+	    
+	    if(MouseEventSetPoint(pnt.time,c->nr)) {
+	      redraw_page(dia-1);
+	    }
+	    setp++;
+	  }
+	}
+	  
+
+	val=val->next;
+      }
+    }
+    cv=cv->next;
+  }
+/* ?? solve redrawproblem / check for mouse not overline or not over point */
+  if(lastcurve!=-1 && setc==0)
+  {
+    if(MouseEventSetCurve(-1)) {
+      redraw_page(dia-1);
+    }
+  }
+  if(setp==0)
+  {
+    if(MouseEventSetPoint(-1,-1)) {
+    }
+  }
+  
+  if(setp>0)
+  {
+    redraw_page(dia-1);
+  }
+}
+
+
+void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
+{
+  GtkWidget *pmenu;
+  int point,curve;
+  MouseActionTyp action;
+  int x, y;
+  GdkModifierType state;
+
+  if (event->type == GDK_BUTTON_PRESS && event->button==1) {
+    point=MouseEventGetPoint();
+    curve=MouseEventGetCurve();
+    action=MouseEventGetAction();
+
+    if(curve>0)
+    {
+      // if NOT over a point
+      if(point==-1)
+      {
+	if(action==INSERT)
+	{
+	  x = event->x;
+	  y = event->y;
+	  
+ 	  PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),rx,ry);
+ 	  redraw_page(dia-1);
+	}
+      }
+      // if over a point
+      else
+      {
+	if(action==DELETE)
+	{
+	  PointDelete(CurveSearchByNr(FileGetCurvesPointer(),curve),point);
+	  redraw_page(dia-1);
+	}
+	if(action==MOVE)
+	{
+	  printf("move\n");
+	  SetMousepressed(1);
+	}
+      }
+    }
+  }
+
+  if (event->type == GDK_BUTTON_PRESS && event->button==3) {
+    
+    pmenu=create_pmenu();
+    point=MouseEventGetPoint();
+    if(point==-1)
+    {
+      gtk_widget_hide ((GtkWidget*)lookup_widget (GTK_WIDGET (pmenu), "pm_movediag"));
+    }
+    
+    GdkEventButton *bevent = (GdkEventButton *) event;       
+    gtk_menu_popup (GTK_MENU (pmenu), NULL, NULL, NULL, NULL,
+		      bevent->button, bevent->time);
+    return;
+  }
+}
+
+int GetMousepressed()
+{
+  return mousepressed;
+}
+
+void SetMousepressed(int foo)
+{
+   mousepressed=foo;
 }

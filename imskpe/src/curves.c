@@ -36,18 +36,14 @@
 #include "curves.h"
 #include "cfg.h"
 
-/*   - curves searchfor (par, button) */
-
-
 void CurveInsert(GList *curves, int parid, GList *points)
 {
   /** CurveMappings
 
-  vs=voice-source  <- reicht evt. für die farben nicht ...
+  2nd column:
+  vs=voice-source  <- maybe not enough colors ...
   ea=exp. amp.
   
-  \todo manche linien vielleicht gestrichelt?!
-
   */
   struct CurveMapping curvetable [] = {
       {"f0","vs","bn_vs_fundfreq",1,GDK_LINE_SOLID},
@@ -89,7 +85,7 @@ void CurveInsert(GList *curves, int parid, GList *points)
       {"anp","nasal","bn_nasal_p_amp",2,GDK_LINE_SOLID},
       {"ab","ea","bn_examp_bypass",2,GDK_LINE_SOLID},
       {"avp","ea","bn_examp_voicepar",2,GDK_LINE_SOLID},
-      {"gain","ae","bn_examp_siggain",2,GDK_LINE_SOLID}
+      {"gain","ea","bn_examp_siggain",2,GDK_LINE_SOLID}
   };
   GList *pl=NULL;
   typCurveList *eval=NULL;
@@ -102,17 +98,6 @@ void CurveInsert(GList *curves, int parid, GList *points)
 //  	 curvetable[parid].widget_name,
 //  	 curvetable[parid].dia,
 //  	 g_list_length(points));
-
-  /*
-    todo:
-    - check if curve exits (CurveSearchWidgetName) !
-    - free pointlist
-    - add new one ...
-    - 
-  */
-
-
-//  printf("curves: %d\n",g_list_length(curves));
 
   eval=(typCurveList *)CurveSearchWidgetName((GList *)curves,(char *)curvetable[parid].widget_name);
 
@@ -292,14 +277,14 @@ gboolean SetCurveShow(char *wn)
     w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
     if(c->show==TRUE)
     {
-      printf("%s - set false\n",c->widget_name);
+//       printf("%s - set false\n",c->widget_name);
       c->show=FALSE;
       redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
       return FALSE;
     }
     else
     {
-      printf("%s - set true\n",c->widget_name);
+//       printf("%s - set true\n",c->widget_name);
       c->show=TRUE;
       redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
       return TRUE;
@@ -356,6 +341,7 @@ void PointDelete (typCurveList *cl, int time)
       {
 	free(v);
       }
+      FileSetIsChanged(TRUE);
       
       vl = g_list_remove(vl,v);
     }
@@ -389,10 +375,11 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       if(!(p_pnt.time+ui>time) && !(v2->time-ui<time))
       {
 	v->time=time;
+	FileSetIsChanged(TRUE);
       }
       
       v->value=value;
-      printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
+//       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
       return TRUE;
     }
     else
@@ -449,6 +436,7 @@ gboolean PointInsert(typCurveList *cl, int time, int value)
       if(!(p_pnt.time+ui>time) && !(pnt.time-ui<time))
       {
 	g_list_insert_before((GList *)g_list_first(cl->points),vl,(typValueList *)GenPoint (time,value));
+	FileSetIsChanged(TRUE);
       }
       else
       {
@@ -494,7 +482,7 @@ void CurveInitStart()
 
   for(i=0;i<40;i++)
   {
-    printf("- %2d - %4d\n",i,starttable[i]);
+//     printf("- %2d - %4d\n",i,starttable[i]);
     points=NULL;
     points = g_list_append(points, (typValueList *)GenPoint(0,starttable[i]));
     points = g_list_append(points, (typValueList *)GenPoint(du,starttable[i]));

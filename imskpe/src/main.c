@@ -37,6 +37,7 @@
 #include "locale.h"
 #include "loadfile.h"
 #include "curves.h"
+#include "cfg.h"
 
 /** 
  * main
@@ -65,23 +66,25 @@ int main (int argc, char *argv[])
 
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
+  ConfigLoad();
+
   SetMainWindow(NULL);
 
   /** init formant list 
       \todo init complete start-file (maybe start.par)
    */
-  FormantListInit();
+//   FormantListInit();
   FileInit();
 
   MouseEventInit();
 
   imskpe_main = create_imskpe_main ();
+  gtk_window_resize (GTK_WINDOW (imskpe_main), ConfigGetInteger("main_window_x"), ConfigGetInteger("main_window_y"));
   gtk_widget_show (imskpe_main);
 
   gtk_main ();
   return 0;
 }
-
 
 /*! \mainpage IMSKPE Documentation
  *

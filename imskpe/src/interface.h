@@ -9,3 +9,4 @@ GtkWidget* create_imskpe_about (void);
 GtkWidget* create_imskpe_prefs (void);
 GtkWidget* create_imskpe_credits (void);
 GtkWidget* create_pmenu (void);
+GtkWidget* create_imskpe_move (void);
