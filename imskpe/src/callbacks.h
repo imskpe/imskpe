@@ -666,3 +666,19 @@ gboolean
 on_draw_wave_expose_event              (GtkWidget       *widget,
                                         GdkEventExpose  *event,
                                         gpointer         user_data);
+
+void
+on_add_set1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_delete_set1_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data);
+
+void
+on_bn_set_add_cancel_clicked           (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_set_add_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data);

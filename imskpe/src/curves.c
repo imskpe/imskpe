@@ -24,16 +24,6 @@
  * 
  * @brief  curve functions
  *
-warning on AMD64:
-
-curves.c: In function `SetCurveShow':
-curves.c:272: warning: cast to pointer from integer of different size
-curves.c:276: warning: cast to pointer from integer of different size
-curves.c:276: warning: cast to pointer from integer of different size
-curves.c: In function `CurveInitStart':
-curves.c:535: warning: cast to pointer from integer of different size
-curves.c:546: warning: cast to pointer from integer of different size
-
  */
 
 #ifdef HAVE_CONFIG_H
@@ -287,14 +277,12 @@ gboolean SetCurveShow(char *wn)
     w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
     if(c->show==TRUE)
     {
-//       printf("%s - set false\n",c->widget_name);
       c->show=FALSE;
       redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-      return FALSE;
+      return TRUE;
     }
     else
     {
-//       printf("%s - set true\n",c->widget_name);
       c->show=TRUE;
       redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
       return TRUE;
@@ -305,6 +293,120 @@ gboolean SetCurveShow(char *wn)
     printf("curve not found: -%s-\n",wn);
     return FALSE;
   }
+}
+
+/** 
+ * returns TRUE if curve is shown.
+ * 
+ * @param num 
+ * 
+ * @return 
+ */
+gboolean GetCurveShowByNum(int num)
+{
+  GtkWidget *w;
+
+  typCurveList *c = CurveSearchByNr((GList *)FileGetCurvesPointer(),num);
+
+  if(c!=NULL)
+  {
+    return c->show;
+  }
+  else
+  {
+    printf("curve not found: -%d-\n",num);
+    return FALSE;
+  }
+}
+
+/** 
+ * sets if a curve is shown on number of curve using gtk_toggle_button_set_active.
+ * 
+ * @param num 
+ * @param val 
+ * 
+ * @return 
+ */
+gboolean SetCurveShowByNum(int num, gboolean val)
+{
+  typCurveList *c = CurveSearchByNr((GList *)FileGetCurvesPointer(),num);
+
+  if(val==TRUE || val==FALSE)
+  {
+    if(c!=NULL)
+    {
+      if(c->show!=val)
+      {
+	// the toggled-event sets value in curves-list!!
+	gtk_toggle_button_set_active((GtkToggleButton*)lookup_widget (GTK_WIDGET (GetMainWindow()), c->widget_name),val);
+      }
+      return TRUE;
+    }
+    else
+    {
+      printf("curve not found: -%d-\n",num);
+      return FALSE;
+    }
+  }
+}
+
+/** 
+ * uses array of 40x 0/1-values to enable/disable curves
+ * 
+ * @param s 
+ * 
+ * @return 
+ */
+gboolean SetCurveShowArray(char *s)
+{
+  GtkWidget *w;
+  int i;
+
+  // first char is a 'B' after that 40x 0 or 1
+  for(i=1;i<41;i++)
+  {  
+    if(SetCurveShowByNum(i-1,s[i]-48)==FALSE)
+    {
+      return FALSE;
+    }
+  }
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+
+  return TRUE;
+}
+
+/** 
+ * returns an array with curves-show-true/false-values
+ * 
+ * 
+ * @return 
+ */
+char *GetCurvesShowArray()
+{
+  int i;
+  char *buf;
+
+  buf = (char *) g_malloc (sizeof (char)*50);
+
+  for(i=0;i<50;i++)
+  {
+    buf[i]=0; 
+  }
+
+  for(i=0;i<40;i++)
+  {  
+    if(GetCurveShowByNum(i)==TRUE)
+    {
+      buf[i]='1';
+    }
+    else
+    {
+      buf[i]='0';
+    }
+  }
+  return buf;
 }
 
 

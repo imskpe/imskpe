@@ -1,3 +1,13 @@
+2005-01-16  Andreas Madsack  <bolsog@users.sf.net>
+
+	* added a Set-feature:
+	  - user can save which curves are shown/not shown
+	  - insert menu-entries for each set
+	  - write all in local config-file (.imskpe)
+	* german translation for todays addons :)
+	* todo: delete of this menu-entries without editing config-file
+	* first version of an icon added
+
 2005-01-13  Andreas Madsack  <bolsog@users.sf.net>
 
 	* bugfixes

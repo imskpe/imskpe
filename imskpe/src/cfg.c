@@ -419,6 +419,8 @@ void ConfigNew()
   ConfigInsert("showquitdiag","1");
   ConfigInsert("rulerfont","\"Sans 6\"");
 
+  ConfigInsertSet("Clear_All","0000000000000000000000000000000000000000");
+
 //  ConfigListInsert("main_window_x","740");
 //  ConfigListInsert("main_window_y","540");
 }
@@ -484,4 +486,72 @@ int hexdigit_value(unsigned char digit)
                     ? digit - '0'
                     : tolower(digit) - 'a' + 10    /* Don't forget + 10 */
                : -1;
+}
+
+void ConfigShowAllSets()
+{
+  typConfig *data;
+  GList *cl;
+  char buf[100];
+  char *s;
+
+  cl=g_list_first (cfg);
+  while(cl)
+  {
+    data=(typConfig *)cl->data;
+    strcpy(buf,data->name);
+
+    if(buf[0]=='S' && buf[1]=='e' && buf[2]=='t' && buf[3]=='_')
+    {
+      s = strchr(buf,'_');
+      while(s != NULL)
+      {
+	s[0]=' ';
+	s = strchr(buf,'_');
+      }
+      SetAddMenuItem(buf+4); // ignore 'Set_'
+    }
+
+    cl = cl->next;
+  }
+}
+
+gboolean ConfigInsertSet(char *name, char val[50])
+{
+  char tmp[100];  // not good
+  char tmp2[100];  // not good
+  char *s;
+  int i;
+
+  strcpy(tmp,"Set_");
+  strcat(tmp,name);
+
+  // convert spaces, dots, kommas to _
+  s = strchr(tmp,' ');
+  while(s != NULL)
+  {
+    s[0]='_';
+    s = strchr(tmp,' ');
+  }
+  
+  // are all values in name: [-A-Za-z0-9_] 
+  for(i=0;i<strlen(tmp);i++)
+  {
+    if(isalnum(tmp[i])==0)
+    {
+      if(tmp[i]!='_' && tmp[i]!='-')
+      {
+// 	printf("problemchar: %c [%x]\n",tmp[i],tmp[i]);
+	DialogErrorOK (_("Only Characters, Numbers, Space and - are allowed!"));
+	return FALSE;
+      }
+    }
+  }
+
+  strcpy(tmp2,"B");
+  strcat(tmp2,val);
+
+  ConfigInsert(tmp,tmp2);
+
+  return TRUE;
 }

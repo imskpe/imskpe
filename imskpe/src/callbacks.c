@@ -2394,3 +2394,87 @@ on_draw_wave_expose_event              (GtkWidget       *widget,
   return FALSE;
 }
 
+void
+on_add_set1_activate                   (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+ static GtkWidget *set_add = NULL;
+ GtkWidget *w;
+
+  if (set_add == NULL) 
+    {
+      set_add = create_imskpe_set_add ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (set_add),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&set_add);
+
+
+      SetMainWindow(lookup_widget (GTK_WIDGET (menuitem), "imskpe_main"));
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (set_add), 
+				    GTK_WINDOW (GetMainWindow()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (set_add));
+}
+
+void
+on_delete_set1_activate                (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+
+//   GtkWidget *menu = (GtkMenuShell *)lookup_widget (GTK_WIDGET (GetMainWindow()), "sets1_menu");
+//   GList *l = menu->children;
+//   while(l)
+//   {
+//     printf("child\n");
+
+//     l = l->next;
+//   }
+
+  
+//    gtk_option_menu_get_menu(GTK_OPTION_MENU(option_menu));
+//   GList     *list = GTK_MENU_SHELL(menu)->children;
+
+//   gtk_widget_hide()
+
+  DialogInfoOK (_("Needs to be done."));
+}
+
+
+void
+on_bn_set_add_cancel_clicked           (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_set_add_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  GtkWidget *menu_items;  
+  GtkWidget *menu;
+  char buf[128];
+  buf[0]=0;
+
+  strcpy(buf,gtk_entry_get_text((GtkEntry *)lookup_widget (GTK_WIDGET (button), "ent_set_name")));
+
+  if(strlen(buf)>0)
+  {
+    if(ConfigInsertSet(buf, GetCurvesShowArray())==TRUE)
+    {
+      SetAddMenuItem(buf);
+    }      
+  }
+  else
+  {
+    DialogErrorOK (_("You need insert a name for the set!"));
+  }
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+}

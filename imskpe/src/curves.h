@@ -91,6 +91,8 @@ void CurveListFree(GList *curves);
 typCurveList *CurveSearchWidgetName(GList *curve,char *wn);
 typCurveList *CurveSearchByNr(GList *curve,int nr);
 gboolean SetCurveShow(char *wn);
+gboolean GetCurveShowByNum(int num);
+gboolean SetCurveShowByNum(int num, gboolean val);
 typValueList *GenPoint (gint t, gint v);
 gboolean PointDelete (typCurveList *vallist, int time);
 gboolean PointInsert(typCurveList *cl, int time, int value);

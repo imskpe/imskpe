@@ -1080,3 +1080,51 @@ char *filtertoken(char str[100], char token[1])
   result = (char *)strtok( s, token ); 
   return result;
 }
+
+// maybe use a set.c ??
+
+
+static void set_action_response(gchar *string)
+{
+  char *s;
+  char tmp[100];
+
+  s = strchr(string,' ');
+  while(s != NULL)
+  {
+    s[0]='_';
+    s = strchr(string,' ');
+  }
+
+  strcpy(tmp,"Set_");
+  strcat(tmp,string);
+
+//   printf ("%s\n", tmp);
+
+  strcpy(tmp,ConfigGetString(tmp));
+
+//   printf ("%s\n", tmp);
+
+  SetCurveShowArray(tmp);
+}
+
+
+gboolean SetAddMenuItem(char *buf)
+{
+  GtkWidget *menu_items;  
+  GtkWidget *menu;
+
+  menu_items = gtk_menu_item_new_with_label (buf);
+  menu=lookup_widget (GTK_WIDGET (GetMainWindow()), "sets1_menu");
+
+  /* ...and add it to the menu. */
+  gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_items);
+  
+  /* Do something interesting when the menuitem is selected */
+   g_signal_connect_swapped (G_OBJECT (menu_items), "activate",
+ 			    G_CALLBACK (set_action_response), 
+ 			    (gpointer) g_strdup (buf));
+  
+  /* Show the widget */
+  gtk_widget_show (menu_items);
+}

@@ -112,6 +112,8 @@ int main (int argc, char *argv[])
 
   InitSplash();
 
+  ConfigShowAllSets();
+
   gtk_main ();
   return 0;
 }

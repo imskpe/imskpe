@@ -30,6 +30,7 @@ GtkWidget*
 create_imskpe_main (void)
 {
   GtkWidget *imskpe_main;
+  GdkPixbuf *imskpe_main_icon_pixbuf;
   GtkWidget *vbox1;
   GtkWidget *menubar1;
   GtkWidget *menuitem1;
@@ -40,10 +41,17 @@ create_imskpe_main (void)
   GtkWidget *save_as1;
   GtkWidget *separatormenuitem1;
   GtkWidget *quit1;
+  GtkWidget *sets1;
+  GtkWidget *sets1_menu;
+  GtkWidget *add_set1;
+  GtkWidget *image7;
+  GtkWidget *delete_set1;
+  GtkWidget *image8;
+  GtkWidget *separator1;
   GtkWidget *menuitem3;
   GtkWidget *menuitem3_menu;
   GtkWidget *execute1;
-  GtkWidget *image7;
+  GtkWidget *image9;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *about1;
@@ -177,6 +185,12 @@ create_imskpe_main (void)
   imskpe_main = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (imskpe_main), _("IMSKPE"));
   gtk_window_set_default_size (GTK_WINDOW (imskpe_main), 600, 400);
+  imskpe_main_icon_pixbuf = create_pixbuf ("imskpe-icon.png");
+  if (imskpe_main_icon_pixbuf)
+    {
+      gtk_window_set_icon (GTK_WINDOW (imskpe_main), imskpe_main_icon_pixbuf);
+      gdk_pixbuf_unref (imskpe_main_icon_pixbuf);
+    }
 
   vbox1 = gtk_vbox_new (FALSE, 0);
   gtk_widget_show (vbox1);
@@ -219,6 +233,34 @@ create_imskpe_main (void)
   gtk_widget_show (quit1);
   gtk_container_add (GTK_CONTAINER (menuitem1_menu), quit1);
 
+  sets1 = gtk_menu_item_new_with_mnemonic (_("_Sets"));
+  gtk_widget_show (sets1);
+  gtk_container_add (GTK_CONTAINER (menubar1), sets1);
+
+  sets1_menu = gtk_menu_new ();
+  gtk_menu_item_set_submenu (GTK_MENU_ITEM (sets1), sets1_menu);
+
+  add_set1 = gtk_image_menu_item_new_with_mnemonic (_("_Add Set"));
+  gtk_widget_show (add_set1);
+  gtk_container_add (GTK_CONTAINER (sets1_menu), add_set1);
+
+  image7 = gtk_image_new_from_stock ("gtk-add", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image7);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (add_set1), image7);
+
+  delete_set1 = gtk_image_menu_item_new_with_mnemonic (_("_Delete Set"));
+  gtk_widget_show (delete_set1);
+  gtk_container_add (GTK_CONTAINER (sets1_menu), delete_set1);
+
+  image8 = gtk_image_new_from_stock ("gtk-delete", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image8);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete_set1), image8);
+
+  separator1 = gtk_separator_menu_item_new ();
+  gtk_widget_show (separator1);
+  gtk_container_add (GTK_CONTAINER (sets1_menu), separator1);
+  gtk_widget_set_sensitive (separator1, FALSE);
+
   menuitem3 = gtk_menu_item_new_with_mnemonic (_("_Actions"));
   gtk_widget_show (menuitem3);
   gtk_container_add (GTK_CONTAINER (menubar1), menuitem3);
@@ -234,9 +276,9 @@ create_imskpe_main (void)
                               GDK_E, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image7 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image7);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image7);
+  image9 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image9);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image9);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_show (menuitem4);
@@ -911,6 +953,12 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) quit1, "activate",
                     G_CALLBACK (imskpe_quit),
                     NULL);
+  g_signal_connect ((gpointer) add_set1, "activate",
+                    G_CALLBACK (on_add_set1_activate),
+                    NULL);
+  g_signal_connect ((gpointer) delete_set1, "activate",
+                    G_CALLBACK (on_delete_set1_activate),
+                    NULL);
   g_signal_connect ((gpointer) execute1, "activate",
                     G_CALLBACK (on_execute1_activate),
                     NULL);
@@ -1191,10 +1239,17 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, save_as1, "save_as1");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatormenuitem1, "separatormenuitem1");
   GLADE_HOOKUP_OBJECT (imskpe_main, quit1, "quit1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, sets1, "sets1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, sets1_menu, "sets1_menu");
+  GLADE_HOOKUP_OBJECT (imskpe_main, add_set1, "add_set1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image7, "image7");
+  GLADE_HOOKUP_OBJECT (imskpe_main, delete_set1, "delete_set1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image8, "image8");
+  GLADE_HOOKUP_OBJECT (imskpe_main, separator1, "separator1");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3, "menuitem3");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3_menu, "menuitem3_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, execute1, "execute1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image7, "image7");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image9, "image9");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, about1, "about1");
@@ -2533,15 +2588,108 @@ create_imskpe_file_save (void)
 }
 
 GtkWidget*
-create_menu1 (void)
+create_imskpe_set_add (void)
 {
-  GtkWidget *menu1;
+  GtkWidget *imskpe_set_add;
+  GtkWidget *dialog_vbox8;
+  GtkWidget *table23;
+  GtkWidget *drawingarea19;
+  GtkWidget *drawingarea20;
+  GtkWidget *label35;
+  GtkWidget *ent_set_name;
+  GtkWidget *drawingarea21;
+  GtkWidget *drawingarea22;
+  GtkWidget *dialog_action_area8;
+  GtkWidget *bn_set_add_cancel;
+  GtkWidget *bn_set_add_ok;
 
-  menu1 = gtk_menu_new ();
+  imskpe_set_add = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (imskpe_set_add), _("Adding a set"));
+  gtk_window_set_type_hint (GTK_WINDOW (imskpe_set_add), GDK_WINDOW_TYPE_HINT_DIALOG);
+
+  dialog_vbox8 = GTK_DIALOG (imskpe_set_add)->vbox;
+  gtk_widget_show (dialog_vbox8);
+
+  table23 = gtk_table_new (4, 3, FALSE);
+  gtk_widget_show (table23);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox8), table23, FALSE, TRUE, 0);
+
+  drawingarea19 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea19);
+  gtk_table_attach (GTK_TABLE (table23), drawingarea19, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea19, 20, -1);
+
+  drawingarea20 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea20);
+  gtk_table_attach (GTK_TABLE (table23), drawingarea20, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea20, 20, 20);
+
+  label35 = gtk_label_new (_("Name of Set:"));
+  gtk_widget_show (label35);
+  gtk_table_attach (GTK_TABLE (table23), label35, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label35), 0, 0.5);
+
+  ent_set_name = gtk_entry_new ();
+  gtk_widget_show (ent_set_name);
+  gtk_table_attach (GTK_TABLE (table23), ent_set_name, 1, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+
+  drawingarea21 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea21);
+  gtk_table_attach (GTK_TABLE (table23), drawingarea21, 1, 2, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea21, 20, 20);
+
+  drawingarea22 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea22);
+  gtk_table_attach (GTK_TABLE (table23), drawingarea22, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea22, 20, -1);
+
+  dialog_action_area8 = GTK_DIALOG (imskpe_set_add)->action_area;
+  gtk_widget_show (dialog_action_area8);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area8), GTK_BUTTONBOX_END);
+
+  bn_set_add_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_set_add_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_set_add), bn_set_add_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_set_add_cancel, GTK_CAN_DEFAULT);
+
+  bn_set_add_ok = gtk_button_new_from_stock ("gtk-ok");
+  gtk_widget_show (bn_set_add_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_set_add), bn_set_add_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_set_add_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_set_add_cancel, "clicked",
+                    G_CALLBACK (on_bn_set_add_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_set_add_ok, "clicked",
+                    G_CALLBACK (on_bn_set_add_ok_clicked),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
-  GLADE_HOOKUP_OBJECT_NO_REF (menu1, menu1, "menu1");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_add, imskpe_set_add, "imskpe_set_add");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_add, dialog_vbox8, "dialog_vbox8");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, table23, "table23");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, drawingarea19, "drawingarea19");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, drawingarea20, "drawingarea20");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, label35, "label35");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, ent_set_name, "ent_set_name");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, drawingarea21, "drawingarea21");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, drawingarea22, "drawingarea22");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_add, dialog_action_area8, "dialog_action_area8");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, bn_set_add_cancel, "bn_set_add_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_set_add, bn_set_add_ok, "bn_set_add_ok");
 
-  return menu1;
+  return imskpe_set_add;
 }
 
