@@ -6,7 +6,8 @@ License: GPL
 Group: Applications
 URL: http://imskpe.sf.net
 Source0: %{name}-%{version}.tar.gz
-Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
+# Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Buildroot: /tmp/bol
 Requires: GTK+-2.4.0
 
 %description 
@@ -32,5 +33,5 @@ rm -fr %{buildroot}
 
 %changelog 
 
-* So Nov 21 2004 Andreas Madsack <bolsog@users.sf.net>
+* Mon Nov 22 2004 Andreas Madsack <bolsog@users.sf.net>
 - first version
