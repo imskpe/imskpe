@@ -141,14 +141,6 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 }
 
 void
-on_bn_file_open_cancel_clicked         (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-void
 on_bn_file_open_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
@@ -369,34 +361,6 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
   /* Make sure the dialog is visible. */
   gtk_window_present (GTK_WINDOW (about));
 }
-
-/** 
- * close about dialog (with cancel)
- *
- * @param button 
- * @param user_data 
- */
-void
-on_bn_about_close_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-/** 
- * close about dialog (with ok)
- *
- * @param button 
- * @param user_data 
- */
-void
-on_bn_credits_ok_clicked               (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
 
 /** 
  * activate credits-dialog
@@ -2129,15 +2093,6 @@ on_ok_button1_clicked                  (GtkButton       *button,
 
 
 void
-on_cancel_button1_clicked              (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-
-void
 on_bn_color_f1_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
@@ -2246,7 +2201,7 @@ on_bn_font_clicked                     (GtkButton       *button,
 {
  static GtkWidget *fontdialog = NULL;
  GtkWidget *w;
- char tmp[40];
+ char tmp[100];
 
  if (fontdialog == NULL) 
  {
@@ -2258,13 +2213,9 @@ on_bn_font_clicked                     (GtkButton       *button,
 		     &fontdialog);
  
    w=lookup_widget (GTK_WIDGET ((GtkWidget *)fontdialog), "font_selection1");
-   strcpy(tmp,ConfigGetString("rulerfont"));
-   if(tmp[0]=='"') // cheat to get rid of starting and ending "
-   {
-     tmp[0]=' '; 
-     tmp[strlen(tmp)-1]=' ';
-   }
-//   printf("-%s-\n",tmp);
+
+   //   printf("%s\n",filtertoken(ConfigGetString("rulerfont"),"\""));
+   strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
    gtk_font_selection_set_font_name((GtkFontSelection *)w,tmp);
   
    /* Make sure the dialog doesn't disappear behind the main window. */
@@ -2290,23 +2241,13 @@ on_font_ok_clicked                     (GtkButton       *button,
 
 
 void
-on_font_cancel_clicked                 (GtkButton       *button,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-}
-
-
-void
 on_font_apply_clicked                  (GtkButton       *button,
                                         gpointer         user_data)
 {
-//  ConfigInsert("rulerfont_tmp",);
   GtkWidget *w;
 
   w=lookup_widget (GTK_WIDGET (prefs), "ent_font");
   gtk_entry_set_text ((GtkEntry *) w, gtk_font_selection_get_font_name((GtkFontSelection *)lookup_widget (GTK_WIDGET ((GtkWidget *)button), "font_selection1")));
-//ConfigGetString("rulerfont"));
 
   return;
 }
@@ -2315,14 +2256,8 @@ void
 on_ent_font_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  char tmp[40];
-  strcpy(tmp,ConfigGetString("rulerfont"));
-  if(tmp[0]=='"') // cheat to get rid of starting and ending "
-  {
-    tmp[0]=' '; 
-    tmp[strlen(tmp)-1]=' ';
-  }
-
+  char tmp[100];
+  strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
   gtk_entry_set_text ((GtkEntry *) widget, tmp);
 }
 
@@ -2474,3 +2409,11 @@ on_spn_max_freq_parent_set             (GtkWidget       *widget,
   ;
 
 }
+
+void
+on_bn_close_allg                       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+

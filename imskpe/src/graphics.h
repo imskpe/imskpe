@@ -91,3 +91,4 @@ gboolean DialogYesNo (char *msg);
 GtkWidget *DialogInfoOK (char *msg);
 GtkWidget *DialogErrorOK (char *msg);
 GtkWidget *DialogOK (char *msg, GtkMessageType mt);
+char *filtertoken(char str[100], char token[1]);

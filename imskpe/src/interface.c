@@ -1363,7 +1363,7 @@ create_imskpe_colorsel (void)
                     G_CALLBACK (on_ok_button1_clicked),
                     NULL);
   g_signal_connect ((gpointer) cancel_button1, "clicked",
-                    G_CALLBACK (on_cancel_button1_clicked),
+                    G_CALLBACK (on_bn_close_allg),
                     NULL);
   g_signal_connect ((gpointer) color_selection1, "configure_event",
                     G_CALLBACK (on_color_selection1_configure_event),
@@ -1443,7 +1443,7 @@ create_imskpe_about (void)
                     G_CALLBACK (on_bn_about_credits_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_about_close, "clicked",
-                    G_CALLBACK (on_bn_about_close_clicked),
+                    G_CALLBACK (on_bn_close_allg),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -2210,7 +2210,7 @@ create_imskpe_credits (void)
   GTK_WIDGET_SET_FLAGS (bn_credits_ok, GTK_CAN_DEFAULT);
 
   g_signal_connect ((gpointer) bn_credits_ok, "clicked",
-                    G_CALLBACK (on_bn_credits_ok_clicked),
+                    G_CALLBACK (on_bn_close_allg),
                     NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
@@ -2479,7 +2479,7 @@ create_imskpe_file_open (void)
   GTK_WIDGET_SET_FLAGS (bn_file_open_ok, GTK_CAN_DEFAULT);
 
   g_signal_connect ((gpointer) bn_file_open_cancel, "clicked",
-                    G_CALLBACK (on_bn_file_open_cancel_clicked),
+                    G_CALLBACK (on_bn_close_allg),
                     NULL);
   g_signal_connect ((gpointer) bn_file_open_ok, "clicked",
                     G_CALLBACK (on_bn_file_open_ok_clicked),
@@ -2579,7 +2579,7 @@ create_imskpe_font (void)
                     G_CALLBACK (on_font_ok_clicked),
                     NULL);
   g_signal_connect ((gpointer) font_cancel, "clicked",
-                    G_CALLBACK (on_font_cancel_clicked),
+                    G_CALLBACK (on_bn_close_allg),
                     NULL);
   g_signal_connect ((gpointer) font_apply, "clicked",
                     G_CALLBACK (on_font_apply_clicked),

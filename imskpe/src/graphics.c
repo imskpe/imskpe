@@ -227,7 +227,7 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
   PangoLayout *layout;
   PangoFontDescription *fontdesc;
   gchar *x;
-  char tmp[40];
+  char tmp[100];
 
   int xsplits=15;  /* export in preferences */
   int ysplits=10;  /* export in preferences */
@@ -251,14 +251,8 @@ void update_ruler(GtkWidget *widget, diagramTyp dia)
 
   x = g_malloc (sizeof (gchar)*10);
   
-  strcpy(tmp,ConfigGetString("rulerfont"));
-  if(tmp[0]=='"') // cheat to get rid of starting and ending "
-  {
-    tmp[0]=' '; 
-    tmp[strlen(tmp)-1]=' ';
-  }
+  strcpy(tmp,filtertoken(ConfigGetString("rulerfont"),"\""));
   fontdesc = pango_font_description_from_string (tmp);  
-  
 
 /* x-achse */
   gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0) ,
@@ -1090,4 +1084,23 @@ gboolean DialogYesNo (char *msg)
     return FALSE;
   }
   return FALSE;
+}
+
+/** 
+ * filter tokens out of strings.
+ * needs hardening! 
+ * 
+ * @param str 
+ * @param token 
+ * 
+ * @return 
+ */
+char *filtertoken(char str[100], char token[1])
+{
+  char *result = NULL;
+  char s[100]; // not good!
+
+  strcpy(s,str);
+  result = strtok( s, token ); 
+  return result;
 }

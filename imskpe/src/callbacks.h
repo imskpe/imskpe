@@ -85,10 +85,6 @@ void
 on_ok_button1_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
 
-void
-on_cancel_button1_clicked              (GtkButton       *button,
-                                        gpointer         user_data);
-
 gboolean
 on_color_selection1_configure_event    (GtkWidget       *widget,
                                         GdkEventConfigure *event,
@@ -165,10 +161,6 @@ on_ok_button2_clicked                  (GtkButton       *button,
 
 void
 on_cancel_button2_clicked              (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
-on_bn_about_close_clicked              (GtkButton       *button,
                                         gpointer         user_data);
 
 void
@@ -382,10 +374,6 @@ on_bn_examp_voicepar_toggled           (GtkToggleButton *togglebutton,
 
 void
 on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
-                                        gpointer         user_data);
-
-void
-on_bn_credits_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data);
 
 void
@@ -605,10 +593,6 @@ on_bn_prefs_default_clicked            (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_bn_file_open_cancel_clicked         (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
 on_bn_file_open_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data);
 
@@ -629,10 +613,6 @@ on_font_ok_clicked                     (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_font_cancel_clicked                 (GtkButton       *button,
-                                        gpointer         user_data);
-
-void
 on_font_apply_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
 
@@ -647,4 +627,8 @@ on_rb_quit_realize                     (GtkWidget       *widget,
 
 void
 on_rb_quit2_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_bn_close_allg                       (GtkButton       *button,
                                         gpointer         user_data);

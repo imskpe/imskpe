@@ -1,3 +1,8 @@
+2004-12-07  Andreas Madsack  <bolsog@users.sf.net>
+
+	* better solution for eliminating tokens in strings
+	* generalizing of eventroutines
+
 2004-12-04  Andreas Madsack  <bolsog@users.sf.net>
 
 	* beta3 released
