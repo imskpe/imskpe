@@ -77,6 +77,51 @@ int nScreenHeight = 200;
 
 GList *formants = NULL;  // put in preferences ?
 
+int hovercurve = -1;
+int hoverpoint = -1;
+
+gboolean HoverCurve (int curve)
+{
+  if(hovercurve!=curve) {
+    hovercurve=curve;
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+gboolean GetHoverCurve(int curve)
+{
+  if(curve==hovercurve)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+gboolean HoverPoint (int x)
+{
+  if(hoverpoint!=x) {
+    hoverpoint=x;
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+gboolean GetHoverPoint(int x)
+{
+  if(x==hoverpoint)
+  {
+    return TRUE;
+  }
+  return FALSE;
+}
+
+
+
+/* ---------------------------------------------------------------------- */
+
 /** \todo put in another file - not graphic relevant! */
 GtkWidget *GetMainWindow()
 {
@@ -311,7 +356,7 @@ int CalcRealX(int dx, int maxx)
   int du=FileGetDuration();
 //  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
 //   int x=(max-25)*dx/du+25;
-  int ox=((dx-25)*du)/(maxx-25-10);
+  int ox=(int)((double)((dx-25)*du)/(double)(maxx-25-10));
 
   return ox;
 }
@@ -321,7 +366,7 @@ int CalcRealY(int dy, int maxy)
   int du=FileGetDuration();
 //  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
 //  d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
-  int oy=((-dy+maxy-25)*5000)/(maxy-25);
+  int oy=(int)((double)((-dy+maxy-25)*5000)/(double)(maxy-25));
 //  int oy=((dy-25)*500)/(maxy-25);    // 500 -> preferences!
 
   return oy;
@@ -518,6 +563,7 @@ GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue)
 //                                   GDK_CAP_NOT_LAST,
 //                                   GDK_JOIN_MITER );
 
+
     return (gc);
 }
 
@@ -577,6 +623,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     int lastx=-1,lasty=-1;
     int x=-1,y=-1;
     typValueList *v;
+
     GList *cv=(GList *)FileGetCurvesPointer();
 
 /* muss alles ausgelagert werden: */
@@ -656,20 +703,35 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 // auch die 25 sollte ausgelagert werden ...
 // nun fehlt noch das rechteck ...
 // wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
+
+	    int linewidth=1;
+	    if(GetHoverCurve(c->nr)) {
+	      linewidth=2;
+	    }
+	    GdkGC *gc=GetPenGdkColor (NULL,GetFormantListColor(c->formant));
+	    gdk_gc_set_line_attributes (gc,linewidth,GDK_LINE_SOLID,GDK_CAP_NOT_LAST,GDK_JOIN_MITER );
+
 	    gdk_draw_line 
-		(g->pixmap, GetPenGdkColor (NULL,GetFormantListColor(c->formant)) ,
+		(g->pixmap, gc ,
 		 (d->allocation.width-25-10)*lastx/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
 		 (d->allocation.width-25-10)*x/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
+	    
+	    int mod=2;
+	    if(GetHoverPoint(lastx) && GetHoverCurve(c->nr))
+	    {
+	      mod=3;
+	    }
+
 	    gdk_draw_rectangle
 		(g->pixmap,
 		 GetPenGdkColor (NULL,GetFormantListColor(c->formant)),
 		 FALSE,
-                 ((d->allocation.width-25-10)*lastx/xmax+25)-2,
-		 (d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25)-2,
-		 5,
-                 5);
+		 ((d->allocation.width-25-10)*lastx/xmax+25)-mod,
+		 (d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25)-mod,
+		 mod*2+1,
+		 mod*2+1);
 
 	    if(x>=xmax-10)  // workaround!
 	    {

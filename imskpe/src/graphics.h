@@ -49,6 +49,11 @@ typedef struct {
 /*
   procedures
 */
+gboolean HoverCurve (int curve);
+gboolean GetHoverCurve(int curve);
+gboolean HoverPoint (int x);
+gboolean GetHoverPoint (int x);
+
 GtkWidget *GetMainWindow();
 void SetMainWindow(GtkWidget *w);
 

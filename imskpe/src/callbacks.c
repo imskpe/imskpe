@@ -314,6 +314,126 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 
 //   Repaint(widget, 1);
 
+/* testarea :)
+ */
+//   printf("s----------\n");
+  
+  // get segment
+    GList *cv=(GList *)FileGetCurvesPointer();
+    typCurveList *c;
+    int dia=1;
+    int setc=0;
+    int setp=0;
+
+    while(cv)
+    {	
+      c=cv->data;
+      if(c->show==TRUE && c->dia==dia)
+      {
+	GList *val;
+	typValueList p_pnt;
+	typValueList pp_pnt;
+	typValueList pnt;
+	typValueList n_pnt;
+	typValueList *v;
+    
+	pp_pnt.time=-1;
+	p_pnt.time=-1;
+	pnt.time=-1;
+	n_pnt.time=-1;
+	
+	val=c->points;
+	val=g_list_first(val);
+	while(val)
+	{	
+	  v=val->data;
+	  if(pp_pnt.time<0) {
+	    if(p_pnt.time<0) {
+	      if(pnt.time<0) {
+		pnt.time=v->time;
+		pnt.value=v->value;
+	      }
+	      else {
+		p_pnt.time=pnt.time;
+		p_pnt.value=pnt.value;
+		pnt.time=v->time;
+		pnt.value=v->value;
+	      }
+	    }
+	    else {
+	      pp_pnt.time=p_pnt.time;
+	      pp_pnt.value=p_pnt.value;
+	      p_pnt.time=pnt.time;
+	      p_pnt.value=pnt.value;
+	      pnt.time=v->time;
+	      pnt.value=v->value;
+	    }
+	  }
+	  else {
+	    pp_pnt.time=p_pnt.time;
+	    pp_pnt.value=p_pnt.value;
+	    p_pnt.time=pnt.time;
+	    p_pnt.value=pnt.value;
+	    pnt.time=v->time;
+	    pnt.value=v->value;
+	  }
+
+	  if(rx>p_pnt.time && rx<pnt.time) {
+	    // berechnen des y-wertes
+
+// 	    printf("time pp: %5d  p: %5d  %5d  pos: %5d \n",pp_pnt.time,p_pnt.time,pnt.time,rx);
+// 	    printf("val  pp: %5d  p: %5d  %5d  pos: %5d \n",pp_pnt.value,p_pnt.value,pnt.value,ry);
+// 	    printf(" | %3.2f %3.2f %5d"
+// 		   ,((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))
+// 		   ,
+// 		   ,p_pnt.value
+// 		);
+	    int yval = (int)((double)p_pnt.value+(((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time)));
+// 	    printf("%5d %5d | %5d\n",yval,ry,rx);
+	    if(yval>ry-50 && yval<ry+50)
+	    {
+	      if(HoverCurve(c->nr)) {
+// 		printf("--r--\n");
+		redraw_page(dia-1);
+	      }
+	      setc++;
+	    }
+	    if((pnt.value>ry-20 && pnt.value<ry+20) && (rx>pnt.time-20 && rx<pnt.time+20))
+	    {
+	      if(HoverPoint(pnt.time)) {
+// 		printf("--r--\n");
+		redraw_page(dia-1);
+	      }
+	      setp++;
+	    }
+	    
+
+// 	    printf("\n");
+	  }
+	  
+
+	  val=val->next;
+	}
+      }
+      cv=cv->next;
+    }
+    if(setc==0)
+    {
+      if(HoverCurve(-1)) {
+// 	printf("--r2--\n");
+	redraw_page(dia-1);
+      }
+    }
+    if(setp==0)
+    {
+      if(HoverPoint(-1)) {
+// 	printf("--r2--\n");
+	redraw_page(dia-1);
+      }
+    }
+    
+//     printf("e---------- %2d\n",set);
+
   return TRUE;
 }
 

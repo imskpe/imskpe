@@ -58,6 +58,8 @@ typedef struct {
     diagramTyp dia;
     /** which linestyle to use */
     GdkLineStyle ls;
+    /** curvenumber in parfiles */
+    int nr;
 } typCurveList;
 
 

@@ -134,9 +134,10 @@ void CurveInsert(GList *curves, int parid, GList *points)
     eval->dia=curvetable[parid].dia;
     eval->ls=curvetable[parid].dia;
 
-/*
-*/
     eval->show=GuiGetToggleButtonState(curvetable[parid].widget_name);
+
+    eval->nr=parid;
+
     curves = g_list_append(curves,eval);
   }
   else

@@ -410,3 +410,31 @@ on_bn_credits_ok_clicked               (GtkButton       *button,
 void
 on_bn_about_credits_clicked            (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_bn_quit_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_open_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_new_clicked                      (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_prefs_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_move_toggled                     (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_insert_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_delete_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
