@@ -2,7 +2,7 @@ TODO:
 
 *** first release:
 
-- lines / interpol over GList
+OK lines / interpol over GList
 OK open par-files
 - save par-files
 - open wavfiles
@@ -11,11 +11,12 @@ OK open par-files
 
 
 win32 issues:
-- improve build (find dlls, locale under win32)
-
+OK improve build (find dlls, locale under win32)
+- place configfile in HOME (unter win2k/win xp)
+  -> win98/95/ME use c:\ - later maybe registry
 
 solaris:
-- test it!
+- works only with gtk2.4 / i have no gtk 2.4-solaris machine!
 
 
 *** final:
@@ -64,24 +65,22 @@ PP      - laden eines eigenen optimaleren formats [nice to have]
 OK - anzeigen der koordinaten in der statusleiste
      - was soll noch in die statusleiste?:
 OK     - filename ?! (besser in den titel)
-       - aktuelle kurve unter dem cursor
+OK     - aktuelle kurve unter dem cursor
+OK     - koordinaten des punktes über dem man ist!!
+OK     - debugmeldungen? (min/max)
    - eventhandling / curves
-     - für einen redraw wird die mauscursorpos gebraucht ...
+OK   - für einen redraw wird die mauscursorpos gebraucht ...
 OK   - um jeden punkt kommt erstmal ein 5x5 pixel rechteck ...
-     - wenn der mauscursor in diesrem rechteck ist, wird es zu 7x7 und 
-       die linie wird dicker ...
-     - es wird eine möglichkeit gebraucht sich zu merken, 
-       wo der mauscursor "vorher" war ...
-       also ob ein redraw erforderlich ist, oder nicht ...
+OK   - wenn der mauscursor in diesrem rechteck ist, wird es zu 7x7 und 
+OK     die linie wird dicker ...
+OK   - es wird eine möglichkeit gebraucht sich zu merken, 
+OK     wo der mauscursor "vorher" war ...
+OK     also ob ein redraw erforderlich ist, oder nicht ...
      - vielleicht eine zusätzliche pixmap-var, in der das linieal schon drin ist?!
        -> schneller beim repaint?!
-
-
-notes:
-gtk_toggle_button_set_active ()
-http://developer.gnome.org/doc/API/gtk/gtktogglebutton.html#GTK-TOGGLE-BUTTON-SET-STATE
-
-gboolean    gtk_toggle_button_get_mode      (GtkToggleButton *toggle_button);
-
-lookupwidget!!
-
+   - neuer zusätzlicher Editdialog
+      - wenn man über einem Punkt ist, dynamisch ins kontextmenu
+      - werte dynamisch begrenzen
+   - play/synthesize it
+      - buttons dafür
+      - preferences einträge für die pfade zu klatt80 / einem wav-player

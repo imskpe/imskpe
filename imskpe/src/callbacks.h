@@ -455,3 +455,8 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
 void
 on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data);
+
+gboolean
+on_draw_freq_button_release_event      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data);

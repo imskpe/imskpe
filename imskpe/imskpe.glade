@@ -2207,6 +2207,7 @@
 		      <signal name="expose_event" handler="on_draw_freq_expose_event" last_modification_time="Thu, 04 Mar 2004 22:57:17 GMT"/>
 		      <signal name="motion_notify_event" handler="on_draw_freq_motion_notify_event" last_modification_time="Thu, 04 Mar 2004 22:57:25 GMT"/>
 		      <signal name="button_press_event" handler="on_draw_freq_button_press_event" last_modification_time="Sat, 11 Sep 2004 12:22:15 GMT"/>
+		      <signal name="button_release_event" handler="on_draw_freq_button_release_event" last_modification_time="Sun, 03 Oct 2004 23:11:07 GMT"/>
 		    </widget>
 		    <packing>
 		      <property name="tab_expand">False</property>
@@ -2343,13 +2344,13 @@
 
 	  <child>
 	    <widget class="GtkStatusbar" id="sb_curve">
-	      <property name="width_request">100</property>
+	      <property name="width_request">200</property>
 	      <property name="visible">True</property>
 	      <property name="has_resize_grip">False</property>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>
-	      <property name="expand">True</property>
+	      <property name="expand">False</property>
 	      <property name="fill">True</property>
 	    </packing>
 	  </child>

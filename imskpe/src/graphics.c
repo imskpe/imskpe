@@ -65,8 +65,6 @@
 #include "graphics.h"
 #include "cfg.h"
 
-
-
 /*
   global variables
 */
@@ -607,6 +605,11 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     
     printf("repaint\n");
 
+    int ui=FileGetUpdateInterval();
+    char statusbarcurvemessage[100];
+    strcpy(statusbarcurvemessage,"\0");
+    gboolean statusshown=FALSE;
+
 //    printf(".. %d\n",cv);
     while(cv)
     {	
@@ -658,12 +661,16 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 
 // es reicht den farbwert einmal nachzuschlagen ...
 // auch die 25 sollte ausgelagert werden ...
-// nun fehlt noch das rechteck ...
+
 // wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
 
 	    int linewidth=1;
 	    if(MouseEventCheckCurve(c->nr)) {
 	      linewidth=2;
+
+	      strncpy(statusbarcurvemessage,strstr(c->widget_name,"_"),strlen(strstr(c->widget_name,"_"))+1);
+	      statusbarcurvemessage[0]=' '; /** cheat!! */
+	      
 	    }
 	    GdkGC *gc=GetPenGdkColor (NULL,GetFormantListColor(c->formant));
 	    gdk_gc_set_line_attributes (gc,linewidth,GDK_LINE_SOLID,GDK_CAP_NOT_LAST,GDK_JOIN_MITER );
@@ -678,7 +685,13 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	    int mod=2;
 	    if(MouseEventCheckPoint(lastx,c->nr))
 	    {
+	      char s[80];
+
 	      mod=3;
+	      snprintf(s,15," (%5d/%5d)",lastx,lasty);
+	      strncat(statusbarcurvemessage,s,strlen(s)+1);
+	      SetStatusBar ("sb_curve",statusbarcurvemessage);
+	      statusshown=TRUE;
 	    }
 
 	    gdk_draw_rectangle
@@ -690,7 +703,7 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 		 mod*2+1,
 		 mod*2+1);
 
-	    if(x>=xmax-10)  // workaround!
+	    if(x>=xmax-ui)
 	    {
 	      gdk_draw_rectangle
 		  (g->pixmap,
@@ -711,7 +724,10 @@ void Repaint(GtkWidget *d, diagramTyp dia)
       }
       cv=cv->next;
     }
-
+    if(statusshown==FALSE)
+    {
+      SetStatusBar ("sb_curve",statusbarcurvemessage);
+    }
 
 /* ****************************** */
     /* --- The whole screen --- */

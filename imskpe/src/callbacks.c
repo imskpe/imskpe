@@ -454,6 +454,11 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
 	redraw_page(dia-1);
       }
     }
+
+    if(state & GDK_BUTTON1_MASK)
+    {
+      redraw_page(dia-1);
+    }
     
 //     printf("e---------- %2d\n",set);
 
@@ -477,43 +482,43 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
 
     if(curve>0)
     {
+      // if NOT over a point
       if(point==-1)
       {
-	// only insert available:
 	if(action==INSERT)
 	{
 	  int x, y;
 	  int rx,ry;
 	  GdkModifierType state;
 
-// 	  if (event->is_hint)
-// 	  gdk_window_get_pointer (event->window, &x, &y, &state);
-// 	  else
-// 	  {
-	    x = event->x;
-	    y = event->y;
-// 	    state = event->state;
-// 	  }
+	  x = event->x;
+	  y = event->y;
 	  
 	  rx=CalcRealX(x, widget->allocation.width);  
 	  ry=CalcRealY(y, widget->allocation.height);  
  	  PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),rx,ry);
  	  redraw_page(dia-1);
-// 	  printf("%d / %d\n",rx,ry);
-// 	  printf("insert\n");
 	}
       }
+      // if over a point
       else
       {
 	if(action==DELETE)
 	{
 	  PointDelete(CurveSearchByNr(FileGetCurvesPointer(),curve),point);
 	  redraw_page(dia-1);
-// 	  printf("delete\n");
 	}
 	if(action==MOVE)
 	{
 	  printf("move\n");
+	  // set buttonpressedvar!
+
+	  // weitere merker:
+	  // bewegen des ersten und letzen punktes ?!?!?!!!!
+	  // vorher das hovern für die beiden ermöglichen ...
+	  // auf releasebutton das löschen des buttonpressmarkers triggern
+	  // 
+
 	}
       }
     }
@@ -541,6 +546,14 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
   return TRUE;
 }
 
+gboolean
+on_draw_freq_button_release_event      (GtkWidget       *widget,
+                                        GdkEventButton  *event,
+                                        gpointer         user_data)
+{
+
+  return FALSE;
+}
 
 gboolean
 on_draw_amp_motion_notify_event        (GtkWidget       *widget,
@@ -1506,4 +1519,5 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
 {
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
+
 

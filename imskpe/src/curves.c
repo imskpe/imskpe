@@ -370,8 +370,11 @@ void PointDelete (typCurveList *cl, int time)
 gboolean PointMove(typCurveList *cl, int otime, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
-  typValueList *v;  
+  typValueList *v,*v2;  
   int ui=FileGetUpdateInterval();
+  typValueList p_pnt;  
+  p_pnt.time=0;
+  p_pnt.value=-1;
 
   while(vl)
   {
@@ -382,15 +385,20 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       
       // check if time is between range!
 
-// \todo !!!!!!!!!!!!!!
-
-      v->time=time;
+      v2=vl->next->data;
+      if(!(p_pnt.time+ui>time) && !(v2->time-ui<time))
+      {
+	v->time=time;
+      }
+      
       v->value=value;
       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
       return TRUE;
     }
     else
     {
+      p_pnt.time=v->time;
+      p_pnt.value=v->value;
       vl=vl->next;
     }
   }
@@ -400,7 +408,10 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
 gboolean PointInsert(typCurveList *cl, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
+  GList *vl2;
   typValueList *v;  
+  typValueList *v2;  
+  int ui=FileGetUpdateInterval();
 
   typValueList p_pnt;
   typValueList pnt;
@@ -433,22 +444,16 @@ gboolean PointInsert(typCurveList *cl, int time, int value)
       pnt.value=v->value;
     }
 
-    if(time>p_pnt.time && time<pnt.time) {
-
-      // insert one ...
-
-//       printf("time p: %5d  %5d  pos: %5d \n",p_pnt.time,pnt.time,time);
-//       printf("val  p: %5d  %5d  pos: %5d \n",p_pnt.value,pnt.value,value);
-
-//       printf("lpos: %d\n",g_list_position ((GList *)g_list_first(cl->points),vl));
-
-//       int pos=g_list_position ((GList *)g_list_first(cl->points),vl);
-      
-      g_list_insert_before((GList *)g_list_first(cl->points),vl,(typValueList *)GenPoint (time,value));
-
-// GList*      g_list_insert                   (GList *list,
-//                                              gpointer data,
-//                                              gint position);
+    if(time>p_pnt.time && time<pnt.time) 
+    {
+      if(!(p_pnt.time+ui>time) && !(pnt.time-ui<time))
+      {
+	g_list_insert_before((GList *)g_list_first(cl->points),vl,(typValueList *)GenPoint (time,value));
+      }
+      else
+      {
+	SetStatusBar ("sb_state","last msg: ui-delta not enough for new point");
+      }
       return TRUE;
     }
 

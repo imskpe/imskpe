@@ -869,8 +869,8 @@ create_imskpe_main (void)
 
   sb_curve = gtk_statusbar_new ();
   gtk_widget_show (sb_curve);
-  gtk_box_pack_start (GTK_BOX (hbox3), sb_curve, TRUE, TRUE, 0);
-  gtk_widget_set_size_request (sb_curve, 100, -1);
+  gtk_box_pack_start (GTK_BOX (hbox3), sb_curve, FALSE, TRUE, 0);
+  gtk_widget_set_size_request (sb_curve, 200, -1);
   gtk_statusbar_set_has_resize_grip (GTK_STATUSBAR (sb_curve), FALSE);
 
   sb_add = gtk_statusbar_new ();
@@ -1117,6 +1117,9 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) draw_freq, "button_press_event",
                     G_CALLBACK (on_draw_freq_button_press_event),
+                    NULL);
+  g_signal_connect ((gpointer) draw_freq, "button_release_event",
+                    G_CALLBACK (on_draw_freq_button_release_event),
                     NULL);
   g_signal_connect ((gpointer) draw_amp, "motion_notify_event",
                     G_CALLBACK (on_draw_amp_motion_notify_event),
