@@ -4,13 +4,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Andreas Madsack <bolsog@users.sf.net>, 2004.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "POT-Creation-Date: 2004-03-09 15:52+0100\n"
-"PO-Revision-Date: 2004-03-09 15:49+0100\n"
-"Last-Translator: Andreas Madsack <bolsog@users.sf.net>\n"
+"PO-Revision-Date: 2004-03-23 22:33+0100\n"
+"Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -38,7 +37,7 @@ msgstr "Über"
 
 #: src/interface.c:251
 msgid "move"
-msgstr "bewegen"
+msgstr "verschieben"
 
 #: src/interface.c:261
 msgid "insert"
@@ -52,13 +51,15 @@ msgstr "löschen"
 msgid "duration: "
 msgstr "Dauer: "
 
-#: src/interface.c:300 src/interface.c:308
+#: src/interface.c:300
+#: src/interface.c:308
 msgid "msec"
 msgstr "msek"
 
 #: src/interface.c:316
+#, fuzzy
 msgid "update interval: "
-msgstr "aktual intval: "
+msgstr "Schrittweite"
 
 #: src/interface.c:324
 msgid "sampling rate: "
@@ -70,7 +71,7 @@ msgstr "Anzahl Formanten: "
 
 #: src/interface.c:340
 msgid "voice source: "
-msgstr "Sprachquelle: "
+msgstr "Stimmquelle: "
 
 #: src/interface.c:348
 msgid "branches"
@@ -104,26 +105,42 @@ msgstr "nur parallel"
 msgid "global"
 msgstr "global"
 
-#: src/interface.c:449 src/interface.c:489 src/interface.c:528
-#: src/interface.c:567 src/interface.c:606 src/interface.c:645
+#: src/interface.c:449
+#: src/interface.c:489
+#: src/interface.c:528
+#: src/interface.c:567
+#: src/interface.c:606
+#: src/interface.c:645
 #: src/interface.c:828
 msgid "frequencies"
 msgstr "Frequenzen"
 
-#: src/interface.c:455 src/interface.c:495 src/interface.c:534
-#: src/interface.c:573 src/interface.c:612 src/interface.c:651
+#: src/interface.c:455
+#: src/interface.c:495
+#: src/interface.c:534
+#: src/interface.c:573
+#: src/interface.c:612
+#: src/interface.c:651
 msgid "amplitudes"
 msgstr "Amplituden"
 
-#: src/interface.c:461 src/interface.c:501 src/interface.c:540
-#: src/interface.c:579 src/interface.c:618 src/interface.c:657
+#: src/interface.c:461
+#: src/interface.c:501
+#: src/interface.c:540
+#: src/interface.c:579
+#: src/interface.c:618
+#: src/interface.c:657
 msgid "bandwidth"
 msgstr "Bandbreite"
 
-#: src/interface.c:467 src/interface.c:507 src/interface.c:546
-#: src/interface.c:585 src/interface.c:624 src/interface.c:663
+#: src/interface.c:467
+#: src/interface.c:507
+#: src/interface.c:546
+#: src/interface.c:585
+#: src/interface.c:624
+#: src/interface.c:663
 msgid "bandwidth parallel"
-msgstr "paralelle Bandbreite"
+msgstr "parallele Bandbreite"
 
 #: src/interface.c:473
 msgid "F1"
@@ -150,24 +167,29 @@ msgid "F6"
 msgstr "F6"
 
 #: src/interface.c:684
+#, fuzzy
 msgid "zero frequencies"
-msgstr "Nullfrequenzen"
+msgstr "Frequenz der Auslöschung"
 
 #: src/interface.c:690
+#, fuzzy
 msgid "zero bandwidth"
-msgstr "Nullbandbreite"
+msgstr "Bandbreite der Auslöschung"
 
 #: src/interface.c:696
+#, fuzzy
 msgid "pole frequency"
-msgstr "Polfrequenz"
+msgstr "Frequenz des Maximums"
 
 #: src/interface.c:702
+#, fuzzy
 msgid "pole bandwidth"
-msgstr "Polbandbreite"
+msgstr "Bandbreite des Maximums"
 
 #: src/interface.c:708
+#, fuzzy
 msgid "pole amplitude"
-msgstr "Polamplitude"
+msgstr "Amplitude des Maxmimums"
 
 #: src/interface.c:714
 msgid "nasals"
@@ -177,26 +199,29 @@ msgstr "Nasale"
 msgid "resonators"
 msgstr "Resonatoren"
 
-# lala
 #: src/interface.c:728
+#, fuzzy
 msgid "glottal open quotient"
-msgstr "Glottalöffnungsquotient"
+msgstr "Öffnungsquotient der Glottisschwingung"
 
 #: src/interface.c:734
 msgid "breathiness"
 msgstr "Behauchtheit"
 
 #: src/interface.c:740
+#, fuzzy
 msgid "spectral tilt"
-msgstr "spektraler Tilt"
+msgstr "Neigung des Spektrums"
 
 #: src/interface.c:746
+#, fuzzy
 msgid "skewness"
-msgstr ""
+msgstr "Schiefe"
 
 #: src/interface.c:751
+#, fuzzy
 msgid "skewness (speed quotient) of voiced excitation signal"
-msgstr ""
+msgstr "Schiefe (speed quotient) des stimmhaften Anregungssignals"
 
 #: src/interface.c:753
 msgid "fundamental frequency"
@@ -204,43 +229,43 @@ msgstr "Grundfrequenz"
 
 #: src/interface.c:759
 msgid "voice src"
-msgstr "Sprachquelle"
+msgstr "Stimmquelle"
 
 #: src/interface.c:768
 msgid "amp. of voicing"
-msgstr ""
+msgstr "Amplitude der Phonation"
 
 #: src/interface.c:774
 msgid "amp. of aspiration"
-msgstr ""
+msgstr "Amplitude der Aspiration"
 
 #: src/interface.c:780
 msgid "amp. of frication"
-msgstr ""
+msgstr "Amplitude der Friktion"
 
 #: src/interface.c:786
 msgid "amp. of bypass path (par)"
-msgstr ""
+msgstr "Amplitude des Nebenpfades (par)"
 
 #: src/interface.c:791
 msgid "amplitude of bypass path (parallel branch)"
-msgstr ""
+msgstr "Amplitude des Nebenpfades (paralleler Zweig)"
 
 #: src/interface.c:793
 msgid "amp. of voicing (par)"
-msgstr ""
+msgstr "Amplitude der Phonation (par)"
 
 #: src/interface.c:798
 msgid "amplitude of voicing (parallel branch)"
-msgstr ""
+msgstr "Amplitude der Phonation (paralleler Zweig)"
 
 #: src/interface.c:800
 msgid "overall signal gain"
-msgstr ""
+msgstr "Signalgewinn insgesamt"
 
 #: src/interface.c:806
 msgid "exc. amp."
-msgstr ""
+msgstr "Ampl. d. Anreg."
 
 #: src/interface.c:858
 msgid "amplitude"
@@ -252,9 +277,11 @@ msgstr "Bandbreite"
 
 #: src/interface.c:1090
 msgid "Select Color"
-msgstr "Wähle Farbe"
+msgstr "Farbe wählen"
 
-#: src/support.c:90 src/support.c:114
+#: src/support.c:90
+#: src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
 msgstr "Kann Bild %s nicht finden."
+
