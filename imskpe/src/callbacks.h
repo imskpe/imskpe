@@ -86,11 +86,6 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data);
 
-gboolean
-on_imskpe_colorsel_destroy_event       (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data);
-
 void
 on_ok_button1_clicked                  (GtkButton       *button,
                                         gpointer         user_data);

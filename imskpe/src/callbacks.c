@@ -467,15 +467,6 @@ on_imskpe_main_delete_event            (GtkWidget       *widget,
 {
 }
 
-gboolean
-on_imskpe_colorsel_destroy_event       (GtkWidget       *widget,
-                                        GdkEvent        *event,
-                                        gpointer         user_data)
-{
-  gtk_widget_destroy (widget);
-  return TRUE;
-}
-
 
 void
 on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
@@ -1239,15 +1230,15 @@ on_bn_prefs_cancel_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
 /*   ConfigRename("klattcmd","tmp_klatt"); */
-  ConfigRemove("tmp_color_f1");
-  ConfigRemove("tmp_color_f2");
-  ConfigRemove("tmp_color_f3");
-  ConfigRemove("tmp_color_f4");
-  ConfigRemove("tmp_color_f5");
-  ConfigRemove("tmp_color_f6");
-  ConfigRemove("tmp_color_nasals");
-  ConfigRemove("tmp_color_vs");
-  ConfigRemove("tmp_color_ea");
+  ConfigRemove("color_f1_tmp");
+  ConfigRemove("color_f2_tmp");
+  ConfigRemove("color_f3_tmp");
+  ConfigRemove("color_f4_tmp");
+  ConfigRemove("color_f5_tmp");
+  ConfigRemove("color_f6_tmp");
+  ConfigRemove("color_nasals_tmp");
+  ConfigRemove("color_vs_tmp");
+  ConfigRemove("color_ea_tmp");
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
@@ -1258,12 +1249,39 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
                                         gpointer         user_data)
 {
   // save values
-
-  if(ConfigFind("tmp_color_f1"))
+  printf("apply\n");
+  if(ConfigFind("color_f1_tmp"))
   {
     ConfigRemove("color_f1");
-    ConfigRename("tmp_color_f1","color_f1");
+    ConfigRename("color_f1_tmp","color_f1");
   }
+  if(ConfigFind("color_f2_tmp"))
+  {
+    ConfigRemove("color_f2");
+    ConfigRename("color_f2_tmp","color_f2");
+  }
+  if(ConfigFind("color_f3_tmp"))
+  {
+    ConfigRemove("color_f3");
+    ConfigRename("color_f3_tmp","color_f3");
+  }
+  if(ConfigFind("color_f4_tmp"))
+  {
+    ConfigRemove("color_f4");
+    ConfigRename("color_f4_tmp","color_f4");
+  }
+  if(ConfigFind("color_f5_tmp"))
+  {
+    ConfigRemove("color_f5");
+    ConfigRename("color_f5_tmp","color_f5");
+  }
+  if(ConfigFind("color_f6_tmp"))
+  {
+    ConfigRemove("color_f6");
+    ConfigRename("color_f6_tmp","color_f6");
+  }
+
+
   // auch fuer die anderen farbwerte machen
 
 
@@ -1490,8 +1508,23 @@ void InitDialogPrefs()
 void InitDialogColor(char *searchstring)
 {
   GtkWidget *w;
+  GdkColor col;
+  char tmp[40];
 
-  GdkColor col=ConfigGetColor(searchstring);
+  strcpy(tmp,"color_");
+  strcat(tmp,searchstring);
+  strcat(tmp,"_tmp");
+  if(ConfigFind(tmp))
+  {
+    strcpy(tmp,searchstring);
+    strcat(tmp,"_tmp");
+    printf("found: %s\n",tmp);
+    col=ConfigGetColor(tmp);
+  }
+  else
+  {
+    col=ConfigGetColor(searchstring);
+  }
   GdkColor *xcol;
 
   xcol=(GdkColor *)malloc(sizeof(GdkColor));
@@ -1748,6 +1781,7 @@ on_ok_button1_clicked                  (GtkButton       *button,
   GdkColor gdk_color;
   GtkWidget *w;
   char tmp[30];
+  char tmp2[30];
 
   strcpy(tmp,"lb_");
   strcat(tmp,selected_color);
@@ -1766,8 +1800,13 @@ on_ok_button1_clicked                  (GtkButton       *button,
 
 
   // \todo farbwerte in #aabbcc umrechnen und abspeichern!
-  printf("%d [%x] / %d [%x] / %d [%x]\n",gdk_color.red,(int)gdk_color.red*256,gdk_color.green,(int)gdk_color.green*256,gdk_color.blue,(int)gdk_color.blue*256);
+  sprintf(tmp,"#%02x%02x%02x",(int)(gdk_color.red/256),(int)(gdk_color.green/256),(int)(gdk_color.blue/256));
 
+  strcpy(tmp2,"color_");
+  strcat(tmp2,selected_color);
+  strcat(tmp2,"_tmp");
+  printf("update ...\n");
+  ConfigListInsert(tmp2,tmp);
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }

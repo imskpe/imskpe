@@ -2420,7 +2420,6 @@
   <property name="skip_pager_hint">False</property>
   <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
   <property name="gravity">GDK_GRAVITY_NORTH_WEST</property>
-  <signal name="destroy_event" handler="on_imskpe_colorsel_destroy_event" last_modification_time="Sat, 06 Mar 2004 19:31:26 GMT"/>
 
   <child internal-child="cancel_button">
     <widget class="GtkButton" id="cancel_button1">

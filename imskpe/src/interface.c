@@ -1344,9 +1344,6 @@ create_imskpe_colorsel (void)
   gtk_widget_show (color_selection1);
   gtk_color_selection_set_has_opacity_control (GTK_COLOR_SELECTION (color_selection1), FALSE);
 
-  g_signal_connect ((gpointer) imskpe_colorsel, "destroy_event",
-                    G_CALLBACK (on_imskpe_colorsel_destroy_event),
-                    NULL);
   g_signal_connect ((gpointer) ok_button1, "clicked",
                     G_CALLBACK (on_ok_button1_clicked),
                     NULL);

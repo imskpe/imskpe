@@ -86,6 +86,7 @@ void ConfigListInsert(char *name, char *value)
       p_value = g_malloc (sizeof(char)*(strlen(value)+1));
       strcpy(p_value,value);
       data->value = p_value;
+      printf("up %30s = %30s \n",name,value);
       return;
     }
     
@@ -127,7 +128,7 @@ void ConfigListInsert(char *name, char *value)
     }
   }
 
-//   printf("%30s = %30s [%d]\n",name,value,type);
+  printf("ins %30s = %30s [%d]\n",name,value,type);
 
   ConfigListInsertString(name,value,type);
 }
