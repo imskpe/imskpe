@@ -6,14 +6,20 @@ version: 3.0
 Contains structure definitions used in parwave.c
 */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
+
+#include <gtk/gtk.h>
 #include "proto.h"
 
 #define CASCADE_PARALLEL 1         /* Type of synthesis model */
 #define ALL_PARALLEL     2 
 #define NPAR		 40        /* Number of control parameters */
 #define MAX_SAM          20000     /* Maximum sample rate */
-#define TRUE             1
-#define FALSE            0
+/* #define TRUE             1 */
+/* #define FALSE            0 */
 #define IMPULSIVE        1         /* Type of voicing source */
 #define NATURAL          2
 #define SAMPLED          3

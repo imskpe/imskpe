@@ -1,4 +1,4 @@
-bin_PROGRAMS = klatt
+#bin_PROGRAMS = klatt
 
 klatt_SOURCES = klatt.c parwave.c parwave.h proto.h
 man1_MANS = klatt.man

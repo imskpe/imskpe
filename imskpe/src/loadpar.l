@@ -63,7 +63,7 @@
 <comment>\n                     return EOL;
 <comment>"*"+"/"                {BEGIN(INITIAL);}
 <comment>Produced[ ]by[ ]kpe80  return KPE;
-<comment>Produced[ ]by[ ]imskpe  return IMSKPE;
+<comment>Produced[ ]by[ ]imskpe return IMSKPE;
 
 ^[ ]+                           {BEGIN(paramdata);}
 <paramdata>[0-9]+":"            return LINEID;

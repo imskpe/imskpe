@@ -39,7 +39,7 @@
 
 #include "loadfile.h"
 
-// #include "klatt80/parwave.h"
+#include "klatt80/parwave.h"
 
 gboolean convert()
 {
