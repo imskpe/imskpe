@@ -93,7 +93,6 @@ void ConfigInsert(char *name, char *value)
     
     cl = cl->next;
   }
-
   /* its not in list: */
 
   // test type:
@@ -139,6 +138,7 @@ void ConfigInsert(char *name, char *value)
       }
     }
   }
+
   if(type==TYPE_INT)
   {
     ConfigInsertInteger(name,atoi(value),type);
@@ -394,7 +394,7 @@ void ConfigFree()
   typConfig *data;
   GList *cl;
 
-//  printf("-configlistfree start-\n");
+//   printf("-configlistfree start-\n");
 
   cl=g_list_first (cfg);
   while(cl)
@@ -412,11 +412,13 @@ void ConfigFree()
 
     cl = g_list_remove(cl,data);
   }
-//  printf("-configlistfree end-\n");
+  cfg=NULL;
+//   printf("-configlistfree end-\n");
 }
 
 void ConfigNew()
 {
+
   ConfigInsert("maxfreq","5000");
   ConfigInsert("maxamp","100");
   ConfigInsert("maxband","2000");
@@ -435,7 +437,6 @@ void ConfigNew()
   ConfigInsert("color_ea","#aaaaff");
 
   ConfigInsert("toolbarstyle","0");
-
 //  ConfigListInsert("main_window_x","740");
 //  ConfigListInsert("main_window_y","540");
 }

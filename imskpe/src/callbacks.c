@@ -1866,6 +1866,21 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
   printf("prefs_ok end\n");     
 }
 
+/** 
+ * restore default preferences
+ * 
+ * @param button 
+ * @param user_data 
+ */
+void
+on_bn_prefs_default_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  printf("first ask for ok!\n");
+  ConfigFree();
+  ConfigNew();
+}
+
 void InitDialogPrefs()
 {
   if (prefs == NULL) 

@@ -142,147 +142,147 @@ void LoadPar(char *filename)
 	return;
       }
       if(firstrun==1)
-	{
-	  FilePrepare(filename);	  
-	}
+      {
+	FilePrepare(filename);	  
+      }
       if(firstrun>1)
+      {
+	switch(toktype)
 	{
-	  switch(toktype)
-	    {
 	      
-	      /* part1 commentinfo */
-	    case IMSKPE:
-	    case KPE:
-	    case COMMENT:
-	    case EOL:
-	      break;
-	    case VARNAME:
-	      // copy only first 2 chars!
-	      strncpy(var,yytext,2);
-	      var[2]=0;
-	      break;
-	    case VALUE:
-	      if(!strcmp(var,"DU"))
-		{
-		  if(FileSetDuration(atoi(yytext))==FALSE)
-		    {
-		      printf(_("PAR-Import-Error: "));
-		      printf(_("DU not integer\n"));
-		    }
-	    GuiSetDuration(atoi(yytext));
-	  }
- 	  else 
-	  if (!strcmp(var,"UI"))
-	  {
- 	    if(FileSetUpdateInterval(atoi(yytext))==FALSE)
- 	    {
- 	      printf(_("PAR-Import-Error: "));
- 	      printf(_("UI not integer\n"));
- 	    }
-	    GuiSetUpdateInterval(atoi(yytext));
-	  }
-	  else
-	  if (!strcmp(var,"SR"))
-	  {
- 	    if(FileSetSamplingRate(atoi(yytext))==FALSE)
- 	    {
- 	      printf(_("PAR-Import-Error: "));
- 	      printf(_("SR not integer\n"));
- 	    }
-	    GuiSetSamplingRate(atoi(yytext));
-	  }
-	  else
-	  if (!strcmp(var,"NF"))
-	  {
- 	    if(FileSetNumberFormants(atoi(yytext))==FALSE)
- 	    {
- 	      printf(_("PAR-Import-Error: "));
- 	      printf(_("NF not integer\n"));
- 	    }
-	    GuiSetNumberFormants(atoi(yytext));
-	  }
-	  else
-	  if (!strcmp(var,"SS"))
-	  {
- 	    if(FileSetVoiceSource(atoi(yytext))==FALSE)
- 	    {
- 	      printf(_("PAR-Import-Error: "));
- 	      printf(_("SS not integer\n"));
- 	    }
-	    GuiSetVoiceSource(atoi(yytext));
-	  }
-	  else
-	  if (!strcmp(var,"CP"))
-	  {
- 	    if(FileSetBranches(atoi(yytext))==FALSE)
- 	    {
- 	      printf(_("PAR-Import-Error: "));
- 	      printf(_("CP not integer\n"));
- 	    }
-	    GuiSetBranches(atoi(yytext));
-	  }
-	  else
-	  {
-	    printf(_("not recognized variable in PAR-File: %s [%s]\n"),var,yytext);
-	  }
-	  break;
+	  /* part1 commentinfo */
+	case IMSKPE:
+	case KPE:
+	case COMMENT:
+	case EOL:
+	    break;
+	case VARNAME:
+	    // copy only first 2 chars!
+	    strncpy(var,yytext,2);
+	    var[2]=0;
+	    break;
+	case VALUE:
+	    if(!strcmp(var,"DU"))
+	    {
+	      if(FileSetDuration(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("DU not integer\n"));
+	      }
+	      GuiSetDuration(atoi(yytext));
+	    }
+	    else 
+	    if (!strcmp(var,"UI"))
+	    {
+	      if(FileSetUpdateInterval(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("UI not integer\n"));
+	      }
+	      GuiSetUpdateInterval(atoi(yytext));
+	    }
+	    else
+	    if (!strcmp(var,"SR"))
+	    {
+	      if(FileSetSamplingRate(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("SR not integer\n"));
+	      }
+	      GuiSetSamplingRate(atoi(yytext));
+	    }
+	    else
+	    if (!strcmp(var,"NF"))
+	    {
+	      if(FileSetNumberFormants(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("NF not integer\n"));
+	      }
+	      GuiSetNumberFormants(atoi(yytext));
+	    }
+	    else
+	    if (!strcmp(var,"SS"))
+	    {
+	      if(FileSetVoiceSource(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("SS not integer\n"));
+	      }
+	      GuiSetVoiceSource(atoi(yytext));
+	    }
+	    else
+	    if (!strcmp(var,"CP"))
+	    {
+	      if(FileSetBranches(atoi(yytext))==FALSE)
+	      {
+		printf(_("PAR-Import-Error: "));
+		printf(_("CP not integer\n"));
+	      }
+	      GuiSetBranches(atoi(yytext));
+	    }
+	    else
+	    {
+	      printf(_("not recognized variable in PAR-File: %s [%s]\n"),var,yytext);
+	    }
+	    break;
 
-	  /* part2 parameters */
-      case LINEID:
-	  // new parameterline
-	  pcount=0;
-	  strncpy(x,yytext,strlen(yytext));
-	  optime=ptime;
-	  ptime=atoi(x);
- 	  if(optime>ptime)
- 	  {
- 	    simpledialog (_("Parameterfile has loops?"));
- 	  }
-	  break;
-      case DITEM:
-	  pvalue = atoi(yytext);
+	    /* part2 parameters */
+	case LINEID:
+	    // new parameterline
+	    pcount=0;
+	    strncpy(x,yytext,strlen(yytext));
+	    optime=ptime;
+	    ptime=atoi(x);
+	    if(optime>ptime)
+	    {
+	      simpledialog (_("Parameterfile has loops?"));
+	    }
+	    break;
+	case DITEM:
+	    pvalue = atoi(yytext);
 	  
-	  tmp = params[pcount];
-	  pointtmp = (GList *) tmp->points;
+	    tmp = params[pcount];
+	    pointtmp = (GList *) tmp->points;
 	  
-	  /**
-	     Idea for importfilter:
-	     save point temporary in params-struct
-	     if it's necessary save it.
-	  */
+	    /**
+	       Idea for importfilter:
+	       save point temporary in params-struct
+	       if it's necessary save it.
+	    */
 
 //	  printf("- %4d %4d %2d - (%4d)(%4d) - %2d - #%3d \n",ptime,pvalue,pcount,tmp->last1,tmp->last2,pcount,g_list_length(pointtmp)); 
 	  
-	  if(tmp->last1!=pvalue && tmp->last2!=pvalue)
-	  {
-	    if(tmp->ptmp!=NULL)
+	    if(tmp->last1!=pvalue && tmp->last2!=pvalue)
+	    {
+	      if(tmp->ptmp!=NULL)
 	      pointtmp = g_list_append(pointtmp,tmp->ptmp);
-	    tmp->last1 = pvalue;
-	    tmp->last2 = -1;
-	  }
-	  else if(tmp->last1==pvalue && tmp->last2!=pvalue)
-	  {
-	    pointtmp = g_list_append(pointtmp,tmp->ptmp);
-	    tmp->last2 = pvalue;
-	  }
-	  else if(tmp->last1==pvalue && tmp->last2==pvalue)
-	  {
-	    ;  /* it's not necessary! => don't append it */
-	  }
-	  /* aktual point; save it temporarily */
-	  tmp->ptmp = (typValueList *) GenPoint(ptime,pvalue);
+	      tmp->last1 = pvalue;
+	      tmp->last2 = -1;
+	    }
+	    else if(tmp->last1==pvalue && tmp->last2!=pvalue)
+	    {
+	      pointtmp = g_list_append(pointtmp,tmp->ptmp);
+	      tmp->last2 = pvalue;
+	    }
+	    else if(tmp->last1==pvalue && tmp->last2==pvalue)
+	    {
+	      ;  /* it's not necessary! => don't append it */
+	    }
+	    /* aktual point; save it temporarily */
+	    tmp->ptmp = (typValueList *) GenPoint(ptime,pvalue);
 	  
-	  /* write back list of points*/
-	  tmp->points = pointtmp;
-	  params[pcount]=tmp;
-	  pcount++;
-	  break;
-      case UNKNOWN:
-	  break;
-      default:
-	  break;
+	    /* write back list of points*/
+	    tmp->points = pointtmp;
+	    params[pcount]=tmp;
+	    pcount++;
+	    break;
+	case UNKNOWN:
+	    break;
+	default:
+	    break;
+	}
       }
-    }
     }
   }
   fclose(infp);

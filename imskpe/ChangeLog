@@ -1,3 +1,10 @@
+2004-11-30  Andreas Madsack  <bolsog@users.sf.net>
+
+	* middle mousebutton now inserts a new point
+	* disabled possibility to delete first and last point on curve.
+	* a few design changes in preferences
+	* added defaults-button in preferences
+
 2004-11-29  Andreas Madsack  <bolsog@users.sf.net>
 
 	* free file data after LoadPar-File-Check

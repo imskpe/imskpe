@@ -326,16 +326,28 @@ typValueList *GenPoint (gint t, gint v)
  * @param cl 
  * @param time 
  */
-void PointDelete (typCurveList *cl, int time)
+gboolean PointDelete (typCurveList *cl, int time)
 {
   GList *vl=(GList *)g_list_first(cl->points);
   typValueList *v;  
+  int du = FileGetDuration();
+  int ui=FileGetUpdateInterval();
 
   while(vl)
   {
     v=vl->data;
     if(v->time==time)
-    {    
+    {
+      /* test if its the first point  */
+      if(time==0)
+      {
+	return FALSE;
+      }
+      if(time>=du-ui && vl->next==NULL)
+      {
+	return FALSE;
+      }
+
       if(v!=NULL)
       {
 	free(v);
@@ -343,13 +355,14 @@ void PointDelete (typCurveList *cl, int time)
       FileSetIsChanged(TRUE);
       
       vl = g_list_remove(vl,v);
+      return TRUE;
     }
     else
     {
       vl=vl->next;
     }
   }
-
+  return FALSE;
 }
 
 int PointMove(typCurveList *cl, int otime, int time, int value)

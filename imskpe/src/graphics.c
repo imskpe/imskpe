@@ -985,6 +985,24 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
     }
   }
 
+  if (event->type == GDK_BUTTON_PRESS && event->button==2) {
+    point=MouseEventGetPoint();
+    curve=MouseEventGetCurve();
+    action=MouseEventGetAction();
+    if(curve>0)
+    {
+      // if NOT over a point
+      if(point==-1)
+      {
+	x = event->x;
+	y = event->y;
+	  
+	PointInsert(CurveSearchByNr(FileGetCurvesPointer(),curve),rx,ry);
+	redraw_page(dia-1);
+      }
+    }
+  }
+
   if (event->type == GDK_BUTTON_PRESS && event->button==3) {
     
     pmenu=create_pmenu();
@@ -1014,7 +1032,7 @@ void SetMousepressed(int foo)
 GtkWidget *simpledialog (char *msg)
 {
   GtkWidget *dialog;
-
+// GTK_MESSAGE_ERROR
   dialog = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO, GTK_BUTTONS_OK,
 				   "%s", msg);
   g_signal_connect (G_OBJECT (dialog), "response",

@@ -599,3 +599,7 @@ void
 on_spn_max_freq_parent_set             (GtkWidget       *widget,
                                         GtkWidget       *old_parent,
                                         gpointer         user_data);
+
+void
+on_bn_prefs_default_clicked            (GtkButton       *button,
+                                        gpointer         user_data);
