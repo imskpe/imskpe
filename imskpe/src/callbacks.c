@@ -40,9 +40,14 @@ typedef struct {
 typedef struct {
     GList *points;
     gchar *widget_name; /* name of togglebutton */
-    GdkColor color;
+    
     gboolean show;
 } typListeCurve;
+
+typedef struct {
+  gchar *formantname;
+  GdkColor color;    
+} typListeFormants;
 
 GList *curves;
 
@@ -58,7 +63,6 @@ typGraphics *NewGraphics ()
     gfx = (typGraphics *) g_malloc (sizeof (typGraphics));
     gfx->gc = NULL;
     gfx->pixmap = NULL;
- 
     return (gfx);
 }
 
@@ -349,7 +353,7 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
     state = event->state;
   }
   printf("%d / %d\n",x,y);
-  
+
   return TRUE;
 }
 
