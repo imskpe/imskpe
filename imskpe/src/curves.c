@@ -177,8 +177,7 @@ void CurveListFree(GList *curves)
       {
 	free(pval);
       }
-
-      pl = g_list_remove(pl,pval);
+      pl = (GList *)g_list_remove(pl,pval);
     }  
 
     if(cdata!=NULL)
@@ -407,6 +406,33 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
   }
   return FALSE;
 }
+
+gboolean PointSetDU(typCurveList *cl,int o_time, int time)
+{
+  GList *vl=(GList *)g_list_first(cl->points);
+  typValueList *v;  
+  typValueList p_pnt;  
+
+  while(vl)
+  {
+    v=vl->data;
+    if(v->time==o_time)
+    {    
+      v->time=time;
+
+      FileSetIsChanged(TRUE);
+      return TRUE;
+    }
+    else
+    {
+      p_pnt.time=v->time;
+      p_pnt.value=v->value;
+      vl=vl->next;
+    }
+  }
+  return FALSE;
+}
+
 
 gboolean PointInsert(typCurveList *cl, int time, int value)
 {

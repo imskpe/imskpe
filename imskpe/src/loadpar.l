@@ -86,7 +86,8 @@ void LoadPar(char *filename)
   char x[100];
   int toktype;
   int pcount;
-  int ptime;
+  int ptime=0;
+  int optime=0;
   int pvalue;
   int i;
   char var[3];
@@ -96,6 +97,9 @@ void LoadPar(char *filename)
 
   typParList *tmp;
   typValueList *point;
+
+  int firstrun;
+  firstrun=-1;
 
   // init
   for(i=0;i<PARAMETERS;i++)
@@ -131,6 +135,13 @@ void LoadPar(char *filename)
 //      printf("\t%3d: %s\n", toktype, yytext);
       
       /* to be done */
+      firstrun++;
+      if(firstrun==1 && !(toktype==IMSKPE || toktype==KPE))
+      {
+	fclose(infp);
+	simpledialog (_("no parameter file."));
+	return;
+      }
       switch(toktype)
       {
 	
@@ -216,7 +227,12 @@ void LoadPar(char *filename)
 	  // new parameterline
 	  pcount=0;
 	  strncpy(x,yytext,strlen(yytext));
+	  optime=ptime;
 	  ptime=atoi(x);
+ 	  if(optime>ptime)
+ 	  {
+ 	    simpledialog (_("Parameterfile has loops?"));
+ 	  }
 	  break;
       case DITEM:
 	  pvalue = atoi(yytext);

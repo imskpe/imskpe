@@ -1,3 +1,9 @@
+2004-11-27  Andreas Madsack  <bolsog@users.sf.net>
+
+	* test in LoadPar if File is a par-file
+	* test in LoadPar if File has loops (nonlinear timevalues)
+	* changing duration changes now maxim-value in all curves
+
 2004-11-23  Andreas Madsack  <bolsog@users.sf.net>
 
 	* bugfix in FileSave
@@ -5,7 +11,6 @@
 	* added information-dialog
 	* added directory-input support in LoadSave-Dialog
 	
-
 2004-11-22  Andreas Madsack  <bolsog@users.sf.net>
 
 	* bug in ConfigInsertString resolved

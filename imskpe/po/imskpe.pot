@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-22 18:11+0100\n"
+"POT-Creation-Date: 2004-11-26 19:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,23 +136,23 @@ msgstr ""
 msgid "samp/sec"
 msgstr ""
 
-#: src/interface.c:458 src/callbacks.c:1239 src/graphics.c:117
+#: src/interface.c:458 src/callbacks.c:1258 src/graphics.c:117
 msgid "impulse"
 msgstr ""
 
-#: src/interface.c:459 src/callbacks.c:1244 src/graphics.c:120
+#: src/interface.c:459 src/callbacks.c:1263 src/graphics.c:120
 msgid "natural"
 msgstr ""
 
-#: src/interface.c:460 src/callbacks.c:1249 src/graphics.c:123
+#: src/interface.c:460 src/callbacks.c:1268 src/graphics.c:123
 msgid "sampled"
 msgstr ""
 
-#: src/interface.c:475 src/callbacks.c:1264 src/graphics.c:134
+#: src/interface.c:475 src/callbacks.c:1283 src/graphics.c:134
 msgid "cascade + parallel"
 msgstr ""
 
-#: src/interface.c:476 src/callbacks.c:1269 src/graphics.c:137
+#: src/interface.c:476 src/callbacks.c:1288 src/graphics.c:137
 msgid "parallel only"
 msgstr ""
 
@@ -531,15 +531,15 @@ msgstr ""
 msgid "IMSKPE-Splash"
 msgstr ""
 
-#: src/callbacks.c:303
+#: src/callbacks.c:322
 msgid "Compiled"
 msgstr ""
 
-#: src/callbacks.c:402
+#: src/callbacks.c:421
 msgid "write bugreports here: "
 msgstr ""
 
-#: src/callbacks.c:403
+#: src/callbacks.c:422
 msgid "get announcements:"
 msgstr ""
 
@@ -548,43 +548,52 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: loadpar.l:153 loadpar.l:163 loadpar.l:173 loadpar.l:183 loadpar.l:193
-#: loadpar.l:203
+#. * \todo use an errordialog ?!
+#: loadpar.l:120
+msgid "Problems open parameter file."
+msgstr ""
+
+#: loadpar.l:141
+msgid "no parameter file."
+msgstr ""
+
+#: loadpar.l:163 loadpar.l:173 loadpar.l:183 loadpar.l:193 loadpar.l:203
+#: loadpar.l:213
 #, c-format
 msgid "PAR-Import-Error: "
 msgstr ""
 
-#: loadpar.l:154
+#: loadpar.l:164
 #, c-format
 msgid "DU not integer\n"
 msgstr ""
 
-#: loadpar.l:164
+#: loadpar.l:174
 #, c-format
 msgid "UI not integer\n"
 msgstr ""
 
-#: loadpar.l:174
+#: loadpar.l:184
 #, c-format
 msgid "SR not integer\n"
 msgstr ""
 
-#: loadpar.l:184
+#: loadpar.l:194
 #, c-format
 msgid "NF not integer\n"
 msgstr ""
 
-#: loadpar.l:194
+#: loadpar.l:204
 #, c-format
 msgid "SS not integer\n"
 msgstr ""
 
-#: loadpar.l:204
+#: loadpar.l:214
 #, c-format
 msgid "CP not integer\n"
 msgstr ""
 
-#: loadpar.l:210
+#: loadpar.l:220
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
 msgstr ""

@@ -156,7 +156,7 @@ on_ok_button2_clicked                  (GtkButton       *button,
       }
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))),filename);
       free (filename);
-      return 0;
+      return;
     }
   }
 
@@ -1314,14 +1314,25 @@ on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
   GtkWidget *w;
+  unsigned int du;
+  unsigned int o_du;
   int foo;
   
+  o_du = FileGetDuration();
+  du=(unsigned int)gtk_spin_button_get_value_as_int(spinbutton);
+
+  if(du>o_du)
+  {
+    for(foo=0;foo<40;foo++)
+    {
+      PointSetDU(CurveSearchByNr(FileGetCurvesPointer(),foo),o_du, du);
+    }
+  }
+  FileSetDuration(du);
+
   w=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "nb_draw");
   foo=gtk_notebook_get_current_page((GtkNotebook *)w);
-//   printf("foo_sp: %d\n",foo);
   configure_page(foo);
-
-  FileSetDuration((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
 }
 
 
