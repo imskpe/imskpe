@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-02 16:05+0100\n"
+"POT-Creation-Date: 2004-12-06 01:28+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,7 +56,7 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/interface.c:286 src/interface.c:2365
+#: src/interface.c:286 src/interface.c:2461
 msgid "Open File"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 msgid "New File"
 msgstr ""
 
-#: src/interface.c:296 src/interface.c:2412
+#: src/interface.c:296 src/interface.c:2508
 msgid "Save File"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "Save File As"
 msgstr ""
 
-#: src/interface.c:306 src/interface.c:1536
+#: src/interface.c:306 src/interface.c:1547
 msgid "Preferences"
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "par -> wav"
 msgstr ""
 
-#: src/interface.c:341 src/interface.c:2150
+#: src/interface.c:341 src/interface.c:2246
 msgid "move"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Move Point"
 msgstr ""
 
-#: src/interface.c:351 src/interface.c:2154
+#: src/interface.c:351 src/interface.c:2250
 msgid "insert"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "Insert Point"
 msgstr ""
 
-#: src/interface.c:360 src/interface.c:2158
+#: src/interface.c:360 src/interface.c:2254
 msgid "delete"
 msgstr ""
 
@@ -257,7 +257,7 @@ msgstr ""
 msgid "fundamental frequency"
 msgstr ""
 
-#: src/interface.c:793 src/interface.c:1614
+#: src/interface.c:793 src/interface.c:1625
 msgid "voice src"
 msgstr ""
 
@@ -293,7 +293,7 @@ msgstr ""
 msgid "overall signal gain"
 msgstr ""
 
-#: src/interface.c:839 src/interface.c:1621
+#: src/interface.c:839 src/interface.c:1632
 msgid "exc. amp."
 msgstr ""
 
@@ -325,185 +325,205 @@ msgid ""
 "(c) 2004 by Andreas Madsack"
 msgstr ""
 
-#: src/interface.c:1433 src/interface.c:2045
+#: src/interface.c:1433 src/interface.c:2141
 msgid "Credits"
 msgstr ""
 
-#: src/interface.c:1551 src/interface.c:1628 src/interface.c:1635
-#: src/interface.c:1642 src/interface.c:1649 src/interface.c:1656
-#: src/interface.c:1663 src/interface.c:1670 src/interface.c:1677
+#: src/interface.c:1562 src/interface.c:1639 src/interface.c:1646
+#: src/interface.c:1653 src/interface.c:1660 src/interface.c:1667
+#: src/interface.c:1674 src/interface.c:1681 src/interface.c:1688
 msgid "Color"
 msgstr ""
 
-#: src/interface.c:1556
+#: src/interface.c:1567
 msgid "Change Color F1"
 msgstr ""
 
-#: src/interface.c:1558
+#: src/interface.c:1569
 msgid "Formant 1"
 msgstr ""
 
-#: src/interface.c:1572
+#: src/interface.c:1583
 msgid "Formant 2"
 msgstr ""
 
-#: src/interface.c:1579
+#: src/interface.c:1590
 msgid "Formant 3"
 msgstr ""
 
-#: src/interface.c:1586
+#: src/interface.c:1597
 msgid "Formant 4"
 msgstr ""
 
-#: src/interface.c:1593
+#: src/interface.c:1604
 msgid "Formant 5"
 msgstr ""
 
-#: src/interface.c:1600
+#: src/interface.c:1611
 msgid "Formant 6"
 msgstr ""
 
-#: src/interface.c:1607
+#: src/interface.c:1618
 msgid "Nasals"
 msgstr ""
 
-#: src/interface.c:1633
+#: src/interface.c:1644
 msgid "Change Color F2"
 msgstr ""
 
-#: src/interface.c:1640
+#: src/interface.c:1651
 msgid "Change Color F4"
 msgstr ""
 
-#: src/interface.c:1647
+#: src/interface.c:1658
 msgid "Change Color F5"
 msgstr ""
 
-#: src/interface.c:1654
+#: src/interface.c:1665
 msgid "Change Color F6"
 msgstr ""
 
-#: src/interface.c:1661
+#: src/interface.c:1672
 msgid "Change Color Nasals"
 msgstr ""
 
-#: src/interface.c:1668
+#: src/interface.c:1679
 msgid "Change Color voice src"
 msgstr ""
 
-#: src/interface.c:1675
+#: src/interface.c:1686
 msgid "Change Color exc. amp."
 msgstr ""
 
-#: src/interface.c:1682
+#: src/interface.c:1693
 msgid "Change Color F3"
 msgstr ""
 
-#: src/interface.c:1684
+#: src/interface.c:1695
 msgid "change"
 msgstr ""
 
-#: src/interface.c:1693
+#: src/interface.c:1704
 msgid "Colors"
 msgstr ""
 
-#: src/interface.c:1701
+#: src/interface.c:1712
 msgid "max frequence"
 msgstr ""
 
-#: src/interface.c:1708
+#: src/interface.c:1719
 msgid "max amplidute"
 msgstr ""
 
-#: src/interface.c:1715
+#: src/interface.c:1726
 msgid "max bandwidth"
 msgstr ""
 
-#: src/interface.c:1743
+#: src/interface.c:1754
 msgid "value:"
 msgstr ""
 
-#: src/interface.c:1757
-msgid "Ruler"
+#: src/interface.c:1768
+msgid "Font: "
 msgstr ""
 
-#: src/interface.c:1765
-msgid "Path"
+#: src/interface.c:1781
+msgid "Sans 6"
 msgstr ""
 
-#: src/interface.c:1779
-msgid "wav player"
+#: src/interface.c:1788
+msgid "Change Font"
 msgstr ""
 
-#: src/interface.c:1786
-msgid "tmp directory"
-msgstr ""
-
-#: src/interface.c:1798
-msgid "playcommand"
-msgstr ""
-
-#: src/interface.c:1799
-msgid "play"
+#: src/interface.c:1802
+msgid "Change"
 msgstr ""
 
 #: src/interface.c:1806
+msgid "Ruler"
+msgstr ""
+
+#: src/interface.c:1814
+msgid "Path"
+msgstr ""
+
+#: src/interface.c:1828
+msgid "wav player"
+msgstr ""
+
+#: src/interface.c:1835
+msgid "tmp directory"
+msgstr ""
+
+#: src/interface.c:1847
+msgid "playcommand"
+msgstr ""
+
+#: src/interface.c:1848
+msgid "play"
+msgstr ""
+
+#: src/interface.c:1855
 msgid "directory for temp-files"
 msgstr ""
 
-#: src/interface.c:1807
+#: src/interface.c:1856
 msgid "/tmp"
 msgstr ""
 
-#: src/interface.c:1809
+#: src/interface.c:1858
 msgid "Paths"
 msgstr ""
 
-#: src/interface.c:1817
-msgid "Value"
-msgstr ""
-
-#: src/interface.c:1824
+#: src/interface.c:1866
 msgid "toolbar style:"
 msgstr ""
 
-#: src/interface.c:1845 src/callbacks.c:1841 src/callbacks.c:2031
+#: src/interface.c:1880
+msgid "show realy quit dialog: "
+msgstr ""
+
+#: src/interface.c:1896
+msgid "Value"
+msgstr ""
+
+#: src/interface.c:1910 src/callbacks.c:1841 src/callbacks.c:2042
 msgid "icons"
 msgstr ""
 
-#: src/interface.c:1846 src/callbacks.c:1845 src/callbacks.c:2034
+#: src/interface.c:1911 src/callbacks.c:1845 src/callbacks.c:2045
 msgid "text"
 msgstr ""
 
-#: src/interface.c:1847 src/callbacks.c:1849 src/callbacks.c:2037
+#: src/interface.c:1912 src/callbacks.c:1849 src/callbacks.c:2048
 msgid "both"
 msgstr ""
 
-#: src/interface.c:1854
+#: src/interface.c:1928
 msgid "Misc"
 msgstr ""
 
-#: src/interface.c:1883
+#: src/interface.c:1957
 msgid "_Default"
 msgstr ""
 
-#: src/interface.c:2068
+#: src/interface.c:2164
 msgid "Andreas Madsack <bolsog@users.sf.net>"
 msgstr ""
 
-#: src/interface.c:2070
+#: src/interface.c:2166
 msgid "written by"
 msgstr ""
 
-#: src/interface.c:2084
+#: src/interface.c:2180
 msgid "Manuel Kountz (de)"
 msgstr ""
 
-#: src/interface.c:2086
+#: src/interface.c:2182
 msgid "translators"
 msgstr ""
 
-#: src/interface.c:2101
+#: src/interface.c:2197
 msgid ""
 "Dennis Klatt \n"
 "(for klatt-formant-synthesis-algorithm)\n"
@@ -515,40 +535,48 @@ msgid ""
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
 
-#: src/interface.c:2103
+#: src/interface.c:2199
 msgid "thanks to"
 msgstr ""
 
-#: src/interface.c:2162
+#: src/interface.c:2258
 msgid "move dialog"
 msgstr ""
 
-#: src/interface.c:2208
+#: src/interface.c:2304
 msgid "imskpe - Move"
 msgstr ""
 
-#: src/interface.c:2222
+#: src/interface.c:2318
 msgid "Value: "
 msgstr ""
 
-#: src/interface.c:2236
+#: src/interface.c:2332
 msgid "Hz"
 msgstr ""
 
-#: src/interface.c:2244
+#: src/interface.c:2340
 msgid "Time:"
 msgstr ""
 
-#: src/interface.c:2251
+#: src/interface.c:2347
 msgid "sec"
 msgstr ""
 
-#: src/interface.c:2314
+#: src/interface.c:2410
 msgid "IMSKPE - Information"
 msgstr ""
 
-#: src/interface.c:2326
+#: src/interface.c:2422
 msgid "IMSKPE-Splash"
+msgstr ""
+
+#: src/interface.c:2555
+msgid "Select Font"
+msgstr ""
+
+#: src/interface.c:2576
+msgid "0123456789"
 msgstr ""
 
 #: src/callbacks.c:94 src/callbacks.c:241
@@ -577,16 +605,16 @@ msgstr ""
 msgid "%d ms - %d dB "
 msgstr ""
 
-#: src/callbacks.c:1895
+#: src/callbacks.c:1906
 msgid "Really reset preferences?"
 msgstr ""
 
 #. wav-file written
-#: src/callbacks.c:2243
+#: src/callbacks.c:2374
 msgid " written"
 msgstr ""
 
-#: src/callbacks.c:2315
+#: src/callbacks.c:2448
 msgid "Really quit?"
 msgstr ""
 
@@ -595,12 +623,12 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: src/cfg.c:63 src/cfg.c:492
-msgid "get_home_dir failed!"
+#: src/cfg.c:501
+msgid "Problems saving config-file!"
 msgstr ""
 
-#: src/cfg.c:467
-msgid "Problems saving config-file!"
+#: src/cfg.c:526
+msgid "get_home_dir failed!"
 msgstr ""
 
 #: loadpar.l:120
@@ -660,6 +688,6 @@ msgstr ""
 msgid "Can't open output parameter file."
 msgstr ""
 
-#: loadconf.l:93
+#: loadconf.l:96
 msgid "couldn't find configfile / use default!"
 msgstr ""
