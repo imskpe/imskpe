@@ -69,17 +69,17 @@ void FileSave(char *filename)
   if(strlen(filename)>1)
   {
     tmp=g_malloc (sizeof (char)*(strlen(filename)));
-    strncpy(tmp,filename,strlen(filename));
+    strcpy(tmp,filename);
   }
   else
   {
     tmp=g_malloc (sizeof (char)*(strlen(FileGetFilename())));
-    strncpy(tmp,FileGetFilename(),strlen(FileGetFilename()));
+    strcpy(tmp,FileGetFilename());
   }
   
-  tmp[strlen(tmp)]=0;
+//   tmp[strlen(tmp)]=0;
   FileSetFilename(tmp);
-//   printf("-%s-\n",tmp);    
+//  printf("-%s-\n",tmp);    
 
   outfp = fopen(tmp,"w");
   if(outfp==NULL)

@@ -42,10 +42,8 @@ create_imskpe_main (void)
   GtkWidget *quit1;
   GtkWidget *menuitem3;
   GtkWidget *menuitem3_menu;
-  GtkWidget *convert1;
-  GtkWidget *image3;
   GtkWidget *execute1;
-  GtkWidget *image4;
+  GtkWidget *image7;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *about1;
@@ -60,7 +58,6 @@ create_imskpe_main (void)
   GtkWidget *bn_prefs;
   GtkWidget *toolbar4;
   GtkWidget *separatortoolitem1;
-  GtkWidget *bn_convert;
   GtkWidget *bn_execute;
   GtkWidget *toolbar2;
   GtkWidget *separatortoolitem2;
@@ -229,18 +226,6 @@ create_imskpe_main (void)
   menuitem3_menu = gtk_menu_new ();
   gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem3), menuitem3_menu);
 
-  convert1 = gtk_image_menu_item_new_with_mnemonic (_("_Convert"));
-  gtk_widget_show (convert1);
-  gtk_container_add (GTK_CONTAINER (menuitem3_menu), convert1);
-  gtk_tooltips_set_tip (tooltips, convert1, _("Generate Wav"), NULL);
-  gtk_widget_add_accelerator (convert1, "activate", accel_group,
-                              GDK_G, GDK_CONTROL_MASK,
-                              GTK_ACCEL_VISIBLE);
-
-  image3 = gtk_image_new_from_stock ("gtk-convert", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image3);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (convert1), image3);
-
   execute1 = gtk_image_menu_item_new_with_mnemonic (_("_Execute"));
   gtk_widget_show (execute1);
   gtk_container_add (GTK_CONTAINER (menuitem3_menu), execute1);
@@ -249,9 +234,9 @@ create_imskpe_main (void)
                               GDK_E, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image4 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image4);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image4);
+  image7 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image7);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image7);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_show (menuitem4);
@@ -315,11 +300,6 @@ create_imskpe_main (void)
   separatortoolitem1 = (GtkWidget*) gtk_separator_tool_item_new ();
   gtk_widget_show (separatortoolitem1);
   gtk_container_add (GTK_CONTAINER (toolbar4), separatortoolitem1);
-
-  bn_convert = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-convert");
-  gtk_widget_show (bn_convert);
-  gtk_container_add (GTK_CONTAINER (toolbar4), bn_convert);
-  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_convert), tooltips, _("par -> wav"), NULL);
 
   bn_execute = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-execute");
   gtk_widget_show (bn_execute);
@@ -931,9 +911,6 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) quit1, "activate",
                     G_CALLBACK (imskpe_quit),
                     NULL);
-  g_signal_connect ((gpointer) convert1, "activate",
-                    G_CALLBACK (on_convert1_activate),
-                    NULL);
   g_signal_connect ((gpointer) execute1, "activate",
                     G_CALLBACK (on_execute1_activate),
                     NULL);
@@ -963,9 +940,6 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) toolbar4, "realize",
                     G_CALLBACK (on_toolbar4_realize),
-                    NULL);
-  g_signal_connect ((gpointer) bn_convert, "clicked",
-                    G_CALLBACK (on_bn_convert_clicked),
                     NULL);
   g_signal_connect ((gpointer) bn_execute, "clicked",
                     G_CALLBACK (on_bn_execute_clicked),
@@ -1213,10 +1187,8 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, quit1, "quit1");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3, "menuitem3");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3_menu, "menuitem3_menu");
-  GLADE_HOOKUP_OBJECT (imskpe_main, convert1, "convert1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image3, "image3");
   GLADE_HOOKUP_OBJECT (imskpe_main, execute1, "execute1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image4, "image4");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image7, "image7");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, about1, "about1");
@@ -1230,7 +1202,6 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_prefs, "bn_prefs");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar4, "toolbar4");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem1, "separatortoolitem1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, bn_convert, "bn_convert");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_execute, "bn_execute");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem2, "separatortoolitem2");
@@ -1533,10 +1504,8 @@ create_imskpe_prefs (void)
   GtkWidget *rb_quit;
   GSList *rb_quit_group = NULL;
   GtkWidget *label30;
-  GtkWidget *cm_tool_style;
-  GList *cm_tool_style_items = NULL;
-  GtkWidget *cme_tool_style;
   GtkWidget *rb_quit2;
+  GtkWidget *cb_tool_style;
   GtkWidget *lb_misc;
   GtkWidget *dialog_action_area2;
   GtkWidget *bn_prefs_cancel;
@@ -1909,22 +1878,6 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
 
-  cm_tool_style = gtk_combo_new ();
-  g_object_set_data (G_OBJECT (GTK_COMBO (cm_tool_style)->popwin),
-                     "GladeParentKey", cm_tool_style);
-  gtk_widget_show (cm_tool_style);
-  gtk_table_attach (GTK_TABLE (table22), cm_tool_style, 2, 4, 1, 2,
-                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (0), 0, 0);
-  cm_tool_style_items = g_list_append (cm_tool_style_items, (gpointer) _("icons"));
-  cm_tool_style_items = g_list_append (cm_tool_style_items, (gpointer) _("text"));
-  cm_tool_style_items = g_list_append (cm_tool_style_items, (gpointer) _("both"));
-  gtk_combo_set_popdown_strings (GTK_COMBO (cm_tool_style), cm_tool_style_items);
-  g_list_free (cm_tool_style_items);
-
-  cme_tool_style = GTK_COMBO (cm_tool_style)->entry;
-  gtk_widget_show (cme_tool_style);
-
   rb_quit2 = gtk_radio_button_new_with_mnemonic (NULL, "gtk-no");
   gtk_button_set_use_stock (GTK_BUTTON (rb_quit2), TRUE);
   gtk_widget_show (rb_quit2);
@@ -1933,6 +1886,15 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (rb_quit2), rb_quit_group);
   rb_quit_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (rb_quit2));
+
+  cb_tool_style = gtk_combo_box_new_text ();
+  gtk_widget_show (cb_tool_style);
+  gtk_table_attach (GTK_TABLE (table22), cb_tool_style, 2, 4, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("icons"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("text"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("both"));
 
   lb_misc = gtk_label_new (_("Misc"));
   gtk_widget_show (lb_misc);
@@ -2034,11 +1996,11 @@ create_imskpe_prefs (void)
   g_signal_connect ((gpointer) rb_quit, "realize",
                     G_CALLBACK (on_rb_quit_realize),
                     NULL);
-  g_signal_connect ((gpointer) cme_tool_style, "realize",
-                    G_CALLBACK (on_cme_tool_style_realize),
-                    NULL);
   g_signal_connect ((gpointer) rb_quit2, "realize",
                     G_CALLBACK (on_rb_quit2_realize),
+                    NULL);
+  g_signal_connect ((gpointer) cb_tool_style, "realize",
+                    G_CALLBACK (on_cb_tool_style_realize),
                     NULL);
   g_signal_connect ((gpointer) bn_prefs_cancel, "clicked",
                     G_CALLBACK (on_bn_prefs_cancel_clicked),
@@ -2110,9 +2072,8 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label34, "label34");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit, "rb_quit");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label30, "label30");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, cm_tool_style, "cm_tool_style");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, cme_tool_style, "cme_tool_style");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit2, "rb_quit2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, cb_tool_style, "cb_tool_style");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_misc, "lb_misc");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_cancel, "bn_prefs_cancel");
@@ -2602,5 +2563,18 @@ create_imskpe_font (void)
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_font, font_selection1, "font_selection1");
 
   return imskpe_font;
+}
+
+GtkWidget*
+create_menu1 (void)
+{
+  GtkWidget *menu1;
+
+  menu1 = gtk_menu_new ();
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (menu1, menu1, "menu1");
+
+  return menu1;
 }
 

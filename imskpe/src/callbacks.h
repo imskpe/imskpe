@@ -459,15 +459,7 @@ on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
                                         gpointer         user_data);
 
 void
-on_convert1_activate                   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data);
-
-void
-on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
                                         gpointer         user_data);
 
 void
@@ -550,10 +542,6 @@ on_splash_close_clicked                (GtkButton       *button,
                                         gpointer         user_data);
 
 void
-on_cme_tool_style_realize              (GtkWidget       *widget,
-                                        gpointer         user_data);
-
-void
 on_toolbar1_realize                    (GtkWidget       *widget,
                                         gpointer         user_data);
 
@@ -625,4 +613,8 @@ on_draw_scroll_event                   (GtkWidget       *widget,
 gboolean
 on_draw_button_release_event           (GtkWidget       *widget,
                                         GdkEventButton  *event,
+                                        gpointer         user_data);
+
+void
+on_cb_tool_style_realize               (GtkWidget       *widget,
                                         gpointer         user_data);

@@ -52,8 +52,10 @@
 /* /\** pointer to open dialog *\/ */
 /* GtkWidget *fileopen = NULL; */
 
-/* /\** pointer to save dialog *\/ */
-/* GtkWidget *filesave = NULL; */
+/** pointer to save dialog */ 
+GtkWidget *filesave = NULL; 
+
+GtkWidget *cb_filesave_extra = NULL;
 
 gint loadafter;
 
@@ -184,25 +186,42 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   char *filename;
   GtkWidget *w;
   int len;
-  
+  int foo=gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
+  char tmp[300];
+
+//  w=(GtkWidget *)lookup_widget (GTK_WIDGET (w), "extra");
   len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
-  filename = (char *) malloc(sizeof(char)*(len+2));
+  filename = (char *) malloc(sizeof(char)*(len+1));
     
   filename = (char *) gtk_file_chooser_get_filename 
       (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+  filename[strlen(filename)]=0;
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
     
-  SetTitle(filename);
-  FileSave(filename);
-  
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-
-  if(loadafter==1)
+  if(foo==0) // par
   {
-    InitDialogLoad();
+
+    SetTitle(filename);
+    FileSave(filename);
+  
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+    redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+
+    if(loadafter==1)
+    {
+      InitDialogLoad();
+    }
+  }
+  else // wav
+  {
+    convert(filename);
+    // wav-file written
+    strcpy(tmp,filename);
+    strcat(tmp,_(" written"));
+    
+    SetStatusBar ("sb_state",tmp);
   }
 }
 
@@ -241,9 +260,34 @@ on_bn_open_clicked                     (GtkButton       *button,
   }
 }
 
+void
+on_extra_changed               (GtkComboBox     *combobox,
+				gpointer         user_data)
+{
+  int foo=gtk_combo_box_get_active(combobox);
+  char *tmp;
+
+  tmp=strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/');
+  tmp++;
+  tmp[strlen(tmp)-strlen(strrchr(tmp, '.'))]=0; /* delete .par at end */
+
+  if(foo==0)  // par
+  {
+    strcat(tmp,".par"); 
+  }
+  else
+  {
+    strcat(tmp,".wav"); 
+  }
+
+  gtk_file_chooser_set_current_name((GtkFileChooser *)filesave, tmp);
+}
+
 void InitDialogSave()
 {
- static GtkWidget *filesave = NULL;
+// static GtkWidget *filesave = NULL;
+ char *tmp;
+ GtkWidget *lb, *hbox;
 
  if (filesave == NULL) 
  {
@@ -253,6 +297,42 @@ void InitDialogSave()
 		     "destroy",
 		     G_CALLBACK (gtk_widget_destroyed),
 		     &filesave);
+
+   // search for last /
+   tmp=strrchr(FileGetFilename(),'/');
+   if(tmp==NULL)
+   {
+     // there was none, so get complete filename
+     tmp=FileGetFilename();
+   }
+   else
+   {
+     // go next to found slash '/foo.par' -> 'foo.par'
+     tmp++;
+   }
+
+   gtk_file_chooser_set_current_name((GtkFileChooser *)filesave, tmp);
+
+   hbox = gtk_hbox_new (FALSE, 0);
+
+   lb = gtk_label_new (_("Filetype: "));
+
+   cb_filesave_extra = gtk_combo_box_new_text ();
+   gtk_widget_show (cb_filesave_extra);
+   gtk_combo_box_append_text (GTK_COMBO_BOX (cb_filesave_extra), "par");
+   gtk_combo_box_append_text (GTK_COMBO_BOX (cb_filesave_extra), "wav");
+   gtk_combo_box_set_active (GTK_COMBO_BOX (cb_filesave_extra),0);
+
+   gtk_widget_show(lb);
+   gtk_box_pack_end((GtkBox *)hbox, (GtkWidget *)cb_filesave_extra, FALSE, FALSE, 0);
+   gtk_box_pack_end((GtkBox *)hbox, (GtkWidget *)lb, FALSE, FALSE, 0);
+
+   g_signal_connect ((gpointer) cb_filesave_extra, "changed",
+                    G_CALLBACK (on_extra_changed),
+                    NULL);
+
+
+   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (filesave), hbox);
    
    /* Make sure the dialog doesn't disappear behind the main window. */
    gtk_window_set_transient_for (GTK_WINDOW (filesave), 
@@ -263,10 +343,10 @@ void InitDialogSave()
  gtk_window_present (GTK_WINDOW (filesave));
 }
 
-
 void InitDialogLoad()
 {
  static GtkWidget *fileopen = NULL;
+ GtkFileFilter *filter;
 
  if (fileopen == NULL) 
  {
@@ -276,6 +356,19 @@ void InitDialogLoad()
 		     "destroy",
 		     G_CALLBACK (gtk_widget_destroyed),
 		     &fileopen);
+
+   /* Filters */
+   filter = gtk_file_filter_new ();
+   gtk_file_filter_set_name (filter, _("All Files"));
+   gtk_file_filter_add_pattern (filter, "*");
+   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fileopen), filter);
+
+   filter = gtk_file_filter_new ();
+   gtk_file_filter_set_name (filter, _("par-Files"));
+   gtk_file_filter_add_pattern (filter, "*.par");
+   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (fileopen), filter);
+
+   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (fileopen), filter);
    
    /* Make sure the dialog doesn't disappear behind the main window. */
    gtk_window_set_transient_for (GTK_WINDOW (fileopen), 
@@ -1711,6 +1804,11 @@ on_bn_prefs_cancel_clicked             (GtkButton       *button,
   ConfigRemove("color_vs_tmp");
   ConfigRemove("color_ea_tmp");
 
+  ConfigRemove("prefs_tab1_tmp");
+  ConfigRemove("prefs_tab2_tmp");
+  ConfigRemove("prefs_tab3_tmp");
+  ConfigRemove("prefs_tab4_tmp");
+
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
@@ -1788,7 +1886,6 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f5"),"f5");
     SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_f6"),"f6");
     SetLabelColor(lookup_widget (GTK_WIDGET (GetMainWindow()), "lb_nasals"),"nasals");
-    ConfigRemove("prefs_tab1_tmp");
   }
 
   if(ConfigFind("prefs_tab2_tmp"))
@@ -1811,7 +1908,6 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     w=lookup_widget (GTK_WIDGET (button), "ent_font");
     sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("rulerfont",tmp);
-    ConfigRemove("prefs_tab2_tmp");
   }
 
   if(ConfigFind("prefs_tab3_tmp"))
@@ -1823,29 +1919,20 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
     strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("tmpdir",tmp);
-    ConfigRemove("prefs_tab3_tmp");
   }
 
   if(ConfigFind("prefs_tab4_tmp"))
   {
-    w=lookup_widget (GTK_WIDGET (button), "cme_tool_style");
-    strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
+    w=lookup_widget (GTK_WIDGET (button), "cb_tool_style");
+//     strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
+    val=gtk_combo_box_get_active((GtkComboBox *)w);
 
-    if(!strcmp(_("icons"),tmp))
+    if(val!=-1)
     {
-      val=GTK_TOOLBAR_ICONS;
+      sprintf(tmp,"%d",val);
+      ConfigInsert("toolbarstyle",tmp);
+      GuiSetToolbarStyle(val);
     }
-    if(!strcmp(_("text"),tmp))
-    {
-      val=GTK_TOOLBAR_TEXT;
-    }
-    if(!strcmp(_("both"),tmp))
-    {
-      val=GTK_TOOLBAR_BOTH;
-    }
-    sprintf(tmp,"%d",val);
-    ConfigInsert("toolbarstyle",tmp);
-    GuiSetToolbarStyle(val);
 
     w=(GtkWidget *)lookup_widget (GTK_WIDGET (prefs), "rb_quit");
     if(gtk_toggle_button_get_active ((GtkToggleButton *)w))
@@ -1857,7 +1944,6 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     {
       ConfigInsert("showquitdiag","0");
     }
-    ConfigRemove("prefs_tab4_tmp");
   }
 
   // redraw!!
@@ -1882,9 +1968,15 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
   // save values
   on_bn_prefs_apply_clicked (button,user_data);
 
+  ConfigRemove("prefs_tab1_tmp");
+  ConfigRemove("prefs_tab2_tmp");
+  ConfigRemove("prefs_tab3_tmp");
+  ConfigRemove("prefs_tab4_tmp");
+
+
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
-  printf("prefs_ok end\n");     
+//  printf("prefs_ok end\n");     
 }
 
 /** 
@@ -2026,27 +2118,17 @@ on_ent_tmp_realize                     (GtkWidget       *widget,
   gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("tmpdir"));
 }
 
+
 void
-on_cme_tool_style_realize              (GtkWidget       *widget,
+on_cb_tool_style_realize               (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   ConfigInsert("prefs_tab4_tmp","1"); // one for each tab (4)
   int foo=ConfigGetInteger("toolbarstyle");  
 
-  switch(foo)
-  {
-  case GTK_TOOLBAR_ICONS:
-      gtk_entry_set_text ((GtkEntry *)widget,_("icons"));
-      break;
-  case GTK_TOOLBAR_TEXT:
-      gtk_entry_set_text ((GtkEntry *)widget,_("text"));
-      break;
-  case GTK_TOOLBAR_BOTH:
-      gtk_entry_set_text ((GtkEntry *)widget,_("both"));
-      break;
-  }
-
+  gtk_combo_box_set_active ((GtkComboBox *)widget,foo);
 }
+
 
 void
 on_lb_colors_realize                   (GtkWidget       *widget,
@@ -2319,26 +2401,6 @@ on_rb_quit2_realize                    (GtkWidget       *widget,
  */
 
 void
-on_convert1_activate                   (GtkMenuItem     *menuitem,
-                                        gpointer         user_data)
-{
-  char tmp[300];
-
-  /* get par-filename */
-  strcpy(tmp,FileGetFilename());
-  tmp[strlen(tmp)-strlen(strrchr(tmp, '.'))]=0; /* delete .par at end */
-  strcat(tmp,".wav");  /* and .wav*/
-
-  convert(tmp);
-
-  // wav-file written
-  strcat(tmp,_(" written"));
-
-  SetStatusBar ("sb_state",tmp);
-}
-
-
-void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
@@ -2362,14 +2424,6 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   system(dir);
 
   g_free(dir);
-}
-
-
-void
-on_bn_convert_clicked                  (GtkToolButton   *toolbutton,
-                                        gpointer         user_data)
-{
-  on_convert1_activate(NULL,NULL);
 }
 
 

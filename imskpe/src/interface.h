@@ -13,3 +13,4 @@ GtkWidget* create_imskpe_splash (void);
 GtkWidget* create_imskpe_file_open (void);
 GtkWidget* create_imskpe_file_save (void);
 GtkWidget* create_imskpe_font (void);
+GtkWidget* create_menu1 (void);

@@ -107,29 +107,6 @@
 		<widget class="GtkMenu" id="menuitem3_menu">
 
 		  <child>
-		    <widget class="GtkImageMenuItem" id="convert1">
-		      <property name="visible">True</property>
-		      <property name="tooltip" translatable="yes">Generate Wav</property>
-		      <property name="label" translatable="yes">_Convert</property>
-		      <property name="use_underline">True</property>
-		      <signal name="activate" handler="on_convert1_activate" last_modification_time="Mon, 01 Nov 2004 10:56:27 GMT"/>
-		      <accelerator key="G" modifiers="GDK_CONTROL_MASK" signal="activate"/>
-
-		      <child internal-child="image">
-			<widget class="GtkImage" id="image3">
-			  <property name="visible">True</property>
-			  <property name="stock">gtk-convert</property>
-			  <property name="icon_size">1</property>
-			  <property name="xalign">0.5</property>
-			  <property name="yalign">0.5</property>
-			  <property name="xpad">0</property>
-			  <property name="ypad">0</property>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-
-		  <child>
 		    <widget class="GtkImageMenuItem" id="execute1">
 		      <property name="visible">True</property>
 		      <property name="tooltip" translatable="yes">Convert &amp; Play</property>
@@ -139,7 +116,7 @@
 		      <accelerator key="E" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image4">
+			<widget class="GtkImage" id="image7">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-execute</property>
 			  <property name="icon_size">1</property>
@@ -322,22 +299,6 @@
 		<packing>
 		  <property name="expand">False</property>
 		  <property name="homogeneous">False</property>
-		</packing>
-	      </child>
-
-	      <child>
-		<widget class="GtkToolButton" id="bn_convert">
-		  <property name="visible">True</property>
-		  <property name="tooltip" translatable="yes">par -&gt; wav</property>
-		  <property name="stock_id">gtk-convert</property>
-		  <property name="visible_horizontal">True</property>
-		  <property name="visible_vertical">True</property>
-		  <property name="is_important">False</property>
-		  <signal name="clicked" handler="on_bn_convert_clicked" last_modification_time="Mon, 01 Nov 2004 11:13:48 GMT"/>
-		</widget>
-		<packing>
-		  <property name="expand">False</property>
-		  <property name="homogeneous">True</property>
 		</packing>
 	      </child>
 
@@ -3880,70 +3841,6 @@ imskpe
 	      </child>
 
 	      <child>
-		<widget class="GtkCombo" id="cm_tool_style">
-		  <property name="visible">True</property>
-		  <property name="value_in_list">False</property>
-		  <property name="allow_empty">True</property>
-		  <property name="case_sensitive">False</property>
-		  <property name="enable_arrow_keys">True</property>
-		  <property name="enable_arrows_always">False</property>
-
-		  <child internal-child="entry">
-		    <widget class="GtkEntry" id="cme_tool_style">
-		      <property name="visible">True</property>
-		      <property name="can_focus">True</property>
-		      <property name="editable">True</property>
-		      <property name="visibility">True</property>
-		      <property name="max_length">0</property>
-		      <property name="text" translatable="yes"></property>
-		      <property name="has_frame">True</property>
-		      <property name="invisible_char" translatable="yes">*</property>
-		      <property name="activates_default">False</property>
-		      <signal name="realize" handler="on_cme_tool_style_realize" last_modification_time="Sun, 28 Nov 2004 15:23:15 GMT"/>
-		    </widget>
-		  </child>
-
-		  <child internal-child="list">
-		    <widget class="GtkList" id="combo-list3">
-		      <property name="visible">True</property>
-		      <property name="selection_mode">GTK_SELECTION_BROWSE</property>
-
-		      <child>
-			<widget class="GtkListItem" id="listitem55">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">icons</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkListItem" id="listitem56">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">text</property>
-			</widget>
-		      </child>
-
-		      <child>
-			<widget class="GtkListItem" id="listitem57">
-			  <property name="visible">True</property>
-			  <property name="can_focus">True</property>
-			  <property name="label" translatable="yes">both</property>
-			</widget>
-		      </child>
-		    </widget>
-		  </child>
-		</widget>
-		<packing>
-		  <property name="left_attach">2</property>
-		  <property name="right_attach">4</property>
-		  <property name="top_attach">1</property>
-		  <property name="bottom_attach">2</property>
-		  <property name="y_options"></property>
-		</packing>
-	      </child>
-
-	      <child>
 		<widget class="GtkRadioButton" id="rb_quit2">
 		  <property name="visible">True</property>
 		  <property name="can_focus">True</property>
@@ -3964,6 +3861,25 @@ imskpe
 		  <property name="bottom_attach">3</property>
 		  <property name="x_options">fill</property>
 		  <property name="y_options"></property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkComboBox" id="cb_tool_style">
+		  <property name="visible">True</property>
+		  <property name="items" translatable="yes">icons
+text
+both
+</property>
+		  <signal name="realize" handler="on_cb_tool_style_realize" last_modification_time="Thu, 16 Dec 2004 14:42:29 GMT"/>
+		</widget>
+		<packing>
+		  <property name="left_attach">2</property>
+		  <property name="right_attach">4</property>
+		  <property name="top_attach">1</property>
+		  <property name="bottom_attach">2</property>
+		  <property name="x_options">fill</property>
+		  <property name="y_options">fill</property>
 		</packing>
 	      </child>
 	    </widget>
@@ -4773,6 +4689,9 @@ Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele
       <property name="fill">True</property>
     </packing>
   </child>
+</widget>
+
+<widget class="GtkMenu" id="menu1">
 </widget>
 
 </glade-interface>

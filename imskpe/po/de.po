@@ -633,7 +633,7 @@ msgstr "Wirklich die Einstellungen zurücksetzen?"
 #. wav-file written
 #: src/callbacks.c:2309
 msgid " written"
-msgstr "geschrieben"
+msgstr " geschrieben"
 
 #: src/callbacks.c:2383
 msgid "Really quit?"
