@@ -600,17 +600,25 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 		 mod*2+1,
 		 mod*2+1);
 
-	    if(x>=xmax-ui)
-	    {
-	      gdk_draw_rectangle
-		  (g->pixmap,
-		   GetPenGdkColor (NULL,ConfigGetColor(c->formant)),
-		   FALSE,
-		   ((d->allocation.width-25-10)*x/xmax+25)-2,
-		   (d->allocation.height-((d->allocation.height-25)*y/ymax)-25)-2,
-		   5,
-		   5);
-	    }
+ 	    if(x>=xmax-ui)
+ 	    {
+	      if(MouseEventCheckPoint(x,c->nr))
+	      {
+		mod=3;
+	      }
+	      else
+	      {
+		mod=2;
+	      }
+ 	      gdk_draw_rectangle
+ 		  (g->pixmap,
+ 		   GetPenGdkColor (NULL,ConfigGetColor(c->formant)),
+ 		   FALSE,
+ 		   ((d->allocation.width-25-10)*x/xmax+25)-mod,
+ 		   (d->allocation.height-((d->allocation.height-25)*y/ymax)-25)-mod,
+ 		   mod*2+1,
+ 		   mod*2+1);
+ 	    }
 
 	    lastx=x;
 	    lasty=y;
@@ -858,7 +866,7 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	  n_pnt.time=v2->time;
 	}
 	
-	if(rx>p_pnt.time && rx<n_pnt.time) { // +/- ui ??
+	if(rx>p_pnt.time && rx<=n_pnt.time) { // +/- ui ??
 	  
 	  double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
 	  int yval = (int)((double)p_pnt.value+(grad));
@@ -879,7 +887,6 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	  
 	  if((pnt.value>ry-ytol && pnt.value<ry+ytol) && (rx>pnt.time-25 && rx<pnt.time+25))
 	  {
-	    
 	    if(state & GDK_BUTTON1_MASK)
 	    {
 	      if(MouseEventGetAction()==MOVE)

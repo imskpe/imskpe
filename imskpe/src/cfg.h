@@ -51,15 +51,15 @@ procedures
 */
 
 void ConfigLoad();
-void ConfigListInsert(char *name, char *value);
-void ConfigListInsertString(char *name, char *value, unsigned short type);
-void ConfigListInsertInteger(char *name, int value, unsigned short type);
+void ConfigInsert(char *name, char *value);
+void ConfigInsertString(char *name, char *value, unsigned short type);
+void ConfigInsertInteger(char *name, int value, unsigned short type);
 char *ConfigGetString(char *name);
 int ConfigGetInteger(char *name);
 GdkColor ConfigGetColor(char *name);
 gboolean ConfigRename(char *name, char *ziel);
 gboolean ConfigFind(char *name);
 gboolean ConfigRemove(char *name);
-void ConfigListFree();
+void ConfigFree();
 void ConfigNew();
 void ConfigSave();

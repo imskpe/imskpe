@@ -6,7 +6,9 @@ OK lines / interpol over GList
 OK open par-files
 OK save par-files
 - open wavfiles
-- generate wavfiles (through kpe80 - console tool)
+NOP generate wavfiles (through kpe80 - console tool)
+- generate wavs internal
+- bind to klatt80
 - use fft to show a spectrum
 
 
@@ -15,86 +17,11 @@ OK improve build (find dlls, locale under win32)
 - place configfile in HOME (unter win2k/win xp)
   -> win98/95/ME use c:\ - later maybe registry
 
+
 solaris:
 - works only with gtk2.4 / i have no gtk 2.4-solaris machine!
 
 
 *** final:
-- bind to libklatt
-- generate wavs internal
-- play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
+- maybe play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
 
-*** nice to have:
-- fuzzy-gettext einträge auch in die .mo ?!?!
-  (--use-fuzzy ... aber wie bekomme ich das per autoconf ?!)
-
-
-BoLSoGs private todo-list (in german):
-OK  - das lineal auslagern ... 
-OK  - auf den duration-spinbutton ein linealredraw triggern
-OK  - den linealcode in eine eigene procedure packen
-OK  - alles auch für amplitude und bandbreite
-OK  - die callbacks.h aufräumen
-    - auf die jeweiligen toggle-buttons reagieren:
-OK    - neue kurven initialisieren (defaultwerte: "schwa"?!)
-OK      - dafür eine extra funktion ... 
-NO      - mit leeren listen ... 
-OK      - und eine init-funktion für new mit den schwa werten ...
-          = start.par
-OK    - wenn schon vorhanden wieder einblenden
-OK  - loadfile einführen
-OK    - globales struct für ein File?
-OK      - darin folgende daten:
-OK        - filename, ischanged, pointer auf formants-GList
-OK    - darin: 
-OK      - laden der par-files
-PP      - laden eines eigenen optimaleren formats [nice to have]
-    - speichern der preferences
-      - preferences dialog
-      - auch speichern der formantfarben
-OK    - y-achsen-max einstellbar machen (in preferences)
-      - auch die unterteilungen einstellbar machen
-OK    - wie soll die aktuelle "hoehe" abgespeicht werden? für jedes diagramm einzeln? 
-        und wie die ganzen preferences? 
-      - die formantsliste muss sowieso weg ... sie dient ja nun nur der farbenspeicherung ...
-        und die linienart sollte auch berücksichtigt werden ...
-OK  - speichern der par-files
-NO    - im speicher den array aufbauen?
-OK    - oder jeden wert mit hilfe der liste berechnen
-OK      - steigung: (endwert-anfangswert)/(endtime-anfangstime)
-OK - anzeigen der koordinaten in der statusleiste
-     - was soll noch in die statusleiste?:
-OK     - filename ?! (besser in den titel)
-OK     - aktuelle kurve unter dem cursor
-OK     - koordinaten des punktes über dem man ist!!
-OK     - debugmeldungen? (min/max)
-   - eventhandling / curves
-OK   - für einen redraw wird die mauscursorpos gebraucht ...
-OK   - um jeden punkt kommt erstmal ein 5x5 pixel rechteck ...
-OK   - wenn der mauscursor in diesrem rechteck ist, wird es zu 7x7 und 
-OK     die linie wird dicker ...
-OK   - es wird eine möglichkeit gebraucht sich zu merken, 
-OK     wo der mauscursor "vorher" war ...
-OK     also ob ein redraw erforderlich ist, oder nicht ...
-     - vielleicht eine zusätzliche pixmap-var, in der das linieal schon drin ist?!
-       -> schneller beim repaint?!
-OK - neuer zusätzlicher Editdialog
-OK    - wenn man über einem Punkt ist, dynamisch ins kontextmenu
-OK    - werte dynamisch begrenzen
-   - play/synthesize it
-OK    - buttons dafür
-OK    - preferences einträge für die pfade zu klatt80 / einem wav-player
-   - optimieren der move-interaktion
-      - erkennen, ob ein anderer punkt nun bewegt wird
-          und dies nur erlauben, wenn vorher die maustaste losgelassen wurde
-OK - sprachproblematik bei den dropdowns!
-
-  /// \todo farbe vom label holen!!! oder anderweitig abspeichern!!
-     - in die configliste, mit anderen identifiern ... vorteil, beim abspeichern einfach diese neuen auslesen und die alten damit überschreiben
-        todo: 
-	 - GdkColor => #aabbcc
-OK	 - delete value in cfg-list
-OK	 - rename value in cfg-list!
-        wichtig:
-OK	 - bei abbruch muessen diese tempöraren vars in der cfg-liste auch gelöscht werden!!!
- 	 - bei ok, dann eben dieser lösch/umbenenn-ablauf

@@ -1,16 +1,54 @@
 IMSKPE
 
-Author: Andreas Madsack 
+Author: Andreas Madsack <bolsog@users.sf.net>
   student of computer linuguistics 
   AT Institut fuer Maschinelle Sprachverarbeitung/Uni Stuttgart/Germany
 
 
---
+(1) Install linux and other unixes
+(2) Install win32
+(3) bugs, featurerequests
 
-compile for win32 under linux:
+-------------------------------
 
-(1) you need mingw, msys, gtk2 and many more compiled unter linux for win32 ...
+(1) linux and other unixes
+
+for all users:
+-------------
+
+./configure
+make
+
+as root:
+make install
+
+
+only for you:
+-------------
+
+./configure --prefix=$HOME
+make
+make install
+
+start with ~/bin/imskpe
+
+-------------------------------
+
+(2) win32
+
+to make win32-exe I use gcc under linux and do crosscompiling
+
+for this you need mingw, msys, gtk2 and many more compiled unter linux for win32 ...
 (mail me for my package - 95MB)
 
-(2) build it:
-run ./mkwin32.sh
+to build it run:
+./mkwin32.sh
+
+
+-------------------------------
+
+(3) bugs, featurerequests, ...
+
+please write a report on http://sf.net/project/imskpe
+or for discussion send an email to imskpe-devel@lists.sf.net
+

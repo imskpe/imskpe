@@ -361,6 +361,7 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
   typValueList p_pnt;  
   p_pnt.time=0;
   p_pnt.value=-1;
+  int v2time;
 
   while(vl)
   {
@@ -371,14 +372,26 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       
       // check if time is between range!
 
-      v2=vl->next->data;
-      if(!(p_pnt.time+ui>time) && !(v2->time-ui<time))
+      if(vl->next!=NULL)
       {
-	v->time=time;
-	FileSetIsChanged(TRUE);
+	v2=vl->next->data;
+	v2time=v2->time-ui;
+      }
+      else
+      {
+	v2time=v->time;
+      }
+
+      if(!(((p_pnt.time+ui)>otime) && (v2time<otime)))
+      {
+	if(otime!=0 && otime!=v2time)
+	{
+	  v->time=time;
+	}
       }
       
       v->value=value;
+      FileSetIsChanged(TRUE);
 //       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
       return TRUE;
     }

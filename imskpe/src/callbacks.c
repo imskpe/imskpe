@@ -104,6 +104,15 @@ on_save_as1_activate                   (GtkMenuItem     *menuitem,
 }
 
 
+/** 
+ * on_about1_activate
+ *
+ * \defgroup imskpe_about about dialog
+ * \addtogroup imskpe_about
+ * 
+ * @param menuitem 
+ * @param user_data 
+ */
 void
 on_about1_activate                     (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -589,7 +598,7 @@ imskpe_quit                            (GtkWidget       *widget,
 //   FormantListFree();
   CurveListFree(FileGetCurvesPointer());
   ConfigSave();
-  ConfigListFree();
+  ConfigFree();
   gtk_main_quit ();
 }
 
@@ -652,7 +661,14 @@ on_cancel_button2_clicked              (GtkButton       *button,
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
-
+/** 
+ * on_bn_about_close_clicked
+ *
+ * \addtogroup imskpe_about
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_bn_about_close_clicked              (GtkButton       *button,
                                         gpointer         user_data)
@@ -819,7 +835,6 @@ void
 on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
-//  printf("'f1_freq' - state: - %d\n",gtk_toggle_button_get_active ((GtkToggleButton *)togglebutton));
   SetCurveShow("bn_f1_freq");
 }
 
@@ -1135,6 +1150,14 @@ on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
 }
 
 
+/** 
+ * on_bn_credits_ok_clicked
+ *
+ * \addtogroup imskpe_about
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_bn_credits_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data)
@@ -1143,6 +1166,14 @@ on_bn_credits_ok_clicked               (GtkButton       *button,
 }
 
 
+/** 
+ * on_bn_about_credits_clicked
+ *
+ * \addtogroup imskpe_about
+ * 
+ * @param button 
+ * @param user_data 
+ */
 void
 on_bn_about_credits_clicked            (GtkButton       *button,
                                         gpointer         user_data)
@@ -1248,6 +1279,10 @@ void
 on_bn_prefs_apply_clicked              (GtkButton       *button,
                                         gpointer         user_data)
 {
+  GtkWidget *w;
+  int val;  
+  char tmp[100];
+
   // save values
   printf("apply\n");
   if(ConfigFind("color_f1_tmp"))
@@ -1281,12 +1316,54 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
     ConfigRename("color_f6_tmp","color_f6");
   }
 
+  if(ConfigFind("color_nasals_tmp"))
+  {
+    ConfigRemove("color_nasals");
+    ConfigRename("color_nasals_tmp","color_nasals");
+  }
+  if(ConfigFind("color_vs_tmp"))
+  {
+    ConfigRemove("color_vs");
+    ConfigRename("color_vs_tmp","color_vs");
+  }
+  if(ConfigFind("color_vs_tmp"))
+  {
+    ConfigRemove("color_vs");
+    ConfigRename("color_vs_tmp","color_vs");
+  }
 
-  // auch fuer die anderen farbwerte machen
+  w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
+  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+  sprintf(tmp,"%d",val);
+  ConfigInsert("maxfreq",tmp);
 
+  w=lookup_widget (GTK_WIDGET (button), "spn_max_amp");
+  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+  sprintf(tmp,"%d",val);
+  ConfigInsert("maxamp",tmp);
 
-  // auch die anderen parameter auslesen und abspeichern!!
-     
+  w=lookup_widget (GTK_WIDGET (button), "spn_max_band");
+  val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
+  sprintf(tmp,"%d",val);
+  ConfigInsert("maxband",tmp);
+
+  w=lookup_widget (GTK_WIDGET (button), "ent_klatt");
+  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+  ConfigInsert("klattcmd",tmp);
+
+  w=lookup_widget (GTK_WIDGET (button), "ent_play");
+  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+  ConfigInsert("playcmd",tmp);
+
+  w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
+  strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
+  ConfigInsert("tmpdir",tmp);
+
+  // redraw!!
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+
+  printf("apply end\n");     
   return;
 }
 
@@ -1296,9 +1373,11 @@ on_bn_prefs_ok_clicked                 (GtkButton       *button,
                                         gpointer         user_data)
 {
   // save values
-  on_bn_prefs_apply_clicked (NULL,NULL);
+  on_bn_prefs_apply_clicked (button,user_data);
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+
+  printf("prefs_ok end\n");     
 }
 
 
@@ -1320,6 +1399,7 @@ on_pm_movediag_activate                (GtkMenuItem     *menuitem,
  typValueList p_pnt;  
  typValueList pnt;  
  typValueList n_pnt;  
+ int v2time;
 
  if (movediag == NULL) 
  {
@@ -1331,7 +1411,7 @@ on_pm_movediag_activate                (GtkMenuItem     *menuitem,
 		     &movediag);
    
    
-   p_pnt.time=-1;
+   p_pnt.time=0;
    n_pnt.time=-1;
    pnt.time=MouseEventGetPoint();
    pnt.value=-1;
@@ -1340,18 +1420,28 @@ on_pm_movediag_activate                (GtkMenuItem     *menuitem,
    {
      v=vl->data;
      if(v->time==pnt.time)
-     {    
-       v2=vl->next->data;
-       n_pnt.time=v2->time-ui;
-       p_pnt.time+=ui;
+     { 
+       if(vl->next!=NULL)
+       {
+	 v2=vl->next->data;
+	 v2time=v2->time-ui;
+       }
+       {
+	 v2time=pnt.time;
+       }
+       n_pnt.time=v2time;
+       if(pnt.time!=0)
+       {
+	 p_pnt.time+=ui;
+       }
        pnt.value=v->value;
        break;
      }
      else
      {
-	  p_pnt.time=v->time;
-	  p_pnt.value=v->value;
-	  vl=vl->next;
+       p_pnt.time=v->time;
+       p_pnt.value=v->value;
+       vl=vl->next;
      }
    }
    
@@ -1377,6 +1467,10 @@ on_pm_movediag_activate                (GtkMenuItem     *menuitem,
    gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.value);
    
    w=lookup_widget (GTK_WIDGET (movediag), "spn_time");
+   if(pnt.time==n_pnt.time)
+   {
+     p_pnt.time=n_pnt.time;  // don't change time of last point!
+   }
    gtk_spin_button_set_range ((GtkSpinButton *) w, p_pnt.time, n_pnt.time);
    gtk_spin_button_set_value ((GtkSpinButton *) w, pnt.time);
    
@@ -1532,9 +1626,10 @@ void InitDialogColor(char *searchstring)
   xcol->green=col.green;
   xcol->blue=col.blue;
 
+  // risky!
   selected_color=searchstring;
 
-  printf("%2x %2x %2x\n",xcol->red,xcol->green,xcol->blue);
+//   printf("%2x %2x %2x\n",xcol->red,xcol->green,xcol->blue);
 
   if (colordiag == NULL) 
     {
@@ -1606,6 +1701,9 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
 {
   char *dir;
   char tmp[300];
+
+
+  return;
 
   dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
 
@@ -1806,9 +1904,16 @@ on_ok_button1_clicked                  (GtkButton       *button,
   strcat(tmp2,selected_color);
   strcat(tmp2,"_tmp");
   printf("update ...\n");
-  ConfigListInsert(tmp2,tmp);
+  ConfigInsert(tmp2,tmp);
+
+//   if(selected_color!=NULL)
+//   {
+//     g_free(selected_color);
+//   }
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+//   colordiag=NULL;
+  printf("color ok end\n");
 }
 
 

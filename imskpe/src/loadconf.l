@@ -134,7 +134,7 @@ void LoadConf(char *filename)
 	      if((strlen(val) > 0) && (strlen(var) > 0))
 	      {
 		printf("var: %s = %s\n",var,val);
-		  ConfigListInsert(var,val);
+		  ConfigInsert(var,val);
 	      }
 	      else
 	      {

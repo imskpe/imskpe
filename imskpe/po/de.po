@@ -7,7 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
-"POT-Creation-Date: 2004-08-13 13:48+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-11-05 00:22+0100\n"
 "PO-Revision-Date: 2004-03-23 22:33+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,264 +16,313 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/interface.c:170
+#: src/interface.c:181
 msgid "IMSKPE"
 msgstr "IMSKPE"
 
-#: src/interface.c:181
+#: src/interface.c:193
 msgid "_File"
 msgstr "_Datei"
 
-#: src/interface.c:213
-msgid "_View"
-msgstr "_Anzeigen"
+#: src/interface.c:225
+msgid "_Actions"
+msgstr ""
 
-#: src/interface.c:217
+#: src/interface.c:240
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: src/interface.c:224
+#: src/interface.c:247
 msgid "_About"
 msgstr "Über"
 
-#: src/interface.c:257
+#: src/interface.c:265
+msgid "Quit"
+msgstr ""
+
+#: src/interface.c:270
+#, fuzzy
+msgid "Open File"
+msgstr "Farbe wählen"
+
+#: src/interface.c:275
+#, fuzzy
+msgid "New File"
+msgstr "Farbe wählen"
+
+#: src/interface.c:280
+#, fuzzy
+msgid "Save File"
+msgstr "Farbe wählen"
+
+#: src/interface.c:285
+#, fuzzy
+msgid "Save File As"
+msgstr "Farbe wählen"
+
+#: src/interface.c:290 src/interface.c:1545
+#, fuzzy
+msgid "Preferences"
+msgstr "Frequenzen"
+
+#: src/interface.c:300 src/interface.c:2094
 msgid "move"
 msgstr "verschieben"
 
-#: src/interface.c:267
+#: src/interface.c:306
+msgid "Move Point"
+msgstr ""
+
+#: src/interface.c:310 src/interface.c:2098
 msgid "insert"
 msgstr "einfügen"
 
-#: src/interface.c:276
+#: src/interface.c:316
+msgid "Insert Point"
+msgstr ""
+
+#: src/interface.c:319 src/interface.c:2102
 msgid "delete"
 msgstr "löschen"
 
-#: src/interface.c:298
+#: src/interface.c:325
+msgid "Delete Point"
+msgstr ""
+
+#: src/interface.c:357
 msgid "duration: "
 msgstr "Dauer: "
 
-#: src/interface.c:305 src/interface.c:312
+#: src/interface.c:364 src/interface.c:371
 msgid "msec"
 msgstr "msek"
 
-#: src/interface.c:319
+#: src/interface.c:378
 #, fuzzy
 msgid "update interval: "
 msgstr "Schrittweite"
 
-#: src/interface.c:326
+#: src/interface.c:385
 msgid "sampling rate: "
 msgstr "Abtastrate: "
 
-#: src/interface.c:333
+#: src/interface.c:392
 msgid "Num of formants: "
 msgstr "Anzahl Formanten: "
 
-#: src/interface.c:340
+#: src/interface.c:399
 msgid "voice source: "
 msgstr "Stimmquelle: "
 
-#: src/interface.c:347
+#: src/interface.c:406
 msgid "branches"
 msgstr "Pfade"
 
-#: src/interface.c:354
+#: src/interface.c:413
 msgid "samp/sec"
 msgstr "Samples/Sek"
 
-#: src/interface.c:376
+#: src/interface.c:436 src/callbacks.c:743 src/graphics.c:118
 msgid "impulse"
 msgstr "Impulse"
 
-#: src/interface.c:377
+#: src/interface.c:437 src/callbacks.c:748 src/graphics.c:121
 msgid "natural"
 msgstr "naturgetreu"
 
-#: src/interface.c:378
+#: src/interface.c:438 src/callbacks.c:753 src/graphics.c:124
 msgid "sampled"
 msgstr "digitalisiert"
 
-#: src/interface.c:392
+#: src/interface.c:453 src/callbacks.c:768 src/graphics.c:135
 msgid "cascade + parallel"
 msgstr "kaskade + parallel"
 
-#: src/interface.c:393
+#: src/interface.c:454 src/callbacks.c:773 src/graphics.c:138
 msgid "parallel only"
 msgstr "nur parallel"
 
-#: src/interface.c:427
+#: src/interface.c:488
 msgid "global"
 msgstr "global"
 
-#: src/interface.c:445 src/interface.c:484 src/interface.c:522
-#: src/interface.c:560 src/interface.c:598 src/interface.c:636
-#: src/interface.c:814
+#: src/interface.c:500 src/interface.c:533 src/interface.c:565
+#: src/interface.c:597 src/interface.c:629 src/interface.c:661
+#: src/interface.c:858 src/interface.c:861
 msgid "frequencies"
 msgstr "Frequenzen"
 
-#: src/interface.c:451 src/interface.c:490 src/interface.c:528
-#: src/interface.c:566 src/interface.c:604 src/interface.c:642
+#: src/interface.c:506 src/interface.c:539 src/interface.c:571
+#: src/interface.c:603 src/interface.c:635 src/interface.c:667
 msgid "amplitudes"
 msgstr "Amplituden"
 
-#: src/interface.c:457 src/interface.c:496 src/interface.c:534
-#: src/interface.c:572 src/interface.c:610 src/interface.c:648
+#: src/interface.c:512 src/interface.c:545 src/interface.c:577
+#: src/interface.c:609 src/interface.c:641 src/interface.c:673
 msgid "bandwidth"
 msgstr "Bandbreite"
 
-#: src/interface.c:463 src/interface.c:502 src/interface.c:540
-#: src/interface.c:578 src/interface.c:616 src/interface.c:654
+#: src/interface.c:518 src/interface.c:551 src/interface.c:583
+#: src/interface.c:615 src/interface.c:647 src/interface.c:679
 msgid "bandwidth parallel"
 msgstr "parallele Bandbreite"
 
-#: src/interface.c:469
+#: src/interface.c:524
 msgid "F1"
 msgstr "F1"
 
-#: src/interface.c:508
+#: src/interface.c:557
 msgid "F2"
 msgstr "F2"
 
-#: src/interface.c:546
+#: src/interface.c:589
 msgid "F3"
 msgstr "F3"
 
-#: src/interface.c:584
+#: src/interface.c:621
 msgid "F4"
 msgstr "F4"
 
-#: src/interface.c:622
+#: src/interface.c:653
 msgid "F5"
 msgstr "F5"
 
-#: src/interface.c:660
+#: src/interface.c:685
 msgid "F6"
 msgstr "F6"
 
-#: src/interface.c:674
+#: src/interface.c:693
 #, fuzzy
 msgid "zero frequencies"
 msgstr "Frequenz der Auslöschung"
 
-#: src/interface.c:680
+#: src/interface.c:699
 #, fuzzy
 msgid "zero bandwidth"
 msgstr "Bandbreite der Auslöschung"
 
-#: src/interface.c:686
+#: src/interface.c:705
 #, fuzzy
 msgid "pole frequency"
 msgstr "Frequenz des Maximums"
 
-#: src/interface.c:692
+#: src/interface.c:711
 #, fuzzy
 msgid "pole bandwidth"
 msgstr "Bandbreite des Maximums"
 
-#: src/interface.c:698
+#: src/interface.c:717
 #, fuzzy
 msgid "pole amplitude"
 msgstr "Amplitude des Maxmimums"
 
-#: src/interface.c:704
+#: src/interface.c:723
 msgid "nasals"
 msgstr "Nasale"
 
-#: src/interface.c:708
+#: src/interface.c:727
 msgid "resonators"
 msgstr "Resonatoren"
 
-#: src/interface.c:716
+#: src/interface.c:735
 #, fuzzy
 msgid "glottal open quotient"
 msgstr "Öffnungsquotient der Glottisschwingung"
 
-#: src/interface.c:722
+#: src/interface.c:741
 msgid "breathiness"
 msgstr "Behauchtheit"
 
-#: src/interface.c:728
+#: src/interface.c:747
 #, fuzzy
 msgid "spectral tilt"
 msgstr "Neigung des Spektrums"
 
-#: src/interface.c:734
+#: src/interface.c:753
 #, fuzzy
 msgid "skewness"
 msgstr "Schiefe"
 
-#: src/interface.c:739
+#: src/interface.c:758
 #, fuzzy
 msgid "skewness (speed quotient) of voiced excitation signal"
 msgstr "Schiefe (speed quotient) des stimmhaften Anregungssignals"
 
-#: src/interface.c:741
+#: src/interface.c:760
 msgid "fundamental frequency"
 msgstr "Grundfrequenz"
 
-#: src/interface.c:747
+#: src/interface.c:766 src/interface.c:1632
 msgid "voice src"
 msgstr "Stimmquelle"
 
-#: src/interface.c:755
+#: src/interface.c:774
 msgid "amp. of voicing"
 msgstr "Amplitude der Phonation"
 
-#: src/interface.c:761
+#: src/interface.c:780
 msgid "amp. of aspiration"
 msgstr "Amplitude der Aspiration"
 
-#: src/interface.c:767
+#: src/interface.c:786
 msgid "amp. of frication"
 msgstr "Amplitude der Friktion"
 
-#: src/interface.c:773
+#: src/interface.c:792
 msgid "amp. of bypass path (par)"
 msgstr "Amplitude des Nebenpfades (par)"
 
-#: src/interface.c:778
+#: src/interface.c:797
 msgid "amplitude of bypass path (parallel branch)"
 msgstr "Amplitude des Nebenpfades (paralleler Zweig)"
 
-#: src/interface.c:780
+#: src/interface.c:799
 msgid "amp. of voicing (par)"
 msgstr "Amplitude der Phonation (par)"
 
-#: src/interface.c:785
+#: src/interface.c:804
 msgid "amplitude of voicing (parallel branch)"
 msgstr "Amplitude der Phonation (paralleler Zweig)"
 
-#: src/interface.c:787
+#: src/interface.c:806
 msgid "overall signal gain"
 msgstr "Signalgewinn insgesamt"
 
-#: src/interface.c:793
+#: src/interface.c:812 src/interface.c:1639
 msgid "exc. amp."
 msgstr "Ampl. d. Anreg."
 
-#: src/interface.c:823
+#: src/interface.c:843
+msgid "par -> wav"
+msgstr ""
+
+#: src/interface.c:848
+msgid "Convert & Play"
+msgstr ""
+
+#: src/interface.c:869 src/interface.c:872
 msgid "amplitude"
 msgstr "Amplitude"
 
-#: src/interface.c:832
+#: src/interface.c:880 src/interface.c:883
 msgid "bandwidths"
 msgstr "Bandbreite"
 
-#: src/interface.c:1099
+#: src/interface.c:1328
 msgid "Select Color"
 msgstr "Farbe wählen"
 
-#: src/interface.c:1150
+#: src/interface.c:1374
 #, fuzzy
 msgid "Select File"
 msgstr "Farbe wählen"
 
-#: src/interface.c:1192
+#: src/interface.c:1417
 #, fuzzy
 msgid "About"
 msgstr "Über"
 
-#: src/interface.c:1197
+#: src/interface.c:1424
 msgid ""
 "\n"
 "\n"
@@ -281,15 +331,223 @@ msgid ""
 "\n"
 "\n"
 "\n"
-"\n"
 "(c) 2004 by Andreas Madsack"
 msgstr ""
 
-#: src/interface.c:1223
+#: src/interface.c:1452 src/interface.c:1989
 msgid "Credits"
 msgstr ""
 
-#: src/callbacks.c:130
+#: src/interface.c:1561 src/interface.c:1646 src/interface.c:1653
+#: src/interface.c:1660 src/interface.c:1667 src/interface.c:1674
+#: src/interface.c:1681 src/interface.c:1688 src/interface.c:1695
+msgid "Color"
+msgstr ""
+
+#: src/interface.c:1566
+msgid "Change Color F1"
+msgstr ""
+
+#: src/interface.c:1568
+msgid "Formant 1"
+msgstr ""
+
+#: src/interface.c:1581
+msgid "change"
+msgstr ""
+
+#: src/interface.c:1590
+msgid "Formant 2"
+msgstr ""
+
+#: src/interface.c:1597
+msgid "Formant 3"
+msgstr ""
+
+#: src/interface.c:1604
+msgid "Formant 4"
+msgstr ""
+
+#: src/interface.c:1611
+msgid "Formant 5"
+msgstr ""
+
+#: src/interface.c:1618
+msgid "Formant 6"
+msgstr ""
+
+#: src/interface.c:1625
+#, fuzzy
+msgid "Nasals"
+msgstr "Nasale"
+
+#: src/interface.c:1651
+msgid "Change Color F2"
+msgstr ""
+
+#: src/interface.c:1658
+msgid "Change Color F4"
+msgstr ""
+
+#: src/interface.c:1665
+msgid "Change Color F5"
+msgstr ""
+
+#: src/interface.c:1672
+msgid "Change Color F6"
+msgstr ""
+
+#: src/interface.c:1679
+msgid "Change Color Nasals"
+msgstr ""
+
+#: src/interface.c:1686
+msgid "Change Color voice src"
+msgstr ""
+
+#: src/interface.c:1693
+msgid "Change Color exc. amp."
+msgstr ""
+
+#: src/interface.c:1700
+msgid "Change Color F3"
+msgstr ""
+
+#: src/interface.c:1702
+msgid "Colors"
+msgstr ""
+
+#: src/interface.c:1710
+#, fuzzy
+msgid "max frequence"
+msgstr "Frequenzen"
+
+#: src/interface.c:1717
+#, fuzzy
+msgid "max amplidute"
+msgstr "Amplitude"
+
+#: src/interface.c:1724
+#, fuzzy
+msgid "max bandwidth"
+msgstr "Bandbreite"
+
+#: src/interface.c:1752
+msgid "value:"
+msgstr ""
+
+#: src/interface.c:1759
+msgid "Ruler"
+msgstr ""
+
+#: src/interface.c:1767
+msgid "klatt80 binary"
+msgstr ""
+
+#: src/interface.c:1774
+msgid "wav player"
+msgstr ""
+
+#: src/interface.c:1781
+msgid "tmp directory"
+msgstr ""
+
+#: src/interface.c:1788
+msgid "Path"
+msgstr ""
+
+#: src/interface.c:1800
+msgid "command for klattbinary"
+msgstr ""
+
+#: src/interface.c:1801
+msgid "klatt"
+msgstr ""
+
+#: src/interface.c:1815
+msgid "playcommand"
+msgstr ""
+
+#: src/interface.c:1816
+msgid "play"
+msgstr ""
+
+#: src/interface.c:1823
+msgid "directory for temp-files"
+msgstr ""
+
+#: src/interface.c:1824
+msgid "/tmp"
+msgstr ""
+
+#: src/interface.c:1826
+msgid "Paths"
+msgstr ""
+
+#: src/interface.c:1834
+#, fuzzy
+msgid "misc"
+msgstr "msek"
+
+#: src/interface.c:2012
+msgid "Andreas Madsack <bolsog@users.sf.net>"
+msgstr ""
+
+#: src/interface.c:2014
+msgid "written by"
+msgstr ""
+
+#: src/interface.c:2028
+msgid "Manuel Kountz (de)"
+msgstr ""
+
+#: src/interface.c:2030
+#, fuzzy
+msgid "translators"
+msgstr "Resonatoren"
+
+#: src/interface.c:2045
+msgid ""
+"Dennis Klatt \n"
+"(for klatt-formant-synthesis-algorithm)\n"
+"\n"
+"Jon Iles, Nick Ing-Simmons \n"
+"(for klatt-command-line-tool)\n"
+"\n"
+"Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
+"(for KPE (gui for klatt from 1995))"
+msgstr ""
+
+#: src/interface.c:2047
+msgid "thanks to"
+msgstr ""
+
+#: src/interface.c:2106
+msgid "move dialog"
+msgstr ""
+
+#: src/interface.c:2152
+msgid "imskpe - Move"
+msgstr ""
+
+#: src/interface.c:2166
+msgid "Value: "
+msgstr ""
+
+#: src/interface.c:2180
+msgid "Hz"
+msgstr ""
+
+#: src/interface.c:2188
+msgid "Time:"
+msgstr ""
+
+#: src/interface.c:2195
+#, fuzzy
+msgid "sec"
+msgstr "msek"
+
+#: src/callbacks.c:140
 #, fuzzy
 msgid "Compiled"
 msgstr "digitalisiert"
@@ -299,15 +557,46 @@ msgstr "digitalisiert"
 msgid "Couldn't find pixmap file: %s"
 msgstr "Kann Bild %s nicht finden."
 
-#: loadpar.l:147
+#: loadpar.l:153 loadpar.l:163 loadpar.l:173 loadpar.l:183 loadpar.l:193
+#: loadpar.l:203
+#, c-format
 msgid "PAR-Import-Error: "
 msgstr ""
 
-#: loadpar.l:148
+#: loadpar.l:154
+#, c-format
 msgid "DU not integer\n"
 msgstr ""
 
-#: loadpar.l:162
+#: loadpar.l:164
+#, c-format
+msgid "UI not integer\n"
+msgstr ""
+
+#: loadpar.l:174
+#, c-format
+msgid "SR not integer\n"
+msgstr ""
+
+#: loadpar.l:184
+#, c-format
+msgid "NF not integer\n"
+msgstr ""
+
+#: loadpar.l:194
+#, c-format
+msgid "SS not integer\n"
+msgstr ""
+
+#: loadpar.l:204
+#, c-format
+msgid "CP not integer\n"
+msgstr ""
+
+#: loadpar.l:210
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
 msgstr ""
+
+#~ msgid "_View"
+#~ msgstr "_Anzeigen"

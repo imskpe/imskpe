@@ -18,7 +18,9 @@ imskpe_SOURCES = \
 	loadfile.c loadfile.h \
 	savefile.c savefile.h \
 	curves.c curves.h \
-	loadconf.l loadconf.h
+	loadconf.l loadconf.h \
+	convert.c
 
 imskpe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 
+SUBDIRS = klatt80

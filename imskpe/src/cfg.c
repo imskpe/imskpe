@@ -63,7 +63,7 @@ void ConfigLoad()
   }
 }
 
-void ConfigListInsert(char *name, char *value)
+void ConfigInsert(char *name, char *value)
 {
   unsigned short type;
   typConfig *data;
@@ -86,7 +86,7 @@ void ConfigListInsert(char *name, char *value)
       p_value = g_malloc (sizeof(char)*(strlen(value)+1));
       strcpy(p_value,value);
       data->value = p_value;
-      printf("up %30s = %30s \n",name,value);
+//       printf("up %30s = %30s \n",name,value);
       return;
     }
     
@@ -128,12 +128,12 @@ void ConfigListInsert(char *name, char *value)
     }
   }
 
-  printf("ins %30s = %30s [%d]\n",name,value,type);
+//   printf("ins %30s = %30s [%d]\n",name,value,type);
 
-  ConfigListInsertString(name,value,type);
+  ConfigInsertString(name,value,type);
 }
 
-void ConfigListInsertString(char *name, char *value, unsigned short type)
+void ConfigInsertString(char *name, char *value, unsigned short type)
 {
   typConfig *p=NULL;
   char *p_name;
@@ -158,12 +158,12 @@ void ConfigListInsertString(char *name, char *value, unsigned short type)
   return;
 }
 
-void ConfigListInsertInteger(char *name, int value, unsigned short type)
+void ConfigInsertInteger(char *name, int value, unsigned short type)
 {
   char x[100];
   
   snprintf (x,sizeof(x),"%d",value);
-  ConfigListInsertString(name, x, type);
+  ConfigInsertString(name, x, type);
 }
 
 
@@ -310,7 +310,7 @@ gboolean ConfigRename(char *name, char *ziel)
       {
 	g_free(data->name);
       }
-      tmp = g_malloc (sizeof(char)*(strlen(ziel)+1));
+      tmp = g_malloc (sizeof(char)*(strlen(ziel)));
       strcpy(tmp,ziel);
       data->name = tmp;
       return TRUE;
@@ -371,7 +371,7 @@ gboolean ConfigRemove(char *name)
   return FALSE;
 }
 
-void ConfigListFree()
+void ConfigFree()
 {
   typConfig *data;
   GList *cl;
@@ -399,23 +399,23 @@ void ConfigListFree()
 
 void ConfigNew()
 {
-  ConfigListInsert("maxfreq","5000");
-  ConfigListInsert("maxamp","100");
-  ConfigListInsert("maxband","2000");
+  ConfigInsert("maxfreq","5000");
+  ConfigInsert("maxamp","100");
+  ConfigInsert("maxband","2000");
 
-  ConfigListInsert("klattcmd","klatt");
-  ConfigListInsert("playcmd","play");
-  ConfigListInsert("tmpdir","/tmp");
+  ConfigInsert("klattcmd","klatt");
+  ConfigInsert("playcmd","play");
+  ConfigInsert("tmpdir","/tmp");
 
-  ConfigListInsert("color_f1","#ff0000");
-  ConfigListInsert("color_f2","#00ff00");
-  ConfigListInsert("color_f3","#0000ff");
-  ConfigListInsert("color_f4","#00ffff");
-  ConfigListInsert("color_f5","#ffff00");
-  ConfigListInsert("color_f6","#ff00ff");
-  ConfigListInsert("color_nasals","#ffaaaa");
-  ConfigListInsert("color_vs","#aaffaa");
-  ConfigListInsert("color_ea","#aaaaff");
+  ConfigInsert("color_f1","#ff0000");
+  ConfigInsert("color_f2","#00ff00");
+  ConfigInsert("color_f3","#0000ff");
+  ConfigInsert("color_f4","#00ffff");
+  ConfigInsert("color_f5","#ffff00");
+  ConfigInsert("color_f6","#ff00ff");
+  ConfigInsert("color_nasals","#ffaaaa");
+  ConfigInsert("color_vs","#aaffaa");
+  ConfigInsert("color_ea","#aaaaff");
 
 //  ConfigListInsert("main_window_x","740");
 //  ConfigListInsert("main_window_y","540");

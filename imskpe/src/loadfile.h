@@ -29,7 +29,7 @@
  */
 
 typedef enum {IMPULSE=1, NATURAL=2, SAMPLED=3} vcTyp;
-typedef enum {BOTH, PARALLEL} branchTyp;
+typedef enum {BOTH=1, PARALLEL=2} branchTyp;
 
 /** File-struct */
 typedef struct {
