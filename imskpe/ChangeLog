@@ -1,3 +1,12 @@
+2004-11-28  Andreas Madsack  <bolsog@users.sf.net>
+
+	* MAJOR IMPROVEMENT: point-moving 
+	  without interference with other points or curves
+	* updated german (de.po) translations
+	* changed toolbar-default to 'Icons only'
+	* toolbar-style changeable in preferences
+	* warning fixes in curves.c
+	
 2004-11-27  Andreas Madsack  <bolsog@users.sf.net>
 
 	* test in LoadPar if File is a par-file

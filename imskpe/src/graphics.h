@@ -60,6 +60,7 @@ void GuiSetNumberFormants(unsigned int x);
 void GuiSetVoiceSource(unsigned int x);
 void GuiSetBranches(unsigned int x);
 gboolean GuiGetToggleButtonState(char tmp[30]);
+void GuiSetToolbarStyle(int style);
 
 int CalcRealX(int dx, int maxx);
 int CalcRealY(int dy, int maxy,diagramTyp dia);

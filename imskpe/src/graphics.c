@@ -161,6 +161,21 @@ gboolean GuiGetToggleButtonState(char tmp[30])
   }
 }
 
+void GuiSetToolbarStyle(int style)
+{
+  GtkWidget *w;
+
+  w = lookup_widget (GTK_WIDGET (GetMainWindow()), "toolbar1");
+  gtk_toolbar_set_style ((GtkToolbar *)w,style);
+
+  w = lookup_widget (GTK_WIDGET (GetMainWindow()), "toolbar2");
+  gtk_toolbar_set_style ((GtkToolbar *)w,style);
+
+  w = lookup_widget (GTK_WIDGET (GetMainWindow()), "toolbar4");
+  gtk_toolbar_set_style ((GtkToolbar *)w,style);
+}
+
+
 
 /* ------------------------------------------------ */
 
@@ -771,6 +786,8 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
   typCurveList *c;
   int setp=0;
   int setc=0;
+  int ui=FileGetUpdateInterval();
+  int tmp;
 
   int ymax=5000;
   switch(dia)
@@ -851,46 +868,50 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	  n_pnt.time=v2->time;
 	}
 	
-	if(rx>p_pnt.time && rx<=n_pnt.time) { // +/- ui ??
-	  
-	  double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
-	  int yval = (int)((double)p_pnt.value+(grad));
-//  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
-	  
-	  // calc ytol
-	  int ytol=(ymax/100);
-	  if(ytol<10)
-	  ytol=10;
-
-	  if(yval>ry-ytol && yval<ry+ytol) // +abs((int)grad))
+	if(state & GDK_BUTTON1_MASK)
+	{
+	  if(MouseEventGetAction()==MOVE && pnt.time==MouseEventGetPoint() && c->nr==MouseEventGetCurve())
 	  {
-	    if(MouseEventSetCurve(c->nr)) {
-	      redraw_page(dia-1);
-	    }
-	    setc++;
-	  }
-	  
-	  if((pnt.value>ry-ytol && pnt.value<ry+ytol) && (rx>pnt.time-25 && rx<pnt.time+25))
-	  {
-	    if(state & GDK_BUTTON1_MASK)
-	    {
-	      if(MouseEventGetAction()==MOVE)
-	      {
-		PointMove(CurveSearchByNr(FileGetCurvesPointer(),c->nr),pnt.time,rx,ry);
-		MouseEventSetPoint(rx,c->nr);
-		setp++;
-	      }
-	    }
-	    
-	    if(MouseEventSetCurve(c->nr)) {
-	      redraw_page(dia-1);
-	    }
-	    setc++;
-	    
-	    if(MouseEventSetPoint(pnt.time,c->nr)) {
-	      redraw_page(dia-1);
-	    }
+	    tmp=PointMove(CurveSearchByNr(FileGetCurvesPointer(),c->nr),pnt.time,rx,ry);
+	    MouseEventSetPoint(tmp,c->nr);
 	    setp++;
+	    
+	    redraw_page(dia-1);
+	  }
+	}
+	else
+	{
+	  if(rx>p_pnt.time && rx<=n_pnt.time) { // +/- ui ??
+	    
+	    double grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
+	    int yval = (int)((double)p_pnt.value+(grad));
+//  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
+	    
+	    // calc ytol
+	    int ytol=(ymax/100);
+	    if(ytol<10)
+	    ytol=10;
+	    
+	    if(yval>ry-ytol && yval<ry+ytol)
+	    {
+	      if(MouseEventSetCurve(c->nr)) {
+	      redraw_page(dia-1);
+	      }
+	      setc++;
+	    }
+	    
+	    if((pnt.value>ry-ytol && pnt.value<ry+ytol) && (rx>pnt.time-(ui-1) && rx<pnt.time+(ui+1)))
+	    {
+	      if(MouseEventSetCurve(c->nr)) {
+		redraw_page(dia-1);
+	      }
+	      setc++;
+	      
+	      if(MouseEventSetPoint(pnt.time,c->nr)) {
+		redraw_page(dia-1);
+	      }
+	      setp++;
+	    }
 	  }
 	}
 	  
@@ -901,19 +922,19 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
     cv=cv->next;
   }
 /* ?? solve redrawproblem / check for mouse not overline or not over point */
-  if(lastcurve!=-1 && setc==0)
+  if(lastcurve!=-1 && setc==0 && !(state & GDK_BUTTON1_MASK))
   {
     if(MouseEventSetCurve(-1)) {
       redraw_page(dia-1);
     }
   }
-  if(setp==0)
+  if(setp==0 && !(state & GDK_BUTTON1_MASK))
   {
     if(MouseEventSetPoint(-1,-1)) {
     }
   }
   
-  if(setp>0)
+  if(setp>0 && !(state & GDK_BUTTON1_MASK))
   {
     redraw_page(dia-1);
   }

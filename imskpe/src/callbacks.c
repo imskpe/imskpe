@@ -23,7 +23,7 @@
  * 
  * @brief  callback-ifdef
  * 
- * 
+ * \todo problem with 'realize'-event and notebook-widgets! - realize isn't raised for notebook-tabs!=1 until selected!
  */
 
 
@@ -633,7 +633,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,"%d ms - %d Hz ",rx,ry);
+  snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
   SetStatusBar("sb_add",tmp);
 
   DrawAreaMotion(rx, ry, state, dia);
@@ -672,7 +672,7 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,"%d ms - %d dB ",rx,ry);
+  snprintf(tmp,30,_("%d ms - %d dB "),rx,ry);
   SetStatusBar("sb_add",tmp);
 
   DrawAreaMotion(rx, ry, state, dia);
@@ -711,7 +711,7 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
     
   rx=CalcRealX(x, widget->allocation.width);  
   ry=CalcRealY(y, widget->allocation.height,dia);  
-  snprintf(tmp,30,"%d ms - %d Hz ",rx,ry);
+  snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
   SetStatusBar("sb_add",tmp);
 
   DrawAreaMotion(rx, ry, state, dia);
@@ -1258,17 +1258,14 @@ on_cm_vs_entry_changed                 (GtkEditable     *editable,
   if(!strcmp(_("impulse"),x))
   {
     FileSetVoiceSource(1);
-//     printf("impulse: 1\n");
   }
   if(!strcmp(_("natural"),x))
   {
     FileSetVoiceSource(2);
-//     printf("natural: 2\n");
   }
   if(!strcmp(_("sampled"),x))
   {
     FileSetVoiceSource(3);
-//     printf("sampled: 3\n");
   }
 }
 
@@ -1654,6 +1651,7 @@ on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
   SetCurveShow("bn_examp_siggain");
 }
 
+
 /** @} */
 
 /* ---------------------------------------------------------------------- */
@@ -1775,6 +1773,7 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
   val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
   sprintf(tmp,"%d",val);
+  printf("max_freq: %d\n",val);
   ConfigInsert("maxfreq",tmp);
 
   w=lookup_widget (GTK_WIDGET (button), "spn_max_amp");
@@ -1798,6 +1797,26 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
   strcpy(tmp,gtk_entry_get_text((GtkEntry *)w));
   ConfigInsert("tmpdir",tmp);
+
+  w=lookup_widget (GTK_WIDGET (button), "cme_tool_style");
+  strncpy(tmp,gtk_editable_get_chars((GtkEditable *)w,0,-1),6);
+
+  if(!strcmp(_("icons"),tmp))
+  {
+    val=GTK_TOOLBAR_ICONS;
+  }
+  if(!strcmp(_("text"),tmp))
+  {
+    val=GTK_TOOLBAR_TEXT;
+  }
+  if(!strcmp(_("both"),tmp))
+  {
+    val=GTK_TOOLBAR_BOTH;
+  }
+  sprintf(tmp,"%d",val);
+  ConfigInsert("toolbarstyle",tmp);
+  GuiSetToolbarStyle(val);
+
 
   // redraw!!
   w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
@@ -1910,7 +1929,6 @@ on_spn_max_freq_realize                (GtkWidget       *widget,
                                         gpointer         user_data)
 {
   gtk_spin_button_set_value ((GtkSpinButton *) widget, ConfigGetInteger("maxfreq"));
-
 }
 
 
@@ -1947,6 +1965,26 @@ on_ent_tmp_realize                     (GtkWidget       *widget,
   gtk_entry_set_text ((GtkEntry *) widget, ConfigGetString("tmpdir"));
 }
 
+void
+on_cme_tool_style_realize              (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  int foo=ConfigGetInteger("toolbarstyle");  
+
+  switch(foo)
+  {
+  case GTK_TOOLBAR_ICONS:
+      gtk_entry_set_text ((GtkEntry *)widget,_("icons"));
+      break;
+  case GTK_TOOLBAR_TEXT:
+      gtk_entry_set_text ((GtkEntry *)widget,_("text"));
+      break;
+  case GTK_TOOLBAR_BOTH:
+      gtk_entry_set_text ((GtkEntry *)widget,_("both"));
+      break;
+  }
+
+}
 
 void
 on_lb_colors_realize                   (GtkWidget       *widget,
@@ -2084,6 +2122,12 @@ on_bn_color_f2_clicked                 (GtkButton       *button,
   InitDialogColor("f2");
 }
 
+void
+on_bn_color_f3_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  InitDialogColor("f3");
+}
 
 void
 on_bn_color_f4_clicked                 (GtkButton       *button,
@@ -2132,12 +2176,30 @@ on_bn_color_ea_clicked                 (GtkButton       *button,
   InitDialogColor("ea");
 }
 
-
 void
-on_bn_color_f3_clicked                 (GtkButton       *button,
+on_toolbar1_realize                    (GtkWidget       *widget,
                                         gpointer         user_data)
 {
-  InitDialogColor("f3");
+  int foo=ConfigGetInteger("toolbarstyle");  
+  gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
+}
+
+
+void
+on_toolbar4_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  int foo=ConfigGetInteger("toolbarstyle");  
+  gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
+}
+
+
+void
+on_toolbar2_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data)
+{
+  int foo=ConfigGetInteger("toolbarstyle");  
+  gtk_toolbar_set_style ((GtkToolbar *)widget,foo);
 }
 
 /** @} */
@@ -2162,7 +2224,8 @@ on_convert1_activate                   (GtkMenuItem     *menuitem,
 
   convert(tmp);
 
-  strcat(tmp," written");
+  // wav-file written
+  strcat(tmp,_(" written"));
 
   SetStatusBar ("sb_state",tmp);
 }
@@ -2242,3 +2305,15 @@ imskpe_quit                            (GtkWidget       *widget,
 }
 
 /** @} */
+
+
+
+void
+on_spn_max_freq_parent_set             (GtkWidget       *widget,
+                                        GtkWidget       *old_parent,
+                                        gpointer         user_data)
+{
+  ;
+
+}
+

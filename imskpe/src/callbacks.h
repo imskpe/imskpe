@@ -577,3 +577,25 @@ on_bn_color_f3_clicked                 (GtkButton       *button,
 void
 on_splash_close_clicked                (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_cme_tool_style_realize              (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_toolbar1_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_toolbar4_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+void
+on_toolbar2_realize                    (GtkWidget       *widget,
+                                        gpointer         user_data);
+
+
+void
+on_spn_max_freq_parent_set             (GtkWidget       *widget,
+                                        GtkWidget       *old_parent,
+                                        gpointer         user_data);

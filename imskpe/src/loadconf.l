@@ -40,6 +40,7 @@
 // #include <gtk/gtk.h>
 // #include <gdk/gdk.h>
 
+#include "support.h"
 #include "loadconf.h"
 #include "cfg.h"
 
@@ -89,8 +90,7 @@ void LoadConf(char *filename)
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    /// \todo use an error- or info-dialog ?!
-    printf("couldn't find configfile / use default!\n");
+    simpledialog (_("couldn't find configfile / use default!"));
 
     free(filename);
 

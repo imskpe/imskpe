@@ -117,7 +117,6 @@ void LoadPar(char *filename)
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
-    /** \todo use an errordialog ?! */
     simpledialog (_("Problems open parameter file."));
 
     free(filename);

@@ -33,6 +33,7 @@
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
 
+#include "support.h"
 #include "curves.h"
 #include "graphics.h"
 #include "loadconf.h"
@@ -59,13 +60,13 @@ void ConfigLoad()
   }
   else
   {
-    printf("get_home_dir failed!!\n");
+    simpledialog (_("get_home_dir failed!"));
   }
 }
 
 void ConfigInsert(char *name, char *value)
 {
-  unsigned short type;
+  unsigned short type=TYPE_STR;;
   typConfig *data;
   GList *cl;
   char *p_value;
@@ -102,6 +103,19 @@ void ConfigInsert(char *name, char *value)
   }
   else
   {
+    j=0;
+    for(i=0;i<strlen(value);i++)
+    {
+      if(isdigit(value[i])==2048)
+      {
+	j++;
+      }
+    }
+    if(j==strlen(value) && j!=0)
+    {
+      type=TYPE_INT;
+    }
+
     if(strlen(value)==7)
     {
       if(value[0]=='#')
@@ -114,23 +128,27 @@ void ConfigInsert(char *name, char *value)
 	    j++;
 	  }
 	}
+	if(j==6)
+	{
+	  type=TYPE_COLOR;
+	}
+	else
+	{
+	  type=TYPE_STR;
+	}
       }
     }
-
-    // \todo mabe add test with isdigit !!
-    if(j==6)
-    {
-      type=TYPE_COLOR;
-    }
-    else
-    {
-      type=TYPE_STR;
-    }
+  }
+  if(type==TYPE_INT)
+  {
+    ConfigInsertInteger(name,atoi(value),type);
+  }
+  else
+  {
+    ConfigInsertString(name,value,type);
   }
 
 //   printf("ins %30s = %30s [%d]\n",name,value,type);
-
-  ConfigInsertString(name,value,type);
 }
 
 void ConfigInsertString(char *name, char *value, unsigned short type)
@@ -376,7 +394,7 @@ void ConfigFree()
   typConfig *data;
   GList *cl;
 
-  printf("-configlistfree start-\n");
+//  printf("-configlistfree start-\n");
 
   cl=g_list_first (cfg);
   while(cl)
@@ -394,7 +412,7 @@ void ConfigFree()
 
     cl = g_list_remove(cl,data);
   }
-  printf("-configlistfree end-\n");
+//  printf("-configlistfree end-\n");
 }
 
 void ConfigNew()
@@ -415,6 +433,8 @@ void ConfigNew()
   ConfigInsert("color_nasals","#ffaaaa");
   ConfigInsert("color_vs","#aaffaa");
   ConfigInsert("color_ea","#aaaaff");
+
+  ConfigInsert("toolbarstyle","0");
 
 //  ConfigListInsert("main_window_x","740");
 //  ConfigListInsert("main_window_y","540");
@@ -443,8 +463,7 @@ void ConfigSave()
     outfp = fopen(tmp,"w");
     if(outfp==NULL)
     {
-      /** \todo use an errordialog ?! */
-      printf("can't open output parameter file");
+      simpledialog (_("Problems saving config-file!"));
       
       free(tmp);
       return;
@@ -453,7 +472,7 @@ void ConfigSave()
     /* write "header"  */
     fprintf(outfp,"# please don't edit this file!!\n");
     
-    printf("save config\n");
+//    printf("save config\n");
     cl=g_list_first (cfg);
     while(cl)
     {	
@@ -469,7 +488,7 @@ void ConfigSave()
   }
   else
   {
-    printf("get_home_dir failed!!\n");
+    simpledialog (_("get_home_dir failed!"));
     return;
   }
 

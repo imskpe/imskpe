@@ -96,7 +96,7 @@ gboolean SetCurveShow(char *wn);
 typValueList *GenPoint (gint t, gint v);
 void PointDelete (typCurveList *vallist, int time);
 gboolean PointInsert(typCurveList *cl, int time, int value);
-gboolean PointMove(typCurveList *cl, int otime, int time, int value);
+int PointMove(typCurveList *cl, int otime, int time, int value);
 gboolean PointSetDU(typCurveList *cl,int o_time, int time);
 void CurveInitStart();
 

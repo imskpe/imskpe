@@ -352,7 +352,7 @@ void PointDelete (typCurveList *cl, int time)
 
 }
 
-gboolean PointMove(typCurveList *cl, int otime, int time, int value)
+int PointMove(typCurveList *cl, int otime, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
   typValueList *v,*v2;  
@@ -374,14 +374,14 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       if(vl->next!=NULL)
       {
 	v2=vl->next->data;
-	v2time=v2->time-ui;
+	v2time=v2->time;
       }
       else
       {
 	v2time=v->time;
       }
 
-      if((((p_pnt.time+ui)<otime) && (v2time>otime)))
+      if((((p_pnt.time+ui)<time) && (v2time>(time+ui))))
       {
 	if(otime!=0 && otime!=v2time)
 	{
@@ -395,7 +395,7 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       }
       FileSetIsChanged(TRUE);
 //       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
-      return TRUE;
+      return v->time;
     }
     else
     {
@@ -404,7 +404,7 @@ gboolean PointMove(typCurveList *cl, int otime, int time, int value)
       vl=vl->next;
     }
   }
-  return FALSE;
+  return -1;
 }
 
 gboolean PointSetDU(typCurveList *cl,int o_time, int time)
@@ -530,7 +530,7 @@ void CurveInitStart()
     points=NULL;
     points = g_list_append(points, (typValueList *)GenPoint(0,starttable[i]));
     points = g_list_append(points, (typValueList *)GenPoint(du,starttable[i]));
-    CurveInsert(FileGetCurvesPointer(), i, points);
+    CurveInsert((GList *)FileGetCurvesPointer(i), i, points);
   }
 
 }

@@ -33,6 +33,7 @@
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include "support.h"
 
 #include "loadfile.h"
 //#include "curves.h"
@@ -84,8 +85,7 @@ void FileSave(char *filename)
   outfp = fopen(tmp,"w");
   if(outfp==NULL)
   {
-    /** \todo use an errordialog ?! */
-    printf("can't open output parameter file");
+    simpledialog (_("Can't open output parameter file."));
 
     free(tmp);
     return;

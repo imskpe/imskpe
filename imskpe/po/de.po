@@ -570,7 +570,6 @@ msgstr "Um bei neuen Versionen benachrichtigt zu werden:"
 msgid "Couldn't find pixmap file: %s"
 msgstr "Kann Bild %s nicht finden."
 
-#. * \todo use an errordialog ?!
 #: loadpar.l:120
 msgid "Problems open parameter file."
 msgstr "Probleme beim öffnen der Parameterdatei."
