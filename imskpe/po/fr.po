@@ -1,0 +1,700 @@
+#  -*- coding: utf-8 -*-
+# Traduction française pour imskpe. ->  http://imskpe.sf.net
+# Copyright (C) 2004,2005 Andreas Madsack
+# This file is distributed under the same license as the imskpe package.
+#
+# Andreas Madsack <bolsog@users.sf.net>, 2004, 2005.
+# Manuel Kountz <mkountz@freenet.de>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: imskpe\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-27 00:02+0100\n"
+"PO-Revision-Date: 2005-03-27 00:04+0100\n"
+"Last-Translator: Franz-Albert Van Den Bussche <franz@favdb.net>\n"
+"Language-Team: <imskpe-devel@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/interface.c:187
+msgid "IMSKPE"
+msgstr "IMSKPE"
+
+#: src/interface.c:205
+msgid "_File"
+msgstr "_Fichier"
+
+#: src/interface.c:237
+msgid "_Sets"
+msgstr "_Ensemble"
+
+#: src/interface.c:244
+msgid "_Add Set"
+msgstr "_Ajouter Set"
+
+#: src/interface.c:252
+msgid "_Delete Set"
+msgstr "_Supprimer Set"
+
+#: src/interface.c:265
+msgid "_Actions"
+msgstr "_Actions"
+
+#: src/interface.c:272
+msgid "_Execute"
+msgstr "_Exécuter"
+
+#: src/interface.c:275 src/interface.c:350
+msgid "Convert & Play"
+msgstr "Covertir & jouer"
+
+#: src/interface.c:284
+msgid "_Help"
+msgstr "_Aide"
+
+#: src/interface.c:291
+msgid "_About"
+msgstr "_A propos"
+
+#: src/interface.c:309
+msgid "Quit"
+msgstr "Quitter"
+
+#: src/interface.c:314 src/interface.c:2512
+msgid "Open File"
+msgstr "Ouvrir fichier"
+
+#: src/interface.c:319
+msgid "New File"
+msgstr "Nouveau fichier"
+
+#: src/interface.c:324 src/interface.c:2559
+msgid "Save File"
+msgstr "Enregistrer"
+
+#: src/interface.c:329
+msgid "Save File As"
+msgstr "Enregistrer sous"
+
+#: src/interface.c:334 src/interface.c:1554
+msgid "Preferences"
+msgstr "Préférences"
+
+#: src/interface.c:355
+msgid "Refresh Wavearea"
+msgstr "Actualiser la zone wave"
+
+#: src/interface.c:369 src/interface.c:2297
+msgid "move"
+msgstr "déplacer"
+
+#: src/interface.c:375
+msgid "Move Point"
+msgstr "Déplacer Point"
+
+#: src/interface.c:379 src/interface.c:2301
+msgid "insert"
+msgstr "insérer"
+
+#: src/interface.c:385
+msgid "Insert Point"
+msgstr "Insérer Point"
+
+#: src/interface.c:388 src/interface.c:2305
+msgid "delete"
+msgstr "supprimer"
+
+#: src/interface.c:394
+msgid "Delete Point"
+msgstr "Supprimer Point"
+
+#: src/interface.c:412
+msgid "duration: "
+msgstr "durée: "
+
+#: src/interface.c:419 src/interface.c:426
+msgid "ms"
+msgstr "ms"
+
+#: src/interface.c:433
+msgid "update interval: "
+msgstr "mise à jour intervalle"
+
+#: src/interface.c:440
+msgid "sampling rate: "
+msgstr "débit d'échantillonnage: "
+
+#: src/interface.c:447
+msgid "Num of formants: "
+msgstr "Num des formants: "
+
+#: src/interface.c:454
+msgid "voice source: "
+msgstr "voix source: "
+
+#: src/interface.c:461
+msgid "branches"
+msgstr "branches"
+
+#: src/interface.c:468
+msgid "samp/sec"
+msgstr "échantillons/sec"
+
+#: src/interface.c:491 src/callbacks.c:1389 src/graphics.c:121
+msgid "impulse"
+msgstr "impulsion"
+
+#: src/interface.c:492 src/callbacks.c:1393 src/graphics.c:124
+msgid "natural"
+msgstr "naturel"
+
+#: src/interface.c:493 src/callbacks.c:1397 src/graphics.c:127
+msgid "sampled"
+msgstr "échantillonné"
+
+#: src/interface.c:508 src/callbacks.c:1411 src/graphics.c:142
+msgid "cascade + parallel"
+msgstr "caskade + parallèle"
+
+#: src/interface.c:509 src/callbacks.c:1416 src/graphics.c:145
+msgid "parallel only"
+msgstr "parallèle seul"
+
+#: src/interface.c:543
+msgid "global"
+msgstr "global"
+
+#: src/interface.c:555 src/interface.c:588 src/interface.c:620
+#: src/interface.c:652 src/interface.c:684 src/interface.c:716
+#: src/interface.c:895
+msgid "frequency"
+msgstr "fréquence"
+
+#: src/interface.c:561 src/interface.c:594 src/interface.c:626
+#: src/interface.c:658 src/interface.c:690 src/interface.c:722
+#: src/interface.c:903 src/interface.c:906
+msgid "amplitude"
+msgstr "amplitude"
+
+#: src/interface.c:567 src/interface.c:600 src/interface.c:632
+#: src/interface.c:664 src/interface.c:696 src/interface.c:728
+#: src/interface.c:917
+msgid "bandwidth"
+msgstr "largeur de bande"
+
+#: src/interface.c:573 src/interface.c:606 src/interface.c:638
+#: src/interface.c:670 src/interface.c:702 src/interface.c:734
+msgid "bandwidth parallel"
+msgstr "largeur de bande parallèle"
+
+#: src/interface.c:579
+msgid "F1"
+msgstr "F1"
+
+#: src/interface.c:612
+msgid "F2"
+msgstr "F2"
+
+#: src/interface.c:644
+msgid "F3"
+msgstr "F3"
+
+#: src/interface.c:676
+msgid "F4"
+msgstr "F4"
+
+#: src/interface.c:708
+msgid "F5"
+msgstr "F5"
+
+#: src/interface.c:740
+msgid "F6"
+msgstr "F6"
+
+#: src/interface.c:748
+msgid "zero frequency"
+msgstr "fréquence zéro"
+
+#: src/interface.c:754
+msgid "zero bandwidth"
+msgstr "largeur de bande zéro"
+
+#: src/interface.c:760
+msgid "pole frequency"
+msgstr "fréquence maximum"
+
+#: src/interface.c:766
+msgid "pole bandwidth"
+msgstr "largeur de bande maximum"
+
+#: src/interface.c:772
+msgid "pole amplitude"
+msgstr "amplitude maximum"
+
+#: src/interface.c:778
+msgid "nasals"
+msgstr "nasales"
+
+#: src/interface.c:782
+msgid "resonators"
+msgstr "résonateurs"
+
+#: src/interface.c:790
+msgid "skewness"
+msgstr "tendance spectrale (skewness)"
+
+#: src/interface.c:795
+msgid "skewness (speed quotient) of voiced excitation signal"
+msgstr "skewness (coéfficient de vitesse) du signal d'excitation de voix"
+
+#: src/interface.c:797
+msgid "spectral tilt"
+msgstr "pentes spectrales (tilt)"
+
+#: src/interface.c:803
+msgid "breathiness"
+msgstr "respiration"
+
+#: src/interface.c:809
+msgid "glottal open quotient"
+msgstr "coéfficient d'ouverture glottale"
+
+#: src/interface.c:815
+msgid "fundamental frequency"
+msgstr "fréquence fondamentale"
+
+#: src/interface.c:821 src/interface.c:1618
+msgid "voice src"
+msgstr "voix source"
+
+#: src/interface.c:829
+msgid "amp. of voicing (par)"
+msgstr "amplitude de phonation (par)"
+
+#: src/interface.c:834
+msgid "amplitude of voicing (parallel branch)"
+msgstr "amplitude de Phonation (branche parallèle)"
+
+#: src/interface.c:836
+msgid "amp. of bypass path (par)"
+msgstr "amplitude de déviation (par)"
+
+#: src/interface.c:841
+msgid "amplitude of bypass path (parallel branch)"
+msgstr "amplitude de déviation (branche parallèle)"
+
+#: src/interface.c:843
+msgid "amp. of frication"
+msgstr "amplitude de frication"
+
+#: src/interface.c:849
+msgid "amp. of aspiration"
+msgstr "amplitude de'aspiration"
+
+#: src/interface.c:855
+msgid "amp. of voicing"
+msgstr "amplitude de phonation"
+
+#: src/interface.c:861
+msgid "overall signal gain"
+msgstr "gain global du signal"
+
+#: src/interface.c:867 src/interface.c:1625
+msgid "exc. amp."
+msgstr "exc. d. amp."
+
+#: src/interface.c:892
+msgid "frequencies"
+msgstr "fréquence"
+
+#: src/interface.c:914
+msgid "bandwidths"
+msgstr "largeur de bande"
+
+#: src/interface.c:1401
+msgid "About"
+msgstr "A propos"
+
+#: src/interface.c:1408
+msgid ""
+"\n"
+"\n"
+"\n"
+"imskpe \n"
+"\n"
+"\n"
+"\n"
+"(c) 2004 by Andreas Madsack"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"imskpe\n"
+"\n"
+"\n"
+"\n"
+"(c) 2004 par Andreas Madsack"
+
+#: src/interface.c:1436 src/interface.c:2192
+msgid "Credits"
+msgstr "Crédits"
+
+#: src/interface.c:1576
+msgid "Formant 2"
+msgstr "Formant 2"
+
+#: src/interface.c:1583
+msgid "Formant 3"
+msgstr "Formant 3"
+
+#: src/interface.c:1590
+msgid "Formant 4"
+msgstr "Formant 4"
+
+#: src/interface.c:1597
+msgid "Formant 5"
+msgstr "Formant 5"
+
+#: src/interface.c:1604
+msgid "Formant 6"
+msgstr "Formant 6"
+
+#: src/interface.c:1611
+msgid "Nasals"
+msgstr "Nasales"
+
+#: src/interface.c:1632
+msgid "Formant 1"
+msgstr "Formant 1"
+
+#: src/interface.c:1644 src/interface.c:1651 src/interface.c:1658
+#: src/interface.c:1665 src/interface.c:1672 src/interface.c:1679
+#: src/interface.c:1686 src/interface.c:1693 src/interface.c:1700
+msgid "Change Color"
+msgstr "Changer Couleur"
+
+#: src/interface.c:1723
+msgid "Colors"
+msgstr "Couleurs"
+
+#: src/interface.c:1767
+msgid "value:"
+msgstr "valeur:"
+
+#: src/interface.c:1774
+msgid "Font: "
+msgstr "Police: "
+
+#: src/interface.c:1781
+msgid "max bandwidth"
+msgstr "bande max."
+
+#: src/interface.c:1788
+msgid "max amplidute"
+msgstr "amplitude max."
+
+#: src/interface.c:1795
+msgid "max frequence"
+msgstr "fréquence max."
+
+#: src/interface.c:1823
+msgid "Ruler"
+msgstr "Règle"
+
+#: src/interface.c:1836
+msgid "directory for temp-files"
+msgstr "répertoire des fichiers temporaires"
+
+#: src/interface.c:1837
+msgid "/tmp"
+msgstr "/tmp"
+
+#: src/interface.c:1844
+msgid "playcommand"
+msgstr "commande pour jouer le son"
+
+# kommando zum Abspielen
+#: src/interface.c:1845
+msgid "play"
+msgstr "play"
+
+#: src/interface.c:1847
+msgid "Path"
+msgstr "Chemin"
+
+#: src/interface.c:1861
+msgid "tmp directory"
+msgstr "répertoire tmp"
+
+#: src/interface.c:1868
+msgid "wav player"
+msgstr "Wave-Player"
+
+#: src/interface.c:1896
+msgid "Paths"
+msgstr "Chemins"
+
+#: src/interface.c:1922
+msgid "show really quit dialog: "
+msgstr "dialogue pour quitter: "
+
+#: src/interface.c:1929
+msgid "toolbar style:"
+msgstr "style barre d'outils:"
+
+#: src/interface.c:1943
+msgid "Value"
+msgstr "Valeur"
+
+#: src/interface.c:1976
+msgid "icons"
+msgstr "Icônes"
+
+#: src/interface.c:1977
+msgid "text"
+msgstr "texte"
+
+#: src/interface.c:1978
+msgid "both"
+msgstr "les deux"
+
+#: src/interface.c:1980
+msgid "Misc"
+msgstr "Divers"
+
+#: src/interface.c:2009
+msgid "_Default"
+msgstr "_Défaut"
+
+#: src/interface.c:2215
+msgid "Andreas Madsack <bolsog@users.sf.net>"
+msgstr "Andreas Madsack <bolsog@users.sf.net>"
+
+#: src/interface.c:2217
+msgid "written by"
+msgstr "écrit par"
+
+#: src/interface.c:2231
+msgid ""
+"Manuel Kountz (de)\n"
+"FaVdB (fr)"
+msgstr ""
+"Manuel Kountz (de)\n"
+"FaVdB (fr)"
+
+#: src/interface.c:2233
+msgid "translators"
+msgstr "traducteurs"
+
+#: src/interface.c:2248
+msgid ""
+"Dennis Klatt \n"
+"(for klatt-formant-synthesis-algorithm)\n"
+"\n"
+"Jon Iles, Nick Ing-Simmons \n"
+"(for klatt-command-line-tool)\n"
+"\n"
+"Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
+"(for KPE (gui for klatt from 1995))"
+msgstr ""
+"Dennis Klatt \n"
+"(pour l'algorithme de synthèse par formants)\n"
+"\n"
+"Jon Iles, Nick Ing-Simmons \n"
+"(pour l'outil ligne de commande)\n"
+"\n"
+"Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
+"(pour l'interface KPE de 1995)"
+
+#: src/interface.c:2250
+msgid "thanks to"
+msgstr "remerciements à"
+
+#: src/interface.c:2309
+msgid "move dialog"
+msgstr "dialogue de déplacement"
+
+#: src/interface.c:2355
+msgid "imskpe - Move"
+msgstr "imskpe - Déplacement"
+
+#: src/interface.c:2369
+msgid "Value: "
+msgstr "Valeur: "
+
+#: src/interface.c:2383
+msgid "Hz"
+msgstr "Hz"
+
+#: src/interface.c:2391
+msgid "Time:"
+msgstr "Temps: "
+
+#: src/interface.c:2398
+msgid "sec"
+msgstr "sec"
+
+#: src/interface.c:2461
+msgid "IMSKPE - Information"
+msgstr "IMSKPE - Information"
+
+#: src/interface.c:2473
+msgid "IMSKPE-Splash"
+msgstr "IMSKPE-Splash"
+
+#: src/interface.c:2614
+msgid "Adding a set"
+msgstr "Ajout d'un set"
+
+#: src/interface.c:2638
+msgid "Name of Set:"
+msgstr "Nom du Set:"
+
+#: src/interface.c:2720
+msgid "Delete a set"
+msgstr "Supprimer un set"
+
+#: src/interface.c:2758
+msgid "Which Set do You want to delete?"
+msgstr "Quel Set voulez-vous supprimer?"
+
+#: src/interface.c:2770
+msgid "choose"
+msgstr "choisissez"
+
+#: src/callbacks.c:90 src/callbacks.c:243 src/callbacks.c:269
+msgid "Save changed data?"
+msgstr "Enregistrer les chagements?"
+
+#: src/callbacks.c:229
+msgid " written"
+msgstr " écrits"
+
+#: src/callbacks.c:350
+msgid "Filetype: "
+msgstr "Type fichier: "
+
+#: src/callbacks.c:393
+msgid "All Files"
+msgstr "Tous fichiers"
+
+#: src/callbacks.c:398
+msgid "par-Files"
+msgstr "Fichiers-par"
+
+#: src/callbacks.c:473
+msgid "Compiled"
+msgstr "Compilé"
+
+#: src/callbacks.c:544
+msgid "write bugreports here: "
+msgstr "rapport de bug ici: "
+
+#: src/callbacks.c:545
+msgid "get announcements:"
+msgstr "avoir les annonces:"
+
+#: src/callbacks.c:761 src/callbacks.c:853
+#, c-format
+msgid "%d ms - %d Hz "
+msgstr "%d ms - %d Hz "
+
+#: src/callbacks.c:807
+#, c-format
+msgid "%d ms - %d dB "
+msgstr "%d ms - %d dB "
+
+#: src/callbacks.c:1995
+msgid "Really reset preferences?"
+msgstr "Réinitialiser vraiment les préférences?"
+
+#: src/callbacks.c:2364
+msgid "You need insert a name for the set!"
+msgstr "Vous devez insérer un nom pour le set"
+
+#: src/callbacks.c:2539
+msgid "Really quit?"
+msgstr "Quitter vraiment?"
+
+#: src/support.c:90 src/support.c:114
+#, c-format
+msgid "Couldn't find pixmap file: %s"
+msgstr "Impossible de trouver le fichier pixmap %s"
+
+#: src/cfg.c:457
+msgid "Problems saving config-file!"
+msgstr "Problèmes denregistrement du fichier de configuration!"
+
+#: src/cfg.c:480
+msgid "get_home_dir failed!"
+msgstr "get_home_dir en erreur!"
+
+#: src/cfg.c:548
+msgid "Only Characters, Numbers, Space and - are allowed!"
+msgstr "Seuls les lettres, nombres, espaces et - sont autorisés!"
+
+#: loadpar.l:120
+msgid "Problems open parameter file."
+msgstr "Problèmes d'ouverture du fichier paramètre."
+
+#: loadpar.l:141
+msgid "no parameter file."
+msgstr "aucun fichier paramètre."
+
+#: loadpar.l:169 loadpar.l:179 loadpar.l:189 loadpar.l:199 loadpar.l:209
+#: loadpar.l:219
+#, c-format
+msgid "PAR-Import-Error: "
+msgstr "Erreur-Import-PAR: "
+
+#: loadpar.l:170
+#, c-format
+msgid "DU not integer\n"
+msgstr "DU non entier\n"
+
+#: loadpar.l:180
+#, c-format
+msgid "UI not integer\n"
+msgstr "UI non entier\n"
+
+#: loadpar.l:190
+#, c-format
+msgid "SR not integer\n"
+msgstr "SR non entier\n"
+
+#: loadpar.l:200
+#, c-format
+msgid "NF not integer\n"
+msgstr "NF non entier\n"
+
+#: loadpar.l:210
+#, c-format
+msgid "SS not integer\n"
+msgstr "SS non entier\n"
+
+#: loadpar.l:220
+#, c-format
+msgid "CP not integer\n"
+msgstr "CP non entier\n"
+
+#: loadpar.l:226
+#, c-format
+msgid "not recognized variable in PAR-File: %s [%s]\n"
+msgstr "variable non reconnue dans le fichier PAR: %s [%s]\n"
+
+#: loadpar.l:239
+msgid "Parameterfile has loops?"
+msgstr "Fichier paramètre contient des doubles!"
+
+#: src/savefile.c:87
+msgid "Can't open output parameter file."
+msgstr "Fichier paramètre impossible à ouvrir."
+
+#: loadconf.l:96
+msgid "couldn't find configfile / use default!"
+msgstr "Impossible de trouver le fichier de configuration. Usage par défaut."
+
+#~ msgid "Needs to be done."
+#~ msgstr "Apportez votre aide."
