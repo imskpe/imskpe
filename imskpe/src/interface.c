@@ -2052,9 +2052,6 @@ create_imskpe_prefs (void)
   g_signal_connect ((gpointer) spn_max_freq, "realize",
                     G_CALLBACK (on_spn_max_freq_realize),
                     NULL);
-  g_signal_connect ((gpointer) spn_max_freq, "parent_set",
-                    G_CALLBACK (on_spn_max_freq_parent_set),
-                    NULL);
   g_signal_connect ((gpointer) ent_tmp, "realize",
                     G_CALLBACK (on_ent_tmp_realize),
                     NULL);
@@ -2691,5 +2688,112 @@ create_imskpe_set_add (void)
   GLADE_HOOKUP_OBJECT (imskpe_set_add, bn_set_add_ok, "bn_set_add_ok");
 
   return imskpe_set_add;
+}
+
+GtkWidget*
+create_imskpe_set_delete (void)
+{
+  GtkWidget *imskpe_set_delete;
+  GtkWidget *dialog_vbox9;
+  GtkWidget *table24;
+  GtkWidget *drawingarea23;
+  GtkWidget *drawingarea24;
+  GtkWidget *drawingarea25;
+  GtkWidget *drawingarea26;
+  GtkWidget *label36;
+  GtkWidget *cb_set_delete;
+  GtkWidget *dialog_action_area9;
+  GtkWidget *bn_set_del_cancel;
+  GtkWidget *bn_set_del_ok;
+
+  imskpe_set_delete = gtk_dialog_new ();
+  gtk_window_set_title (GTK_WINDOW (imskpe_set_delete), _("Delete a set"));
+  gtk_window_set_type_hint (GTK_WINDOW (imskpe_set_delete), GDK_WINDOW_TYPE_HINT_DIALOG);
+
+  dialog_vbox9 = GTK_DIALOG (imskpe_set_delete)->vbox;
+  gtk_widget_show (dialog_vbox9);
+
+  table24 = gtk_table_new (4, 3, FALSE);
+  gtk_widget_show (table24);
+  gtk_box_pack_start (GTK_BOX (dialog_vbox9), table24, FALSE, FALSE, 0);
+
+  drawingarea23 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea23);
+  gtk_table_attach (GTK_TABLE (table24), drawingarea23, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea23, 20, 20);
+
+  drawingarea24 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea24);
+  gtk_table_attach (GTK_TABLE (table24), drawingarea24, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea24, 20, -1);
+
+  drawingarea25 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea25);
+  gtk_table_attach (GTK_TABLE (table24), drawingarea25, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
+                    (GtkAttachOptions) (GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea25, 20, -1);
+
+  drawingarea26 = gtk_drawing_area_new ();
+  gtk_widget_show (drawingarea26);
+  gtk_table_attach (GTK_TABLE (table24), drawingarea26, 1, 2, 3, 4,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_widget_set_size_request (drawingarea26, 20, 20);
+
+  label36 = gtk_label_new (_("Which Set do You want to delete?"));
+  gtk_widget_show (label36);
+  gtk_table_attach (GTK_TABLE (table24), label36, 1, 2, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label36), 0, 0.5);
+
+  cb_set_delete = gtk_combo_box_new_text ();
+  gtk_widget_show (cb_set_delete);
+  gtk_table_attach (GTK_TABLE (table24), cb_set_delete, 1, 2, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (GTK_EXPAND | GTK_FILL), 0, 0);
+  gtk_combo_box_append_text (GTK_COMBO_BOX (cb_set_delete), _("choose"));
+
+  dialog_action_area9 = GTK_DIALOG (imskpe_set_delete)->action_area;
+  gtk_widget_show (dialog_action_area9);
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (dialog_action_area9), GTK_BUTTONBOX_END);
+
+  bn_set_del_cancel = gtk_button_new_from_stock ("gtk-cancel");
+  gtk_widget_show (bn_set_del_cancel);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_set_delete), bn_set_del_cancel, GTK_RESPONSE_CANCEL);
+  GTK_WIDGET_SET_FLAGS (bn_set_del_cancel, GTK_CAN_DEFAULT);
+
+  bn_set_del_ok = gtk_button_new_from_stock ("gtk-ok");
+  gtk_widget_show (bn_set_del_ok);
+  gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_set_delete), bn_set_del_ok, GTK_RESPONSE_OK);
+  GTK_WIDGET_SET_FLAGS (bn_set_del_ok, GTK_CAN_DEFAULT);
+
+  g_signal_connect ((gpointer) bn_set_del_cancel, "clicked",
+                    G_CALLBACK (on_bn_set_del_cancel_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_set_del_ok, "clicked",
+                    G_CALLBACK (on_bn_set_del_ok_clicked),
+                    NULL);
+
+  /* Store pointers to all widgets, for use by lookup_widget(). */
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_delete, imskpe_set_delete, "imskpe_set_delete");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_delete, dialog_vbox9, "dialog_vbox9");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, table24, "table24");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, drawingarea23, "drawingarea23");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, drawingarea24, "drawingarea24");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, drawingarea25, "drawingarea25");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, drawingarea26, "drawingarea26");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, label36, "label36");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, cb_set_delete, "cb_set_delete");
+  GLADE_HOOKUP_OBJECT_NO_REF (imskpe_set_delete, dialog_action_area9, "dialog_action_area9");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, bn_set_del_cancel, "bn_set_del_cancel");
+  GLADE_HOOKUP_OBJECT (imskpe_set_delete, bn_set_del_ok, "bn_set_del_ok");
+
+  return imskpe_set_delete;
 }
 

@@ -65,3 +65,7 @@ void ConfigFree();
 void ConfigNew();
 void ConfigSave();
 int hexdigit_value(unsigned char digit);
+
+
+void ConfigShowAllSets();
+gboolean ConfigInsertSet(char *name, char val[50]);

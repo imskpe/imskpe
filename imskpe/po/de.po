@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-16 22:53+0100\n"
-"PO-Revision-Date: 2005-01-16 18:02+0100\n"
+"POT-Creation-Date: 2005-01-17 23:02+0100\n"
+"PO-Revision-Date: 2005-01-17 23:14+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "Über"
 msgid "Quit"
 msgstr "Beenden"
 
-#: src/interface.c:313 src/interface.c:2505
+#: src/interface.c:313 src/interface.c:2502
 msgid "Open File"
 msgstr "Datei öffnen"
 
@@ -70,7 +70,7 @@ msgstr "Datei öffnen"
 msgid "New File"
 msgstr "Neue Datei"
 
-#: src/interface.c:323 src/interface.c:2552
+#: src/interface.c:323 src/interface.c:2549
 msgid "Save File"
 msgstr "Datei speichern"
 
@@ -82,7 +82,7 @@ msgstr "Datei speichern als"
 msgid "Preferences"
 msgstr "Einstellungen"
 
-#: src/interface.c:363 src/interface.c:2290
+#: src/interface.c:363 src/interface.c:2287
 msgid "move"
 msgstr "verschieben"
 
@@ -90,7 +90,7 @@ msgstr "verschieben"
 msgid "Move Point"
 msgstr "Punkt verschieben"
 
-#: src/interface.c:373 src/interface.c:2294
+#: src/interface.c:373 src/interface.c:2291
 msgid "insert"
 msgstr "einfügen"
 
@@ -98,7 +98,7 @@ msgstr "einfügen"
 msgid "Insert Point"
 msgstr "Punkt einfügen"
 
-#: src/interface.c:382 src/interface.c:2298
+#: src/interface.c:382 src/interface.c:2295
 msgid "delete"
 msgstr "löschen"
 
@@ -333,7 +333,7 @@ msgstr ""
 "\n"
 "(c) 2004 by Andreas Madsack"
 
-#: src/interface.c:1426 src/interface.c:2185
+#: src/interface.c:1426 src/interface.c:2182
 msgid "Credits"
 msgstr "Credits"
 
@@ -464,23 +464,23 @@ msgstr "Verschiende"
 msgid "_Default"
 msgstr "_Voreinstellungen"
 
-#: src/interface.c:2208
+#: src/interface.c:2205
 msgid "Andreas Madsack <bolsog@users.sf.net>"
 msgstr "Andreas Madsack <bolsog@users.sf.net>"
 
-#: src/interface.c:2210
+#: src/interface.c:2207
 msgid "written by"
 msgstr "programmiert von"
 
-#: src/interface.c:2224
+#: src/interface.c:2221
 msgid "Manuel Kountz (de)"
 msgstr "Manuel Kountz (de)"
 
-#: src/interface.c:2226
+#: src/interface.c:2223
 msgid "translators"
 msgstr "Übersetzer"
 
-#: src/interface.c:2241
+#: src/interface.c:2238
 msgid ""
 "Dennis Klatt \n"
 "(for klatt-formant-synthesis-algorithm)\n"
@@ -500,49 +500,61 @@ msgstr ""
 "Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
 "(für die KPE-GUI aus dem Jahre 1995)"
 
-#: src/interface.c:2243
+#: src/interface.c:2240
 msgid "thanks to"
 msgstr "Danksagung an"
 
-#: src/interface.c:2302
+#: src/interface.c:2299
 msgid "move dialog"
 msgstr "Verschieben Dialog"
 
-#: src/interface.c:2348
+#: src/interface.c:2345
 msgid "imskpe - Move"
 msgstr "imskpe - Verschieben"
 
-#: src/interface.c:2362
+#: src/interface.c:2359
 msgid "Value: "
 msgstr "Wert: "
 
-#: src/interface.c:2376
+#: src/interface.c:2373
 msgid "Hz"
 msgstr "Hz"
 
-#: src/interface.c:2384
+#: src/interface.c:2381
 msgid "Time:"
 msgstr "Zeit: "
 
-#: src/interface.c:2391
+#: src/interface.c:2388
 msgid "sec"
 msgstr "sek"
 
-#: src/interface.c:2454
+#: src/interface.c:2451
 msgid "IMSKPE - Information"
 msgstr "IMSKPE - Information"
 
-#: src/interface.c:2466
+#: src/interface.c:2463
 msgid "IMSKPE-Splash"
 msgstr "IMSKPE-Splash"
 
-#: src/interface.c:2607
+#: src/interface.c:2604
 msgid "Adding a set"
 msgstr "Ein Set hinzufügen"
 
-#: src/interface.c:2631
+#: src/interface.c:2628
 msgid "Name of Set:"
 msgstr "Name des Set:"
+
+#: src/interface.c:2710
+msgid "Delete a set"
+msgstr "Ein Set löschen"
+
+#: src/interface.c:2748
+msgid "Which Set do You want to delete?"
+msgstr "Welches Set wollen Sie löschen?"
+
+#: src/interface.c:2760
+msgid "choose"
+msgstr "auswählen"
 
 #: src/callbacks.c:90 src/callbacks.c:240 src/callbacks.c:266
 msgid "Save changed data?"
@@ -586,47 +598,32 @@ msgstr "%d ms - %d Hz "
 msgid "%d ms - %d dB "
 msgstr "%d ms - %d dB "
 
-#: src/callbacks.c:2001
+#: src/callbacks.c:1992
 msgid "Really reset preferences?"
 msgstr "Wirklich die Einstellungen zurücksetzen?"
 
-#: src/callbacks.c:2329
-msgid "Really quit?"
-msgstr "Wirklich Beenden?"
-
-#. GtkWidget *menu = (GtkMenuShell *)lookup_widget (GTK_WIDGET (GetMainWindow()), "sets1_menu");
-#. GList *l = menu->children;
-#. while(l)
-#. {
-#. printf("child\n");
-#. l = l->next;
-#. }
-#. gtk_option_menu_get_menu(GTK_OPTION_MENU(option_menu));
-#. GList     *list = GTK_MENU_SHELL(menu)->children;
-#. gtk_widget_hide()
-#: src/callbacks.c:2444
-msgid "Needs to be done."
-msgstr "Muss noch programmiert werden."
-
-#: src/callbacks.c:2476
+#: src/callbacks.c:2361
 msgid "You need insert a name for the set!"
 msgstr "Sie muessen dem Set einen Namen geben."
+
+#: src/callbacks.c:2536
+msgid "Really quit?"
+msgstr "Wirklich Beenden?"
 
 #: src/support.c:90 src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
 msgstr "Kann Bild %s nicht finden."
 
-#: src/cfg.c:451
+#: src/cfg.c:457
 msgid "Problems saving config-file!"
 msgstr "Probleme beim Speichern der Konfiguration!"
 
-#: src/cfg.c:476
+#: src/cfg.c:480
 msgid "get_home_dir failed!"
 msgstr "Das Bestimmen des Heimatverzeichnisses ist fehlgeschlagen!"
 
-#. printf("problemchar: %c [%x]\n",tmp[i],tmp[i]);
-#: src/cfg.c:545
+#: src/cfg.c:548
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr "Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche (-) sind erlaubt!"
 
@@ -690,3 +687,6 @@ msgstr "Kann Ausgabedatei nicht zum Schreiben öffnen."
 #: loadconf.l:96
 msgid "couldn't find configfile / use default!"
 msgstr "Kann Konfigurationsdatei nicht finden. Verwende Voreinstellungen."
+
+#~ msgid "Needs to be done."
+#~ msgstr "Muss noch programmiert werden."

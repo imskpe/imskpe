@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-16 22:53+0100\n"
+"POT-Creation-Date: 2005-01-17 23:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -60,7 +60,7 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/interface.c:313 src/interface.c:2505
+#: src/interface.c:313 src/interface.c:2502
 msgid "Open File"
 msgstr ""
 
@@ -68,7 +68,7 @@ msgstr ""
 msgid "New File"
 msgstr ""
 
-#: src/interface.c:323 src/interface.c:2552
+#: src/interface.c:323 src/interface.c:2549
 msgid "Save File"
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Preferences"
 msgstr ""
 
-#: src/interface.c:363 src/interface.c:2290
+#: src/interface.c:363 src/interface.c:2287
 msgid "move"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Move Point"
 msgstr ""
 
-#: src/interface.c:373 src/interface.c:2294
+#: src/interface.c:373 src/interface.c:2291
 msgid "insert"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "Insert Point"
 msgstr ""
 
-#: src/interface.c:382 src/interface.c:2298
+#: src/interface.c:382 src/interface.c:2295
 msgid "delete"
 msgstr ""
 
@@ -323,7 +323,7 @@ msgid ""
 "(c) 2004 by Andreas Madsack"
 msgstr ""
 
-#: src/interface.c:1426 src/interface.c:2185
+#: src/interface.c:1426 src/interface.c:2182
 msgid "Credits"
 msgstr ""
 
@@ -453,23 +453,23 @@ msgstr ""
 msgid "_Default"
 msgstr ""
 
-#: src/interface.c:2208
+#: src/interface.c:2205
 msgid "Andreas Madsack <bolsog@users.sf.net>"
 msgstr ""
 
-#: src/interface.c:2210
+#: src/interface.c:2207
 msgid "written by"
 msgstr ""
 
-#: src/interface.c:2224
+#: src/interface.c:2221
 msgid "Manuel Kountz (de)"
 msgstr ""
 
-#: src/interface.c:2226
+#: src/interface.c:2223
 msgid "translators"
 msgstr ""
 
-#: src/interface.c:2241
+#: src/interface.c:2238
 msgid ""
 "Dennis Klatt \n"
 "(for klatt-formant-synthesis-algorithm)\n"
@@ -481,48 +481,60 @@ msgid ""
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
 
-#: src/interface.c:2243
+#: src/interface.c:2240
 msgid "thanks to"
 msgstr ""
 
-#: src/interface.c:2302
+#: src/interface.c:2299
 msgid "move dialog"
 msgstr ""
 
-#: src/interface.c:2348
+#: src/interface.c:2345
 msgid "imskpe - Move"
 msgstr ""
 
-#: src/interface.c:2362
+#: src/interface.c:2359
 msgid "Value: "
 msgstr ""
 
-#: src/interface.c:2376
+#: src/interface.c:2373
 msgid "Hz"
 msgstr ""
 
-#: src/interface.c:2384
+#: src/interface.c:2381
 msgid "Time:"
 msgstr ""
 
-#: src/interface.c:2391
+#: src/interface.c:2388
 msgid "sec"
 msgstr ""
 
-#: src/interface.c:2454
+#: src/interface.c:2451
 msgid "IMSKPE - Information"
 msgstr ""
 
-#: src/interface.c:2466
+#: src/interface.c:2463
 msgid "IMSKPE-Splash"
 msgstr ""
 
-#: src/interface.c:2607
+#: src/interface.c:2604
 msgid "Adding a set"
 msgstr ""
 
-#: src/interface.c:2631
+#: src/interface.c:2628
 msgid "Name of Set:"
+msgstr ""
+
+#: src/interface.c:2710
+msgid "Delete a set"
+msgstr ""
+
+#: src/interface.c:2748
+msgid "Which Set do You want to delete?"
+msgstr ""
+
+#: src/interface.c:2760
+msgid "choose"
 msgstr ""
 
 #: src/callbacks.c:90 src/callbacks.c:240 src/callbacks.c:266
@@ -567,30 +579,16 @@ msgstr ""
 msgid "%d ms - %d dB "
 msgstr ""
 
-#: src/callbacks.c:2001
+#: src/callbacks.c:1992
 msgid "Really reset preferences?"
 msgstr ""
 
-#: src/callbacks.c:2329
-msgid "Really quit?"
-msgstr ""
-
-#. GtkWidget *menu = (GtkMenuShell *)lookup_widget (GTK_WIDGET (GetMainWindow()), "sets1_menu");
-#. GList *l = menu->children;
-#. while(l)
-#. {
-#. printf("child\n");
-#. l = l->next;
-#. }
-#. gtk_option_menu_get_menu(GTK_OPTION_MENU(option_menu));
-#. GList     *list = GTK_MENU_SHELL(menu)->children;
-#. gtk_widget_hide()
-#: src/callbacks.c:2444
-msgid "Needs to be done."
-msgstr ""
-
-#: src/callbacks.c:2476
+#: src/callbacks.c:2361
 msgid "You need insert a name for the set!"
+msgstr ""
+
+#: src/callbacks.c:2536
+msgid "Really quit?"
 msgstr ""
 
 #: src/support.c:90 src/support.c:114
@@ -598,16 +596,15 @@ msgstr ""
 msgid "Couldn't find pixmap file: %s"
 msgstr ""
 
-#: src/cfg.c:451
+#: src/cfg.c:457
 msgid "Problems saving config-file!"
 msgstr ""
 
-#: src/cfg.c:476
+#: src/cfg.c:480
 msgid "get_home_dir failed!"
 msgstr ""
 
-#. printf("problemchar: %c [%x]\n",tmp[i],tmp[i]);
-#: src/cfg.c:545
+#: src/cfg.c:548
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr ""
 

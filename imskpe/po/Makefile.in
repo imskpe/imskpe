@@ -14,7 +14,7 @@
 
 GETTEXT_PACKAGE = imskpe
 PACKAGE = imskpe
-VERSION = 1.0beta5
+VERSION = 1.0beta6
 
 SHELL = /bin/sh
 
@@ -23,7 +23,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /home/bol
+prefix = /usr/local
 exec_prefix = ${prefix}
 datadir = ${prefix}/share
 libdir = ${exec_prefix}/lib

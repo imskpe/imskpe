@@ -85,11 +85,6 @@ void
 on_ok_button1_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
 
-gboolean
-on_color_selection1_configure_event    (GtkWidget       *widget,
-                                        GdkEventConfigure *event,
-                                        gpointer         user_data);
-
 void
 on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
                                         gpointer         user_data);
@@ -553,11 +548,6 @@ on_toolbar2_realize                    (GtkWidget       *widget,
 
 
 void
-on_spn_max_freq_parent_set             (GtkWidget       *widget,
-                                        GtkWidget       *old_parent,
-                                        gpointer         user_data);
-
-void
 on_bn_prefs_default_clicked            (GtkButton       *button,
                                         gpointer         user_data);
 
@@ -682,3 +672,12 @@ on_bn_set_add_cancel_clicked           (GtkButton       *button,
 void
 on_bn_set_add_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data);
+
+void
+on_bn_set_del_cancel_clicked           (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_set_del_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data);
+

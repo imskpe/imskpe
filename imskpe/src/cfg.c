@@ -434,6 +434,13 @@ void ConfigSave()
   typConfig *data;
   GList *cl;
 
+  // delete a few items. only as insurance
+  ConfigRemove("prefs_tab1_tmp");
+  ConfigRemove("prefs_tab2_tmp");
+  ConfigRemove("prefs_tab3_tmp");
+  ConfigRemove("prefs_tab4_tmp");
+
+  // now real saving
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
@@ -443,7 +450,6 @@ void ConfigSave()
     tmp[homelen]=0;
     tmp=strcat(tmp,"/.imskpe");
     tmp[homelen+strlen("/.imskpe")]=0;
-//     printf(">%s<\n",tmp);
 
     outfp = fopen(tmp,"w");
     if(outfp==NULL)
@@ -457,15 +463,13 @@ void ConfigSave()
     /* write "header"  */
     fprintf(outfp,"# please don't edit this file!!\n");
     
-//    printf("save config\n");
     cl=g_list_first (cfg);
     while(cl)
     {	
       data=(typConfig *)cl->data;
       
-//       printf("%s=%s\n",data->name,data->value);
       fprintf(outfp,"%s = %s\n",data->name,data->value);
-      
+     
       cl = cl->next;
     }
     
@@ -526,7 +530,7 @@ gboolean ConfigInsertSet(char *name, char val[50])
   strcpy(tmp,"Set_");
   strcat(tmp,name);
 
-  // convert spaces, dots, kommas to _
+  // convert spaces to _
   s = strchr(tmp,' ');
   while(s != NULL)
   {
@@ -541,7 +545,6 @@ gboolean ConfigInsertSet(char *name, char val[50])
     {
       if(tmp[i]!='_' && tmp[i]!='-')
       {
-// 	printf("problemchar: %c [%x]\n",tmp[i],tmp[i]);
 	DialogErrorOK (_("Only Characters, Numbers, Space and - are allowed!"));
 	return FALSE;
       }
@@ -555,3 +558,4 @@ gboolean ConfigInsertSet(char *name, char val[50])
 
   return TRUE;
 }
+
