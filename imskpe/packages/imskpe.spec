@@ -1,6 +1,6 @@
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
-Version: 1.0beta5
+Version: 1.0beta6
 Release: 1
 License: GPL
 Group: Applications/Sound
@@ -8,8 +8,8 @@ URL: http://imskpe.sf.net
 Source0: %{name}-%{version}.tar.gz
 #Buildroot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Buildroot: /tmp/bol
-Requires:        gtk+ >= @GTK_REQUIRED@
-BuildRequires:   gtk+-devel >= @GTK_REQUIRED@
+#Requires:        gtk+ >= @GTK_REQUIRED@
+#BuildRequires:   gtk+-devel >= @GTK_REQUIRED@
 prefix: /usr/local
 
 # cheats
