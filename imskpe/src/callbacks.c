@@ -47,20 +47,35 @@
 #include "convert.h"
 
 /*  globals  */
+
+
+/** loadsaveType - maybe not the best solution */
 typedef enum {NONE, LOAD, SAVE} lsTyp;
 
+/** default value for loadsave */
 lsTyp loadorsave=NONE;
 
+/** bad style trick variable ... */
 char *selected_color;
-static GtkWidget *colordiag = NULL;
-static GtkWidget *prefs = NULL;
+
+/** pointer to colordialog */
+GtkWidget *colordiag = NULL;
+/** pointer to prefs dialog */
+GtkWidget *prefs = NULL;
 
 
 /*** procedures:
 
 ***/
 
-
+/** 
+ * on_new1_activate
+ *
+ * init new file, redraw drawarea
+ * 
+ * @param menuitem 
+ * @param user_data 
+ */
 void
 on_new1_activate                       (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -73,6 +88,17 @@ on_new1_activate                       (GtkMenuItem     *menuitem,
 }
 
 
+/** 
+ * on_open1_activate
+ *
+ * start fileopen dialog
+ * 
+ * \defgroup imskpe_loadsave load/save dialog
+ * \addtogroup imskpe_loadsave
+ *
+ * @param menuitem 
+ * @param user_data 
+ */
 void
 on_open1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -81,6 +107,17 @@ on_open1_activate                      (GtkMenuItem     *menuitem,
 }
 
 
+/** 
+ * on_save1_activate
+ *
+ * start filesave dialog
+ * if file is new, ask for new filename else use default in aFile-struct
+ * 
+ * \addtogroup imskpe_loadsave
+ *
+ * @param menuitem 
+ * @param user_data 
+ */
 void
 on_save1_activate                      (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -96,7 +133,16 @@ on_save1_activate                      (GtkMenuItem     *menuitem,
   }
 }
 
-
+/** 
+ * on_save_as1_activate
+ *
+ * start filesave dialog for filename asking
+ * 
+ * \addtogroup imskpe_loadsave
+ *
+ * @param menuitem 
+ * @param user_data 
+ */
 void
 on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
@@ -159,6 +205,9 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
+ * \defgroup imskpe_drawareas drawarea parts
+ * \addtogroup imskpe_drawareas
+ *
  * @param widget 
  * @param event 
  * @param user_data 
@@ -191,6 +240,8 @@ on_draw_freq_configure_event           (GtkWidget       *widget,
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
+ * \addtogroup imskpe_drawareas
+ *
  * @param widget 
  * @param event 
  * @param user_data 
@@ -224,6 +275,8 @@ on_draw_amp_configure_event            (GtkWidget       *widget,
  * look which notebook is selected and configure only this one!
  * except first start, when MainWindow isn't set
  * 
+ * \addtogroup imskpe_drawareas
+ *
  * @param widget 
  * @param event 
  * @param user_data 
@@ -251,7 +304,19 @@ on_draw_band_configure_event           (GtkWidget       *widget,
 }
 
 
-
+/** 
+ * on_draw_freq_expose_event
+ *
+ * redraw after resize of the window
+ * 
+ * \addtogroup imskpe_drawareas
+ *
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_freq_expose_event              (GtkWidget       *widget,
                                         GdkEventExpose  *event,
@@ -262,6 +327,20 @@ on_draw_freq_expose_event              (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_amp_expose_event
+ *
+ * redraw after resize of the window
+ * 
+ * \addtogroup imskpe_drawareas
+ *
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_amp_expose_event               (GtkWidget       *widget,
                                         GdkEventExpose  *event,
@@ -272,6 +351,19 @@ on_draw_amp_expose_event               (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_band_expose_event
+ *
+ * redraw after resize of the window
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_band_expose_event              (GtkWidget       *widget,
                                         GdkEventExpose  *event,
@@ -282,6 +374,19 @@ on_draw_band_expose_event              (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_freq_motion_notify_event
+ *
+ * refresh on mousemotion the activated drawarea (incl. hovering)
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_freq_motion_notify_event       (GtkWidget       *widget,
                                         GdkEventMotion  *event,
@@ -312,6 +417,19 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_amp_motion_notify_event
+ *
+ * refresh on mousemotion the activated drawarea (incl. hovering)
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_amp_motion_notify_event        (GtkWidget       *widget,
                                         GdkEventMotion  *event,
@@ -342,6 +460,19 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_band_motion_notify_event
+ *
+ * refresh on mousemotion the activated drawarea (incl. hovering)
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_band_motion_notify_event       (GtkWidget       *widget,
                                         GdkEventMotion  *event,
@@ -372,6 +503,19 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_freq_button_press_event
+ *
+ * choose action for buttonpressed
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_freq_button_press_event        (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -393,6 +537,19 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_draw_amp_button_press_event
+ *
+ * choose action for buttonpressed
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_amp_button_press_event         (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -414,7 +571,19 @@ on_draw_amp_button_press_event         (GtkWidget       *widget,
   return TRUE;
 }
 
-
+/** 
+ * on_draw_band_button_press_event
+ *
+ * choose action for buttonpressed
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_band_button_press_event        (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -437,6 +606,19 @@ on_draw_band_button_press_event        (GtkWidget       *widget,
 }
 
 
+/** 
+ * on_draw_freq_button_release_event
+ *
+ * set buttonpressedvar to 0
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_freq_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -447,7 +629,19 @@ on_draw_freq_button_release_event      (GtkWidget       *widget,
   return TRUE;
 }
 
-
+/** 
+ * on_draw_amp_button_release_event
+ *
+ * set buttonpressedvar to 0
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_amp_button_release_event       (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -458,6 +652,19 @@ on_draw_amp_button_release_event       (GtkWidget       *widget,
   return TRUE;
 }
 
+/** 
+ * on_amp_freq_button_release_event
+ *
+ * set buttonpressedvar to 0
+ * 
+ * \addtogroup imskpe_drawareas
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_band_button_release_event      (GtkWidget       *widget,
                                         GdkEventButton  *event,
@@ -477,7 +684,14 @@ on_imskpe_main_delete_event            (GtkWidget       *widget,
 {
 }
 
-
+/** 
+ * on_spbn_numF_changed
+ *
+ * number of formants changed -> decrease visible tabs
+ * 
+ * @param spinbutton 
+ * @param user_data 
+ */
 void
 on_spbn_numF_changed                   (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)

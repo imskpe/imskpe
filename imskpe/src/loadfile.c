@@ -52,7 +52,9 @@ void FileOpen(char *filename)
 {
   char *tmp;
   
-  /** \todo look if old file isChanged and needs to be saved. */
+  /** \todo look if old file isChanged and needs to be saved. 
+            insert dialog !!
+   */
   if(FileGetIsChanged())
   {
     printf("ask for save?\n");

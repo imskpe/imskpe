@@ -23,7 +23,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /home/bol
+prefix = /home/users7/madsacas
 exec_prefix = ${prefix}
 datadir = ${prefix}/share
 libdir = ${exec_prefix}/lib
@@ -32,7 +32,7 @@ gnulocaledir = $(datadir)/locale
 gettextsrcdir = $(datadir)/glib-2.0/gettext/po
 subdir = po
 
-INSTALL = /usr/bin/ginstall -c
+INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 MKINSTALLDIRS = $(top_srcdir)/./mkinstalldirs
 
