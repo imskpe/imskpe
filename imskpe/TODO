@@ -1,6 +1,7 @@
 TODO:
 
-first release:
+*** first release:
+
 - lines / interpol over GList
 OK open par-files
 - save par-files
@@ -8,48 +9,79 @@ OK open par-files
 - generate wavfiles (through kpe80 - console tool)
 - use fft to show a spectrum
 
-final:
+
+win32 issues:
+- improve build (find dlls, locale under win32)
+
+
+solaris:
+- test it!
+
+
+*** final:
 - bind to libklatt
 - generate wavs internal
 - play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
 
-nice to have:
+*** nice to have:
 - fuzzy-gettext einträge auch in die .mo ?!?!
   (--use-fuzzy ... aber wie bekomme ich das per autoconf ?!)
 
 
-
 BoLSoGs private todo-list (in german):
-OK - das lineal auslagern ... 
-OK - auf den duration-spinbutton ein linealredraw triggern
-OK - den linealcode in eine eigene procedure packen
-OK - alles auch für amplitude und bandbreite
-OK - die callbacks.h aufräumen
-- auf die jeweiligen toggle-buttons reagieren:
-OK  - neue kurven initialisieren (defaultwerte: "schwa"?!)
-OK    - dafür eine extra funktion ... 
-NO    - mit leeren listen ... 
-OK    - und eine init-funktion für new mit den schwa werten ...
-        = start.par
-  - wenn schon vorhanden wieder einblenden
-OK loadfile einführen
-OK  - globales struct für ein File?
-OK    - darin folgende daten:
-OK      - filename, ischanged, pointer auf formants-GList
-OK  - darin: 
-OK    - laden der par-files
-    - laden eines eigenen optimaleren formats [nice to have]
-- speichern der preferences
-  - preferences dialog
-  - auch speichern der formantfarben
-  - y-achsen-max einstellbar machen (in preferences)
-  - auch die unterteilungen einstellbar machen
-- anzeigen der koordinaten in der statusleiste
-  - was soll noch in die statusleiste?:
-    - filename ?! (besser in den titel)
-    - aktuelle kurve unter dem cursor
+OK  - das lineal auslagern ... 
+OK  - auf den duration-spinbutton ein linealredraw triggern
+OK  - den linealcode in eine eigene procedure packen
+OK  - alles auch für amplitude und bandbreite
+OK  - die callbacks.h aufräumen
+    - auf die jeweiligen toggle-buttons reagieren:
+OK    - neue kurven initialisieren (defaultwerte: "schwa"?!)
+OK      - dafür eine extra funktion ... 
+NO      - mit leeren listen ... 
+OK      - und eine init-funktion für new mit den schwa werten ...
+          = start.par
+      - wenn schon vorhanden wieder einblenden
+OK  - loadfile einführen
+OK    - globales struct für ein File?
+OK      - darin folgende daten:
+OK        - filename, ischanged, pointer auf formants-GList
+OK    - darin: 
+OK      - laden der par-files
+PP      - laden eines eigenen optimaleren formats [nice to have]
+    - speichern der preferences
+      - preferences dialog
+      - auch speichern der formantfarben
+      - y-achsen-max einstellbar machen (in preferences)
+      - auch die unterteilungen einstellbar machen
+      - wie soll die aktuelle "hoehe" abgespeicht werden? für jedes diagramm einzeln? 
+        und wie die ganzen preferences? 
+      - die formantsliste muss sowieso weg ... sie dient ja nun nur der farbenspeicherung ...
+        und die linienart sollte auch berücksichtigt werden ...
+    - speichern der par-files
+      - im speicher den array aufbauen?
+      - oder jeden wert mit hilfe der liste berechnen
+        - steigung: (endwert-anfangswert)/(endtime-anfangstime)
+OK - anzeigen der koordinaten in der statusleiste
+     - was soll noch in die statusleiste?:
+OK     - filename ?! (besser in den titel)
+       - aktuelle kurve unter dem cursor
+   - eventhandling / curves
+     - für einen redraw wird die mauscursorpos gebraucht ...
+OK   - um jeden punkt kommt erstmal ein 5x5 pixel rechteck ...
+     - wenn der mauscursor in diesrem rechteck ist, wird es zu 7x7 und 
+       die linie wird dicker ...
+     - es wird eine möglichkeit gebraucht sich zu merken, 
+       wo der mauscursor "vorher" war ...
+       also ob ein redraw erforderlich ist, oder nicht ...
+     - vielleicht eine zusätzliche pixmap-var, in der das linieal schon drin ist?!
+       -> schneller beim repaint?!
+
 
 notes:
 gtk_toggle_button_set_active ()
 http://developer.gnome.org/doc/API/gtk/gtktogglebutton.html#GTK-TOGGLE-BUTTON-SET-STATE
+
+gboolean    gtk_toggle_button_get_mode      (GtkToggleButton *toggle_button);
+
+lookupwidget!!
 

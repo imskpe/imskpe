@@ -58,16 +58,23 @@ void GuiSetSamplingRate(unsigned int x);
 void GuiSetNumberFormants(unsigned int x);
 void GuiSetVoiceSource(unsigned int x);
 void GuiSetBranches(unsigned int x);
+gboolean GuiGetToggleButtonState(char tmp[30]);
 
-GdkGC *GetPenRGB (int nRed, int nGreen, int nBlue);
-GdkGC *GetPenGdkColor (GdkColor col);
+int CalcRealX(int dx, int maxx);
+int CalcRealY(int dy, int maxy);
+void update_ruler(GtkWidget *widget, diagramTyp dia);
+void configure_drawarea(GtkWidget *widget, diagramTyp dia);
+GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue);
+GdkGC *GetPenGdkColor (GdkGC *gc, GdkColor col);
 GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue);
 GdkColor GetFormantListColor (gchar *searchstring);
-void Repaint(GtkWidget *d);
+void Repaint(GtkWidget *d, diagramTyp dia);
 void Redrawpixmap(GtkWidget *w, GdkEventExpose  *event);
 typGraphics *NewGraphics ();
 // void CurveListInit ();
 
-void redraw_all_drawareas();
+void configure_page(int page);
+void redraw_page(int page);
 
 void SetStatusBar(char *sb, gchar *text);
+void SetTitle(gchar *text);

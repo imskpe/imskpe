@@ -24,10 +24,8 @@
  * 
  * @brief  all visual routines of IMSKPE
  * 
- * \todo put part of functions in other files (formant/curves-routines, math-stuff, statusbar, ...)
+ * \todo put part of functions in other files (formant-routines, math-stuff, statusbar, ...)
  * 
- * \todo color muss auch in Curves ... -> keine formantsliste mehr ... / abspeichern der farbwerte in den preferences ... 
- *
  * \note idea: 
  * - one list for formants (in preferences)
  *   - specify color of label and curves
@@ -63,9 +61,10 @@
 #include "callbacks.h"
 #include "interface.h"
 #include "support.h"
+#include "curves.h"
 #include "graphics.h"
 #include "cfg.h"
-#include "curves.h"
+
 
 
 /*
@@ -76,7 +75,6 @@ typGraphics *g = NULL;
 int nScreenWidth = 200;
 int nScreenHeight = 200;
 
-//GList *curves = NULL;  // put in file struct!!
 GList *formants = NULL;  // put in preferences ?
 
 /** \todo put in another file - not graphic relevant! */
@@ -148,6 +146,28 @@ void GuiSetBranches(unsigned int x)
   case 2:
       gtk_entry_set_text ((GtkEntry *)w,"parallel only");
       break;
+  }
+}
+
+gboolean GuiGetToggleButtonState(char tmp[30])
+{
+  GtkWidget *w = GetMainWindow();
+
+  /* MainWindow isn't initialized yet!  */
+  if(w==NULL)
+  {
+    return FALSE;
+  }
+  w = lookup_widget (GTK_WIDGET (w), tmp);
+
+  if(w!=NULL)
+  {
+    return gtk_toggle_button_get_active ((GtkToggleButton *)w);
+  }
+  else
+  {
+    printf("GuiGetToggleButtonState: %s not found\n",tmp);
+    return FALSE;
   }
 }
 
@@ -231,44 +251,35 @@ void FormantListInit ()
 
   formants = g_list_append (formants, oneformant);
 
-
 /* wohin mit dieser initroutine?! */
+/* sollte in main() */
   LoadConfig();
 
-/* not best position ... :) */
-//  CurveListInit ();
 }
 
 GdkColor GetFormantListColor (gchar *searchstring)
 {
   typFormantList *oneformant;  
 
-/*  printf ("%s\n",searchstring);*/
-/*  printf("--\nsearch: %s\n",searchstring);*/
   formants=g_list_first (formants);
   while(formants)
   {	
     gchar *fname;
     fname = g_malloc (sizeof (gchar)*8);
 
-//    oneformant = g_malloc (sizeof (typFormantList));
     oneformant = formants->data;
 
     strncpy(fname,oneformant->formantname,8);
-    if(!strcmp(fname,searchstring))   /* strCASEcmp under win32? */
+    if(!strcasecmp(fname,searchstring))
     {
-      printf("found %s\n",fname);
+//      printf("found %s\n",fname);
       return oneformant->color;
     }
 
     formants=formants->next;
 
     free(fname);
-//    free(oneformant);
   }
-
-/*  printf("problem?! %s\n",searchstring);*/
-  /* return FALSE?? */
 }
 
 
@@ -294,14 +305,38 @@ void FormantListFree()
 
 /* ------------------------------------------------ */
 
+
+int CalcRealX(int dx, int maxx)
+{
+  int du=FileGetDuration();
+//  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
+//   int x=(max-25)*dx/du+25;
+  int ox=((dx-25)*du)/(maxx-25-10);
+
+  return ox;
+}
+
+int CalcRealY(int dy, int maxy)
+{
+  int du=FileGetDuration();
+//  printf("dx: %5d / max: %5d / DU: %5d\n",dx,max,du);
+//  d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
+  int oy=((-dy+maxy-25)*5000)/(maxy-25);
+//  int oy=((dy-25)*500)/(maxy-25);    // 500 -> preferences!
+
+  return oy;
+}
+
+
 /** 
  * draw ruler
  *
  * \todo export values to preferences!
+ * \todo use dia for y-values (Hz, dB, ...)
  * 
  * @param widget 
  */
-void update_ruler(GtkWidget *widget)
+void update_ruler(GtkWidget *widget, diagramTyp dia)
 {
   gint duration;
   int i;
@@ -311,10 +346,9 @@ void update_ruler(GtkWidget *widget)
 
   int xsplits=15;  /* export in preferences */
   int ysplits=10;  /* export in preferences */
-//  int ymax=3000;   /* put in preferences and/or calculate it! */
-  int ymax=500;   /* put in preferences and/or calculate it! */
+  int ymax=5000;   /* put in preferences and/or calculate it! */
 
-  duration = gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
+  duration = FileGetDuration();
 
   x = g_malloc (sizeof (gchar)*10);
   
@@ -323,7 +357,7 @@ void update_ruler(GtkWidget *widget)
   
 
 /* x-achse */
-  gdk_draw_line (g->pixmap, GetPenRGB (0, 0, 0) ,
+  gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0) ,
 		 20, 
 		 widget->allocation.height-25,
 		 widget->allocation.width, 
@@ -343,20 +377,20 @@ void update_ruler(GtkWidget *widget)
     layout = gtk_widget_create_pango_layout (widget, x);
 
     pango_layout_set_font_description (layout, fontdesc); 
-    gdk_draw_layout (g->pixmap,GetPenRGB(0xffff,0,0),
-		     ((widget->allocation.width-25)/xsplits)*i+25-mod, 
+    gdk_draw_layout (g->pixmap,GetPenRGB(NULL, 0xffff,0,0),
+		     ((widget->allocation.width-25-10)/xsplits)*i+25-mod, 
 		     widget->allocation.height-15, layout);
 
-    gdk_draw_line (g->pixmap, GetPenRGB (0, 0, 0xffff) ,
-		   ((widget->allocation.width-25)/xsplits)*i+25, 
+    gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0xffff) ,
+		   ((widget->allocation.width-25-10)/xsplits)*i+25, 
 		   widget->allocation.height-30,
-		   ((widget->allocation.width-25)/xsplits)*i+25, 
+		   ((widget->allocation.width-25-10)/xsplits)*i+25, 
 		   widget->allocation.height-20);
     
   }
 
 /* y-achse */
-  gdk_draw_line (g->pixmap, GetPenRGB (0, 0, 0) ,
+  gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0) ,
 		 25, 
 		 0,
 		 25, 
@@ -369,11 +403,11 @@ void update_ruler(GtkWidget *widget)
     layout = gtk_widget_create_pango_layout (widget, x);
 
     pango_layout_set_font_description (layout, fontdesc); 
-    gdk_draw_layout (g->pixmap,GetPenRGB(0xffff,0,0),
+    gdk_draw_layout (g->pixmap,GetPenRGB(NULL, 0xffff,0,0),
 		     0, 
 		     ((widget->allocation.height-25)/ysplits)*i, layout);
 
-    gdk_draw_line (g->pixmap, GetPenRGB (0, 0, 0xffff) ,
+    gdk_draw_line (g->pixmap, GetPenRGB (NULL, 0, 0, 0xffff) ,
 		   20,
 		   ((widget->allocation.height-25)*i)/ysplits,
 		   30,
@@ -386,7 +420,7 @@ void update_ruler(GtkWidget *widget)
   free(x);
 }
 
-void configure_drawarea(GtkWidget *widget)
+void configure_drawarea(GtkWidget *widget, diagramTyp dia)
 {
   main_window = lookup_widget (GTK_WIDGET (widget), "imskpe_main");
 
@@ -422,9 +456,9 @@ void configure_drawarea(GtkWidget *widget)
 		      widget->allocation.height);
 
 
-  update_ruler(widget); 
+  update_ruler(widget,dia); 
   
-  Repaint(widget);
+  Repaint(widget,dia);
 
 }
 
@@ -448,22 +482,24 @@ typGraphics *NewGraphics ()
     return (gfx);
 }
 
-
-/*
+/** 
+ * 
  * GetPen
  *
  * Get a GdkGC (pen) based on the colors passed 
  * in.  This is used to change the color of the 
  * items being drawn.
- *
- * nRed - Red component of pen
- * nGreen - Green component of pen
- * nBlue - Blue component of pen
+ * 
+ * @param gc 
+ * @param nRed 
+ * @param nGreen 
+ * @param nBlue 
+ * 
+ * @return 
  */
-GdkGC *GetPenRGB (int nRed, int nGreen, int nBlue)
+GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue)
 {
     GdkColor *c;
-    GdkGC *gc;
 
     c = (GdkColor *) g_malloc (sizeof (GdkColor));
     c->red = nRed;
@@ -476,16 +512,28 @@ GdkGC *GetPenRGB (int nRed, int nGreen, int nBlue)
 
     gdk_gc_set_foreground (gc, c);
 
+//     gdk_gc_set_line_attributes (gc,
+//                                   1,
+//                                   GDK_LINE_ON_OFF_DASH,
+//                                   GDK_CAP_NOT_LAST,
+//                                   GDK_JOIN_MITER );
+
     return (gc);
 }
-/*
- * GetPen
+
+/** 
+ * GetPenGdkColor
+ * 
+ * (not used?!)
  *
+ * @param gc 
+ * @param col 
+ * 
+ * @return 
  */
-GdkGC *GetPenGdkColor (GdkColor col)
+GdkGC *GetPenGdkColor (GdkGC *gc, GdkColor col)
 {
     GdkColor *c;
-    GdkGC *gc;
 
     c = (GdkColor *) g_malloc (sizeof (GdkColor));
     c->red = col.red;
@@ -522,51 +570,48 @@ GdkColor GetColor (gdouble Red, gdouble Green, gdouble Blue)
  *
  * @param d 
  */
-void Repaint(GtkWidget *d)
+void Repaint(GtkWidget *d, diagramTyp dia)
 {
     GdkRectangle  update_rect;
     typCurveList *c;
     int lastx=-1,lasty=-1;
     int x=-1,y=-1;
     typValueList *v;
-//    GList *cv=g_list_first (curves);
+    GList *cv=(GList *)FileGetCurvesPointer();
 
 /* muss alles ausgelagert werden: */
     int xsplits=15;  /**< export in preferences */
     int ysplits=10;  /**< export in preferences */
-    int ymax=500;   /**< put in preferences and/or calculate it! */
+    int ymax=5000;   /**< put in preferences and/or calculate it! */
 
     int xmax = FileGetDuration();
-//gtk_spin_button_get_value_as_int((GtkSpinButton *)lookup_widget (GTK_WIDGET (main_window), "spbn_duration"));
-
 
     /* --- clear pixmap --- */
     gdk_draw_rectangle (g->pixmap,
-			GetPenRGB (0xffff, 0xffff, 0xffff),
+			GetPenRGB (NULL, 0xffff, 0xffff, 0xffff),
 			TRUE,
 			0, 0,
 			d->allocation.width,
 			d->allocation.height);
 
-    /* --- Draw molecule in the background --- */
 /*    paint (g);*/
-    update_ruler(d);
+    update_ruler(d, dia);
 
     /***************************************
       erst hier, dann auslagern ... 
     ****************************************/
     
     printf("repaint\n");
-/*
+
 //    printf(".. %d\n",cv);
     while(cv)
     {	
       c=cv->data;
 //      printf("-\n");
-      if(c->show==TRUE)
+      if(c->show==TRUE && c->dia==dia)
       {
 	GList *val;
-	printf("show it\n");
+// 	printf("show it\n");
 
 	lastx=-1;lasty=-1;x=-1;y=-1;
 	val=c->points;
@@ -593,30 +638,51 @@ void Repaint(GtkWidget *d)
 	  }
 	  if(x>0 && y>0)
 	  {
-*/
 
-/*	    printf ("lastx %d %d %d\n",d->allocation.width-25,xmax,lastx);
-	    printf ("    x %d %d %d\n",d->allocation.width-25,xmax,x);
-	    printf ("lasty %d %d %d\n",d->allocation.height-25,ymax,lasty);
-	    printf ("    y %d %d %d\n",d->allocation.height-25,ymax,y);
 
-	    printf ("%d/%d - %d/%d\n",
-		 (d->allocation.width-25)/xmax*lastx+25,
-		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
-		 (d->allocation.width-25)*x/xmax+25,
-		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
-*/
+// 	    printf ("lastx %d %d %d\n",d->allocation.width-25,xmax,lastx);
+// 	    printf ("    x %d %d %d\n",d->allocation.width-25,xmax,x);
+// 	    printf ("lasty %d %d %d\n",d->allocation.height-25,ymax,lasty);
+// 	    printf ("    y %d %d %d\n",d->allocation.height-25,ymax,y);
+
+// 	    printf ("%d/%d - %d/%d\n",
+// 		 (d->allocation.width-25-10)/xmax*lastx+25,
+// 		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
+// 		 (d->allocation.width-25-10)*x/xmax+25,
+// 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
+
 
 // es reicht den farbwert einmal nachzuschlagen ...
 // auch die 25 sollte ausgelagert werden ...
 // nun fehlt noch das rechteck ...
 // wobei das 0er rechteck und evt. auch das max rechteck sich nur in der y-achse bewegen sollten ...
-/*	    gdk_draw_line 
-	    (g->pixmap, GetPenGdkColor (GetFormantListColor(c->formant)) ,
-		 (d->allocation.width-25)*lastx/xmax+25,
+	    gdk_draw_line 
+		(g->pixmap, GetPenGdkColor (NULL,GetFormantListColor(c->formant)) ,
+		 (d->allocation.width-25-10)*lastx/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25,
-		 (d->allocation.width-25)*x/xmax+25,
+		 (d->allocation.width-25-10)*x/xmax+25,
 		 d->allocation.height-((d->allocation.height-25)*y/ymax)-25);
+	    gdk_draw_rectangle
+		(g->pixmap,
+		 GetPenGdkColor (NULL,GetFormantListColor(c->formant)),
+		 FALSE,
+                 ((d->allocation.width-25-10)*lastx/xmax+25)-2,
+		 (d->allocation.height-((d->allocation.height-25)*lasty/ymax)-25)-2,
+		 5,
+                 5);
+
+	    if(x>=xmax-10)  // workaround!
+	    {
+	      gdk_draw_rectangle
+		  (g->pixmap,
+		   GetPenGdkColor (NULL,GetFormantListColor(c->formant)),
+		   FALSE,
+		   ((d->allocation.width-25-10)*x/xmax+25)-2,
+		   (d->allocation.height-((d->allocation.height-25)*y/ymax)-25)-2,
+		   5,
+		   5);
+	    }
+
 	    lastx=x;
 	    lasty=y;
 	  }
@@ -626,7 +692,7 @@ void Repaint(GtkWidget *d)
       }
       cv=cv->next;
     }
-*/
+
 
 /* ****************************** */
     /* --- The whole screen --- */
@@ -654,21 +720,56 @@ void Redrawpixmap(GtkWidget *w, GdkEventExpose  *event)
 /** 
   \todo repaint only actual drawable .. 
 */
-void redraw_all_drawareas()
+
+void configure_page(int page)
 {
   GtkWidget *widget;
 
-  widget=(GtkWidget *)lookup_widget (GTK_WIDGET (main_window), "draw_freq");
-/*  configure_drawarea(widget);*/
-  Repaint(widget);
+//   printf("-CP- %d\n",page);
 
-  widget=(GtkWidget *)lookup_widget (GTK_WIDGET (main_window), "draw_amp");
-  Repaint(widget);
-
-  widget=(GtkWidget *)lookup_widget (GTK_WIDGET (main_window), "draw_band");
-  Repaint(widget);
+  switch(page)
+  {
+  case 0:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_freq");
+      configure_drawarea(widget, 1);
+      break;
+  case 1:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_amp");
+      configure_drawarea(widget, 2);
+      break;
+  case 2:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_band");
+      configure_drawarea(widget, 3);
+      break;
+  default:
+      printf("nb-error, tab out of range?!\n");
+  }
 }
 
+void redraw_page(int page)
+{
+  GtkWidget *widget;
+
+//   printf("-RP- %d\n",page);
+
+  switch(page)
+  {
+  case 0:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_freq");
+      Repaint(widget, 1);
+      break;
+  case 1:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_amp");
+      Repaint(widget, 2);
+      break;
+  case 2:
+      widget=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "draw_band");
+      Repaint(widget, 3);
+      break;
+  default:
+      printf("nb-error, tab out of range?!\n");
+  }
+}
 
 void SetStatusBar(char *sb, gchar *text)
 {
@@ -686,7 +787,20 @@ void SetStatusBar(char *sb, gchar *text)
 
   gtk_statusbar_push (s, 0, text);
 
-  printf("%s -> %s\n",sb,text);
+//  printf("%s -> %s\n",sb,text);
 
 //  g_free(tmp);
+}
+
+void SetTitle(gchar *text)
+{
+  GtkWindow *w;
+  gchar tmp[200];
+
+  snprintf(tmp,200,"IMSKPE - %s",text);
+  
+  w=(GtkWindow *) GetMainWindow();
+
+  gtk_window_set_title (w,tmp);
+
 }

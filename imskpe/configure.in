@@ -3,31 +3,74 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(configure.in)
 AM_INIT_AUTOMAKE(imskpe, 0.1)
 AM_CONFIG_HEADER(config.h)
-AM_MAINTAINER_MODE
 
 AC_ISC_POSIX
 AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
-pkg_modules="gtk+-2.0 >= 2.0.0"
-PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
-AC_SUBST(PACKAGE_CFLAGS)
-AC_SUBST(PACKAGE_LIBS)
-
-GETTEXT_PACKAGE=imskpe
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
-
 dnl check for (f)lex
 AM_PROG_LEX
 
 dnl check if snprintf is available
 AC_CHECK_FUNCS(snprintf)
+AC_CHECK_FUNCS(strcasecmp)
 
 dnl Add the languages which your application supports here.
 ALL_LINGUAS="de"
 AM_GLIB_GNU_GETTEXT
+
+
+# Check for WIN32 build. Add some libs if so.
+#
+win32=no
+AC_MSG_CHECKING(build for windows? )
+AC_ARG_WITH(win32,
+  [  --with-win32			Build for Win32. Requires Win32 versions of GTK ],
+  [
+    case "${witheval}" in
+     *)
+      AC_MSG_RESULT(yes)
+
+   WIN32MESSAGE="crosscompile for win32"
+
+   WINGTK_CFLAGS=" \
+   -mms-bitfields -DWIN32 -mno-cygwin "
+
+   # hide cmd terminal window when not debugging (win32)
+   if test "$debug" != 1; then
+      WINGTK_CFLAGS="-mwindows $WINGTK_CFLAGS"
+   fi
+
+   WINGTK_LDFLAGS="-Wl,--export-dynamic,--export-all-symbols,--add-stdcall-alias"
+
+   AC_SUBST(WINGTK_CFLAGS)
+   AC_SUBST(WINGTK_LDLAGS)
+   AC_SUBST(WINGTK_LIBS)
+
+     ;;
+     esac
+  ],
+  [
+
+   WIN32MESSAGE=""
+
+  ])
+
+AC_MSG_RESULT(yes)
+pkg_modules="gtk+-2.0 >= 2.0.0"
+PKG_CHECK_MODULES(PACKAGE, [$pkg_modules])
+AC_SUBST(GTK_LIBS)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LDFLAGS)
+
+GETTEXT_PACKAGE=imskpe
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE",GETTEXT_PACKAGE)
+
+CFLAGS="$CFLAGS $WINGTK_CFLAGS $GTK_CFLAGS"
+LIBS="$LIBS $WINGTK_LIBS $GTK_LIBS"
+LDFLAGS="$LDFLAGS $WINGTK_LDFLAGS $GTK_LDFLAGS"
 
 AC_OUTPUT([
 Makefile
@@ -40,3 +83,7 @@ echo   imskpe $VERSION
 echo
 echo Building with GTK+ `pkg-config --modversion gtk+-2.0`
 echo 
+echo this system: `uname`
+echo
+echo $WIN32MESSAGE
+echo

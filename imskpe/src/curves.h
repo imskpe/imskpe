@@ -54,6 +54,10 @@ typedef struct {
     char formant[20];
     /** show curve or not */
     gboolean show;
+    /** in which diagramm paint this curve? */
+    diagramTyp dia;
+    /** which linestyle to use */
+    GdkLineStyle ls;
 } typCurveList;
 
 
@@ -63,11 +67,13 @@ struct CurveMapping {
     char formant[20]; // only for colorcodes?
     char widget_name[30];
     diagramTyp dia;
+    GdkLineStyle ls;
 };
 
 
-typCurveList CurveInsert(GList *curves,int parid, GList *points);
+void CurveInsert(GList *curves,int parid, GList *points);
 void CurveListFree(GList *curves);
-GList *CurveSearchWidgetName(GList *curve,char *wn);
+typCurveList *CurveSearchWidgetName(GList *curve,char *wn);
+gboolean SetCurveShow(char *wn);
 typValueList *PointInsert (gint t, gint v);
 void CurveInitStart();

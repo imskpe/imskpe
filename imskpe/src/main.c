@@ -64,6 +64,8 @@ int main (int argc, char *argv[])
 
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 
+  SetMainWindow(NULL);
+
   /** init formant list 
       \todo init complete start-file (maybe start.par)
    */

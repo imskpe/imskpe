@@ -39,7 +39,7 @@
 /*   - curves searchfor (par, button) */
 
 
-typCurveList CurveInsert(GList *curves, int parid, GList *points)
+void CurveInsert(GList *curves, int parid, GList *points)
 {
   /** CurveMappings
 
@@ -50,59 +50,58 @@ typCurveList CurveInsert(GList *curves, int parid, GList *points)
 
   */
   struct CurveMapping curvetable [] = {
-      {"f0","vs","bn_vs_fundfreq",1},
-      {"av","ea","bn_examp_voice",2},
-      {"f1","f1","bn_f1_freq",1},
-      {"b1","f1","bn_f1_band",3},
-      {"f2","f2","bn_f2_freq",1},
-      {"b2","f2","bn_f2_band",3},
-      {"f3","f3","bn_f3_freq",1},
-      {"b3","f3","bn_f3_band",3},
-      {"f4","f4","bn_f4_freq",1},
-      {"b4","f4","bn_f4_band",3},
-      {"f5","f5","bn_f5_freq",1},
-      {"b5","f5","bn_f5_band",3},
-      {"f6","f6","bn_f6_freq",1},
-      {"b6","f6","bn_f6_band",3},
-      {"fnz","nasal","bn_nasal_z_freq",1},
-      {"bnz","nasal","bn_nasal_z_band",3},
-      {"fnp","nasal","bn_nasal_p_freq",1},
-      {"bnp","nasal","bn_nasal_p_band",3},
-      {"asp","ea","bn_examp_asp",2},
-      {"kopen","vs","bn_vs_gopenquot",2},  // no dia? -> 2
-      {"aturb","vs","bn_vs_breath",2},
-      {"tilt","vs","bn_vs_spectilt",2},
-      {"af","ea","bn_examp_fric",2},
-      {"skew","vs","bn_vs_skewness",2},  // no dia? -> 2
-      {"a1","f1","bn_f1_amp",2},
-      {"b1p","f1","bn_f1_bandp",3},
-      {"a2","f2","bn_f2_amp",2},
-      {"b2p","f2","bn_f2_bandp",3},
-      {"a3","f3","bn_f3_amp",2},
-      {"b3p","f3","bn_f3_bandp",3},
-      {"a4","f4","bn_f4_amp",2},
-      {"b4p","f4","bn_f4_bandp",3},
-      {"a5","f5","bn_f5_amp",2},
-      {"b5p","f5","bn_f5_bandp",3},
-      {"a6","f6","bn_f6_amp",2},
-      {"b6p","f6","bn_f6_bandp",3},
-      {"anp","nasal","bn_nasal_p_amp",2},
-      {"ab","ea","bn_examp_bypass",2},
-      {"avp","ea","bn_examp_voicepar",2},
-      {"gain","ae","bn_examp_siggain",2}
+      {"f0","vs","bn_vs_fundfreq",1,GDK_LINE_SOLID},
+      {"av","ea","bn_examp_voice",2,GDK_LINE_SOLID},
+      {"f1","f1","bn_f1_freq",1,GDK_LINE_SOLID},
+      {"b1","f1","bn_f1_band",3,GDK_LINE_SOLID},
+      {"f2","f2","bn_f2_freq",1,GDK_LINE_SOLID},
+      {"b2","f2","bn_f2_band",3,GDK_LINE_SOLID},
+      {"f3","f3","bn_f3_freq",1,GDK_LINE_SOLID},
+      {"b3","f3","bn_f3_band",3,GDK_LINE_SOLID},
+      {"f4","f4","bn_f4_freq",1,GDK_LINE_SOLID},
+      {"b4","f4","bn_f4_band",3,GDK_LINE_SOLID},
+      {"f5","f5","bn_f5_freq",1,GDK_LINE_SOLID},
+      {"b5","f5","bn_f5_band",3,GDK_LINE_SOLID},
+      {"f6","f6","bn_f6_freq",1,GDK_LINE_SOLID},
+      {"b6","f6","bn_f6_band",3,GDK_LINE_SOLID},
+      {"fnz","nasal","bn_nasal_z_freq",1,GDK_LINE_SOLID},
+      {"bnz","nasal","bn_nasal_z_band",3,GDK_LINE_SOLID},
+      {"fnp","nasal","bn_nasal_p_freq",1,GDK_LINE_SOLID},
+      {"bnp","nasal","bn_nasal_p_band",3,GDK_LINE_SOLID},
+      {"asp","ea","bn_examp_asp",2,GDK_LINE_SOLID},
+      {"kopen","vs","bn_vs_gopenquot",2,GDK_LINE_SOLID},  // no dia? -> 2
+      {"aturb","vs","bn_vs_breath",2,GDK_LINE_SOLID},
+      {"tilt","vs","bn_vs_spectilt",2,GDK_LINE_SOLID},
+      {"af","ea","bn_examp_fric",2,GDK_LINE_SOLID},
+      {"skew","vs","bn_vs_skewness",2,GDK_LINE_SOLID},  // no dia? -> 2
+      {"a1","f1","bn_f1_amp",2,GDK_LINE_SOLID},
+      {"b1p","f1","bn_f1_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"a2","f2","bn_f2_amp",2,GDK_LINE_SOLID},
+      {"b2p","f2","bn_f2_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"a3","f3","bn_f3_amp",2,GDK_LINE_SOLID},
+      {"b3p","f3","bn_f3_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"a4","f4","bn_f4_amp",2,GDK_LINE_SOLID},
+      {"b4p","f4","bn_f4_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"a5","f5","bn_f5_amp",2,GDK_LINE_SOLID},
+      {"b5p","f5","bn_f5_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"a6","f6","bn_f6_amp",2,GDK_LINE_SOLID},
+      {"b6p","f6","bn_f6_bandp",3,GDK_LINE_ON_OFF_DASH},
+      {"anp","nasal","bn_nasal_p_amp",2,GDK_LINE_SOLID},
+      {"ab","ea","bn_examp_bypass",2,GDK_LINE_SOLID},
+      {"avp","ea","bn_examp_voicepar",2,GDK_LINE_SOLID},
+      {"gain","ae","bn_examp_siggain",2,GDK_LINE_SOLID}
   };
   GList *pl=NULL;
-  GList *el=NULL;
   typCurveList *eval=NULL;
   typValueList *pval=NULL;
   int tmp;
     
-//   printf("%s / %s / %s / %d - %d\n",
-// 	 curvetable[parid].parname,
-// 	 curvetable[parid].formant,
-// 	 curvetable[parid].widget_name,
-// 	 curvetable[parid].dia,
-// 	 g_list_length(points));
+//    printf("%s / %s / %s / %d - %d\n",
+//  	 curvetable[parid].parname,
+//  	 curvetable[parid].formant,
+//  	 curvetable[parid].widget_name,
+//  	 curvetable[parid].dia,
+//  	 g_list_length(points));
 
   /*
     todo:
@@ -115,31 +114,34 @@ typCurveList CurveInsert(GList *curves, int parid, GList *points)
 
 //  printf("curves: %d\n",g_list_length(curves));
 
-  // -> data ??!
-  el=(GList *)CurveSearchWidgetName((GList *)curves,(char *)curvetable[parid].widget_name);
+  eval=(typCurveList *)CurveSearchWidgetName((GList *)curves,(char *)curvetable[parid].widget_name);
 
-  if(el==NULL)
+  if(eval==NULL)
   {
-//    printf("--\n");
     eval = g_malloc (sizeof (typCurveList));
-
     eval->points=points;
 
     tmp=strlen(curvetable[parid].formant);
+    curvetable[parid].formant[tmp]=0;
     if(tmp>20) tmp=20;
-    strncpy(eval->formant,curvetable[parid].formant,tmp);
+    strncpy(eval->formant,curvetable[parid].formant,tmp+1);
 
     tmp=strlen(curvetable[parid].widget_name);
+    curvetable[parid].widget_name[tmp]=0;
     if(tmp>30) tmp=30;
-    strncpy(eval->widget_name,curvetable[parid].widget_name,tmp);
+    strncpy(eval->widget_name,curvetable[parid].widget_name,tmp+1);
+    
+    eval->dia=curvetable[parid].dia;
+    eval->ls=curvetable[parid].dia;
 
-    eval->show=FALSE;
+/*
+*/
+    eval->show=GuiGetToggleButtonState(curvetable[parid].widget_name);
     curves = g_list_append(curves,eval);
   }
   else
   {
     /* free all points */
-    eval= (typCurveList *) el->data;
     pl=g_list_first(eval->points);
     while(pl)
     {	
@@ -181,10 +183,8 @@ void CurveListFree(GList *curves)
     cdata = (typCurveList *) cl->data; 
     
     pl=g_list_first(cdata->points);
-    printf("-");
     while(pl)
     {	
-      printf(".");
       pval = (typValueList *) pl->data;
 
       if(pval!=NULL)
@@ -202,18 +202,80 @@ void CurveListFree(GList *curves)
 
     cl = g_list_remove(cl,cdata);
   }
-  printf("\n");
   FileSetCurvesPointer(NULL);
 }
 
-GList *CurveSearchWidgetName(GList *curve,char *wn)
+/** 
+ * CurveSearchWidgetName
+ *
+ * returns searched element in curve-list
+ * 
+ * @param curve 
+ * @param wn 
+ * 
+ * @return 
+ */
+typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
 {
   // über liste traversieren und das richtige element suchen ..
   // wenn gefunden zurückliefern, sonst NULL
   
+  typCurveList *thiscurve;  
+  GList *cl;
+  char tmp[30];
+
+  cl=g_list_first (curve);
+
+  while(cl)
+  {	
+    thiscurve = cl->data;
+
+    strncpy(tmp,thiscurve->widget_name,30);
+//     printf("------------- -%s-\n",thiscurve->widget_name);
+    if(!strcasecmp(tmp,wn))
+    {
+//        printf("found %s\n",wn);
+      return thiscurve;
+    }
+
+    cl=cl->next;
+  }
   return NULL;
 
 }
+
+
+gboolean SetCurveShow(char *wn)
+{
+  GtkWidget *w;
+
+  typCurveList *c = CurveSearchWidgetName((GList *)FileGetCurvesPointer(),wn);
+
+  if(c!=NULL)
+  {
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+    if(c->show==TRUE)
+    {
+      printf("%s - set false\n",c->widget_name);
+      c->show=FALSE;
+      redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+      return FALSE;
+    }
+    else
+    {
+      printf("%s - set true\n",c->widget_name);
+      c->show=TRUE;
+      redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+      return TRUE;
+    }
+  }
+  else
+  {
+    printf("curve not found: -%s-\n",wn);
+    return FALSE;
+  }
+}
+
 
 /** 
  * Inserts a Point in an typCurveList/typParList and 
@@ -262,10 +324,11 @@ void CurveInitStart()
 
   du=FileGetDuration();
 
+
   for(i=0;i<40;i++)
   {
+    printf("- %2d - %4d\n",i,starttable[i]);
     points=NULL;
-
     points = g_list_append(points, (typValueList *)PointInsert(0,starttable[i]));
     points = g_list_append(points, (typValueList *)PointInsert(du,starttable[i]));
     CurveInsert((GList *)FileGetCurvesPointer(), i, points);

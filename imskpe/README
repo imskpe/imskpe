@@ -1,5 +1,16 @@
 IMSKPE
 
-the authors are alle students 
-from University of Stuttgart
-Institut fuer Maschinelle Sprachverarbeitung
+Author: Andreas Madsack 
+  student of computer linuguistics 
+  AT Institut fuer Maschinelle Sprachverarbeitung/Uni Stuttgart/Germany
+
+
+--
+
+compile for win32 under linux:
+
+(1) you need mingw, msys, gtk2 and many more compiled unter linux for win32 ...
+(mail me for my package - 95MB)
+
+(2) build it:
+run ./mkwin32.sh

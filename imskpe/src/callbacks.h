@@ -242,3 +242,171 @@ void
 on_cm_voicesource_state_changed        (GtkWidget       *widget,
                                         GtkStateType     state,
                                         gpointer         user_data);
+
+void
+on_bn_prefs_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_f1_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f1_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f1_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f2_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f2_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f2_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f2_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f3_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f3_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f3_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f3_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f4_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f4_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f4_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f4_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f5_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f5_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f5_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f5_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f6_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f6_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f6_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_f6_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_nasal_z_freq_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_nasal_z_band_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_nasal_p_freq_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_nasal_p_band_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_nasal_p_amp_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_vs_gopenquot_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_vs_breath_toggled                (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_vs_spectilt_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_vs_skewness_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_vs_fundfreq_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_voice_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_asp_toggled                (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_fric_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_bypass_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_voicepar_toggled           (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_bn_credits_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_bn_about_credits_clicked            (GtkButton       *button,
+                                        gpointer         user_data);

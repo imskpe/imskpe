@@ -40,10 +40,9 @@
 #include "support.h"
 
 #include "cfg.h"
-#include "graphics.h"
 #include "loadfile.h"
 #include "curves.h"
-
+#include "graphics.h"
 
 /*** procedures:
 
@@ -142,31 +141,100 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 }
 
 
+/** 
+ * on_draw_freq_configure_event
+ *
+ * look which notebook is selected and configure only this one!
+ * except first start, when MainWindow isn't set
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_freq_configure_event           (GtkWidget       *widget,
                                         GdkEventConfigure *event,
                                         gpointer         user_data)
 {
-  configure_drawarea(widget);
+  GtkWidget *w=(GtkWidget *)GetMainWindow();
+
+  if(w!=NULL)  
+  {
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (w), "nb_draw");
+    configure_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  }
+  else
+  {
+    configure_drawarea(widget, 1);
+  }
+
   return TRUE;
 }
 
+/** 
+ * on_draw_amp_configure_event
+ *
+ * look which notebook is selected and configure only this one!
+ * except first start, when MainWindow isn't set
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_amp_configure_event            (GtkWidget       *widget,
                                         GdkEventConfigure *event,
                                         gpointer         user_data)
 {
-  configure_drawarea(widget);
+  GtkWidget *w=(GtkWidget *)GetMainWindow();
+
+  if(w!=NULL)  
+  {
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (w), "nb_draw");
+    configure_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  }
+  else
+  {
+    configure_drawarea(widget, 2);
+  }
+
   return TRUE;
 }
 
 
+/** 
+ * on_draw_band_configure_event
+ *
+ * look which notebook is selected and configure only this one!
+ * except first start, when MainWindow isn't set
+ * 
+ * @param widget 
+ * @param event 
+ * @param user_data 
+ * 
+ * @return 
+ */
 gboolean
 on_draw_band_configure_event           (GtkWidget       *widget,
                                         GdkEventConfigure *event,
                                         gpointer         user_data)
 {
-  configure_drawarea(widget);
+  GtkWidget *w=(GtkWidget *)GetMainWindow();
+
+  if(w!=NULL)  
+  {
+    w=(GtkWidget *)lookup_widget (GTK_WIDGET (w), "nb_draw");
+    configure_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  }
+  else
+  {
+    configure_drawarea(widget, 3);
+  }
+
   return TRUE;
 }
 
@@ -225,7 +293,27 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data)
 {
-  
+  int x, y;
+  int rx,ry;
+  char tmp[80];
+  GdkModifierType state;
+
+  if (event->is_hint)
+    gdk_window_get_pointer (event->window, &x, &y, &state);
+  else
+    {
+      x = event->x;
+      y = event->y;
+      state = event->state;
+    }
+    
+  rx=CalcRealX(x, widget->allocation.width);  
+  ry=CalcRealY(y, widget->allocation.height);  
+  snprintf(tmp,30,"%d ms - %d Hz ",rx,ry);
+  SetStatusBar("sb_add",tmp);
+
+//   Repaint(widget, 1);
+
   return TRUE;
 }
 
@@ -234,7 +322,25 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data)
 {
-  return FALSE;
+  int x, y;
+  int rx,ry;
+  char tmp[80];
+  GdkModifierType state;
+
+  if (event->is_hint)
+    gdk_window_get_pointer (event->window, &x, &y, &state);
+  else
+    {
+      x = event->x;
+      y = event->y;
+      state = event->state;
+    }
+    
+  rx=CalcRealX(x, widget->allocation.width);  
+  ry=CalcRealY(y, widget->allocation.height);  
+  snprintf(tmp,30,"%d ms - %d dB ",rx,ry);
+  SetStatusBar("sb_add",tmp);
+  return TRUE;
 }
 
 gboolean
@@ -242,8 +348,25 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
                                         GdkEventMotion  *event,
                                         gpointer         user_data)
 {
+  int x, y;
+  int rx,ry;
+  char tmp[80];
+  GdkModifierType state;
 
-  return FALSE;
+  if (event->is_hint)
+    gdk_window_get_pointer (event->window, &x, &y, &state);
+  else
+    {
+      x = event->x;
+      y = event->y;
+      state = event->state;
+    }
+    
+  rx=CalcRealX(x, widget->allocation.width);  
+  ry=CalcRealY(y, widget->allocation.height);  
+  snprintf(tmp,30,"%d ms - %d Hz ",rx,ry);
+  SetStatusBar("sb_add",tmp);
+  return TRUE;
 }
 
 void
@@ -395,7 +518,7 @@ on_bn_fX_color_clicked                 (GtkButton       *button,
       SetMainWindow(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
       /* Make sure the dialog doesn't disappear behind the main window. */
       gtk_window_set_transient_for (GTK_WINDOW (color), 
-				    GTK_WINDOW (GetMainWindow()));
+				    GTK_WINDOW ((GtkWidget *)GetMainWindow()));
       /* Do not allow user to resize the dialog */
       gtk_window_set_resizable (GTK_WINDOW (color), FALSE);
     }
@@ -478,7 +601,7 @@ void
 on_imskpe_main_activate_default        (GtkWindow       *window,
                                         gpointer         user_data)
 {
-
+  SetMainWindow(lookup_widget (GTK_WIDGET (window), "imskpe_main"));
 }
 
 
@@ -538,7 +661,9 @@ on_nb_draw_switch_page                 (GtkNotebook     *notebook,
                                         guint            page_num,
                                         gpointer         user_data)
 {
-  redraw_all_drawareas();
+//   printf("--on_nb_draw\n");
+  redraw_page(page_num);
+  printf("--> tab: %2d\n",page_num);
 }
 
 
@@ -549,6 +674,7 @@ on_ok_button2_clicked                  (GtkButton       *button,
 {
   // set filename 
   char *filename;
+  GtkWidget *w;
 
   int len = strlen(gtk_file_selection_get_filename (GTK_FILE_SELECTION (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
 
@@ -561,8 +687,11 @@ on_ok_button2_clicked                  (GtkButton       *button,
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
   // and start import ...
-  SetStatusBar("sb_file", filename);
+  SetTitle(filename);
   FileOpen(filename);
+
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 }
 
 
@@ -605,14 +734,6 @@ on_bn_open_clicked                     (GtkButton       *button,
 
   /* Make sure the dialog is visible. */
   gtk_window_present (GTK_WINDOW (fileopen));
-}
-
-
-void
-on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
-                                        gpointer         user_data)
-{
-
 }
 
 
@@ -737,8 +858,392 @@ void
 on_spbn_duration_value_changed         (GtkSpinButton   *spinbutton,
                                         gpointer         user_data)
 {
-  redraw_all_drawareas();
+  GtkWidget *w;
+  w=(GtkWidget *)lookup_widget (GTK_WIDGET ((GtkWidget *)GetMainWindow()), "nb_draw");
+  int foo=gtk_notebook_get_current_page((GtkNotebook *)w);
+//   printf("foo_sp: %d\n",foo);
+  configure_page(foo);
+
   FileSetDuration((unsigned int)gtk_spin_button_get_value_as_int(spinbutton));
 }
 
+
+
+void
+on_bn_prefs_clicked                    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+ static GtkWidget *prefs = NULL;
+
+  if (prefs == NULL) 
+    {
+      prefs = create_imskpe_prefs ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (prefs),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&prefs);
+
+      SetMainWindow(lookup_widget (GTK_WIDGET (button), "imskpe_main"));
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (prefs), 
+				    GTK_WINDOW (GetMainWindow()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (prefs));
+
+}
+
+void
+on_bn_f1_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  printf("'f1_freq' - state: - %d\n",gtk_toggle_button_get_active ((GtkToggleButton *)togglebutton));
+  SetCurveShow("bn_f1_freq");
+}
+
+void
+on_bn_f1_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f1_amp");
+}
+
+
+void
+on_bn_f1_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f1_band");
+}
+
+
+void
+on_bn_f1_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f1_bandp");
+}
+
+
+void
+on_bn_f2_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f2_freq");
+}
+
+
+void
+on_bn_f2_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f2_amp");
+}
+
+
+void
+on_bn_f2_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f2_band");
+}
+
+
+void
+on_bn_f2_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f2_bandp");
+}
+
+
+void
+on_bn_f3_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f3_freq");
+}
+
+
+void
+on_bn_f3_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f3_amp");
+}
+
+
+void
+on_bn_f3_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f3_band");
+}
+
+
+void
+on_bn_f3_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f3_bandp");
+}
+
+
+void
+on_bn_f4_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f4_freq");
+}
+
+
+void
+on_bn_f4_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f4_amp");
+}
+
+
+void
+on_bn_f4_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f4_band");
+}
+
+
+void
+on_bn_f4_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f4_bandp");
+}
+
+
+void
+on_bn_f5_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f5_freq");
+}
+
+
+void
+on_bn_f5_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f5_amp");
+}
+
+
+void
+on_bn_f5_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f5_band");
+}
+
+
+void
+on_bn_f5_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f5_bandp");
+}
+
+
+void
+on_bn_f6_freq_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f6_freq");
+}
+
+
+void
+on_bn_f6_amp_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f6_amp");
+}
+
+
+void
+on_bn_f6_band_toggled                  (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f6_band");
+}
+
+
+void
+on_bn_f6_bandp_toggled                 (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_f6_bandp");
+}
+
+
+void
+on_bn_nasal_z_freq_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_nasal_z_freq");
+}
+
+
+void
+on_bn_nasal_z_band_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_nasal_z_band");
+}
+
+
+void
+on_bn_nasal_p_freq_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_nasal_p_freq");
+}
+
+
+void
+on_bn_nasal_p_band_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_nasal_p_band");
+}
+
+
+void
+on_bn_nasal_p_amp_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_nasal_p_amp");
+}
+
+
+void
+on_bn_vs_gopenquot_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_vs_gopenquot");
+}
+
+
+void
+on_bn_vs_breath_toggled                (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_vs_breath");
+}
+
+
+void
+on_bn_vs_spectilt_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_vs_spectilt");
+}
+
+
+void
+on_bn_vs_skewness_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_vs_skewness");
+}
+
+
+void
+on_bn_vs_fundfreq_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_vs_fundfreq");
+}
+
+
+void
+on_bn_examp_voice_toggled              (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_voice");
+}
+
+
+void
+on_bn_examp_asp_toggled                (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_asp");
+}
+
+
+void
+on_bn_examp_fric_toggled               (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_fric");
+}
+
+
+void
+on_bn_examp_bypass_toggled             (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_bypass");
+}
+
+
+void
+on_bn_examp_voicepar_toggled           (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_voicepar");
+}
+
+
+void
+on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+  SetCurveShow("bn_examp_siggain");
+}
+
+
+void
+on_bn_credits_ok_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+}
+
+
+void
+on_bn_about_credits_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+ static GtkWidget *credits = NULL;
+
+  if (credits == NULL) 
+    {
+      credits = create_imskpe_credits ();
+      /* set the widget pointer to NULL when the widget is destroyed */
+      g_signal_connect (G_OBJECT (credits),
+			"destroy",
+			G_CALLBACK (gtk_widget_destroyed),
+			&credits);
+
+      /* Make sure the dialog doesn't disappear behind the main window. */
+      gtk_window_set_transient_for (GTK_WINDOW (credits), 
+				    GTK_WINDOW (GetMainWindow()));
+    }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (credits));
+}
 

@@ -295,7 +295,7 @@ void LoadPar(char *filename)
      {	
        point = (typValueList *) pointtmp->data;
 
-       printf("%4d %4d %2d\n",point->time,point->value,i); 
+        printf("%4d %4d %2d\n",point->time,point->value,i); 
       
 //       if(point!=NULL)
 //       free(point);
