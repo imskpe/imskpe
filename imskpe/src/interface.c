@@ -67,6 +67,7 @@ create_imskpe_main (void)
   GtkWidget *toolbar4;
   GtkWidget *separatortoolitem1;
   GtkWidget *bn_execute;
+  GtkWidget *bn_refresh;
   GtkWidget *toolbar2;
   GtkWidget *separatortoolitem2;
   GtkWidget *tmp_image;
@@ -347,6 +348,11 @@ create_imskpe_main (void)
   gtk_widget_show (bn_execute);
   gtk_container_add (GTK_CONTAINER (toolbar4), bn_execute);
   gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_execute), tooltips, _("Convert & Play"), NULL);
+
+  bn_refresh = (GtkWidget*) gtk_tool_button_new_from_stock ("gtk-refresh");
+  gtk_widget_show (bn_refresh);
+  gtk_container_add (GTK_CONTAINER (toolbar4), bn_refresh);
+  gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_refresh), tooltips, _("Refresh Wavearea"), NULL);
 
   toolbar2 = gtk_toolbar_new ();
   gtk_widget_show (toolbar2);
@@ -992,6 +998,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) bn_execute, "clicked",
                     G_CALLBACK (on_bn_execute_clicked),
                     NULL);
+  g_signal_connect ((gpointer) bn_refresh, "clicked",
+                    G_CALLBACK (on_bn_refresh_clicked),
+                    NULL);
   g_signal_connect ((gpointer) toolbar2, "realize",
                     G_CALLBACK (on_toolbar2_realize),
                     NULL);
@@ -1264,6 +1273,7 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar4, "toolbar4");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem1, "separatortoolitem1");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_execute, "bn_execute");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_refresh, "bn_refresh");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem2, "separatortoolitem2");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_move, "bn_move");

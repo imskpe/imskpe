@@ -681,3 +681,7 @@ void
 on_bn_set_del_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data);
 
+
+void
+on_bn_refresh_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data);

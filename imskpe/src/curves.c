@@ -269,6 +269,7 @@ typCurveList *CurveSearchByNr(GList *curve,int nr)
 gboolean SetCurveShow(char *wn)
 {
   GtkWidget *w;
+  int page;
 
   typCurveList *c = CurveSearchWidgetName((GList *)FileGetCurvesPointer(),wn);
 
@@ -284,7 +285,9 @@ gboolean SetCurveShow(char *wn)
     else
     {
       c->show=TRUE;
-      redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+      page=c->dia-1;
+      gtk_notebook_set_current_page((GtkNotebook *)w,page);
+      redraw_page(page);
       return TRUE;
     }
   }

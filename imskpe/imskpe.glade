@@ -379,6 +379,22 @@
 		  <property name="homogeneous">True</property>
 		</packing>
 	      </child>
+
+	      <child>
+		<widget class="GtkToolButton" id="bn_refresh">
+		  <property name="visible">True</property>
+		  <property name="tooltip" translatable="yes">Refresh Wavearea</property>
+		  <property name="stock_id">gtk-refresh</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_bn_refresh_clicked" last_modification_time="Thu, 10 Feb 2005 21:56:19 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
+	      </child>
 	    </widget>
 	    <packing>
 	      <property name="padding">0</property>

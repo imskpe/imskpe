@@ -2559,3 +2559,12 @@ on_bn_close_allg                       (GtkButton       *button,
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
 }
 
+
+void
+on_bn_refresh_clicked                  (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  repaint_wave();
+//   redraw_wave_expose(widget,event);
+}
+

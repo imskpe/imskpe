@@ -1,3 +1,9 @@
+2005-02-10  Andreas Madsack  <bolsog@users.sf.net>
+
+	* refresh button for waveareas
+	* show drawarea when curve on it activated
+	* small fix in Hz displaying on statusbar
+
 2005-01-17  Andreas Madsack  <bolsog@users.sf.net>
 
         * beta 6 released

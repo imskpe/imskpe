@@ -605,6 +605,10 @@ void Repaint(GtkWidget *d, diagramTyp dia)
 	      if(MouseEventCheckPoint(x,c->nr))
 	      {
 		mod=3;
+		snprintf(s,15," (%5d/%5d)",x,y);
+		strncat(statusbarcurvemessage,s,strlen(s)+1);
+		SetStatusBar ("sb_curve",statusbarcurvemessage);
+		statusshown=TRUE;
 	      }
 	      else
 	      {
