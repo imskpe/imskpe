@@ -1,4 +1,4 @@
-\name/*
+/*
     callbacks.c - Part of IMSKPE
 
     Copyright (C) 2004 Andreas Madsack
@@ -1578,6 +1578,14 @@ on_bn_examp_siggain_toggled            (GtkToggleButton *togglebutton,
     @name preferences parts 
     @{ */
 
+/** bad style trick variable ... */
+char *selected_color;
+
+/** pointer to colordialog */
+GtkWidget *colordiag = NULL;
+/** pointer to prefs dialog */
+GtkWidget *prefs = NULL;
+
 /** 
  * init preferences dialog
  * 
@@ -1738,7 +1746,7 @@ void InitDialogPrefs()
 {
   if (prefs == NULL) 
     {
-      prefs = create_preferences parts ();
+      prefs = create_imskpe_prefs();
       /* set the widget pointer to NULL when the widget is destroyed */
       g_signal_connect (G_OBJECT (prefs),
 			"destroy",
