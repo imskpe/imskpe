@@ -23,7 +23,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /usr/local
+prefix = /home/bol
 exec_prefix = ${prefix}
 datadir = ${prefix}/share
 libdir = ${exec_prefix}/lib
@@ -52,14 +52,14 @@ INCLUDES = -I.. -I$(top_srcdir)/intl
 COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(XCFLAGS)
 
 SOURCES = 
-POFILES = 
-GMOFILES = 
+POFILES =  de.po
+GMOFILES =  de.gmo
 DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(GETTEXT_PACKAGE).pot \
 $(POFILES) $(GMOFILES) $(SOURCES)
 
 POTFILES = \
 
-CATALOGS = 
+CATALOGS =  de.gmo
 CATOBJEXT = .gmo
 INSTOBJEXT = .mo
 
