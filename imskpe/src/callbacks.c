@@ -1583,15 +1583,6 @@ void
 on_convert1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  char *dir;
-
-  dir = (char *)g_malloc(sizeof(ConfigGetString("tmpdir"))+20);
-
-  strcpy(dir,ConfigGetString("tmpdir"));
-  printf("%d\n",getpid());
-  
-  g_free(dir);
-  
   
 }
 
@@ -1600,7 +1591,33 @@ void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+  char *dir;
+  char tmp[300];
 
+  dir = (char *)g_malloc(sizeof(ConfigGetString("tmpdir"))+20);
+
+  strcpy(dir,ConfigGetString("tmpdir"));
+  strcat(dir,"/imskpe.");
+  sprintf(tmp,"%d",getpid());
+  strcat(dir,tmp);
+  printf("%s\n",dir);
+
+  strcpy(tmp,ConfigGetString("klattcmd"));
+  strcpy(tmp,"/home/bol/imskpe/klatt80/klatt");
+  strcat(tmp," -i ");
+  strcat(tmp,dir);
+  strcat(tmp,".par -o ");
+  strcat(tmp,dir);
+  strcat(tmp,".wav");
+
+  strcat(dir,".par");
+  dir[strlen(dir)]=0;
+
+  FileSave(dir);
+
+  system(tmp);
+
+  g_free(dir);
 }
 
 
@@ -1616,6 +1633,8 @@ void
 on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
+
+  on_execute1_activate(NULL,NULL);
 
 }
 

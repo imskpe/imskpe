@@ -266,7 +266,7 @@ GdkColor GetFormantListColor (gchar *searchstring)
 
     free(fname);
   }
-  return GetColor(1.0,0.0,0.0);
+  return GetColor(0.0,0.0,0.0);
 }
 
 

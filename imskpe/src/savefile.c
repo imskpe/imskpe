@@ -67,17 +67,19 @@ void FileSave(char *filename)
 
   if(strlen(filename)>1)
   {
-    tmp=g_malloc (sizeof (char)*(strlen(filename)+1));
+    tmp=g_malloc (sizeof (char)*(strlen(filename)));
     strncpy(tmp,filename,strlen(filename));
   }
   else
   {
-    tmp=g_malloc (sizeof (char)*(strlen(FileGetFilename())+1));
+    tmp=g_malloc (sizeof (char)*(strlen(FileGetFilename())));
     strncpy(tmp,FileGetFilename(),strlen(FileGetFilename()));
   }
   
   FileSetFilename(tmp);
-  printf("%s\n",tmp);    
+  printf("-%s-\n",tmp);    
+
+  tmp[strlen(tmp)-1]=0;
 
   outfp = fopen(tmp,"w");
   if(outfp==NULL)
@@ -138,8 +140,6 @@ void FileSave(char *filename)
       {
 	y=p_pnt[j]->value + (int)((float)(pnt[j]->value-p_pnt[j]->value)/(float)(pnt[j]->time-p_pnt[j]->time)*(float)(i-p_pnt[j]->time));
       }
-      if(i>458 && i<464)
-      printf ("%4d %4d %4d \n",i,j,y);
       
       fprintf(outfp,"%d ",y);
     }
