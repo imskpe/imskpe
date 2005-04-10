@@ -3,20 +3,21 @@ TODO:
 *** 1.0
 - code-cleanup
 
-*** later release
+*** later releases
 - open wavfiles
 - use fft to show a spectrum
 - add libsndfile-support (first do a win32 compile!)
 - maybe play wavs internal (alsa, oss, artsd, gstreamer, nasd, ...)
 
+- listoptimizer after import, to get rid of unnecessary points in lists.
+- new left-control-area with somekind of tree-structure
+  -> first step to use klatt80-alternatives
 
 
 needed Tests:
-
 
 solaris:
 - works only with gtk2.4 / i have no gtk 2.4-solaris machine!
 
 macos:
 - test endieness
-

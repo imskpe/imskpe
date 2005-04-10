@@ -44,8 +44,6 @@
 
 
 /** 
- * FileSave
- * 
  * Wrapper for saving files.
  * At this moment it only saves PAR-Files
  * 
@@ -56,6 +54,13 @@ void FileSave(char *filename)
 {
   char *tmp;
   FILE *outfp;
+
+  int i,j;
+  typValueList *pnt[PARAMETERS];
+  typValueList *p_pnt[PARAMETERS];
+  GList *vl[PARAMETERS];
+  int y;
+
   
   if(!FileIsDefined())
   {
@@ -77,9 +82,7 @@ void FileSave(char *filename)
     strcpy(tmp,FileGetFilename());
   }
   
-//   tmp[strlen(tmp)]=0;
   FileSetFilename(tmp);
-//  printf("-%s-\n",tmp);    
 
   outfp = fopen(tmp,"w");
   if(outfp==NULL)
@@ -100,11 +103,6 @@ void FileSave(char *filename)
   fprintf(outfp,"/*  CP : %d */\n",FileGetBranches());
 
   /* write values */
-  int i,j;
-  typValueList *pnt[PARAMETERS];
-  typValueList *p_pnt[PARAMETERS];
-  GList *vl[PARAMETERS];
-  int y;
 
   for(j=0;j<PARAMETERS;j++)
   {

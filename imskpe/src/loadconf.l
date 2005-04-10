@@ -84,9 +84,7 @@ void LoadConf(char *filename)
   FILE *infp;
   char buffer[1024];
   int toktype;
-  char val[100], var[100];  // das ist nicht optimal ... die können überlaufen!
-
-//   printf("%s\n",filename);
+  char val[100], var[100];  // needs to become tested!!
 
   ConfigNew();
 
@@ -110,12 +108,9 @@ void LoadConf(char *filename)
     yy_scan_string(buffer);
     while ((toktype = yylex()) != 0) 
     {
-//      printf("\t%3d: %s\n", toktype, yytext);
-      
       switch(toktype)
       {
       case COMMENT:
-//	  printf("comment\n");
 	  break;
       case VARNAME:
 	  strcpy(var,yytext);   // hardening: strncpy!!
@@ -136,7 +131,6 @@ void LoadConf(char *filename)
 	  {
 	      if((strlen(val) > 0) && (strlen(var) > 0))
 	      {
-//  		printf("var: %s = %s\n",var,val);
 		ConfigInsert(var,val);
 	      }
 	      else

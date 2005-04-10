@@ -361,11 +361,12 @@ gboolean convert(char *filename)
 	j++)
     {
 
-#ifdef WORDS_BIGENDIAN
-      raw_type=1;
-#else
+// seems to be unnecessary?
+//#ifdef WORDS_BIGENDIAN
+//      raw_type=1;
+//#else
       raw_type=0;
-#endif
+//#endif
 
       low_byte = waveformDestination[j] & 0xff;
       high_byte = (waveformDestination[j] >> 8) & 0xff;

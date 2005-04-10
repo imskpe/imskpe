@@ -362,7 +362,6 @@ void configure_drawarea(GtkWidget *widget, diagramTyp dia)
 		      widget->allocation.width,
 		      widget->allocation.height);
 
-//  update_ruler(widget,dia); 
   Repaint(widget,dia);
 }
 
@@ -412,13 +411,6 @@ GdkGC *GetPenRGB (GdkGC *gc, int nRed, int nGreen, int nBlue)
     gc = gdk_gc_new (g->pixmap);
 
     gdk_gc_set_foreground (gc, c);
-
-//     gdk_gc_set_line_attributes (gc,
-//                                   1,
-//                                   GDK_LINE_ON_OFF_DASH,
-//                                   GDK_CAP_NOT_LAST,
-//                                   GDK_JOIN_MITER );
-
 
     return (gc);
 }
@@ -523,20 +515,13 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     update_ruler(d, dia);
 
     /***************************************
-      erst hier, dann auslagern ... 
     ****************************************/
     
-//    printf("repaint\n");
-
-//    printf(".. %d\n",cv);
     while(cv)
     {	
       c=cv->data;
-//      printf("-\n");
       if(c->show==TRUE && c->dia==dia)
       {
-// 	printf("show it\n");
-
 	lastx=-1;lasty=-1;x=-1;y=-1;
 	val=c->points;
 	val=g_list_first(val);
@@ -862,11 +847,10 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 	}
 	else
 	{
-	  if(rx>p_pnt.time && rx<=n_pnt.time) { // +/- ui ??
+	  if(rx>p_pnt.time && rx<=n_pnt.time) {
 
 	    grad=((double)(pnt.value-p_pnt.value)/(double)(pnt.time-p_pnt.time))*(double)(rx-p_pnt.time);
 	    yval = (int)((double)p_pnt.value+(grad));
-//  	    printf("yv: %5d  g: %5.0f | x:%5d / y:%5d\n",yval,grad,ry,rx);
 	    
 	    ytol=(ymax/100);
 	    if(ytol<10)
@@ -1085,9 +1069,8 @@ char *filtertoken(char str[100], char token[1])
   return result;
 }
 
+
 // maybe use a set.c ??
-
-
 static void set_action_response(gchar *string)
 {
   char *s;
@@ -1103,11 +1086,7 @@ static void set_action_response(gchar *string)
   strcpy(tmp,"Set_");
   strcat(tmp,string);
 
-//   printf ("%s\n", tmp);
-
   strcpy(tmp,ConfigGetString(tmp));
-
-//   printf ("%s\n", tmp);
 
   SetCurveShowArray(tmp);
 }

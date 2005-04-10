@@ -47,8 +47,6 @@
 typFile *aFile=NULL;
 
 /** 
- * FileOpen
- * 
  * Wrapper for opening of files.
  * At this moment it only opens PAR-Files
  * 
@@ -398,7 +396,5 @@ void FileInit()
   GuiSetBranches(1);
 
   CurveInitStart();
-
-  /** \todo free aFile at quit! -> in need of FileGetFilename*/
 }
 

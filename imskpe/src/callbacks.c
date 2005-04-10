@@ -1319,9 +1319,7 @@ on_nb_draw_switch_page                 (GtkNotebook     *notebook,
                                         guint            page_num,
                                         gpointer         user_data)
 {
-//   printf("--on_nb_draw\n");
   redraw_page(page_num);
-//   printf("--> tab: %2d\n",page_num);
 }
 
 void
@@ -1411,12 +1409,10 @@ on_cm_cp_entry_changed                 (GtkEditable     *editable,
   if(!strcmp(_("cascade + parallel"),x))
   {
     FileSetBranches(1);
-//     printf("cascade + parallel: 1\n");
   }
   if(!strcmp(_("parallel only"),x))
   {
     FileSetBranches(2);
-//     printf("parallel only: 2\n");
   }
 }
 
@@ -2264,11 +2260,9 @@ void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-//   char *dir;
-  char dir[300];
-  char tmp[300];
+  char dir[300];  // not good
+  char tmp[300];  // not good
 
-//   dir = (char *)g_malloc(sizeof(char)*(strlen(ConfigGetString("tmpdir"))+20));
   strcpy(dir,filtertoken(ConfigGetString("tmpdir"),"\""));
   strcat(dir,"/imskpe.");
   sprintf(tmp,"%d",getpid());
@@ -2282,8 +2276,6 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   strcat(dir," ");
   strcat(dir,tmp);
   system(dir);
-
-//   g_free(dir);
 }
 
 

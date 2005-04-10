@@ -151,8 +151,6 @@ void CurveInsert(GList *curves, int parid, GList *points)
 }
 
 /** 
- * CurvesListFree
- *
  * freeing a list of curves (and all points on each curve)
  * 
  * @param curves 
@@ -192,8 +190,6 @@ void CurveListFree(GList *curves)
 }
 
 /** 
- * CurveSearchWidgetName
- *
  * returns searched element in curve-list with correct WidgetName
  * if not found returns NULL
  * 
@@ -227,8 +223,6 @@ typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
 }
 
 /** 
- * CurveSearchByNr
- *
  * searches searched element in curvelist with correct nr
  * if not found returns NULL
  * 
@@ -260,7 +254,7 @@ typCurveList *CurveSearchByNr(GList *curve,int nr)
 }
 
 /** 
- * SetCurveShow
+ * sets a curve-show-flag
  * 
  * @param wn 
  * 
@@ -383,7 +377,6 @@ gboolean SetCurveShowArray(char *s)
 /** 
  * returns an array with curves-show-true/false-values
  * 
- * 
  * @return 
  */
 char *GetCurvesShowArray()
@@ -414,8 +407,6 @@ char *GetCurvesShowArray()
 
 
 /** 
- * GenPoint
- *
  * Inserts a Point in an typCurveList/typParList and 
  * returns the pointer to it.
  *
@@ -435,8 +426,6 @@ typValueList *GenPoint (gint t, gint v)
 }
 
 /** 
- * PointDelete
- *
  * deletes an point in value-list
  * 
  * @param cl 
@@ -523,7 +512,6 @@ int PointMove(typCurveList *cl, int otime, int time, int value)
 	v->value=value;
       }
       FileSetIsChanged(TRUE);
-//       printf("%5d/%5d -> %5d/%5d\n",v->time,v->value,time,value);
       return v->time;
     }
     else
@@ -655,7 +643,6 @@ void CurveInitStart()
 
   for(i=0;i<40;i++)
   {
-//     printf("- %2d - %4d\n",i,starttable[i]);
     points=NULL;
     points = g_list_append(points, (typValueList *)GenPoint(0,starttable[i]));
     points = g_list_append(points, (typValueList *)GenPoint(du,starttable[i]));

@@ -61,7 +61,6 @@ int main (int argc, char *argv[])
 #ifdef ENABLE_NLS
 #ifdef WIN32
   bindtextdomain (GETTEXT_PACKAGE, "..\\share\\locale");
-//  printf("win32 locale\n");
 #else
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);
 #endif
@@ -78,9 +77,6 @@ int main (int argc, char *argv[])
   add_pixmap_directory (PACKAGE_DATA_DIR "/" PACKAGE "/pixmaps");
 #endif
 
-// we need less random!
-//  srand(time(NULL));
-
   ConfigLoad();
 
   SetMainWindow(NULL);
@@ -96,13 +92,11 @@ int main (int argc, char *argv[])
 
   SetTitle("unnamed.par");
 
-//   printf("%d %s\n",argc,argv[1]);
   if(argc>1)
   {
     filename=g_malloc (sizeof (char)*(strlen(argv[1])+1));
     strncpy(filename,argv[1],strlen(argv[1]));
     filename[strlen(argv[1])]=0;
-//     printf("%d %s\n",strlen(filename),filename);
     FileOpen(filename);
   }
   else

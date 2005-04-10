@@ -48,9 +48,8 @@ void ConfigLoad()
   char *tmp;
   int homelen;
 
-  // schreibe log messages in debug-file !!!
+  // todo: schreibe log messages in debug-file !!!
 
-//   printf("--- start configload\n");
   if(g_get_home_dir()!=NULL)
   {
     homelen=strlen(g_get_home_dir());
@@ -60,7 +59,6 @@ void ConfigLoad()
     tmp[homelen]=0;
     tmp=strcat(tmp,"/.imskpe");
     tmp[homelen+strlen("/.imskpe")]=0;
-//     printf(">%s<\n",tmp);
     LoadConf(tmp);
   }
   else
@@ -68,7 +66,6 @@ void ConfigLoad()
 //     DialogErrorOK (_("get_home_dir failed!"));
     ;
   }
-//   printf("--- end configload\n");
 }
 
 void ConfigInsert(char *name, char *value)
@@ -94,7 +91,6 @@ void ConfigInsert(char *name, char *value)
       p_value = g_malloc (sizeof(char)*(strlen(value)+1));
       strcpy(p_value,value);
       data->value = p_value;
-//       printf("up %30s = %30s \n",name,value);
       return;
     }
     
@@ -154,8 +150,6 @@ void ConfigInsert(char *name, char *value)
   {
     ConfigInsertString(name,value,type);
   }
-
-//   printf("ins %30s = %30s [%d]\n",name,value,type);
 }
 
 void ConfigInsertString(char *name, char *value, unsigned short type)
@@ -274,7 +268,6 @@ GdkColor ConfigGetColor(char *name)
 	a[i]=hexdigit_value(data->value[(i*2)+2]);
 	a[i]+=(hexdigit_value(data->value[(i*2)+1]))*16;
       }
-//       printf("- colorcode: %3d %3d %3d\n",a[0],a[1],a[2]);
       return GetColor((float)a[0]/(float)255,(float)a[1]/(float)255,(float)a[2]/(float)255);
     }
 
@@ -367,8 +360,6 @@ void ConfigFree()
   typConfig *data;
   GList *cl;
 
-//   printf("-configlistfree start-\n");
-
   cl=g_list_first (cfg);
   while(cl)
   {	
@@ -386,7 +377,6 @@ void ConfigFree()
     cl = g_list_remove(cl,data);
   }
   cfg=NULL;
-//   printf("-configlistfree end-\n");
 }
 
 void ConfigNew()

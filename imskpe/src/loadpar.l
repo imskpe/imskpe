@@ -113,7 +113,6 @@ void LoadPar(char *filename)
     tmp=NULL;
   }
 
-/*   printf("loadpar: %s\n",filename); */
   infp = fopen(filename,"r");
   if(infp==NULL)
   {
@@ -126,13 +125,9 @@ void LoadPar(char *filename)
   /* read from file, line by line */
   while (fgets (buffer, sizeof (buffer), infp)) 
   {
-//     printf("%s",buffer);
-    // ist es ein kommentar?
     yy_scan_string(buffer);
     while ((toktype = yylex()) != 0) 
     {
-//      printf("\t%3d: %s\n", toktype, yytext);
-      
       /* to be done */
       firstrun++;
       if(firstrun==1 && !(toktype==IMSKPE || toktype==KPE))
@@ -248,7 +243,7 @@ void LoadPar(char *filename)
 	    /**
 	       Idea for importfilter:
 	       save point temporary in params-struct
-	       if it's necessary save it.
+	       only if it's necessary save it.
 	    */
 
 //	  printf("- %4d %4d %2d - (%4d)(%4d) - %2d - #%3d \n",ptime,pvalue,pcount,tmp->last1,tmp->last2,pcount,g_list_length(pointtmp)); 
@@ -302,8 +297,6 @@ void LoadPar(char *filename)
   {
     tmp=params[i];
     pointtmp = (GList *) g_list_first (tmp->points);
-//    printf ("%2d / %3d\n",i,g_list_length (pointtmp));
-
 
 /* par->curves:
    - curves auslagern in extra .c
@@ -314,15 +307,12 @@ void LoadPar(char *filename)
    - formants weg -> preferences colortable her!!
 
 */
-//    printf("X-\n");
     CurveInsert(FileGetCurvesPointer(),i,pointtmp);
 
      while(pointtmp)
      {	
        point = (typValueList *) pointtmp->data;
 
-//        printf("%4d %4d %2d\n",point->time,point->value,i); 
-      
 //       if(point!=NULL)
 //       free(point);
 

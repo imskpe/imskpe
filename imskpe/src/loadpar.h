@@ -46,11 +46,12 @@ procedures
 
 #define PARAMETERS 40
 
+/** ParList-struct */
 typedef struct {
     int last1;
     int last2;
-    GList *points;  // typValueList Liste
-    typValueList *ptmp; // maybe next to insert
+    GList *points;  /**< typValueList Liste */
+    typValueList *ptmp; /**< maybe next to insert File-struct*/
 } typParList;
 
 
