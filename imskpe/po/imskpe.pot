@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-10 23:59+0200\n"
+"POT-Creation-Date: 2005-04-12 22:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -614,56 +614,56 @@ msgstr ""
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr ""
 
-#: loadpar.l:120
+#: loadpar.l:119
 msgid "Problems open parameter file."
 msgstr ""
 
-#: loadpar.l:141
+#: loadpar.l:136
 msgid "no parameter file."
 msgstr ""
 
-#: loadpar.l:169 loadpar.l:179 loadpar.l:189 loadpar.l:199 loadpar.l:209
-#: loadpar.l:219
+#: loadpar.l:164 loadpar.l:174 loadpar.l:184 loadpar.l:194 loadpar.l:204
+#: loadpar.l:214
 #, c-format
 msgid "PAR-Import-Error: "
 msgstr ""
 
-#: loadpar.l:170
+#: loadpar.l:165
 #, c-format
 msgid "DU not integer\n"
 msgstr ""
 
-#: loadpar.l:180
+#: loadpar.l:175
 #, c-format
 msgid "UI not integer\n"
 msgstr ""
 
-#: loadpar.l:190
+#: loadpar.l:185
 #, c-format
 msgid "SR not integer\n"
 msgstr ""
 
-#: loadpar.l:200
+#: loadpar.l:195
 #, c-format
 msgid "NF not integer\n"
 msgstr ""
 
-#: loadpar.l:210
+#: loadpar.l:205
 #, c-format
 msgid "SS not integer\n"
 msgstr ""
 
-#: loadpar.l:220
+#: loadpar.l:215
 #, c-format
 msgid "CP not integer\n"
 msgstr ""
 
-#: loadpar.l:226
+#: loadpar.l:221
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
 msgstr ""
 
-#: loadpar.l:239
+#: loadpar.l:234
 msgid "Parameterfile has loops?"
 msgstr ""
 
@@ -671,6 +671,6 @@ msgstr ""
 msgid "Can't open output parameter file."
 msgstr ""
 
-#: loadconf.l:96
+#: loadconf.l:94
 msgid "couldn't find configfile / use default!"
 msgstr ""

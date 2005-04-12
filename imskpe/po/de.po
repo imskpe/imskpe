@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-10 23:59+0200\n"
+"POT-Creation-Date: 2005-04-12 22:16+0200\n"
 "PO-Revision-Date: 2005-03-27 00:04+0100\n"
 "Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
@@ -635,56 +635,56 @@ msgstr "Das Bestimmen des Heimatverzeichnisses ist fehlgeschlagen!"
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr "Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche (-) sind erlaubt!"
 
-#: loadpar.l:120
+#: loadpar.l:119
 msgid "Problems open parameter file."
 msgstr "Probleme beim Öffnen der Parameterdatei."
 
-#: loadpar.l:141
+#: loadpar.l:136
 msgid "no parameter file."
 msgstr "Datei ist keine PAR-Datei."
 
-#: loadpar.l:169 loadpar.l:179 loadpar.l:189 loadpar.l:199 loadpar.l:209
-#: loadpar.l:219
+#: loadpar.l:164 loadpar.l:174 loadpar.l:184 loadpar.l:194 loadpar.l:204
+#: loadpar.l:214
 #, c-format
 msgid "PAR-Import-Error: "
 msgstr "PAR-Importier-Fehler: "
 
-#: loadpar.l:170
+#: loadpar.l:165
 #, c-format
 msgid "DU not integer\n"
 msgstr "DU ist keine Ganzzahl\n"
 
-#: loadpar.l:180
+#: loadpar.l:175
 #, c-format
 msgid "UI not integer\n"
 msgstr "UI ist keine Ganzzahl\n"
 
-#: loadpar.l:190
+#: loadpar.l:185
 #, c-format
 msgid "SR not integer\n"
 msgstr "SR ist keine Ganzzahl\n"
 
-#: loadpar.l:200
+#: loadpar.l:195
 #, c-format
 msgid "NF not integer\n"
 msgstr "NF ist keine Ganzzahl\n"
 
-#: loadpar.l:210
+#: loadpar.l:205
 #, c-format
 msgid "SS not integer\n"
 msgstr "SS ist keine Ganzzahl\n"
 
-#: loadpar.l:220
+#: loadpar.l:215
 #, c-format
 msgid "CP not integer\n"
 msgstr "CP ist keine Ganzzahl\n"
 
-#: loadpar.l:226
+#: loadpar.l:221
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
 msgstr "Eine nicht zuweisbare Variable in der PAR-Datei: %s [%s]\n"
 
-#: loadpar.l:239
+#: loadpar.l:234
 msgid "Parameterfile has loops?"
 msgstr "Parameterfile hat Wiederholungen!"
 
@@ -692,7 +692,7 @@ msgstr "Parameterfile hat Wiederholungen!"
 msgid "Can't open output parameter file."
 msgstr "Kann Ausgabedatei nicht zum Schreiben öffnen."
 
-#: loadconf.l:96
+#: loadconf.l:94
 msgid "couldn't find configfile / use default!"
 msgstr "Kann Konfigurationsdatei nicht finden. Verwende Voreinstellungen."
 
