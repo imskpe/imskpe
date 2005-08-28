@@ -1,3 +1,10 @@
+2005-08-28  Andreas Madsack  <bolsog@users.sf.net>
+	
+	* first implementation of the interpolation-feature
+	  (there need to be improvements done!)
+	* a few fixes
+	* translation updates
+
 2005-04-12  Andreas Madsack  <bolsog@users.sf.net>
 
 	* beta 8 released

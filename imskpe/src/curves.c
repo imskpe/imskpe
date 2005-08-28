@@ -37,6 +37,13 @@
 #include "curves.h"
 #include "cfg.h"
 
+/** 
+ * Insert one Curve to curvelist
+ * 
+ * @param curves List of curves
+ * @param parid the curve is for which parameter
+ * @param points Points to add to this curve
+ */
 void CurveInsert(GList *curves, int parid, GList *points)
 {
   /** CurveMappings
@@ -146,14 +153,14 @@ void CurveInsert(GList *curves, int parid, GList *points)
     eval->points=points;        
     /* no need to set formant/widget_name/show */
   }
-  // Set curves
+  // Set curvespointer
   FileSetCurvesPointer(curves);
 }
 
 /** 
- * freeing a list of curves (and all points on each curve)
+ * freeing a list of curves (and ALL points on EACH curve)
  * 
- * @param curves 
+ * @param curves List of curves to be freed
  */
 void CurveListFree(GList *curves)
 {
@@ -193,10 +200,10 @@ void CurveListFree(GList *curves)
  * returns searched element in curve-list with correct WidgetName
  * if not found returns NULL
  * 
- * @param curve 
- * @param wn 
+ * @param curve List of Curves to search on
+ * @param wn search for this widgetname
  * 
- * @return 
+ * @return a Curvelist
  */
 typCurveList *CurveSearchWidgetName(GList *curve,char *wn)
 {
@@ -375,7 +382,8 @@ gboolean SetCurveShowArray(char *s)
 }
 
 /** 
- * returns an array with curves-show-true/false-values
+ * returns an array with curves-show-true/false-values (0 or 1)
+ * i.e. 0000000000000000000000000000000000000000 for all false
  * 
  * @return 
  */
@@ -384,6 +392,7 @@ char *GetCurvesShowArray()
   int i;
   char *buf;
 
+  /* yes 10 bytes to much */
   buf = (char *) g_malloc (sizeof (char)*50);
 
   for(i=0;i<50;i++)
@@ -470,6 +479,16 @@ gboolean PointDelete (typCurveList *cl, int time)
   return FALSE;
 }
 
+/** 
+ * Move one Point on a curvelists-points
+ * 
+ * @param cl 
+ * @param otime 
+ * @param time 
+ * @param value 
+ * 
+ * @return 
+ */
 int PointMove(typCurveList *cl, int otime, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
@@ -524,6 +543,19 @@ int PointMove(typCurveList *cl, int otime, int time, int value)
   return -1;
 }
 
+/** 
+ * sets new duration-maximum. all time values bigger as new duration 
+ * were set to ew duration
+ * not the best solution. needs to be improved!
+ * especially, if more than one point is bigger as new DU, 
+ * only one is needed, or not?
+ * 
+ * @param cl 
+ * @param o_time 
+ * @param time 
+ * 
+ * @return TRUE if ok, else FALSE
+ */
 gboolean PointSetDU(typCurveList *cl,int o_time, int time)
 {
   GList *vl=(GList *)g_list_first(cl->points);
@@ -551,6 +583,15 @@ gboolean PointSetDU(typCurveList *cl,int o_time, int time)
 }
 
 
+/** 
+ * Insert one point to a curvelists-points
+ * 
+ * @param cl 
+ * @param time 
+ * @param value 
+ * 
+ * @return 
+ */
 gboolean PointInsert(typCurveList *cl, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
@@ -611,7 +652,7 @@ gboolean PointInsert(typCurveList *cl, int time, int value)
 
 
 /** 
- * Init default Curve
+ * Init default Curves
  *
  * using DU from File-struct to get 2nd point!
  * setting no other values, except curve!
@@ -631,7 +672,7 @@ void CurveInitStart()
 //       489,0,40,0,0,0,0,0,60,0,90,
 //       0,150,0,200,0,200,
 //       0,500,0,0,60,60};
-  typCurveList *curve;
+//  typCurveList *curve;
   unsigned int du;
   GList *points=NULL;
   int i;
@@ -652,7 +693,131 @@ void CurveInitStart()
 }
 
 
-/* MouseEventStructureFunctions ...  */
+/** 
+ * interpolates all unnecessary points on all curves
+ * 
+ * idea: calculating gradient for pp_pnt/pnt vs pp_pnt/p_pnt
+ * \todo add some kind of configurable-option in preferences for the tolerance of the interpolation. In dB and Hz!
+ *
+ * @param cl curvelist to operate on, if NULL get curvelist from active file
+ * 
+ * @return 
+ */
+gboolean CurveInterpolate()
+{
+  typCurveList *cdata;
+  GList *cl;
+  typValueList *pv;
+  typValueList *p_pv;
+  GList *pl;
+  GList *p_pl;
+
+  typValueList pnt;
+  typValueList p_pnt;
+  typValueList pp_pnt;
+
+  double a,b;
+
+  cl=g_list_first((GList *)FileGetCurvesPointer());
+  while(cl)
+  {
+    cdata = (typCurveList *) cl->data; 
+    
+    pnt.time=-1;
+    p_pnt.time=-1;
+    pp_pnt.time=-1;
+
+    pl=g_list_first(cdata->points);
+    while(pl)
+    {	
+      pv = (typValueList *) pl->data;
+
+      if(pp_pnt.time<0) {
+	if(p_pnt.time<0) {
+	  if(pnt.time<0) {
+	    pnt.time=pv->time;
+	    pnt.value=pv->value;
+	  }
+	  else {
+	    p_pnt.time=pnt.time;
+	    p_pnt.value=pnt.value;
+	    pnt.time=pv->time;
+	    pnt.value=pv->value;
+	  }
+	}
+	else {
+	  pp_pnt.time=p_pnt.time;
+	  pp_pnt.value=p_pnt.value;
+	  p_pnt.time=pnt.time;
+	  p_pnt.value=pnt.value;
+	  pnt.time=pv->time;
+	  pnt.value=pv->value;
+	}
+      }
+      else {
+	pp_pnt.time=p_pnt.time;
+	pp_pnt.value=p_pnt.value;
+	p_pnt.time=pnt.time;
+	p_pnt.value=pnt.value;
+	pnt.time=pv->time;
+	pnt.value=pv->value;
+      }
+      
+      if(pp_pnt.time>0)
+      {
+	printf("%20s %4.2f %4.2f ",
+	       cdata->widget_name,
+	       ((double)(pnt.value-pp_pnt.value)/(double)(pnt.time-pp_pnt.time)),
+		((double)(p_pnt.value-pp_pnt.value)/(double)(p_pnt.time-pp_pnt.time))
+	    );
+	a = ((double)(pnt.value-pp_pnt.value)/(double)(pnt.time-pp_pnt.time));
+	b = ((double)(p_pnt.value-pp_pnt.value)/(double)(p_pnt.time-pp_pnt.time));
+	printf(" - %4.2f %4.2f - ",a,b);
+
+	if(fabs(fabs(a)-fabs(b)) < 0.05)  /* tolerance-value  */
+	{
+	  /* delete previous point */
+	  p_pl = pl->prev;
+	  p_pv = (typValueList *) p_pl->data;
+
+	  if(p_pv!=NULL)
+	  {
+	    free(p_pv);
+	  }
+	  printf("D");
+
+	  p_pl = (GList *)g_list_remove(p_pl,p_pv);
+	  pl=p_pl->next;
+	}
+	else
+	{
+	  pl=pl->next;
+	}
+	printf("\n");
+      }
+      else
+      {
+	pl=pl->next;
+      }
+    }  
+    cl=cl->next;
+  }
+  redraw_page(0);
+  redraw_page(1);
+  redraw_page(2);
+}
+
+
+
+/**
+ * \todo put this stuff in an extra c-file?
+ * 
+ */
+/**
+ * MouseEventStructureFunctions ...
+   @name mouse events
+   @{ */ 
+
 
 MouseEventData mouseevent;
 
@@ -724,4 +889,6 @@ gboolean MouseEventCheckPoint(int x, int curve)
   return FALSE;
 }
 
+
+/** @} */
 

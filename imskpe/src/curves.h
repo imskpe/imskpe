@@ -99,6 +99,7 @@ gboolean PointInsert(typCurveList *cl, int time, int value);
 int PointMove(typCurveList *cl, int otime, int time, int value);
 gboolean PointSetDU(typCurveList *cl,int o_time, int time);
 void CurveInitStart();
+gboolean CurveInterpolate(); // typCurveList *cl);
 
 /* mouseevent-functions  */
 

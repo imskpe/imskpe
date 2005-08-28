@@ -44,20 +44,22 @@ create_imskpe_main (void)
   GtkWidget *sets1;
   GtkWidget *sets1_menu;
   GtkWidget *add_set1;
-  GtkWidget *image7;
+  GtkWidget *image9;
   GtkWidget *delete_set1;
-  GtkWidget *image8;
+  GtkWidget *image10;
   GtkWidget *separator1;
   GtkWidget *menuitem3;
   GtkWidget *menuitem3_menu;
   GtkWidget *execute1;
-  GtkWidget *image9;
+  GtkWidget *image11;
+  GtkWidget *interpolate1;
+  GtkWidget *image12;
   GtkWidget *menuitem4;
   GtkWidget *menuitem4_menu;
   GtkWidget *about1;
   GtkWidget *hbox2;
   GtkWidget *toolbar1;
-  gint tmp_toolbar_icon_size;
+  GtkIconSize tmp_toolbar_icon_size;
   GtkWidget *bn_quit;
   GtkWidget *bn_open;
   GtkWidget *bn_new;
@@ -68,9 +70,10 @@ create_imskpe_main (void)
   GtkWidget *separatortoolitem1;
   GtkWidget *bn_execute;
   GtkWidget *bn_refresh;
+  GtkWidget *tmp_image;
+  GtkWidget *bn_interpol;
   GtkWidget *toolbar2;
   GtkWidget *separatortoolitem2;
-  GtkWidget *tmp_image;
   GtkWidget *bn_move;
   GtkWidget *bn_insert;
   GtkWidget *bn_delete;
@@ -245,17 +248,17 @@ create_imskpe_main (void)
   gtk_widget_show (add_set1);
   gtk_container_add (GTK_CONTAINER (sets1_menu), add_set1);
 
-  image7 = gtk_image_new_from_stock ("gtk-add", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image7);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (add_set1), image7);
+  image9 = gtk_image_new_from_stock ("gtk-add", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image9);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (add_set1), image9);
 
   delete_set1 = gtk_image_menu_item_new_with_mnemonic (_("_Delete Set"));
   gtk_widget_show (delete_set1);
   gtk_container_add (GTK_CONTAINER (sets1_menu), delete_set1);
 
-  image8 = gtk_image_new_from_stock ("gtk-delete", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image8);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete_set1), image8);
+  image10 = gtk_image_new_from_stock ("gtk-delete", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image10);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (delete_set1), image10);
 
   separator1 = gtk_separator_menu_item_new ();
   gtk_widget_show (separator1);
@@ -277,9 +280,17 @@ create_imskpe_main (void)
                               GDK_E, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
-  image9 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
-  gtk_widget_show (image9);
-  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image9);
+  image11 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image11);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (execute1), image11);
+
+  interpolate1 = gtk_image_menu_item_new_with_mnemonic (_("Interpolate"));
+  gtk_widget_show (interpolate1);
+  gtk_container_add (GTK_CONTAINER (menuitem3_menu), interpolate1);
+
+  image12 = gtk_image_new_from_stock ("gtk-apply", GTK_ICON_SIZE_MENU);
+  gtk_widget_show (image12);
+  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (interpolate1), image12);
 
   menuitem4 = gtk_menu_item_new_with_mnemonic (_("_Help"));
   gtk_widget_show (menuitem4);
@@ -353,6 +364,12 @@ create_imskpe_main (void)
   gtk_widget_show (bn_refresh);
   gtk_container_add (GTK_CONTAINER (toolbar4), bn_refresh);
   gtk_tool_item_set_tooltip (GTK_TOOL_ITEM (bn_refresh), tooltips, _("Refresh Wavearea"), NULL);
+
+  tmp_image = gtk_image_new_from_stock ("gtk-apply", tmp_toolbar_icon_size);
+  gtk_widget_show (tmp_image);
+  bn_interpol = (GtkWidget*) gtk_tool_button_new (tmp_image, _("Interpolate"));
+  gtk_widget_show (bn_interpol);
+  gtk_container_add (GTK_CONTAINER (toolbar4), bn_interpol);
 
   toolbar2 = gtk_toolbar_new ();
   gtk_widget_show (toolbar2);
@@ -888,8 +905,7 @@ create_imskpe_main (void)
   draw_freq = gtk_drawing_area_new ();
   gtk_widget_show (draw_freq);
   gtk_container_add (GTK_CONTAINER (nb_draw), draw_freq);
-  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_freq,
-                                    _("frequencies"));
+  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_freq, _("frequencies"));
   gtk_widget_set_events (draw_freq, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_MOTION_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK);
 
   lb_draw_freq = gtk_label_new (_("frequency"));
@@ -899,8 +915,7 @@ create_imskpe_main (void)
   draw_amp = gtk_drawing_area_new ();
   gtk_widget_show (draw_amp);
   gtk_container_add (GTK_CONTAINER (nb_draw), draw_amp);
-  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_amp,
-                                    _("amplitude"));
+  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_amp, _("amplitude"));
   gtk_widget_set_events (draw_amp, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK);
 
   lb_draw_amp = gtk_label_new (_("amplitude"));
@@ -910,8 +925,7 @@ create_imskpe_main (void)
   draw_band = gtk_drawing_area_new ();
   gtk_widget_show (draw_band);
   gtk_container_add (GTK_CONTAINER (nb_draw), draw_band);
-  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_band,
-                                    _("bandwidths"));
+  gtk_notebook_set_menu_label_text (GTK_NOTEBOOK (nb_draw), draw_band, _("bandwidths"));
   gtk_widget_set_events (draw_band, GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_LEAVE_NOTIFY_MASK);
 
   lb_draw_band = gtk_label_new (_("bandwidth"));
@@ -968,6 +982,9 @@ create_imskpe_main (void)
   g_signal_connect ((gpointer) execute1, "activate",
                     G_CALLBACK (on_execute1_activate),
                     NULL);
+  g_signal_connect ((gpointer) interpolate1, "activate",
+                    G_CALLBACK (on_interpolate1_activate),
+                    NULL);
   g_signal_connect ((gpointer) about1, "activate",
                     G_CALLBACK (on_about1_activate),
                     NULL);
@@ -1000,6 +1017,9 @@ create_imskpe_main (void)
                     NULL);
   g_signal_connect ((gpointer) bn_refresh, "clicked",
                     G_CALLBACK (on_bn_refresh_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) bn_interpol, "clicked",
+                    G_CALLBACK (on_bn_interpol_clicked),
                     NULL);
   g_signal_connect ((gpointer) toolbar2, "realize",
                     G_CALLBACK (on_toolbar2_realize),
@@ -1251,14 +1271,16 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, sets1, "sets1");
   GLADE_HOOKUP_OBJECT (imskpe_main, sets1_menu, "sets1_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, add_set1, "add_set1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image7, "image7");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image9, "image9");
   GLADE_HOOKUP_OBJECT (imskpe_main, delete_set1, "delete_set1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image8, "image8");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image10, "image10");
   GLADE_HOOKUP_OBJECT (imskpe_main, separator1, "separator1");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3, "menuitem3");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem3_menu, "menuitem3_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, execute1, "execute1");
-  GLADE_HOOKUP_OBJECT (imskpe_main, image9, "image9");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image11, "image11");
+  GLADE_HOOKUP_OBJECT (imskpe_main, interpolate1, "interpolate1");
+  GLADE_HOOKUP_OBJECT (imskpe_main, image12, "image12");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4, "menuitem4");
   GLADE_HOOKUP_OBJECT (imskpe_main, menuitem4_menu, "menuitem4_menu");
   GLADE_HOOKUP_OBJECT (imskpe_main, about1, "about1");
@@ -1274,6 +1296,7 @@ create_imskpe_main (void)
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem1, "separatortoolitem1");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_execute, "bn_execute");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_refresh, "bn_refresh");
+  GLADE_HOOKUP_OBJECT (imskpe_main, bn_interpol, "bn_interpol");
   GLADE_HOOKUP_OBJECT (imskpe_main, toolbar2, "toolbar2");
   GLADE_HOOKUP_OBJECT (imskpe_main, separatortoolitem2, "separatortoolitem2");
   GLADE_HOOKUP_OBJECT (imskpe_main, bn_move, "bn_move");
@@ -2211,8 +2234,7 @@ create_imskpe_credits (void)
   gtk_container_add (GTK_CONTAINER (scrolledwindow3), textview6);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (textview6), FALSE);
   gtk_text_view_set_accepts_tab (GTK_TEXT_VIEW (textview6), FALSE);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview6)),
-	_("Andreas Madsack <bolsog@users.sf.net>"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview6)), _("Andreas Madsack <bolsog@users.sf.net>"), -1);
 
   label6 = gtk_label_new (_("written by"));
   gtk_widget_show (label6);
@@ -2227,8 +2249,7 @@ create_imskpe_credits (void)
   gtk_widget_show (_);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), _);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (_), FALSE);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (_)),
-	_("Manuel Kountz (de)\nFaVdB (fr)"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (_)), _("Manuel Kountz (de)\nFranz-Albert Van Den Bussche (fr)"), -1);
 
   label7 = gtk_label_new (_("translators"));
   gtk_widget_show (label7);
@@ -2244,8 +2265,7 @@ create_imskpe_credits (void)
   gtk_container_add (GTK_CONTAINER (scrolledwindow1), textview4);
   gtk_widget_set_size_request (textview4, 500, 150);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (textview4), FALSE);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview4)),
-	_("Dennis Klatt \n(for klatt-formant-synthesis-algorithm)\n\nJon Iles, Nick Ing-Simmons \n(for klatt-command-line-tool)\n\nAndrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n(for KPE (gui for klatt from 1995))"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview4)), _("Dennis Klatt \n(for klatt-formant-synthesis-algorithm)\n\nJon Iles, Nick Ing-Simmons \n(for klatt-command-line-tool)\n\nAndrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n(for KPE (gui for klatt from 1995))"), -1);
 
   label8 = gtk_label_new (_("thanks to"));
   gtk_widget_show (label8);

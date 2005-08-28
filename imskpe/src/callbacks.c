@@ -133,6 +133,7 @@ void
 on_save_as1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
+  loadafter=0;
   InitDialogSave();
 }
 
@@ -430,6 +431,7 @@ void
 on_bn_saveas_clicked                   (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
+  loadafter=0;
   InitDialogSave();
 }
 
@@ -2561,5 +2563,21 @@ on_bn_refresh_clicked                  (GtkToolButton   *toolbutton,
 {
   repaint_wave();
 //   redraw_wave_expose(widget,event);
+}
+
+
+void
+on_interpolate1_activate               (GtkMenuItem     *menuitem,
+                                        gpointer         user_data)
+{
+  CurveInterpolate();
+}
+
+
+void
+on_bn_interpol_clicked                 (GtkToolButton   *toolbutton,
+                                        gpointer         user_data)
+{
+  CurveInterpolate();
 }
 

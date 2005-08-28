@@ -115,7 +115,7 @@
 		      <signal name="activate" handler="on_add_set1_activate" last_modification_time="Sat, 15 Jan 2005 19:04:57 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image7">
+			<widget class="GtkImage" id="image9">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-add</property>
 			  <property name="icon_size">1</property>
@@ -136,7 +136,7 @@
 		      <signal name="activate" handler="on_delete_set1_activate" last_modification_time="Sat, 15 Jan 2005 19:04:57 GMT"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image8">
+			<widget class="GtkImage" id="image10">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-delete</property>
 			  <property name="icon_size">1</property>
@@ -178,9 +178,30 @@
 		      <accelerator key="E" modifiers="GDK_CONTROL_MASK" signal="activate"/>
 
 		      <child internal-child="image">
-			<widget class="GtkImage" id="image9">
+			<widget class="GtkImage" id="image11">
 			  <property name="visible">True</property>
 			  <property name="stock">gtk-execute</property>
+			  <property name="icon_size">1</property>
+			  <property name="xalign">0.5</property>
+			  <property name="yalign">0.5</property>
+			  <property name="xpad">0</property>
+			  <property name="ypad">0</property>
+			</widget>
+		      </child>
+		    </widget>
+		  </child>
+
+		  <child>
+		    <widget class="GtkImageMenuItem" id="interpolate1">
+		      <property name="visible">True</property>
+		      <property name="label" translatable="yes">Interpolate</property>
+		      <property name="use_underline">True</property>
+		      <signal name="activate" handler="on_interpolate1_activate" last_modification_time="Tue, 07 Jun 2005 11:52:51 GMT"/>
+
+		      <child internal-child="image">
+			<widget class="GtkImage" id="image12">
+			  <property name="visible">True</property>
+			  <property name="stock">gtk-apply</property>
 			  <property name="icon_size">1</property>
 			  <property name="xalign">0.5</property>
 			  <property name="yalign">0.5</property>
@@ -389,6 +410,23 @@
 		  <property name="visible_vertical">True</property>
 		  <property name="is_important">False</property>
 		  <signal name="clicked" handler="on_bn_refresh_clicked" last_modification_time="Thu, 10 Feb 2005 21:56:19 GMT"/>
+		</widget>
+		<packing>
+		  <property name="expand">False</property>
+		  <property name="homogeneous">True</property>
+		</packing>
+	      </child>
+
+	      <child>
+		<widget class="GtkToolButton" id="bn_interpol">
+		  <property name="visible">True</property>
+		  <property name="label" translatable="yes">Interpolate</property>
+		  <property name="use_underline">True</property>
+		  <property name="stock_id">gtk-apply</property>
+		  <property name="visible_horizontal">True</property>
+		  <property name="visible_vertical">True</property>
+		  <property name="is_important">False</property>
+		  <signal name="clicked" handler="on_bn_interpol_clicked" last_modification_time="Tue, 07 Jun 2005 11:52:02 GMT"/>
 		</widget>
 		<packing>
 		  <property name="expand">False</property>
@@ -784,7 +822,7 @@
 			      <property name="max_length">0</property>
 			      <property name="text" translatable="yes"></property>
 			      <property name="has_frame">True</property>
-			      <property name="invisible_char" translatable="yes">*</property>
+			      <property name="invisible_char">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_cm_vs_entry_changed" last_modification_time="Mon, 16 Aug 2004 13:46:40 GMT"/>
 			    </widget>
@@ -848,7 +886,7 @@
 			      <property name="max_length">0</property>
 			      <property name="text" translatable="yes"></property>
 			      <property name="has_frame">True</property>
-			      <property name="invisible_char" translatable="yes">*</property>
+			      <property name="invisible_char">*</property>
 			      <property name="activates_default">False</property>
 			      <signal name="changed" handler="on_cm_cp_entry_changed" last_modification_time="Mon, 16 Aug 2004 13:46:45 GMT"/>
 			    </widget>
@@ -3571,7 +3609,7 @@ imskpe
 		  <property name="max_length">0</property>
 		  <property name="text" translatable="yes">/tmp</property>
 		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
+		  <property name="invisible_char">*</property>
 		  <property name="activates_default">False</property>
 		  <signal name="realize" handler="on_ent_tmp_realize" last_modification_time="Mon, 01 Nov 2004 16:00:32 GMT"/>
 		</widget>
@@ -3594,7 +3632,7 @@ imskpe
 		  <property name="max_length">0</property>
 		  <property name="text" translatable="yes">play</property>
 		  <property name="has_frame">True</property>
-		  <property name="invisible_char" translatable="yes">*</property>
+		  <property name="invisible_char">*</property>
 		  <property name="activates_default">False</property>
 		  <signal name="realize" handler="on_ent_play_realize" last_modification_time="Mon, 01 Nov 2004 16:00:27 GMT"/>
 		</widget>
@@ -4144,7 +4182,8 @@ both
 		  <property name="left_margin">0</property>
 		  <property name="right_margin">0</property>
 		  <property name="indent">0</property>
-		  <property name="text" translatable="yes">Manuel Kountz (de)</property>
+		  <property name="text" translatable="yes">Manuel Kountz (de)
+Franz-Albert Van Den Bussche (fr)</property>
 		</widget>
 	      </child>
 	    </widget>
@@ -4849,7 +4888,7 @@ Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele
 	      <property name="max_length">0</property>
 	      <property name="text" translatable="yes"></property>
 	      <property name="has_frame">True</property>
-	      <property name="invisible_char" translatable="yes">*</property>
+	      <property name="invisible_char">*</property>
 	      <property name="activates_default">False</property>
 	    </widget>
 	    <packing>
