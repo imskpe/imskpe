@@ -34,15 +34,14 @@
 #  include <config.h>
 #endif
 
-// #include <stdlib.h>
-// #include <string.h>
 #include <stdio.h>
-// #include <gtk/gtk.h>
-// #include <gdk/gdk.h>
+#include <string.h>
 
 #include "support.h"
 #include "loadconf.h"
 #include "cfg.h"
+#include "curves.h"
+#include "graphics.h"
 
 %}
 

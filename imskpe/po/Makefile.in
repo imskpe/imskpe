@@ -23,7 +23,7 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /home/bol
+prefix = /usr/local
 exec_prefix = ${prefix}
 datadir = ${prefix}/share
 libdir = ${exec_prefix}/lib

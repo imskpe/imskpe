@@ -42,6 +42,7 @@
 #include "loadpar.h"
 #include "loadfile.h"
 #include "support.h"
+#include "graphics.h"
 
   int datanr;
 
@@ -84,8 +85,8 @@ void LoadPar(char *filename)
   FILE *infp;
   char buffer[1024];
   char x[100];
-  int toktype;
-  int pcount;
+  int toktype=0;
+  int pcount=0;
   int ptime=0;
   int optime=0;
   int pvalue;

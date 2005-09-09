@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-18 00:45+0200\n"
+"POT-Creation-Date: 2005-09-09 22:18+0200\n"
 "PO-Revision-Date: 2005-08-18 22:28+0200\n"
 "Last-Translator: Franz-Albert Van Den Bussche <franz@favdb.net>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
@@ -146,23 +146,23 @@ msgstr "branches"
 msgid "samp/sec"
 msgstr "échantillons/sec"
 
-#: src/interface.c:508 src/callbacks.c:1389 src/graphics.c:121
+#: src/interface.c:508 src/callbacks.c:1351 src/graphics.c:123
 msgid "impulse"
 msgstr "impulsion"
 
-#: src/interface.c:509 src/callbacks.c:1393 src/graphics.c:124
+#: src/interface.c:509 src/callbacks.c:1355 src/graphics.c:126
 msgid "natural"
 msgstr "naturel"
 
-#: src/interface.c:510 src/callbacks.c:1397 src/graphics.c:127
+#: src/interface.c:510 src/callbacks.c:1359 src/graphics.c:129
 msgid "sampled"
 msgstr "échantillonné"
 
-#: src/interface.c:525 src/callbacks.c:1411 src/graphics.c:142
+#: src/interface.c:525 src/callbacks.c:1373 src/graphics.c:144
 msgid "cascade + parallel"
 msgstr "caskade + parallèle"
 
-#: src/interface.c:526 src/callbacks.c:1415 src/graphics.c:145
+#: src/interface.c:526 src/callbacks.c:1377 src/graphics.c:147
 msgid "parallel only"
 msgstr "parallèle seul"
 
@@ -569,57 +569,49 @@ msgstr "Quel Set voulez-vous supprimer?"
 msgid "choose"
 msgstr "choisissez"
 
-#: src/callbacks.c:90 src/callbacks.c:244 src/callbacks.c:270
+#: src/callbacks.c:92 src/callbacks.c:246 src/callbacks.c:272
 msgid "Save changed data?"
 msgstr "Enregistrer les chagements?"
 
-#: src/callbacks.c:230
+#: src/callbacks.c:232
 msgid " written"
 msgstr " écrits"
 
-#: src/callbacks.c:351
+#: src/callbacks.c:353
 msgid "Filetype: "
 msgstr "Type fichier: "
 
-#: src/callbacks.c:394
+#: src/callbacks.c:396
 msgid "All Files"
 msgstr "Tous fichiers"
 
-#: src/callbacks.c:399
+#: src/callbacks.c:401
 msgid "par-Files"
 msgstr "Fichiers-par"
 
-#: src/callbacks.c:475
+#: src/callbacks.c:477
 msgid "Compiled"
 msgstr "Compilé"
 
-#: src/callbacks.c:546
-msgid "write bugreports here: "
-msgstr "rapport de bug ici: "
-
-#: src/callbacks.c:547
-msgid "get announcements:"
-msgstr "avoir les annonces:"
-
-#: src/callbacks.c:763 src/callbacks.c:855
+#: src/callbacks.c:725 src/callbacks.c:817
 #, c-format
 msgid "%d ms - %d Hz "
 msgstr "%d ms - %d Hz "
 
-#: src/callbacks.c:809
+#: src/callbacks.c:771
 #, c-format
 msgid "%d ms - %d dB "
 msgstr "%d ms - %d dB "
 
-#: src/callbacks.c:1993
+#: src/callbacks.c:1955
 msgid "Really reset preferences?"
 msgstr "Réinitialiser vraiment les préférences?"
 
-#: src/callbacks.c:2358
+#: src/callbacks.c:2319
 msgid "You need insert a name for the set!"
 msgstr "Vous devez insérer un nom pour le set"
 
-#: src/callbacks.c:2533
+#: src/callbacks.c:2494
 msgid "Really quit?"
 msgstr "Quitter vraiment?"
 
@@ -628,72 +620,80 @@ msgstr "Quitter vraiment?"
 msgid "Couldn't find pixmap file: %s"
 msgstr "Impossible de trouver le fichier pixmap %s"
 
-#: src/cfg.c:447
+#: src/graphics.c:1145
+msgid "write bugreports here: "
+msgstr "rapport de bug ici: "
+
+#: src/graphics.c:1146
+msgid "get announcements:"
+msgstr "avoir les annonces:"
+
+#: src/cfg.c:470
 msgid "Problems saving config-file!"
 msgstr "Problèmes denregistrement du fichier de configuration!"
 
-#: src/cfg.c:470
+#: src/cfg.c:493
 msgid "get_home_dir failed!"
 msgstr "get_home_dir en erreur!"
 
-#: src/cfg.c:538
+#: src/cfg.c:561
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr "Seuls les lettres, nombres, espaces et - sont autorisés!"
 
-#: loadpar.l:119
+#: loadpar.l:121
 msgid "Problems open parameter file."
 msgstr "Problèmes d'ouverture du fichier paramètre."
 
-#: loadpar.l:136
+#: loadpar.l:138
 msgid "no parameter file."
 msgstr "aucun fichier paramètre."
 
-#: loadpar.l:164 loadpar.l:174 loadpar.l:184 loadpar.l:194 loadpar.l:204
-#: loadpar.l:214
+#: loadpar.l:166 loadpar.l:176 loadpar.l:186 loadpar.l:196 loadpar.l:206
+#: loadpar.l:216
 #, c-format
 msgid "PAR-Import-Error: "
 msgstr "Erreur-Import-PAR: "
 
-#: loadpar.l:165
+#: loadpar.l:167
 #, c-format
 msgid "DU not integer\n"
 msgstr "DU non entier\n"
 
-#: loadpar.l:175
+#: loadpar.l:177
 #, c-format
 msgid "UI not integer\n"
 msgstr "UI non entier\n"
 
-#: loadpar.l:185
+#: loadpar.l:187
 #, c-format
 msgid "SR not integer\n"
 msgstr "SR non entier\n"
 
-#: loadpar.l:195
+#: loadpar.l:197
 #, c-format
 msgid "NF not integer\n"
 msgstr "NF non entier\n"
 
-#: loadpar.l:205
+#: loadpar.l:207
 #, c-format
 msgid "SS not integer\n"
 msgstr "SS non entier\n"
 
-#: loadpar.l:215
+#: loadpar.l:217
 #, c-format
 msgid "CP not integer\n"
 msgstr "CP non entier\n"
 
-#: loadpar.l:221
+#: loadpar.l:223
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
 msgstr "variable non reconnue dans le fichier PAR: %s [%s]\n"
 
-#: loadpar.l:234
+#: loadpar.l:236
 msgid "Parameterfile has loops?"
 msgstr "Fichier paramètre contient des doubles!"
 
-#: src/savefile.c:90
+#: src/savefile.c:91
 msgid "Can't open output parameter file."
 msgstr "Fichier paramètre impossible à ouvrir."
 

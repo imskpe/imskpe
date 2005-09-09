@@ -31,7 +31,9 @@
 #endif
 
 #include <stdio.h>
+#include <string.h>
 #include <gtk/gtk.h>
+#include <math.h>
 #include "convert.h"
 
 #include "loadfile.h"
@@ -40,6 +42,7 @@
 #include "klatt80/parwave.h"
 
 #include "graphics.h"
+#include "support.h"
 
 /* defaults */
 

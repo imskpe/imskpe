@@ -33,6 +33,8 @@
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
 #include <sys/stat.h>
+#include <string.h>
+#include <malloc.h>
 
 #include "callbacks.h"
 #include "interface.h"
@@ -518,46 +520,6 @@ on_bn_about_credits_clicked            (GtkButton       *button,
 
 
 /** 
- * initialize and set splashscreen!
- * 
- */
-void InitSplash()
-{
-  static GtkWidget *splash = NULL;
-  GtkWidget *w;
-  char buf[512];
-
-  if (splash == NULL) 
-  {
-    splash = create_imskpe_splash ();
-    /* set the widget pointer to NULL when the widget is destroyed */
-    g_signal_connect (G_OBJECT (splash),
-		      "destroy",
-		      G_CALLBACK (gtk_widget_destroyed),
-		      &splash);
-
-
-    w = lookup_widget (GTK_WIDGET (splash), "splash_label");    
-    snprintf(buf,sizeof(buf),
-	     "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
-	     "\n\n"
-	     "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
-	     "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
-	     ,VERSION,_("write bugreports here: "),"http://sourceforge.net/tracker/?group_id=94548",
-	     _("get announcements:"),"http://lists.sourceforge.net/lists/listinfo/imskpe-announce"
-	);
-    gtk_label_set_markup (GTK_LABEL (w), buf);  
-
-    /* Make sure the dialog doesn't disappear behind the main window. */
-    gtk_window_set_transient_for (GTK_WINDOW (splash), 
-				  GTK_WINDOW (GetMainWindow()));
-  }
-
-  /* Make sure the dialog is visible. */
-  gtk_window_present (GTK_WINDOW (splash));
-}
-
-/** 
  * close splashscreen
  * 
  * @param button 
@@ -882,7 +844,7 @@ on_draw_freq_button_press_event        (GtkWidget       *widget,
   diagramTyp dia=FREQUENCIES;
   int x, y;
   int rx,ry;
-  GdkModifierType state;
+//  GdkModifierType state;
   
   x = event->x;
   y = event->y;
@@ -912,7 +874,7 @@ on_draw_amp_button_press_event         (GtkWidget       *widget,
   diagramTyp dia=AMPLITUDE;
   int x, y;
   int rx,ry;
-  GdkModifierType state;
+//  GdkModifierType state;
   
   x = event->x;
   y = event->y;
@@ -942,7 +904,7 @@ on_draw_band_button_press_event        (GtkWidget       *widget,
   diagramTyp dia=BANDWIDTH;
   int x, y;
   int rx,ry;
-  GdkModifierType state;
+//  GdkModifierType state;
   
   x = event->x;
   y = event->y;
@@ -2304,7 +2266,6 @@ on_add_set1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
   static GtkWidget *set_add = NULL;
-  GtkWidget *w;
 
   if (set_add == NULL) 
   {
@@ -2339,8 +2300,8 @@ void
 on_bn_set_add_ok_clicked               (GtkButton       *button,
                                         gpointer         user_data)
 {
-  GtkWidget *menu_items;  
-  GtkWidget *menu;
+//  GtkWidget *menu_items;  
+//  GtkWidget *menu;
   char buf[128];
   buf[0]=0;
 
@@ -2545,6 +2506,7 @@ imskpe_quit                            (GtkWidget       *widget,
     ConfigFree();
     gtk_main_quit ();
   }
+  return TRUE;
 }
 
 /** @} */

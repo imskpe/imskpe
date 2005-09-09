@@ -32,8 +32,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
-
+#include <string.h>
+#include <stdlib.h>
 #include <ctype.h>
+#include <malloc.h>
 
 #include "support.h"
 #include "curves.h"
@@ -48,7 +50,7 @@ void ConfigLoad()
   char *tmp;
   int homelen;
 
-  // todo: schreibe log messages in debug-file !!!
+  // todo: write log to debug-file!
 
   if(g_get_home_dir()!=NULL)
   {
@@ -203,8 +205,19 @@ char *ConfigGetString(char *name)
 
     cl = cl->next;
   }
+  return 0;
 }
 
+/** 
+ * returns Integervalue from Configfile
+ *
+ * if not found returnvalue is 0.
+ * bad solution!!
+ * 
+ * @param name 
+ * 
+ * @return integer
+ */
 int ConfigGetInteger(char *name)
 {
   typConfig *data;
@@ -229,6 +242,7 @@ int ConfigGetInteger(char *name)
 
     cl = cl->next;
   }
+  return 0;
 }
 
 gboolean ConfigInsertColor(GdkColor *color, char *selected_color)
@@ -244,11 +258,20 @@ gboolean ConfigInsertColor(GdkColor *color, char *selected_color)
   return TRUE;
 }
 
+/** 
+ * returns color-struct from config-file
+ *
+ * \todo needs return-value in error-case
+ * 
+ * @param name 
+ * 
+ * @return 
+ */
 GdkColor ConfigGetColor(char *name)
 {
   typConfig *data;
   GList *cl;
-  int i,x,a[3];
+  int i,a[3];
   char tmp[30];
 
   strcpy(tmp,"color_");

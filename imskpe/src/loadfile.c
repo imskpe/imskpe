@@ -33,11 +33,14 @@
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <string.h>
+#include <malloc.h>
 
 #include "support.h"
 
 #include "loadfile.h"
 #include "loadpar.h"
+#include "graphics.h"
 
 /* only for InitDialogSave :( */
 #include "callbacks.h"
@@ -57,6 +60,13 @@ void FileOpen(char *filename)
   LoadPar(filename);
 }
 
+/** 
+ * set all values in file-struct, for newly loaded file.
+ * 
+ * @param filename 
+ * 
+ * @return 
+ */
 gboolean FilePrepare(char *filename)
 {
   char *tmp;
@@ -78,31 +88,40 @@ gboolean FilePrepare(char *filename)
   aFile->ischanged=FALSE;
   aFile->isnew=FALSE;
   aFile->curves=NULL;
+  
+  return TRUE;
 }
 
+/** 
+ * returns if File is defined in file-struct
+ *
+ * if not set FALSE is returned.
+ * 
+ * @return 
+ */
 gboolean FileIsDefined()
 {
   if(aFile!=NULL)
   {
     return TRUE;
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
-
+/** 
+ * returns Filename of actual file in file-struct
+ * 
+ * returns "\0" if not defined
+ * 
+ * @return 
+ */
 char *FileGetFilename()
 {
   if(aFile!=NULL)
   {
     return aFile->filename;
   }
-  else
-  {
-    return 0;
-  }
+  return "\0";
 }
 
 gboolean FileSetFilename(char *foo)
@@ -118,10 +137,7 @@ gboolean FileSetFilename(char *foo)
     aFile->filename=tmp;
     return TRUE;
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
 
@@ -139,22 +155,23 @@ gboolean FileSetDuration(unsigned int d)
       return FALSE;
     }
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
+/** 
+ * returns durations from file-struct
+ * 
+ * returns 0 if not defined
+ * 
+ * @return 
+ */
 unsigned int FileGetDuration()
 {
   if(aFile!=NULL)
   {
     return aFile->duration;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 gboolean FileSetUpdateInterval(unsigned int ui)
@@ -171,22 +188,24 @@ gboolean FileSetUpdateInterval(unsigned int ui)
       return FALSE;
     }
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
+/** 
+ * returns updateinterval from file-struct
+ *
+ * returns 0 if not defined
+ * 
+ * 
+ * @return 
+ */
 unsigned int FileGetUpdateInterval()
 {
   if(aFile!=NULL)
   {
     return aFile->update_interval;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 gboolean FileSetSamplingRate(unsigned int sr)
@@ -203,22 +222,23 @@ gboolean FileSetSamplingRate(unsigned int sr)
       return FALSE;
     }
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
+/** 
+ * returns Samplingrate defined in file-struct
+ * 
+ * returns 0 if not defined
+ * 
+ * @return 
+ */
 unsigned int FileGetSamplingRate()
 {
   if(aFile!=NULL)
   {
     return aFile->sampling_rate;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 
@@ -236,22 +256,23 @@ gboolean FileSetNumberFormants(unsigned int f)
       return FALSE;
     }
   }
-  else
-  {
-    return FALSE;
-  }
+  return FALSE;
 }
 
+/** 
+ * returns number of formants defined in file-struct
+ * 
+ * returns 0 if not defined
+ * 
+ * @return 
+ */
 unsigned int FileGetNumberFormants()
 {
   if(aFile!=NULL)
   {
     return aFile->formant_number;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 
@@ -266,22 +287,25 @@ gboolean FileSetVoiceSource(unsigned int vs)
     case SAMPLED:
 	aFile->voice_source=vs;
 	return TRUE;
-    default:
-	return FALSE;
     }
   }
+  return FALSE;
 }
 
+/** 
+ * returns VoiceSource from file-struct
+ *
+ * returns 0 if not defined
+ * 
+ * @return 
+ */
 unsigned int FileGetVoiceSource()
 {
   if(aFile!=NULL)
   {
     return aFile->voice_source;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 gboolean FileSetBranches(unsigned int cp)
@@ -298,18 +322,23 @@ gboolean FileSetBranches(unsigned int cp)
 	return FALSE;
     }
   }
+  return FALSE;
 }
 
+/** 
+ * returns Branches from file-struct
+ * 
+ * returns 0 if not defined
+ * 
+ * @return 
+ */
 unsigned int FileGetBranches()
 {
   if(aFile!=NULL)
   {
     return aFile->branches;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
 
 void FileSetIsNew(gboolean b)
@@ -320,12 +349,21 @@ void FileSetIsNew(gboolean b)
   }
 }
 
+/** 
+ * returns if file is new
+ *
+ * if not defined, file is new (result is TRUE)
+ * 
+ * 
+ * @return 
+ */
 gboolean FileGetIsNew()
 {
   if(aFile!=NULL)
   {
     return aFile->isnew;
   }
+  return TRUE;
 }
 
 void FileSetIsChanged(gboolean b)
@@ -336,12 +374,22 @@ void FileSetIsChanged(gboolean b)
   }
 }
 
+/** 
+ * returns if file is changes
+ *
+ * not defined should not occur.
+ * if it occurs, FALSE will be returned.
+ * 
+ * 
+ * @return 
+ */
 gboolean FileGetIsChanged()
 {
   if(aFile!=NULL)
   {
     return aFile->ischanged;
   }
+  return FALSE;
 }
 
 void FileSetCurvesPointer(GList *curves)
@@ -349,6 +397,13 @@ void FileSetCurvesPointer(GList *curves)
   aFile->curves=curves;
 }
 
+/** 
+ * returns curves-pointer in file-struct
+ * 
+ * if not defined NULL is returned
+ * 
+ * @return 
+ */
 GList *FileGetCurvesPointer()
 {
   if(aFile!=NULL)
@@ -358,13 +413,18 @@ GList *FileGetCurvesPointer()
       return g_list_first(aFile->curves);
     }
   }
+  return NULL;
 }
 
+/** 
+ * Initialize File.
+ *
+ * \todo look if old file isChanged and needs to be saved. 
+ * 
+ */
 void FileInit()
 {
   char *tmp;
-  
-  /** \todo look if old file isChanged and needs to be saved. */
 
   if(aFile != NULL)
   {

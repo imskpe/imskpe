@@ -94,3 +94,4 @@ GtkWidget *DialogOK (char *msg, GtkMessageType mt);
 char *filtertoken(char str[100], char token[1]);
 
 gboolean SetAddMenuItem(char *buf);
+void InitSplash();

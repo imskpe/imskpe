@@ -36,4 +36,12 @@ dist-hook:
 	    fi \
 	  done \
 	fi
+	if test -d debian; then \
+	  mkdir $(distdir)/debian; \
+	  for debian in debian/*; do \
+	    if test -f $$debian; then \
+	      cp -p $$debian $(distdir)/debian; \
+	    fi \
+	  done \
+	fi
 

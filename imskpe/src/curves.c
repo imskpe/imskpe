@@ -33,9 +33,15 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
+#include <string.h>
+#include <math.h>
+#include <malloc.h>
 
+#include "loadfile.h"
 #include "curves.h"
 #include "cfg.h"
+#include "support.h"
+#include "graphics.h"
 
 /** 
  * Insert one Curve to curvelist
@@ -292,11 +298,9 @@ gboolean SetCurveShow(char *wn)
       return TRUE;
     }
   }
-  else
-  {
-    printf("curve not found: -%s-\n",wn);
-    return FALSE;
-  }
+
+  printf("curve not found: -%s-\n",wn);
+  return FALSE;
 }
 
 /** 
@@ -308,19 +312,15 @@ gboolean SetCurveShow(char *wn)
  */
 gboolean GetCurveShowByNum(int num)
 {
-  GtkWidget *w;
-
   typCurveList *c = CurveSearchByNr((GList *)FileGetCurvesPointer(),num);
 
   if(c!=NULL)
   {
     return c->show;
   }
-  else
-  {
-    printf("curve not found: -%d-\n",num);
-    return FALSE;
-  }
+
+  printf("curve not found: -%d-\n",num);
+  return FALSE;
 }
 
 /** 
@@ -346,12 +346,9 @@ gboolean SetCurveShowByNum(int num, gboolean val)
       }
       return TRUE;
     }
-    else
-    {
-      printf("curve not found: -%d-\n",num);
-      return FALSE;
-    }
   }
+  printf("curve not found: -%d-\n",num);
+  return FALSE;
 }
 
 /** 
@@ -595,9 +592,9 @@ gboolean PointSetDU(typCurveList *cl,int o_time, int time)
 gboolean PointInsert(typCurveList *cl, int time, int value)
 {
   GList *vl=(GList *)g_list_first(cl->points);
-  GList *vl2;
+//  GList *vl2;
   typValueList *v;  
-  typValueList *v2;  
+//  typValueList *v2;  
   int ui=FileGetUpdateInterval();
 
   typValueList p_pnt;
@@ -765,14 +762,14 @@ gboolean CurveInterpolate()
       
       if(pp_pnt.time>0)
       {
-	printf("%20s %4.2f %4.2f ",
-	       cdata->widget_name,
-	       ((double)(pnt.value-pp_pnt.value)/(double)(pnt.time-pp_pnt.time)),
-		((double)(p_pnt.value-pp_pnt.value)/(double)(p_pnt.time-pp_pnt.time))
-	    );
+// 	printf("%20s %4.2f %4.2f ",
+// 	       cdata->widget_name,
+// 	       ((double)(pnt.value-pp_pnt.value)/(double)(pnt.time-pp_pnt.time)),
+// 		((double)(p_pnt.value-pp_pnt.value)/(double)(p_pnt.time-pp_pnt.time))
+// 	    );
 	a = ((double)(pnt.value-pp_pnt.value)/(double)(pnt.time-pp_pnt.time));
 	b = ((double)(p_pnt.value-pp_pnt.value)/(double)(p_pnt.time-pp_pnt.time));
-	printf(" - %4.2f %4.2f - ",a,b);
+//	printf(" - %4.2f %4.2f - ",a,b);
 
 	if(fabs(fabs(a)-fabs(b)) < 0.05)  /* tolerance-value  */
 	{
@@ -784,7 +781,7 @@ gboolean CurveInterpolate()
 	  {
 	    free(p_pv);
 	  }
-	  printf("D");
+// 	  printf("D");
 
 	  p_pl = (GList *)g_list_remove(p_pl,p_pv);
 	  pl=p_pl->next;
@@ -793,7 +790,7 @@ gboolean CurveInterpolate()
 	{
 	  pl=pl->next;
 	}
-	printf("\n");
+//	printf("\n");
       }
       else
       {
@@ -805,6 +802,8 @@ gboolean CurveInterpolate()
   redraw_page(0);
   redraw_page(1);
   redraw_page(2);
+  
+  return TRUE;
 }
 
 

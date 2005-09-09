@@ -93,6 +93,8 @@ typCurveList *CurveSearchByNr(GList *curve,int nr);
 gboolean SetCurveShow(char *wn);
 gboolean GetCurveShowByNum(int num);
 gboolean SetCurveShowByNum(int num, gboolean val);
+gboolean SetCurveShowArray(char *s);
+char *GetCurvesShowArray();
 typValueList *GenPoint (gint t, gint v);
 gboolean PointDelete (typCurveList *vallist, int time);
 gboolean PointInsert(typCurveList *cl, int time, int value);

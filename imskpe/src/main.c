@@ -30,6 +30,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <string.h>
 
 #include "interface.h"
 #include "callbacks.h"
@@ -38,6 +39,7 @@
 #include "loadfile.h"
 #include "curves.h"
 #include "cfg.h"
+#include "graphics.h"
 
 // #include "klatt80/parwave.h"
 

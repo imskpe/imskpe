@@ -38,6 +38,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdk.h>
 #include <glib/gprintf.h>
+#include <string.h>
+#include <malloc.h>
 
 #include "callbacks.h"
 #include "interface.h"
@@ -167,6 +169,7 @@ gboolean GuiGetToggleButtonState(char tmp[30])
       return FALSE;
     }
   }
+  return FALSE;
 }
 
 void GuiSetToolbarStyle(int style)
@@ -200,7 +203,7 @@ int CalcRealX(int dx, int maxx)
 
 int CalcRealY(int dy, int maxy,diagramTyp dia)
 {
-  int du=FileGetDuration();
+//  int du=FileGetDuration();
   int rulerdiff=25;
   int max=5000;
   int oy;
@@ -472,8 +475,8 @@ void Repaint(GtkWidget *d, diagramTyp dia)
     GList *cv=(GList *)FileGetCurvesPointer();
 
 /* muss alles ausgelagert werden: */
-    int xsplits=15;  /**< export in preferences */
-    int ysplits=10;  /**< export in preferences */
+//    int xsplits=15;  /**< export in preferences */
+//    int ysplits=10;  /**< export in preferences */
     int ymax=5000;
 
     int xmax = FileGetDuration();
@@ -753,7 +756,7 @@ void DrawAreaMotion(int rx, int ry,   GdkModifierType state, diagramTyp dia)
 
   int ymax=5000;
 
-  int lastpoint=MouseEventGetPoint();
+//  int lastpoint=MouseEventGetPoint();
   int lastcurve=MouseEventGetCurve();
   
   GList *val;
@@ -911,7 +914,7 @@ void DrawButtonPressed(int rx, int ry, GdkEventButton  *event, diagramTyp dia)
   int point,curve;
   MouseActionTyp action;
   int x, y;
-  GdkModifierType state;
+//  GdkModifierType state;
   GdkEventButton *bevent;
 
   if (event->type == GDK_BUTTON_PRESS && event->button==1) {
@@ -1110,4 +1113,45 @@ gboolean SetAddMenuItem(char *buf)
   
   /* Show the widget */
   gtk_widget_show (menu_items);
+  return TRUE;
+}
+
+/** 
+ * initialize and set splashscreen!
+ * 
+ */
+void InitSplash()
+{
+  static GtkWidget *splash = NULL;
+  GtkWidget *w;
+  char buf[512];
+
+  if (splash == NULL) 
+  {
+    splash = create_imskpe_splash ();
+    /* set the widget pointer to NULL when the widget is destroyed */
+    g_signal_connect (G_OBJECT (splash),
+		      "destroy",
+		      G_CALLBACK (gtk_widget_destroyed),
+		      &splash);
+
+
+    w = lookup_widget (GTK_WIDGET (splash), "splash_label");    
+    snprintf(buf,sizeof(buf),
+	     "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
+	     "\n\n"
+	     "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
+	     "<b>%s</b>\n<span size=\"small\">%s</span>\n\n"
+	     ,VERSION,_("write bugreports here: "),"http://sourceforge.net/tracker/?group_id=94548",
+	     _("get announcements:"),"http://lists.sourceforge.net/lists/listinfo/imskpe-announce"
+	);
+    gtk_label_set_markup (GTK_LABEL (w), buf);  
+
+    /* Make sure the dialog doesn't disappear behind the main window. */
+    gtk_window_set_transient_for (GTK_WINDOW (splash), 
+				  GTK_WINDOW (GetMainWindow()));
+  }
+
+  /* Make sure the dialog is visible. */
+  gtk_window_present (GTK_WINDOW (splash));
 }

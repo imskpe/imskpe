@@ -33,14 +33,15 @@
 
 #include <gtk/gtk.h>
 #include <stdio.h>
+#include <string.h>
+#include <malloc.h>
+
+#include "loadpar.h"
+#include "graphics.h"
 #include "support.h"
 
 #include "loadfile.h"
-//#include "curves.h"
 #include "savefile.h"
-
-#include "loadpar.h"
-
 
 
 /** 
