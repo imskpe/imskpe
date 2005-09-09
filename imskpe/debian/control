@@ -1,0 +1,13 @@
+Source: imskpe
+Section: unknown
+Priority: optional
+Maintainer: Andreas Madsack <bolsog@users.sf.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: imskpe
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Formantsynthesis GUI
+ Formantsynthesis GUI based on klatt80-algorithm.
+ Using GTK2.
