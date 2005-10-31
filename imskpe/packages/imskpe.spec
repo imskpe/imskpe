@@ -1,6 +1,6 @@
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
-Version: 1.0beta6
+Version: 1.0
 Release: 1
 License: GPL
 Group: Applications/Sound
@@ -41,6 +41,9 @@ make DESTDIR=%{buildroot} install
 #%doc AUTHORS ChangeLog INSTALL README NEWS TODO
 
 %changelog 
+
+* Mon Oct 31 2005 Andreas Madsack <bolsog@users.sf.net>
+- 1.0 release
 
 * Mon Nov 22 2004 Andreas Madsack <bolsog@users.sf.net>
 - first version
