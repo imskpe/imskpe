@@ -47,10 +47,10 @@ AUTOMAKE = ${SHELL} /home/bol/imskpe/imskpe/missing --run automake-1.7
 AWK = mawk
 CATALOGS =  de.gmo fr.gmo
 CATOBJEXT = .gmo
-CC = gcc
+CC = i486-linux-gnu-gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2  
-CPP = gcc -E
+CFLAGS = -Wall -g -O2  
+CPP = i486-linux-gnu-gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DATADIRNAME = share
@@ -86,8 +86,8 @@ MSGFMT = /usr/bin/msgfmt
 OBJEXT = o
 PACKAGE = imskpe
 PACKAGE_BUGREPORT = 
-PACKAGE_CFLAGS = -DXTHREADS -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/X11R6/include -I/usr/include/atk-1.0 -I/usr/include/pango-1.0 -I/usr/include/freetype2 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  
-PACKAGE_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangoxft-1.0 -lpangox-1.0 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0  
+PACKAGE_CFLAGS = -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  
+PACKAGE_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lfontconfig -lXinerama -lXi -lXrandr -lXext -lXcursor -lXfixes -lpango-1.0 -lcairo -lXrender -lX11 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0  
 PACKAGE_NAME = 
 PACKAGE_STRING = 
 PACKAGE_TARNAME = 
@@ -102,32 +102,33 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = 
 USE_NLS = yes
-VERSION = 1.0beta8
+VERSION = 1.0
 WINGTK_CFLAGS = 
 WINGTK_LDLAGS = 
 WINGTK_LIBS = 
 XGETTEXT = /usr/bin/xgettext
-ac_ct_CC = gcc
+ac_ct_CC = 
 ac_ct_STRIP = 
+ac_pt_PKG_CONFIG = /usr/bin/pkg-config
 am__fastdepCC_FALSE = #
 am__fastdepCC_TRUE = 
 am__include = include
 am__leading_dot = .
 am__quote = 
 bindir = ${exec_prefix}/bin
-build_alias = 
+build_alias = i486-linux-gnu
 datadir = ${prefix}/share
 exec_prefix = ${prefix}
-host_alias = 
+host_alias = i486-linux-gnu
 includedir = ${prefix}/include
-infodir = ${prefix}/info
+infodir = ${prefix}/share/info
 install_sh = /home/bol/imskpe/imskpe/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localstatedir = ${prefix}/var
-mandir = ${prefix}/man
+mandir = ${prefix}/share/man
 oldincludedir = /usr/include
-prefix = /usr/local
+prefix = /usr
 program_transform_name = s,x,x,
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
@@ -277,12 +278,12 @@ uninstall-am: uninstall-info-am
 	uninstall-info-am
 
 
-#klatt_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangoxft-1.0 -lpangox-1.0 -lpango-1.0 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0   $(INTLLIBS)
+#klatt_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lfontconfig -lXinerama -lXi -lXrandr -lXext -lXcursor -lXfixes -lpango-1.0 -lcairo -lXrender -lX11 -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0   $(INTLLIBS)
 
 #INCLUDES = \
 #	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 #	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-#	-DXTHREADS -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/X11R6/include -I/usr/include/atk-1.0 -I/usr/include/pango-1.0 -I/usr/include/freetype2 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  
+#	-I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/pango-1.0 -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include  
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

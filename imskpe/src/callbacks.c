@@ -474,7 +474,7 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 	     "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
 	     "\n\n"
 	     "<b>%s</b>: %s\n\n"
-	     "<small>\302\251 2004 Andreas Madsack &lt;bolsog@users.sf.net></small>",VERSION,_("Compiled"),__DATE__
+	     "<small>\302\251 2004,2005 Andreas Madsack &lt;bolsog@users.sf.net></small>",VERSION,_("Compiled"),__DATE__
 	);
     gtk_label_set_markup (GTK_LABEL (w), buf);  
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-09 22:18+0200\n"
+"POT-Creation-Date: 2005-10-31 15:45+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Quit"
 msgstr ""
 
-#: src/interface.c:325 src/interface.c:2532
+#: src/interface.c:325 src/interface.c:2548
 msgid "Open File"
 msgstr ""
 
@@ -72,7 +72,7 @@ msgstr ""
 msgid "New File"
 msgstr ""
 
-#: src/interface.c:335 src/interface.c:2579
+#: src/interface.c:335 src/interface.c:2595
 msgid "Save File"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Refresh Wavearea"
 msgstr ""
 
-#: src/interface.c:386 src/interface.c:2317
+#: src/interface.c:386 src/interface.c:2333
 msgid "move"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 msgid "Move Point"
 msgstr ""
 
-#: src/interface.c:396 src/interface.c:2321
+#: src/interface.c:396 src/interface.c:2337
 msgid "insert"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 msgid "Insert Point"
 msgstr ""
 
-#: src/interface.c:405 src/interface.c:2325
+#: src/interface.c:405 src/interface.c:2341
 msgid "delete"
 msgstr ""
 
@@ -267,7 +267,7 @@ msgstr ""
 msgid "fundamental frequency"
 msgstr ""
 
-#: src/interface.c:838 src/interface.c:1641
+#: src/interface.c:838 src/interface.c:1634
 msgid "voice src"
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 msgid "overall signal gain"
 msgstr ""
 
-#: src/interface.c:884 src/interface.c:1648
+#: src/interface.c:884 src/interface.c:1641
 msgid "exc. amp."
 msgstr ""
 
@@ -331,155 +331,155 @@ msgid ""
 "(c) 2004 by Andreas Madsack"
 msgstr ""
 
-#: src/interface.c:1459 src/interface.c:2215
+#: src/interface.c:1459 src/interface.c:2231
 msgid "Credits"
 msgstr ""
 
-#: src/interface.c:1599
+#: src/interface.c:1592
 msgid "Formant 2"
 msgstr ""
 
-#: src/interface.c:1606
+#: src/interface.c:1599
 msgid "Formant 3"
 msgstr ""
 
-#: src/interface.c:1613
+#: src/interface.c:1606
 msgid "Formant 4"
 msgstr ""
 
-#: src/interface.c:1620
+#: src/interface.c:1613
 msgid "Formant 5"
 msgstr ""
 
-#: src/interface.c:1627
+#: src/interface.c:1620
 msgid "Formant 6"
 msgstr ""
 
-#: src/interface.c:1634
+#: src/interface.c:1627
 msgid "Nasals"
 msgstr ""
 
-#: src/interface.c:1655
+#: src/interface.c:1648
 msgid "Formant 1"
 msgstr ""
 
-#: src/interface.c:1667 src/interface.c:1674 src/interface.c:1681
-#: src/interface.c:1688 src/interface.c:1695 src/interface.c:1702
-#: src/interface.c:1709 src/interface.c:1716 src/interface.c:1723
+#: src/interface.c:1660 src/interface.c:1667 src/interface.c:1674
+#: src/interface.c:1681 src/interface.c:1688 src/interface.c:1695
+#: src/interface.c:1702 src/interface.c:1709 src/interface.c:1716
 msgid "Change Color"
 msgstr ""
 
-#: src/interface.c:1746
+#: src/interface.c:1750
 msgid "Colors"
 msgstr ""
 
-#: src/interface.c:1790
+#: src/interface.c:1787
 msgid "value:"
 msgstr ""
 
-#: src/interface.c:1797
+#: src/interface.c:1794
 msgid "Font: "
 msgstr ""
 
-#: src/interface.c:1804
+#: src/interface.c:1801
 msgid "max bandwidth"
 msgstr ""
 
-#: src/interface.c:1811
+#: src/interface.c:1808
 msgid "max amplidute"
 msgstr ""
 
-#: src/interface.c:1818
+#: src/interface.c:1815
 msgid "max frequence"
 msgstr ""
 
-#: src/interface.c:1846
+#: src/interface.c:1854
 msgid "Ruler"
 msgstr ""
 
-#: src/interface.c:1859
+#: src/interface.c:1867
 msgid "directory for temp-files"
 msgstr ""
 
-#: src/interface.c:1860
+#: src/interface.c:1868
 msgid "/tmp"
 msgstr ""
 
-#: src/interface.c:1867
+#: src/interface.c:1875
 msgid "playcommand"
 msgstr ""
 
-#: src/interface.c:1868
+#: src/interface.c:1876
 msgid "play"
 msgstr ""
 
-#: src/interface.c:1870
+#: src/interface.c:1878
 msgid "Path"
 msgstr ""
 
-#: src/interface.c:1884
+#: src/interface.c:1885
 msgid "tmp directory"
 msgstr ""
 
-#: src/interface.c:1891
+#: src/interface.c:1892
 msgid "wav player"
 msgstr ""
 
-#: src/interface.c:1919
+#: src/interface.c:1931
 msgid "Paths"
 msgstr ""
 
-#: src/interface.c:1945
+#: src/interface.c:1957
 msgid "show really quit dialog: "
 msgstr ""
 
-#: src/interface.c:1952
+#: src/interface.c:1964
 msgid "toolbar style:"
 msgstr ""
 
-#: src/interface.c:1966
+#: src/interface.c:1971
 msgid "Value"
 msgstr ""
 
-#: src/interface.c:1999
+#: src/interface.c:1983
 msgid "icons"
 msgstr ""
 
-#: src/interface.c:2000
+#: src/interface.c:1984
 msgid "text"
 msgstr ""
 
-#: src/interface.c:2001
+#: src/interface.c:1985
 msgid "both"
 msgstr ""
 
-#: src/interface.c:2003
+#: src/interface.c:2019
 msgid "Misc"
 msgstr ""
 
-#: src/interface.c:2032
+#: src/interface.c:2048
 msgid "_Default"
 msgstr ""
 
-#: src/interface.c:2237
+#: src/interface.c:2253
 msgid "Andreas Madsack <bolsog@users.sf.net>"
 msgstr ""
 
-#: src/interface.c:2239
+#: src/interface.c:2255
 msgid "written by"
 msgstr ""
 
-#: src/interface.c:2252
+#: src/interface.c:2268
 msgid ""
 "Manuel Kountz (de)\n"
 "Franz-Albert Van Den Bussche (fr)"
 msgstr ""
 
-#: src/interface.c:2254
+#: src/interface.c:2270
 msgid "translators"
 msgstr ""
 
-#: src/interface.c:2268
+#: src/interface.c:2284
 msgid ""
 "Dennis Klatt \n"
 "(for klatt-formant-synthesis-algorithm)\n"
@@ -491,59 +491,59 @@ msgid ""
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
 
-#: src/interface.c:2270
+#: src/interface.c:2286
 msgid "thanks to"
 msgstr ""
 
-#: src/interface.c:2329
+#: src/interface.c:2345
 msgid "move dialog"
 msgstr ""
 
-#: src/interface.c:2375
+#: src/interface.c:2391
 msgid "imskpe - Move"
 msgstr ""
 
-#: src/interface.c:2389
+#: src/interface.c:2405
 msgid "Value: "
 msgstr ""
 
-#: src/interface.c:2403
+#: src/interface.c:2419
 msgid "Hz"
 msgstr ""
 
-#: src/interface.c:2411
+#: src/interface.c:2427
 msgid "Time:"
 msgstr ""
 
-#: src/interface.c:2418
+#: src/interface.c:2434
 msgid "sec"
 msgstr ""
 
-#: src/interface.c:2481
+#: src/interface.c:2497
 msgid "IMSKPE - Information"
 msgstr ""
 
-#: src/interface.c:2493
+#: src/interface.c:2509
 msgid "IMSKPE-Splash"
 msgstr ""
 
-#: src/interface.c:2634
+#: src/interface.c:2650
 msgid "Adding a set"
 msgstr ""
 
-#: src/interface.c:2658
+#: src/interface.c:2674
 msgid "Name of Set:"
 msgstr ""
 
-#: src/interface.c:2740
+#: src/interface.c:2756
 msgid "Delete a set"
 msgstr ""
 
-#: src/interface.c:2778
+#: src/interface.c:2794
 msgid "Which Set do You want to delete?"
 msgstr ""
 
-#: src/interface.c:2790
+#: src/interface.c:2806
 msgid "choose"
 msgstr ""
 

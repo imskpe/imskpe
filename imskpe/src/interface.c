@@ -1494,7 +1494,6 @@ create_imskpe_prefs (void)
   GtkWidget *dialog_vbox2;
   GtkWidget *nb_prefs;
   GtkWidget *table18;
-  GtkWidget *drawingarea6;
   GtkWidget *lb_f2;
   GtkWidget *lb_f3;
   GtkWidget *lb_f4;
@@ -1513,9 +1512,10 @@ create_imskpe_prefs (void)
   GtkWidget *cb_nasals;
   GtkWidget *cb_vs;
   GtkWidget *cb_ea;
-  GtkWidget *drawingarea18;
-  GtkWidget *drawingarea17;
-  GtkWidget *drawingarea16;
+  GtkWidget *spacer1;
+  GtkWidget *spacer2;
+  GtkWidget *spacer3;
+  GtkWidget *spacer4;
   GtkWidget *lb_colors;
   GtkWidget *table21;
   GtkWidget *fb_font;
@@ -1525,26 +1525,26 @@ create_imskpe_prefs (void)
   GtkWidget *spn_max_amp;
   GtkObject *spn_max_freq_adj;
   GtkWidget *spn_max_freq;
-  GtkWidget *drawingarea7;
   GtkWidget *label29;
   GtkWidget *label33;
   GtkWidget *lb_max_band;
   GtkWidget *ln_max_amp;
   GtkWidget *lb_max_freq;
-  GtkWidget *drawingarea8;
-  GtkWidget *drawingarea5;
-  GtkWidget *drawingarea9;
+  GtkWidget *spacer10;
+  GtkWidget *spacer11;
+  GtkWidget *spacer12;
+  GtkWidget *spacer13;
   GtkWidget *lb_ruler;
   GtkWidget *table20;
   GtkWidget *ent_tmp;
   GtkWidget *ent_play;
   GtkWidget *label25;
-  GtkWidget *drawingarea10;
   GtkWidget *lb_tmp;
   GtkWidget *lb_play;
-  GtkWidget *drawingarea3;
-  GtkWidget *drawingarea12;
-  GtkWidget *drawingarea11;
+  GtkWidget *spacer20;
+  GtkWidget *spacer21;
+  GtkWidget *spacer23;
+  GtkWidget *spacer22;
   GtkWidget *lb_paths;
   GtkWidget *table22;
   GtkWidget *rb_quit2;
@@ -1552,12 +1552,12 @@ create_imskpe_prefs (void)
   GtkWidget *rb_quit;
   GtkWidget *label34;
   GtkWidget *label31;
-  GtkWidget *drawingarea4;
   GtkWidget *label30;
-  GtkWidget *drawingarea15;
-  GtkWidget *drawingarea14;
-  GtkWidget *drawingarea13;
   GtkWidget *cb_tool_style;
+  GtkWidget *spacer32;
+  GtkWidget *spacer31;
+  GtkWidget *spacer30;
+  GtkWidget *spacer33;
   GtkWidget *lb_misc;
   GtkWidget *dialog_action_area2;
   GtkWidget *bn_prefs_cancel;
@@ -1588,13 +1588,6 @@ create_imskpe_prefs (void)
   table18 = gtk_table_new (10, 5, FALSE);
   gtk_widget_show (table18);
   gtk_container_add (GTK_CONTAINER (nb_prefs), table18);
-
-  drawingarea6 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea6);
-  gtk_table_attach (GTK_TABLE (table18), drawingarea6, 1, 2, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea6, 20, 20);
 
   lb_f2 = gtk_label_new (_("Formant 2"));
   gtk_widget_show (lb_f2);
@@ -1722,26 +1715,37 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_tooltips_set_tip (tooltips, cb_ea, _("Change Color"), NULL);
 
-  drawingarea18 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea18);
-  gtk_table_attach (GTK_TABLE (table18), drawingarea18, 4, 5, 1, 2,
+  spacer1 = gtk_label_new ("");
+  gtk_widget_show (spacer1);
+  gtk_table_attach (GTK_TABLE (table18), spacer1, 0, 1, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer1, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer1), 0, 0.5);
+
+  spacer2 = gtk_label_new ("");
+  gtk_widget_show (spacer2);
+  gtk_table_attach (GTK_TABLE (table18), spacer2, 1, 2, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer2, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer2), 0, 0.5);
+
+  spacer3 = gtk_label_new ("");
+  gtk_widget_show (spacer3);
+  gtk_table_attach (GTK_TABLE (table18), spacer3, 2, 3, 1, 2,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer3, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer3), 0, 0.5);
+
+  spacer4 = gtk_label_new ("");
+  gtk_widget_show (spacer4);
+  gtk_table_attach (GTK_TABLE (table18), spacer4, 4, 5, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea18, 20, -1);
-
-  drawingarea17 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea17);
-  gtk_table_attach (GTK_TABLE (table18), drawingarea17, 0, 1, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea17, 20, -1);
-
-  drawingarea16 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea16);
-  gtk_table_attach (GTK_TABLE (table18), drawingarea16, 2, 3, 1, 2,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea16, 20, -1);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer4, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer4), 0, 0.5);
 
   lb_colors = gtk_label_new (_("Colors"));
   gtk_widget_show (lb_colors);
@@ -1780,13 +1784,6 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  drawingarea7 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea7);
-  gtk_table_attach (GTK_TABLE (table21), drawingarea7, 4, 5, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea7, 20, -1);
-
   label29 = gtk_label_new (_("value:"));
   gtk_widget_show (label29);
   gtk_table_attach (GTK_TABLE (table21), label29, 3, 5, 1, 2,
@@ -1822,26 +1819,37 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (lb_max_freq), 0, 0.5);
 
-  drawingarea8 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea8);
-  gtk_table_attach (GTK_TABLE (table21), drawingarea8, 0, 1, 2, 3,
+  spacer10 = gtk_label_new ("");
+  gtk_widget_show (spacer10);
+  gtk_table_attach (GTK_TABLE (table21), spacer10, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea8, 20, -1);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer10, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer10), 0, 0.5);
 
-  drawingarea5 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea5);
-  gtk_table_attach (GTK_TABLE (table21), drawingarea5, 3, 4, 0, 1,
+  spacer11 = gtk_label_new ("");
+  gtk_widget_show (spacer11);
+  gtk_table_attach (GTK_TABLE (table21), spacer11, 2, 3, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea5, 20, 20);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer11, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer11), 0, 0.5);
 
-  drawingarea9 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea9);
-  gtk_table_attach (GTK_TABLE (table21), drawingarea9, 2, 3, 2, 3,
+  spacer12 = gtk_label_new ("");
+  gtk_widget_show (spacer12);
+  gtk_table_attach (GTK_TABLE (table21), spacer12, 3, 4, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea9, 20, -1);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer12, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer12), 0, 0.5);
+
+  spacer13 = gtk_label_new ("");
+  gtk_widget_show (spacer13);
+  gtk_table_attach (GTK_TABLE (table21), spacer13, 4, 5, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer13, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer13), 0, 0.5);
 
   lb_ruler = gtk_label_new (_("Ruler"));
   gtk_widget_show (lb_ruler);
@@ -1874,13 +1882,6 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label25), 0, 0.5);
 
-  drawingarea10 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea10);
-  gtk_table_attach (GTK_TABLE (table20), drawingarea10, 4, 5, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea10, 20, -1);
-
   lb_tmp = gtk_label_new (_("tmp directory"));
   gtk_widget_show (lb_tmp);
   gtk_table_attach (GTK_TABLE (table20), lb_tmp, 1, 2, 3, 4,
@@ -1895,26 +1896,37 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (lb_play), 0, 0.5);
 
-  drawingarea3 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea3);
-  gtk_table_attach (GTK_TABLE (table20), drawingarea3, 2, 3, 2, 3,
+  spacer20 = gtk_label_new ("");
+  gtk_widget_show (spacer20);
+  gtk_table_attach (GTK_TABLE (table20), spacer20, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea3, 20, -1);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer20, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer20), 0, 0.5);
 
-  drawingarea12 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea12);
-  gtk_table_attach (GTK_TABLE (table20), drawingarea12, 0, 1, 2, 3,
+  spacer21 = gtk_label_new ("");
+  gtk_widget_show (spacer21);
+  gtk_table_attach (GTK_TABLE (table20), spacer21, 2, 3, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea12, 20, -1);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer21, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer21), 0, 0.5);
 
-  drawingarea11 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea11);
-  gtk_table_attach (GTK_TABLE (table20), drawingarea11, 3, 4, 0, 1,
+  spacer23 = gtk_label_new ("");
+  gtk_widget_show (spacer23);
+  gtk_table_attach (GTK_TABLE (table20), spacer23, 4, 5, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea11, 20, 20);
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer23, 20, -1);
+  gtk_misc_set_alignment (GTK_MISC (spacer23), 0, 0.5);
+
+  spacer22 = gtk_label_new ("");
+  gtk_widget_show (spacer22);
+  gtk_table_attach (GTK_TABLE (table20), spacer22, 3, 4, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer22, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer22), 0, 0.5);
 
   lb_paths = gtk_label_new (_("Paths"));
   gtk_widget_show (lb_paths);
@@ -1956,40 +1968,12 @@ create_imskpe_prefs (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label31), 0, 0.5);
 
-  drawingarea4 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea4);
-  gtk_table_attach (GTK_TABLE (table22), drawingarea4, 2, 3, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea4, 20, -1);
-
   label30 = gtk_label_new (_("Value"));
   gtk_widget_show (label30);
   gtk_table_attach (GTK_TABLE (table22), label30, 3, 5, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label30), 0, 0.5);
-
-  drawingarea15 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea15);
-  gtk_table_attach (GTK_TABLE (table22), drawingarea15, 3, 4, 0, 1,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea15, 20, 20);
-
-  drawingarea14 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea14);
-  gtk_table_attach (GTK_TABLE (table22), drawingarea14, 5, 6, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea14, 20, -1);
-
-  drawingarea13 = gtk_drawing_area_new ();
-  gtk_widget_show (drawingarea13);
-  gtk_table_attach (GTK_TABLE (table22), drawingarea13, 0, 1, 2, 3,
-                    (GtkAttachOptions) (GTK_FILL),
-                    (GtkAttachOptions) (GTK_FILL), 0, 0);
-  gtk_widget_set_size_request (drawingarea13, 20, -1);
 
   cb_tool_style = gtk_combo_box_new_text ();
   gtk_widget_show (cb_tool_style);
@@ -1999,6 +1983,38 @@ create_imskpe_prefs (void)
   gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("icons"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("text"));
   gtk_combo_box_append_text (GTK_COMBO_BOX (cb_tool_style), _("both"));
+
+  spacer32 = gtk_label_new ("");
+  gtk_widget_show (spacer32);
+  gtk_table_attach (GTK_TABLE (table22), spacer32, 3, 4, 0, 1,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer32, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer32), 0, 0.5);
+
+  spacer31 = gtk_label_new ("");
+  gtk_widget_show (spacer31);
+  gtk_table_attach (GTK_TABLE (table22), spacer31, 2, 3, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer31, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer31), 0, 0.5);
+
+  spacer30 = gtk_label_new ("");
+  gtk_widget_show (spacer30);
+  gtk_table_attach (GTK_TABLE (table22), spacer30, 0, 1, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer30, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer30), 0, 0.5);
+
+  spacer33 = gtk_label_new ("");
+  gtk_widget_show (spacer33);
+  gtk_table_attach (GTK_TABLE (table22), spacer33, 5, 6, 2, 3,
+                    (GtkAttachOptions) (GTK_FILL),
+                    (GtkAttachOptions) (0), 0, 0);
+  gtk_widget_set_size_request (spacer33, 20, 20);
+  gtk_misc_set_alignment (GTK_MISC (spacer33), 0, 0.5);
 
   lb_misc = gtk_label_new (_("Misc"));
   gtk_widget_show (lb_misc);
@@ -2118,7 +2134,6 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_vbox2, "dialog_vbox2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, nb_prefs, "nb_prefs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table18, "table18");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea6, "drawingarea6");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f2, "lb_f2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f3, "lb_f3");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_f4, "lb_f4");
@@ -2137,47 +2152,48 @@ create_imskpe_prefs (void)
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cb_nasals, "cb_nasals");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cb_vs, "cb_vs");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cb_ea, "cb_ea");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea18, "drawingarea18");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea17, "drawingarea17");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea16, "drawingarea16");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer1, "spacer1");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer2, "spacer2");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer3, "spacer3");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer4, "spacer4");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_colors, "lb_colors");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table21, "table21");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, fb_font, "fb_font");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_band, "spn_max_band");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_amp, "spn_max_amp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, spn_max_freq, "spn_max_freq");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea7, "drawingarea7");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label29, "label29");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label33, "label33");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_max_band, "lb_max_band");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ln_max_amp, "ln_max_amp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_max_freq, "lb_max_freq");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea8, "drawingarea8");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea5, "drawingarea5");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea9, "drawingarea9");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer10, "spacer10");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer11, "spacer11");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer12, "spacer12");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer13, "spacer13");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_ruler, "lb_ruler");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table20, "table20");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_tmp, "ent_tmp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, ent_play, "ent_play");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label25, "label25");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea10, "drawingarea10");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_tmp, "lb_tmp");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_play, "lb_play");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea3, "drawingarea3");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea12, "drawingarea12");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea11, "drawingarea11");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer20, "spacer20");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer21, "spacer21");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer23, "spacer23");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer22, "spacer22");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_paths, "lb_paths");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, table22, "table22");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit2, "rb_quit2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, rb_quit, "rb_quit");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label34, "label34");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label31, "label31");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea4, "drawingarea4");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, label30, "label30");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea15, "drawingarea15");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea14, "drawingarea14");
-  GLADE_HOOKUP_OBJECT (imskpe_prefs, drawingarea13, "drawingarea13");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, cb_tool_style, "cb_tool_style");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer32, "spacer32");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer31, "spacer31");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer30, "spacer30");
+  GLADE_HOOKUP_OBJECT (imskpe_prefs, spacer33, "spacer33");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, lb_misc, "lb_misc");
   GLADE_HOOKUP_OBJECT_NO_REF (imskpe_prefs, dialog_action_area2, "dialog_action_area2");
   GLADE_HOOKUP_OBJECT (imskpe_prefs, bn_prefs_cancel, "bn_prefs_cancel");
