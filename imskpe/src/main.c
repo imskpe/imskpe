@@ -58,7 +58,7 @@
 int main (int argc, char *argv[])
 {
   GtkWidget *imskpe_main;
-  char *filename;
+  char *filename, *wavname;
 
 #ifdef ENABLE_NLS
 #ifdef WIN32
@@ -87,24 +87,32 @@ int main (int argc, char *argv[])
 
   FileInit();
 
-  imskpe_main = create_imskpe_main ();
-//   gtk_window_resize (GTK_WINDOW (imskpe_main), ConfigGetInteger("main_window_x"), ConfigGetInteger("main_window_y"));
-
-  gtk_widget_show (imskpe_main);
-
-  SetTitle("unnamed.par");
-
   if(argc>1)
   {
     filename=g_malloc (sizeof (char)*(strlen(argv[1])+1));
     strncpy(filename,argv[1],strlen(argv[1]));
     filename[strlen(argv[1])]=0;
     FileOpen(filename);
+    if(argc>2) // parameter2: wav-export
+    {
+      wavname=g_malloc (sizeof (char)*(strlen(argv[2])+1));
+      strncpy(wavname,argv[2],strlen(argv[2]));
+      wavname[strlen(argv[2])]=0;
+      convert(wavname);
+      return 0;
+    }
   }
   else
   {
     FileInit();
   }
+  
+  imskpe_main = create_imskpe_main ();
+//   gtk_window_resize (GTK_WINDOW (imskpe_main), ConfigGetInteger("main_window_x"), ConfigGetInteger("main_window_y"));
+
+  gtk_widget_show (imskpe_main);
+
+  SetTitle("unnamed.par");
 
   InitSplash();
 

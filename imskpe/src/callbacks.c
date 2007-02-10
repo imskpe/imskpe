@@ -166,6 +166,9 @@ on_bn_file_open_ok_clicked             (GtkButton       *button,
   redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 
   convert("");
+
+  w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+  redraw_wave(w);
 }
 
 
@@ -227,6 +230,8 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   else // wav
   {
     convert(filename);
+    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+    redraw_wave(w);
     // wav-file written
     strcpy(tmp,filename);
     strcat(tmp,_(" written"));
@@ -2226,6 +2231,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
 {
   char dir[300];  // not good
   char tmp[300];  // not good
+  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
 
   strcpy(dir,filtertoken(ConfigGetString("tmpdir"),"\""));
   strcat(dir,"/imskpe.");
@@ -2236,6 +2242,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
   strcat(tmp,".wav");
 
   convert(tmp);
+  redraw_wave(w);
   strcpy(dir,filtertoken(ConfigGetString("playcmd"),"\""));
   strcat(dir," ");
   strcat(dir,tmp);

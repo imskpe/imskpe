@@ -239,12 +239,16 @@ gboolean convert(char *filename)
   typValueList *pnt[PARAMETERS];
   typValueList *p_pnt[PARAMETERS];
 
-  // wav-area-varibles:
-  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+  GtkWidget *w;
   int wavewidth;
   int waveheight;
   int waveseg;
   short val;
+
+  if(GetMainWindow()!=NULL)
+  {
+    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");  
+  }
 
   kglobals.sample_factor = 1.0;
   kglobals.f0_flutter = 0;
@@ -317,11 +321,13 @@ gboolean convert(char *filename)
 /* 
    init wave-area
 */
-  init_wave(w);
-  wavewidth=width_wave(w);
-  waveheight=height_wave(w);
-  waveseg=wavewidth*100/noFrames;
-
+  if(GetMainWindow()!=NULL)
+  {
+    init_wave(w);
+    wavewidth=width_wave(w);
+    waveheight=height_wave(w);
+    waveseg=wavewidth*100/noFrames;
+  }
 /* par2wav conversation */
 
   for (frame=0;
@@ -387,16 +393,20 @@ gboolean convert(char *filename)
 	  fprintf(outfp,"%c%c",low_byte,high_byte);
 	}
       }
-      // display wav
-      val=waveformDestination[j]*(waveheight*2) / 32768;     // correct multiplicator: (waveheight/2)
-                                                             // \todo howto get correct multiplicator?
-      if(j%(100*samplesPerFrame/waveseg)==0)
+
+      // display wav / only when MainWindow is initialized
+      if(GetMainWindow()!=NULL)
       {
+	val=waveformDestination[j]*(waveheight*2) / 32768;     // correct multiplicator: (waveheight/2)
+	// \todo howto get correct multiplicator?
+	if(j%(100*samplesPerFrame/waveseg)==0)
+	{
 	if(val>0)
 	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), (waveheight/2)-val, waveheight/2);
 	else
 	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), waveheight/2,(waveheight/2)+abs(val));
 // 	printf("%4d | %3d | %3d | %4d \n",frame,j,waveseg,(waveseg*frame)+(j/(samplesPerFrame/waveseg)));
+	}
       }
     }
    
@@ -406,7 +416,5 @@ gboolean convert(char *filename)
   {
     fclose(outfp);
   }
-
-  redraw_wave(w);
 }
 
