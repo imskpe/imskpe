@@ -14,7 +14,7 @@
 
 GETTEXT_PACKAGE = imskpe
 PACKAGE = imskpe
-VERSION = 1.0
+VERSION = 1.0.1
 
 SHELL = /bin/sh
 
@@ -23,10 +23,10 @@ srcdir = .
 top_srcdir = ..
 
 
-prefix = /home/users7/madsacas
+prefix = /usr/local
 exec_prefix = ${prefix}
-datarootdir = @datarootdir@
-datadir = ${prefix}/share
+datarootdir = ${prefix}/share
+datadir = ${datarootdir}
 libdir = ${exec_prefix}/lib
 localedir = $(libdir)/locale
 gnulocaledir = $(datadir)/locale
@@ -41,6 +41,7 @@ CC = gcc
 GENCAT = @GENCAT@
 GMSGFMT = /usr/bin/msgfmt
 MSGFMT = /usr/bin/msgfmt
+MSGFMT_OPTS = -c
 XGETTEXT = /usr/bin/xgettext
 MSGMERGE = msgmerge
 
@@ -79,7 +80,7 @@ INSTOBJEXT = .mo
 
 .po.gmo:
 	file=$(srcdir)/`echo $* | sed 's,.*/,,'`.gmo \
-	  && rm -f $$file && $(GMSGFMT) -c -o $$file $<
+	  && rm -f $$file && $(GMSGFMT) $(MSGFMT_OPTS) -o $$file $<
 
 .po.cat:
 	sed -f ../intl/po2msg.sed < $< > $*.msg \
