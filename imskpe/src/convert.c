@@ -297,18 +297,18 @@ gboolean convert(char *filename)
     fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
     fprintf(outfp,"WAVEfmt \20%c%c%c%c%c",0,0,0,1,0);
     i=1;
-    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // always one channel!
+    fprintf(outfp,"%c%c",(char)i&0xff,(char)(i>>8)&0xff);  // always one channel!
     i=FileGetSamplingRate();
-    fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // samplingrate
+    fprintf(outfp,"%c%c%c%c",(char)i&0xff,(char)(i>>8)&0xff,(char)(i>>16)&0xff,(char)(i>>24)&0xff);  // samplingrate
     i=FileGetSamplingRate()*1*2; // Bps=samplerate*channels*samplesize;
-    fprintf(outfp,"%c%c%c%c",i&0xff,(i>>8)&0xff,(i>>16)&0xff,(i>>24)&0xff);  // Bps
+    fprintf(outfp,"%c%c%c%c",(char)i&0xff,(char)(i>>8)&0xff,(char)(i>>16)&0xff,(char)(i>>24)&0xff);  // Bps
     i=1*2;  // Bpsmp=channels*samplesize
-    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // Bpsmp
+    fprintf(outfp,"%c%c",(char)i&0xff,(char)(i>>8)&0xff);  // Bpsmp
     i=2<<3;
-    fprintf(outfp,"%c%c",i&0xff,(i>>8)&0xff);  // samplebits
+    fprintf(outfp,"%c%c",(char)i&0xff,(char)(i>>8)&0xff);  // samplebits
     fprintf(outfp,"data");
     size=FileGetDuration()*32;
-    fprintf(outfp,"%c%c%c%c",size&0xff,(size>>8)&0xff,(size>>16)&0xff,(size>>24)&0xff);
+    fprintf(outfp,"%c%c%c%c",(char)size&0xff,(char)(size>>8)&0xff,(char)(size>>16)&0xff,(char)(size>>24)&0xff);
   }
 
   waveformDestination = (short *) g_malloc(sizeof(short)*(samplesPerFrame+1));
@@ -412,9 +412,12 @@ gboolean convert(char *filename)
    
   }
 
+//  printf("xxx\n");
+
   if(strlen(filename)>0)
   {
     fclose(outfp);
   }
+
 }
 

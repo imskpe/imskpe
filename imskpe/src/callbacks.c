@@ -172,6 +172,9 @@ on_bn_file_open_ok_clicked             (GtkButton       *button,
 }
 
 
+/*
+  cancel-button-event for save-dialog
+ */
 void
 on_bn_file_save_cancel_clicked         (GtkButton       *button,
                                         gpointer         user_data)
@@ -188,7 +191,9 @@ on_bn_file_save_cancel_clicked         (GtkButton       *button,
   }
 }
 
-
+/*
+  ok-button-event for save-dialog
+ */
 void
 on_bn_file_save_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
@@ -210,7 +215,7 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
 
   gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
     
-  if(foo==0) // par
+  if(foo==0) // filetype: par
   {
     SetTitle(filename);
     FileSave(filename);
@@ -227,16 +232,17 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
       on_bn_new_clicked(NULL,NULL);
     }
   }
-  else // wav
+  else // filetype: wav
   {
-    convert(filename);
     w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+    // convert writes file, if filename is set
+    convert(filename);
     redraw_wave(w);
     // wav-file written
     strcpy(tmp,filename);
     strcat(tmp,_(" written"));
     
-    SetStatusBar ("sb_state",tmp);
+    SetStatusBar("sb_state",tmp);
   }
 }
 
@@ -347,7 +353,7 @@ void InitDialogSave()
     }
     else
     {
-      // go next to found slash '/foo.par' -> 'foo.par'
+      // go to next found slash '/foo.par' -> 'foo.par'
       tmp++;
     }
 
@@ -479,7 +485,7 @@ on_about1_activate                     (GtkMenuItem     *menuitem,
 	     "\n<span size=\"x-large\"><b>IMS-KPE %s</b></span>\n\n"
 	     "\n\n"
 	     "<b>%s</b>: %s\n\n"
-	     "<small>\302\251 2004-2007 Andreas Madsack &lt;bolsog@users.sf.net></small>",VERSION,_("Compiled"),__DATE__
+	     "<small>\302\251 2004-2010 Andreas Madsack &lt;bolsog@users.sf.net></small>",VERSION,_("Compiled"),__DATE__
 	);
     gtk_label_set_markup (GTK_LABEL (w), buf);  
 
@@ -2254,9 +2260,7 @@ void
 on_bn_execute_clicked                  (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
-
   on_execute1_activate(NULL,NULL);
-
 }
 
 /** @} */
