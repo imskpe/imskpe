@@ -791,7 +791,7 @@ klatt_frame_ptr frame;
       if(globals->quiet_flag == FALSE)
       {
 	printf("Warning: minimum glottal open period is 10 samples.\n");
-	printf("truncated, nopen = %d\n",globals->nopen);
+	printf("truncated, nopen = %d\n",(int)globals->nopen);
       }
     }
 
@@ -824,7 +824,7 @@ klatt_frame_ptr frame;
       if(globals->quiet_flag == FALSE)
       {
 	printf("Kskew duration=%d > glottal closed period=%d, truncate\n",
-	       frame->Kskew, globals->T0 - globals->nopen);
+	       (int)frame->Kskew, (int)(globals->T0 - globals->nopen));
       }
       frame->Kskew = temp;
     }
