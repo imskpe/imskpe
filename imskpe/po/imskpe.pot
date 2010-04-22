@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-31 15:45+0100\n"
+"POT-Creation-Date: 2010-04-22 19:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,23 +144,23 @@ msgstr ""
 msgid "samp/sec"
 msgstr ""
 
-#: src/interface.c:508 src/callbacks.c:1351 src/graphics.c:123
+#: src/interface.c:508 src/callbacks.c:1362 src/graphics.c:123
 msgid "impulse"
 msgstr ""
 
-#: src/interface.c:509 src/callbacks.c:1355 src/graphics.c:126
+#: src/interface.c:509 src/callbacks.c:1366 src/graphics.c:126
 msgid "natural"
 msgstr ""
 
-#: src/interface.c:510 src/callbacks.c:1359 src/graphics.c:129
+#: src/interface.c:510 src/callbacks.c:1370 src/graphics.c:129
 msgid "sampled"
 msgstr ""
 
-#: src/interface.c:525 src/callbacks.c:1373 src/graphics.c:144
+#: src/interface.c:525 src/callbacks.c:1384 src/graphics.c:144
 msgid "cascade + parallel"
 msgstr ""
 
-#: src/interface.c:526 src/callbacks.c:1377 src/graphics.c:147
+#: src/interface.c:526 src/callbacks.c:1388 src/graphics.c:147
 msgid "parallel only"
 msgstr ""
 
@@ -547,50 +547,54 @@ msgstr ""
 msgid "choose"
 msgstr ""
 
-#: src/callbacks.c:92 src/callbacks.c:246 src/callbacks.c:272
+#: src/callbacks.c:92 src/callbacks.c:257 src/callbacks.c:283
 msgid "Save changed data?"
 msgstr ""
 
-#: src/callbacks.c:232
+#: src/callbacks.c:243
 msgid " written"
 msgstr ""
 
-#: src/callbacks.c:353
+#: src/callbacks.c:364
 msgid "Filetype: "
 msgstr ""
 
-#: src/callbacks.c:396
+#: src/callbacks.c:407
 msgid "All Files"
 msgstr ""
 
-#: src/callbacks.c:401
+#: src/callbacks.c:412
 msgid "par-Files"
 msgstr ""
 
-#: src/callbacks.c:477
+#: src/callbacks.c:488
 msgid "Compiled"
 msgstr ""
 
-#: src/callbacks.c:725 src/callbacks.c:817
+#: src/callbacks.c:736 src/callbacks.c:828
 #, c-format
 msgid "%d ms - %d Hz "
 msgstr ""
 
-#: src/callbacks.c:771
+#: src/callbacks.c:782
 #, c-format
 msgid "%d ms - %d dB "
 msgstr ""
 
-#: src/callbacks.c:1955
+#: src/callbacks.c:1966
 msgid "Really reset preferences?"
 msgstr ""
 
-#: src/callbacks.c:2319
+#: src/callbacks.c:2330
 msgid "You need insert a name for the set!"
 msgstr ""
 
-#: src/callbacks.c:2494
+#: src/callbacks.c:2505
 msgid "Really quit?"
+msgstr ""
+
+#: src/callbacks.c:2548 src/callbacks.c:2559
+msgid "Really interpolate?"
 msgstr ""
 
 #: src/support.c:90 src/support.c:114
