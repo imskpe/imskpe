@@ -329,7 +329,7 @@ gboolean convert(char *filename)
     waveseg=wavewidth*100/noFrames;
   }
 /* par2wav conversation */
-
+  
   for (frame=0;
        frame<noFrames;
        frame++)
@@ -339,7 +339,7 @@ gboolean convert(char *filename)
     lptr=(long *)&kframe;
     for(j=0;j<PARAMETERS;j++,lptr++)
     {
-      if(pnt[j]->time<i)
+      if(pnt[j]->time < i)
       {
 	p_pnt[j]=pnt[j];
 	if(vl[j]->next != NULL)
@@ -361,16 +361,16 @@ gboolean convert(char *filename)
       *lptr=(long)y;
       
     }
-
+    
     /* Change to Klatt's 1/10Hz steps */
     kframe.F0hz10 *=10;
     parwave(&kglobals,&kframe,waveformDestination);
-
+    
     for(j=0;
 	j<samplesPerFrame;
 	j++)
     {
-
+      
 // seems to be unnecessary?
 //#ifdef WORDS_BIGENDIAN
 //      raw_type=1;
@@ -380,7 +380,7 @@ gboolean convert(char *filename)
 
       low_byte = waveformDestination[j] & 0xff;
       high_byte = (waveformDestination[j] >> 8) & 0xff;
-
+      
 //       printf("%5d: %6d => [%02x%02x | %02x%02x]\n",j,waveformDestination[j],low_byte,high_byte,high_byte,low_byte);
       if(strlen(filename)>0)
       {
@@ -401,10 +401,14 @@ gboolean convert(char *filename)
 	// \todo howto get correct multiplicator?
 	if(j%(100*samplesPerFrame/waveseg)==0)
 	{
-	if(val>0)
-	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), (waveheight/2)-val, waveheight/2);
-	else
-	drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), waveheight/2,(waveheight/2)+abs(val));
+	  if(val>0)
+	  {
+	    drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), (waveheight/2)-val, waveheight/2);
+	  }
+	  else
+	  {
+	    drawline_wave(w, 25+(waveseg*frame)/100+(j/(100*samplesPerFrame/waveseg)), waveheight/2,(waveheight/2)+abs(val));
+	  }
 // 	printf("%4d | %3d | %3d | %4d \n",frame,j,waveseg,(waveseg*frame)+(j/(samplesPerFrame/waveseg)));
 	}
       }

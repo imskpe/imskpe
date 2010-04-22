@@ -306,6 +306,7 @@ short *output;
 
     glotout = globals->amp_voice * voice;
     par_glotout = globals->par_amp_voice * voice;
+
     /* Compute aspiration amplitude and add to voicing source */
 
     aspiration = globals->amp_aspir * noise;
@@ -750,7 +751,6 @@ klatt_frame_ptr frame;
     /* T0 is 4* the number of samples in one pitch period */
 
     globals->T0 = (40 * globals->samrate) / frame->F0hz10;
-
 
     globals->amp_voice = DBtoLIN(frame->AVdb);
 

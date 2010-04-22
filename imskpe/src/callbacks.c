@@ -2535,6 +2535,8 @@ on_bn_refresh_clicked                  (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
   repaint_wave();
+  GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+  redraw_wave(w);
 //   redraw_wave_expose(widget,event);
 }
 
@@ -2543,7 +2545,10 @@ void
 on_interpolate1_activate               (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  CurveInterpolate();
+  if(DialogYesNo(_("Really interpolate?"))==TRUE)
+  {
+    CurveInterpolate();
+  }
 }
 
 
@@ -2551,6 +2556,9 @@ void
 on_bn_interpol_clicked                 (GtkToolButton   *toolbutton,
                                         gpointer         user_data)
 {
-  CurveInterpolate();
+  if(DialogYesNo(_("Really interpolate?"))==TRUE)
+  {
+    CurveInterpolate();
+  }
 }
 
