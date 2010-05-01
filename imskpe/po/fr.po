@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-04-22 19:05+0200\n"
-"PO-Revision-Date: 2010-04-22 19:05+0200\n"
+"PO-Revision-Date: 2010-05-01 17:07+0200\n"
 "Last-Translator: Franz-Albert Van Den Bussche <franz@favdb.net>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -479,7 +479,6 @@ msgid "written by"
 msgstr "écrit par"
 
 #: src/interface.c:2268
-#, fuzzy
 msgid ""
 "Manuel Kountz (de)\n"
 "Franz-Albert Van Den Bussche (fr)"
