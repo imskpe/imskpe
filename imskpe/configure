@@ -5839,7 +5839,6 @@ $as_echo "no" >&6; }
 fi
 
 
-ALL_LINGUAS="de fr"
 
    for ac_header in locale.h
 do :
