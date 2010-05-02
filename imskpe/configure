@@ -5813,7 +5813,7 @@ $as_echo "yes" >&6; }
 
    WINGTK_CFLAGS=" -mms-bitfields -DWIN32 -mno-cygwin "
 
-   CFLAGS=" $CFLAGS -I/opt/cross/include"
+#   CFLAGS=" $CFLAGS -I~/cross/include"
 
    # hide cmd terminal window when not debugging (win32)
    #if test "$debug" != 1; then

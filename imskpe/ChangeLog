@@ -1,3 +1,9 @@
+2010-05-02  Andreas Madsack  <bolsog@users.sf.net>
+
+	* 1.0.2 Release
+	* including new Win32-Release
+	* fixed segfault on saving waves
+
 2007-04-27  Andreas Madsack  <bolsog@users.sf.net>
 
 	* 1.0.1 Release
@@ -22,7 +28,7 @@
 	  - added a few missing doxygen blocks
 
 2005-08-28  Andreas Madsack  <bolsog@users.sf.net>
-	
+
 	* first implementation of the interpolation-feature
 	  (there need to be improvements done!)
 	* a few fixes
