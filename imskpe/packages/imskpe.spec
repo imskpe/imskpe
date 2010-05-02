@@ -1,6 +1,6 @@
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
-Version: 1.0.1
+Version: 1.0.2
 Release: 1
 License: GPL
 Group: Applications/Sound
@@ -41,6 +41,11 @@ make DESTDIR=%{buildroot} install
 #%doc AUTHORS ChangeLog INSTALL README NEWS TODO
 
 %changelog 
+
+* Sun May 02 2010 Andreas Madsack <bolsog@users.sf.net>
+- 1.0.2 Release
+- including new Win32-Release
+- fixed segfault on saving waves
 
 * Fri Apr 27 2007 Andreas Madsack <bolsog@users.sf.net>
 - 1.0.1 release
