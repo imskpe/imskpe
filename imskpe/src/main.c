@@ -118,7 +118,7 @@ int main (int argc, char *argv[])
 
   ConfigShowAllSets();
 
-  gtk_main ();
+  gtk_main();
   return 0;
 }
 

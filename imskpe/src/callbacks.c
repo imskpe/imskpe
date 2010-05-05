@@ -201,26 +201,28 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   char *filename;
   GtkWidget *w;
   int len;
-  int foo=gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
+  int type;
   char tmp[300];
 
-  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+  w = (GtkWidget *) gtk_widget_get_toplevel (GTK_WIDGET (button));
 
-   filename = (char *) malloc(sizeof(char)*(len+1));
+  type = gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
+  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+  filename = (char *) malloc(sizeof(char)*(len+1));
     
-   filename = (char *) gtk_file_chooser_get_filename 
+  filename = (char *) gtk_file_chooser_get_filename 
        (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
 
   filename[len]=0;
+//  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  gtk_widget_hide(gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
-    
-  if(foo==0) // filetype: par
+  if(type==0) // filetype: par
   {
     SetTitle(filename);
     FileSave(filename);
   
-    w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
     redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 
     if(loadafter==1)
@@ -234,14 +236,13 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   }
   else // filetype: wav
   {
-    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
     // convert writes file, if filename is set
     convert(filename);
+    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
     redraw_wave(w);
     // wav-file written
     strcpy(tmp,filename);
     strcat(tmp,_(" written"));
-    
     SetStatusBar("sb_state",tmp);
   }
 }
@@ -297,10 +298,10 @@ void
 on_extra_changed               (GtkComboBox     *combobox,
 				gpointer         user_data)
 {
-  int foo;
+  int type;
   char *tmp;
 
-  foo=gtk_combo_box_get_active(combobox);
+  type=gtk_combo_box_get_active(combobox);
   if(strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/')!=NULL)
   {
     tmp=strrchr(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (combobox)))),'/');
@@ -311,9 +312,12 @@ on_extra_changed               (GtkComboBox     *combobox,
   }
 
   tmp++;
-  tmp[strlen(tmp)-strlen(strrchr(tmp, '.'))]=0; /* delete .par at end */
+  if(strrchr(tmp, '.'))
+  {
+    tmp[strlen(tmp) - strlen(strrchr(tmp, '.'))] = 0; /* delete .par at end */
+  }
 
-  if(foo==0)  // par
+  if(type==0)  // par
   {
     strcat(tmp,".par"); 
   }
@@ -329,6 +333,7 @@ void InitDialogSave()
 {
 // static GtkWidget *filesave = NULL;
   char *tmp;
+  char *tmp2;
   GtkWidget *lb, *hbox;
 
   if (filesave == NULL) 
@@ -336,28 +341,29 @@ void InitDialogSave()
     filesave = create_imskpe_file_save ();
     /* set the widget pointer to NULL when the widget is destroyed */
     g_signal_connect (G_OBJECT (filesave),
-		      "destroy",
-		      G_CALLBACK (gtk_widget_destroyed),
-		      &filesave);
+    		      "destroy",
+    		      G_CALLBACK (gtk_widget_destroyed),
+    		      &filesave);
 
     // search for last /
+    tmp = strdup(FileGetFilename());
 #ifdef WIN32
-    tmp=strrchr(FileGetFilename(),'\\');
+    tmp2=strrchr(tmp,'\\');
 #else
-    tmp=strrchr(FileGetFilename(),'/');
+    tmp2=strrchr(tmp,'/');
 #endif
-    if(tmp==NULL)
-    {
-      // there was none, so get complete filename
-      tmp=FileGetFilename();
-    }
-    else
+    
+    if(tmp2!=NULL)
     {
       // go to next found slash '/foo.par' -> 'foo.par'
       tmp++;
     }
 
-    gtk_file_chooser_set_current_name((GtkFileChooser *)filesave, tmp);
+    if (tmp)
+    {
+      gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(filesave), tmp);
+//      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(filesave), tmp);
+    }
 
     hbox = gtk_hbox_new (FALSE, 0);
 
@@ -374,8 +380,8 @@ void InitDialogSave()
     gtk_box_pack_end((GtkBox *)hbox, (GtkWidget *)lb, FALSE, FALSE, 0);
 
     g_signal_connect ((gpointer) cb_filesave_extra, "changed",
-		      G_CALLBACK (on_extra_changed),
-		      NULL);
+    		      G_CALLBACK (on_extra_changed),
+    		      NULL);
 
     gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (filesave), hbox);
    
@@ -383,7 +389,7 @@ void InitDialogSave()
     gtk_window_set_transient_for (GTK_WINDOW (filesave), 
 				  GTK_WINDOW (GetMainWindow()));
   }
- 
+
   /* Make sure the dialog is visible. */
   gtk_window_present (GTK_WINDOW (filesave));
 }
@@ -398,9 +404,9 @@ void InitDialogLoad()
     fileopen = create_imskpe_file_open ();
     /* set the widget pointer to NULL when the widget is destroyed */
     g_signal_connect (G_OBJECT (fileopen),
-		      "destroy",
-		      G_CALLBACK (gtk_widget_destroyed),
-		      &fileopen);
+    		      "destroy",
+    		      G_CALLBACK (gtk_widget_destroyed),
+    		      &fileopen);
 
     /* Filters */
     filter = gtk_file_filter_new ();
@@ -717,7 +723,7 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
   int x, y;
   int rx,ry;
   GdkModifierType state;
-  char tmp[80];
+  char tmp[30];
   diagramTyp dia=FREQUENCIES;
   
   if (event->is_hint)
@@ -733,14 +739,14 @@ on_draw_freq_motion_notify_event       (GtkWidget       *widget,
   ry=CalcRealY(y, widget->allocation.height,dia);  
   if(rx>=0 && ry>=0)
   {
-    snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
+    snprintf(tmp,sizeof(tmp),_("%d ms - %d Hz "),rx,ry);
     SetStatusBar("sb_add",tmp);
 
     DrawAreaMotion(rx, ry, state, dia);
   }
   else
   {
-    snprintf(tmp,30,"");
+    snprintf(tmp,sizeof(tmp),"");
     SetStatusBar("sb_add",tmp);
   }
   return TRUE;
@@ -762,7 +768,7 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
 {
   int x, y;
   int rx,ry;
-  char tmp[80];
+  char tmp[30];
   GdkModifierType state;
   diagramTyp dia=AMPLITUDE;
 
@@ -779,14 +785,14 @@ on_draw_amp_motion_notify_event        (GtkWidget       *widget,
   ry=CalcRealY(y, widget->allocation.height,dia);  
   if(rx>=0 && ry>=0)
   {
-    snprintf(tmp,30,_("%d ms - %d dB "),rx,ry);
+    snprintf(tmp,sizeof(tmp),_("%d ms - %d dB "),rx,ry);
     SetStatusBar("sb_add",tmp);
 
     DrawAreaMotion(rx, ry, state, dia);
   }
   else
   {
-    snprintf(tmp,30,"");
+    snprintf(tmp,sizeof(tmp),"");
     SetStatusBar("sb_add",tmp);
   }
   return TRUE;
@@ -808,7 +814,7 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
 {
   int x, y;
   int rx,ry;
-  char tmp[80];
+  char tmp[30];
   GdkModifierType state;
   diagramTyp dia=BANDWIDTH;
 
@@ -825,14 +831,14 @@ on_draw_band_motion_notify_event       (GtkWidget       *widget,
   ry=CalcRealY(y, widget->allocation.height,dia);  
   if(rx>=0 && ry>=0)
   {
-    snprintf(tmp,30,_("%d ms - %d Hz "),rx,ry);
+    snprintf(tmp,sizeof(tmp),_("%d ms - %d Hz "),rx,ry);
     SetStatusBar("sb_add",tmp);
 
     DrawAreaMotion(rx, ry, state, dia);
   }
   else
   {
-    snprintf(tmp,30,"");
+    snprintf(tmp,sizeof(tmp),"");
     SetStatusBar("sb_add",tmp);
   }
   return TRUE;
@@ -1856,32 +1862,32 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
   {
     w=lookup_widget (GTK_WIDGET (button), "spn_max_freq");
     val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-    sprintf(tmp,"%d",val);
+    snprintf(tmp,sizeof(tmp),"%d",val);
     ConfigInsert("maxfreq",tmp);
     
     w=lookup_widget (GTK_WIDGET (button), "spn_max_amp");
     val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-    sprintf(tmp,"%d",val);
+    snprintf(tmp,sizeof(tmp),"%d",val);
     ConfigInsert("maxamp",tmp);
     
     w=lookup_widget (GTK_WIDGET (button), "spn_max_band");
     val=gtk_spin_button_get_value_as_int ((GtkSpinButton *) w);
-    sprintf(tmp,"%d",val);
+    snprintf(tmp,sizeof(tmp),"%d",val);
     ConfigInsert("maxband",tmp);
 
     w=lookup_widget (GTK_WIDGET (button), "fb_font");
-    sprintf(tmp,"\"%s\"",gtk_font_button_get_font_name ((GtkFontButton *)w));
+    snprintf(tmp,sizeof(tmp),"\"%s\"",gtk_font_button_get_font_name ((GtkFontButton *)w));
     ConfigInsert("rulerfont",tmp);
   }
 
   if(ConfigFind("prefs_tab3_tmp"))
   {
     w=lookup_widget (GTK_WIDGET (button), "ent_play");
-    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
+    snprintf(tmp,sizeof(tmp),"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("playcmd",tmp);
 
     w=lookup_widget (GTK_WIDGET (button), "ent_tmp");
-    sprintf(tmp,"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
+    snprintf(tmp,sizeof(tmp),"\"%s\"",gtk_entry_get_text((GtkEntry *)w));
     ConfigInsert("tmpdir",tmp);
   }
 
@@ -1892,7 +1898,7 @@ on_bn_prefs_apply_clicked              (GtkButton       *button,
 
     if(val!=-1)
     {
-      sprintf(tmp,"%d",val);
+      snprintf(tmp,sizeof(tmp),"%d",val);
       ConfigInsert("toolbarstyle",tmp);
       GuiSetToolbarStyle(val);
     }
@@ -2241,7 +2247,7 @@ on_execute1_activate                   (GtkMenuItem     *menuitem,
 
   strcpy(dir,filtertoken(ConfigGetString("tmpdir"),"\""));
   strcat(dir,"/imskpe.");
-  sprintf(tmp,"%d",getpid());
+  snprintf(tmp,sizeof(tmp),"%d",getpid());
   strcat(dir,tmp);
 
   strcpy(tmp,dir);

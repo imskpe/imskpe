@@ -277,7 +277,7 @@ create_imskpe_main (void)
   gtk_container_add (GTK_CONTAINER (menuitem3_menu), execute1);
   gtk_tooltips_set_tip (tooltips, execute1, _("Convert & Play"), NULL);
   gtk_widget_add_accelerator (execute1, "activate", accel_group,
-                              GDK_E, GDK_CONTROL_MASK,
+                              GDK_E, (GdkModifierType) GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   image11 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
@@ -489,7 +489,7 @@ create_imskpe_main (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (lb_samp1), 0, 0.5);
 
-  spbn_numF_adj = gtk_adjustment_new (6, 1, 6, 1, 1, 1);
+  spbn_numF_adj = gtk_adjustment_new (6, 1, 6, 1, 1, 0);
   spbn_numF = gtk_spin_button_new (GTK_ADJUSTMENT (spbn_numF_adj), 1, 0);
   gtk_widget_show (spbn_numF);
   gtk_table_attach (GTK_TABLE (table14), spbn_numF, 1, 3, 3, 4,
@@ -530,7 +530,7 @@ create_imskpe_main (void)
   cm_cp_entry = GTK_COMBO (cm_cascpar)->entry;
   gtk_widget_show (cm_cp_entry);
 
-  spbn_sprate_adj = gtk_adjustment_new (16000, 5000, 24000, 100, 1000, 1000);
+  spbn_sprate_adj = gtk_adjustment_new (16000, 5000, 24000, 100, 1000, 0);
   spbn_sprate = gtk_spin_button_new (GTK_ADJUSTMENT (spbn_sprate_adj), 1, 0);
   gtk_widget_show (spbn_sprate);
   gtk_table_attach (GTK_TABLE (table14), spbn_sprate, 1, 2, 2, 3,
@@ -539,7 +539,7 @@ create_imskpe_main (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spbn_sprate), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spbn_sprate), GTK_UPDATE_IF_VALID);
 
-  spbn_ui_adj = gtk_adjustment_new (10, 2, 20, 1, 10, 10);
+  spbn_ui_adj = gtk_adjustment_new (10, 2, 20, 1, 10, 0);
   spbn_ui = gtk_spin_button_new (GTK_ADJUSTMENT (spbn_ui_adj), 1, 0);
   gtk_widget_show (spbn_ui);
   gtk_table_attach (GTK_TABLE (table14), spbn_ui, 1, 2, 1, 2,
@@ -548,7 +548,7 @@ create_imskpe_main (void)
   gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spbn_ui), TRUE);
   gtk_spin_button_set_update_policy (GTK_SPIN_BUTTON (spbn_ui), GTK_UPDATE_IF_VALID);
 
-  spbn_duration_adj = gtk_adjustment_new (500, 30, 5000, 1, 10, 100);
+  spbn_duration_adj = gtk_adjustment_new (500, 30, 5000, 1, 10, 0);
   spbn_duration = gtk_spin_button_new (GTK_ADJUSTMENT (spbn_duration_adj), 1, 0);
   gtk_widget_show (spbn_duration);
   gtk_table_attach (GTK_TABLE (table14), spbn_duration, 1, 2, 0, 1,
@@ -1763,21 +1763,21 @@ create_imskpe_prefs (void)
   gtk_font_button_set_use_font (GTK_FONT_BUTTON (fb_font), TRUE);
   gtk_font_button_set_use_size (GTK_FONT_BUTTON (fb_font), TRUE);
 
-  spn_max_band_adj = gtk_adjustment_new (2000, 500, 2000, 1, 10, 10);
+  spn_max_band_adj = gtk_adjustment_new (2000, 500, 2000, 1, 10, 0);
   spn_max_band = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_band_adj), 1, 0);
   gtk_widget_show (spn_max_band);
   gtk_table_attach (GTK_TABLE (table21), spn_max_band, 3, 4, 4, 5,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  spn_max_amp_adj = gtk_adjustment_new (100, 10, 100, 1, 10, 10);
+  spn_max_amp_adj = gtk_adjustment_new (100, 10, 100, 1, 10, 0);
   spn_max_amp = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_amp_adj), 1, 0);
   gtk_widget_show (spn_max_amp);
   gtk_table_attach (GTK_TABLE (table21), spn_max_amp, 3, 4, 3, 4,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  spn_max_freq_adj = gtk_adjustment_new (5000, 1000, 5000, 1, 10, 10);
+  spn_max_freq_adj = gtk_adjustment_new (5000, 1000, 5000, 1, 10, 0);
   spn_max_freq = gtk_spin_button_new (GTK_ADJUSTMENT (spn_max_freq_adj), 1, 0);
   gtk_widget_show (spn_max_freq);
   gtk_table_attach (GTK_TABLE (table21), spn_max_freq, 3, 4, 2, 3,
@@ -2409,7 +2409,7 @@ create_imskpe_move (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label9), 0, 0.5);
 
-  spn_value_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spn_value_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 0);
   spn_value = gtk_spin_button_new (GTK_ADJUSTMENT (spn_value_adj), 1, 0);
   gtk_widget_show (spn_value);
   gtk_table_attach (GTK_TABLE (table19), spn_value, 1, 2, 0, 1,
@@ -2438,7 +2438,7 @@ create_imskpe_move (void)
                     (GtkAttachOptions) (0), 0, 0);
   gtk_misc_set_alignment (GTK_MISC (label12), 0, 0.5);
 
-  spn_time_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spn_time_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 0);
   spn_time = gtk_spin_button_new (GTK_ADJUSTMENT (spn_time_adj), 1, 0);
   gtk_widget_show (spn_time);
   gtk_table_attach (GTK_TABLE (table19), spn_time, 1, 2, 1, 2,
@@ -2546,6 +2546,7 @@ create_imskpe_file_open (void)
   GtkWidget *bn_file_open_ok;
 
   imskpe_file_open = gtk_file_chooser_dialog_new (_("Open File"), NULL, GTK_FILE_CHOOSER_ACTION_OPEN, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (imskpe_file_open), 5);
   gtk_window_set_modal (GTK_WINDOW (imskpe_file_open), TRUE);
 
   dialog_vbox6 = GTK_DIALOG (imskpe_file_open)->vbox;
@@ -2593,6 +2594,7 @@ create_imskpe_file_save (void)
   GtkWidget *bn_file_save_ok;
 
   imskpe_file_save = gtk_file_chooser_dialog_new (_("Save File"), NULL, GTK_FILE_CHOOSER_ACTION_SAVE, NULL);
+  gtk_container_set_border_width (GTK_CONTAINER (imskpe_file_save), 5);
   gtk_window_set_modal (GTK_WINDOW (imskpe_file_save), TRUE);
 
   dialog_vbox7 = GTK_DIALOG (imskpe_file_save)->vbox;
@@ -2607,7 +2609,7 @@ create_imskpe_file_save (void)
   gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_save), bn_file_save_cancel, GTK_RESPONSE_CANCEL);
   GTK_WIDGET_SET_FLAGS (bn_file_save_cancel, GTK_CAN_DEFAULT);
 
-  bn_file_save_ok = gtk_button_new_from_stock ("gtk-open");
+  bn_file_save_ok = gtk_button_new_from_stock ("gtk-save");
   gtk_widget_show (bn_file_save_ok);
   gtk_dialog_add_action_widget (GTK_DIALOG (imskpe_file_save), bn_file_save_ok, GTK_RESPONSE_OK);
   GTK_WIDGET_SET_FLAGS (bn_file_save_ok, GTK_CAN_DEFAULT);

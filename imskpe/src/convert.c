@@ -422,6 +422,5 @@ gboolean convert(char *filename)
   {
     fclose(outfp);
   }
-
 }
 
