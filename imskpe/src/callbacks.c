@@ -2292,7 +2292,7 @@ void
 on_execute1_activate                   (GtkMenuItem     *menuitem,
                                         gpointer         user_data)
 {
-  char dir[300];  // not good
+  char dir[500];  // not good
   char tmp[300];  // not good
   GtkWidget *w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
 

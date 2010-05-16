@@ -63,7 +63,7 @@
 <confdata>"="                return EQUAL;
 <confdata>":"                return DPOINT;
 <confdata>[-A-Za-z0-9_/#]+   return VALUE;
-<confdata>\"[-A-Za-z0-9_/#:\\\ ]+\"  return VALUE;
+<confdata>\"[-A-Za-z0-9_/#:\\\ \.]+\"  return VALUE;
 <confdata>"#"                {BEGIN(comment);return COMMENT;}
 <confdata>\r                 ; // win32 needs this?
 <confdata>\n                 {BEGIN(INITIAL);return EOL;}
