@@ -55,7 +55,7 @@ typedef struct {
 } typFile;
 
 
-void FileOpen(char *filename);
+gboolean FileOpen(char *filename);
 gboolean FilePrepare(char *filename);
 
 gboolean FileIsDefined();

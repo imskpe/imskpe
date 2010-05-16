@@ -32,6 +32,7 @@
 #endif
 
 #include <gtk/gtk.h>
+#include <glib.h> 
 #include <stdio.h>
 #include <string.h>
 #include <malloc.h>
@@ -55,9 +56,15 @@ typFile *aFile=NULL;
  * 
  * @param filename 
  */
-void FileOpen(char *filename)
+gboolean FileOpen(char *filename)
 {
-  LoadPar(filename);
+  // check if filename is a file
+  if (!g_file_test(filename, G_FILE_TEST_IS_DIR))
+  {
+    LoadPar(filename);
+    return TRUE;
+  }
+  return FALSE;
 }
 
 /** 

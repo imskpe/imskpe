@@ -143,32 +143,51 @@ void
 on_bn_file_open_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
-  char *filename;
+  char *filename=NULL;
   GtkWidget *w;
   int len;
+  char *tmp;
   
-  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
+  tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+  if(tmp)
+  {
+    len = strlen(tmp);
+  }
+  else
+  {
+    len = 0;
+  }
 
-  filename = (char *) malloc(sizeof(char)*(len+2));
+  tmp = (char *) malloc(sizeof(char)*(500)); // should be no constant
+  tmp = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+  ConfigInsert("lastdir", tmp);
+
+  if(len)
+  {
+    filename = (char *) malloc(sizeof(char)*(len+2));
     
-  filename = (char *) gtk_file_chooser_get_filename 
-      (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+    filename = (char *) gtk_file_chooser_get_filename 
+	(GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+    filename[len]=0;
+  }
 
-  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
+  gtk_widget_hide(gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
-  filename[len]=0;
-    
-  // and start import ...
-  SetTitle(filename);
-  FileOpen(filename);
-  
-  w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-  redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+  if (filename)
+  {
+    // and start import ...
+    if(FileOpen(filename)==TRUE)
+    {
+      SetTitle(filename);
+      w=(GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+      redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
 
-  convert("");
-
-  w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
-  redraw_wave(w);
+      convert("");
+      
+      w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+      redraw_wave(w);
+    }
+  }
 }
 
 
@@ -198,33 +217,47 @@ void
 on_bn_file_save_ok_clicked             (GtkButton       *button,
                                         gpointer         user_data)
 {
-  char *filename;
+  char *filename=NULL;
   GtkWidget *w;
   int len;
   int type;
-  char tmp[300];
+  gchar *tmp;
 
   w = (GtkWidget *) gtk_widget_get_toplevel (GTK_WIDGET (button));
 
-  type = gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
-  len = strlen(gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button)))));
-  filename = (char *) malloc(sizeof(char)*(len+1));
-    
-  filename = (char *) gtk_file_chooser_get_filename 
-       (GTK_FILE_CHOOSER (gtk_widget_get_toplevel (GTK_WIDGET (button))));
+  tmp = (char *) malloc(sizeof(char)*(500)); // should be no constant
+  tmp = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER (w));
+  ConfigInsert("lastdir", tmp);
+  free(tmp);
 
-  filename[len]=0;
+  type = gtk_combo_box_get_active((GtkComboBox *)cb_filesave_extra);
+  tmp = (char *) malloc(sizeof(char)*(500)); // should be no constant
+  tmp = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w));
+  if(tmp)
+  {
+    len = strlen(tmp);
+    filename = (char *) malloc(sizeof(char)*(len+1));
+    filename = (char *) gtk_file_chooser_get_filename(GTK_FILE_CHOOSER (w));
+    filename[len]=0;
+    free(tmp);
+  }
+  else
+  {
+    len = 0;
+  }
 //  gtk_widget_destroy (gtk_widget_get_toplevel (GTK_WIDGET (button)));
   gtk_widget_hide(gtk_widget_get_toplevel (GTK_WIDGET (button)));
 
   if(type==0) // filetype: par
   {
-    SetTitle(filename);
-    FileSave(filename);
+    if(filename)
+    {
+      SetTitle(filename);
+      FileSave(filename);
   
-    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
-    redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
-
+      w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "nb_draw");
+      redraw_page(gtk_notebook_get_current_page((GtkNotebook *)w));
+    }
     if(loadafter==1)
     {
       InitDialogLoad();
@@ -236,14 +269,17 @@ on_bn_file_save_ok_clicked             (GtkButton       *button,
   }
   else // filetype: wav
   {
-    // convert writes file, if filename is set
-    convert(filename);
-    w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
-    redraw_wave(w);
-    // wav-file written
-    strcpy(tmp,filename);
-    strcat(tmp,_(" written"));
-    SetStatusBar("sb_state",tmp);
+    if(filename)
+    {
+      // convert writes file, if filename is set
+      convert(filename);
+      w = (GtkWidget *)lookup_widget (GTK_WIDGET (GetMainWindow()), "draw_wave");
+      redraw_wave(w);
+      // wav-file written
+      strcpy(tmp,filename);
+      strcat(tmp,_(" written"));
+      SetStatusBar("sb_state",tmp);
+    }
   }
 }
 
@@ -363,7 +399,6 @@ void InitDialogSave()
     {
       gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(filesave), tmp);
 //      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(filesave), tmp);
-      free(tmp);
     }
 
     tmp=(char *)g_malloc(200); // should be not a constant!!
