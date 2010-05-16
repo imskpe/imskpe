@@ -1,18 +1,15 @@
-#  -*- coding: utf-8 -*-
-# German Translation for imskpe. ->  http://imskpe.sf.net
-# Copyright (C) 2004,2005 Andreas Madsack
-# This file is distributed under the same license as the imskpe package.
-#
-# Andreas Madsack <bolsog@users.sf.net>, 2004, 2005, 2010.
-# Manuel Kountz <mkountz@freenet.de>, 2004.
-#
+# #  -*- coding: utf-8 -*-
+# # Brazilian Portuguese Translation for imskpe. ->  http://imskpe.sf.net
+# # Copyright (C) 2004-2010 Andreas Madsack
+# # This file is distributed under the same license as the imskpe package.
+# #
 msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-05-16 14:21+0200\n"
-"PO-Revision-Date: 2010-04-22 18:53+0200\n"
-"Last-Translator: Manuel Kountz <mkountz@freenet.de>\n"
+"POT-Creation-Date: 2010-05-16 14:22+0200\n"
+"PO-Revision-Date: 2010-05-16 14:26+0200\n"
+"Last-Translator: Aldebaro Klautau\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,99 +21,99 @@ msgstr "IMSKPE"
 
 #: src/interface.c:208
 msgid "_File"
-msgstr "_Datei"
+msgstr "_Arquivos"
 
 #: src/interface.c:240
 msgid "_Sets"
-msgstr "_Set"
+msgstr "_Conjuntos"
 
 #: src/interface.c:247
 msgid "_Add Set"
-msgstr "Set hinzufügen"
+msgstr "_Adicione conjunto"
 
 #: src/interface.c:255
 msgid "_Delete Set"
-msgstr "Set löschen"
+msgstr "_Remova conjunto"
 
 #: src/interface.c:268
 msgid "_Actions"
-msgstr "_Aktionen"
+msgstr "_Acoes"
 
 #: src/interface.c:275
 msgid "_Execute"
-msgstr "Ausführen"
+msgstr "_Executar"
 
 #: src/interface.c:278 src/interface.c:361
 msgid "Convert & Play"
-msgstr "Umwandeln & Ausführen"
+msgstr "Converte & Toca"
 
 #: src/interface.c:287 src/interface.c:370
 msgid "Interpolate"
-msgstr "Interpolieren"
+msgstr "Interpola"
 
 #: src/interface.c:295
 msgid "_Help"
-msgstr "_Hilfe"
+msgstr "_Ajuda"
 
 #: src/interface.c:302
 msgid "_About"
-msgstr "Über"
+msgstr "_Sobre"
 
 #: src/interface.c:320
 msgid "Quit"
-msgstr "Beenden"
+msgstr "Sair"
 
 #: src/interface.c:325 src/interface.c:2548
 msgid "Open File"
-msgstr "Datei öffnen"
+msgstr "Abrir Arquivo"
 
 #: src/interface.c:330
 msgid "New File"
-msgstr "Neue Datei"
+msgstr "Novo Arquivo"
 
 #: src/interface.c:335 src/interface.c:2596
 msgid "Save File"
-msgstr "Datei speichern"
+msgstr "Salvar Arquivo"
 
 #: src/interface.c:340
 msgid "Save File As"
-msgstr "Datei speichern als"
+msgstr "Salvar Arquivo Como"
 
 #: src/interface.c:345 src/interface.c:1577
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr "Preferencias"
 
 #: src/interface.c:366
 msgid "Refresh Wavearea"
-msgstr "aktualisieren der Wavanzeige"
+msgstr "Refrescar Wavearea"
 
 #: src/interface.c:386 src/interface.c:2333
 msgid "move"
-msgstr "verschieben"
+msgstr "move"
 
 #: src/interface.c:392
 msgid "Move Point"
-msgstr "Punkt verschieben"
+msgstr "Move ponto"
 
 #: src/interface.c:396 src/interface.c:2337
 msgid "insert"
-msgstr "einfügen"
+msgstr "inserir"
 
 #: src/interface.c:402
 msgid "Insert Point"
-msgstr "Punkt einfügen"
+msgstr "Inserir ponto"
 
 #: src/interface.c:405 src/interface.c:2341
 msgid "delete"
-msgstr "löschen"
+msgstr "Remove"
 
 #: src/interface.c:411
 msgid "Delete Point"
-msgstr "Punkt löschen"
+msgstr "Remove ponto"
 
 #: src/interface.c:429
 msgid "duration: "
-msgstr "Dauer: "
+msgstr "Duracao: "
 
 #: src/interface.c:436 src/interface.c:443
 msgid "ms"
@@ -124,47 +121,47 @@ msgstr "ms"
 
 #: src/interface.c:450
 msgid "update interval: "
-msgstr "Schrittweite"
+msgstr "intervalo de atualizacao: "
 
 #: src/interface.c:457
 msgid "sampling rate: "
-msgstr "Abtastrate: "
+msgstr "taxa de amostragem: "
 
 #: src/interface.c:464
 msgid "Num of formants: "
-msgstr "Anzahl Formanten: "
+msgstr "Num de formantes: "
 
 #: src/interface.c:471
 msgid "voice source: "
-msgstr "Stimmquelle: "
+msgstr "Fonte de vozeamento: "
 
 #: src/interface.c:478
 msgid "branches"
-msgstr "Zweige"
+msgstr "ramos"
 
 #: src/interface.c:485
 msgid "samp/sec"
-msgstr "Samples/Sek"
+msgstr "amostras/seg"
 
 #: src/interface.c:508 src/callbacks.c:1384 src/graphics.c:123
 msgid "impulse"
-msgstr "Impulse"
+msgstr "impulsiva"
 
 #: src/interface.c:509 src/callbacks.c:1388 src/graphics.c:126
 msgid "natural"
-msgstr "naturgetreu"
+msgstr "natural"
 
 #: src/interface.c:510 src/callbacks.c:1392 src/graphics.c:129
 msgid "sampled"
-msgstr "digitalisiert"
+msgstr "digitalizada"
 
 #: src/interface.c:525 src/callbacks.c:1406 src/graphics.c:144
 msgid "cascade + parallel"
-msgstr "kaskade + parallel"
+msgstr "cascata + paralelo"
 
 #: src/interface.c:526 src/callbacks.c:1410 src/graphics.c:147
 msgid "parallel only"
-msgstr "nur parallel"
+msgstr "apenas paralelo"
 
 #: src/interface.c:560
 msgid "global"
@@ -174,24 +171,24 @@ msgstr "global"
 #: src/interface.c:669 src/interface.c:701 src/interface.c:733
 #: src/interface.c:911
 msgid "frequency"
-msgstr "Frequenz"
+msgstr "frequencia"
 
 #: src/interface.c:578 src/interface.c:611 src/interface.c:643
 #: src/interface.c:675 src/interface.c:707 src/interface.c:739
 #: src/interface.c:918 src/interface.c:921
 msgid "amplitude"
-msgstr "Amplitude"
+msgstr "amplitude"
 
 #: src/interface.c:584 src/interface.c:617 src/interface.c:649
 #: src/interface.c:681 src/interface.c:713 src/interface.c:745
 #: src/interface.c:931
 msgid "bandwidth"
-msgstr "Bandbreite"
+msgstr "largura de faixa"
 
 #: src/interface.c:590 src/interface.c:623 src/interface.c:655
 #: src/interface.c:687 src/interface.c:719 src/interface.c:751
 msgid "bandwidth parallel"
-msgstr "parallele Bandbreite"
+msgstr "largura de faixa paralelo"
 
 #: src/interface.c:596
 msgid "F1"
@@ -219,177 +216,177 @@ msgstr "F6"
 
 #: src/interface.c:765
 msgid "zero frequency"
-msgstr "Frequenz der Auslöschung"
+msgstr "frequencia do zero"
 
 #: src/interface.c:771
 msgid "zero bandwidth"
-msgstr "Bandbreite der Auslöschung"
+msgstr "largura de faixa do zero"
 
 #: src/interface.c:777
 msgid "pole frequency"
-msgstr "Frequenz des Maximums"
+msgstr "frequencia do polo"
 
 #: src/interface.c:783
 msgid "pole bandwidth"
-msgstr "Bandbreite des Maximums"
+msgstr "largura de faixa do polo"
 
 #: src/interface.c:789
 msgid "pole amplitude"
-msgstr "Amplitude des Maxmimums"
+msgstr "amplitude do polo"
 
 #: src/interface.c:795
 msgid "nasals"
-msgstr "Nasale"
+msgstr "nasais"
 
 #: src/interface.c:799
 msgid "resonators"
-msgstr "Resonatoren"
+msgstr "ressoadores"
 
 #: src/interface.c:807
 msgid "skewness"
-msgstr "spektrale Schiefe (skewness)"
+msgstr ""
 
 #: src/interface.c:812
 msgid "skewness (speed quotient) of voiced excitation signal"
-msgstr "skewness (speed quotient) des stimmhaften Anregungssignals"
+msgstr "skewness (taxa de velocidade) do sinal de excitacao vozeada"
 
 #: src/interface.c:814
 msgid "spectral tilt"
-msgstr "spektrums Neigung (tilt)"
+msgstr "decaimento espectral"
 
 #: src/interface.c:820
 msgid "breathiness"
-msgstr "Behauchtheit"
+msgstr ""
 
 #: src/interface.c:826
 msgid "glottal open quotient"
-msgstr "Öffnungsquotient"
+msgstr ""
 
 #: src/interface.c:832
 msgid "fundamental frequency"
-msgstr "Grundfrequenz"
+msgstr "frequencia fundamental"
 
 #: src/interface.c:838 src/interface.c:1634
 msgid "voice src"
-msgstr "Stimmquelle"
+msgstr "fonte de vozeamento"
 
 #: src/interface.c:846
 msgid "amp. of voicing (par)"
-msgstr "Amplitude der Phonation (par)"
+msgstr "amp. de vozeamento (par)"
 
 #: src/interface.c:851
 msgid "amplitude of voicing (parallel branch)"
-msgstr "Amplitude der Phonation (paralleler Zweig)"
+msgstr "amplitude de vozeamento (ramo par)"
 
 #: src/interface.c:853
 msgid "amp. of bypass path (par)"
-msgstr "Amplitude des Nebenpfades (par)"
+msgstr "amp. do caminho de bypass (par)"
 
 #: src/interface.c:858
 msgid "amplitude of bypass path (parallel branch)"
-msgstr "Amplitude des Nebenpfades (paralleler Zweig)"
+msgstr "amplitude do caminho de bypass (par)"
 
 #: src/interface.c:860
 msgid "amp. of frication"
-msgstr "Amplitude der Friktion"
+msgstr "amp. de fricacao"
 
 #: src/interface.c:866
 msgid "amp. of aspiration"
-msgstr "Amplitude der Aspiration"
+msgstr "amp. de aspiracao"
 
 #: src/interface.c:872
 msgid "amp. of voicing"
-msgstr "Amplitude der Phonation"
+msgstr "amp. de vozeamento"
 
 #: src/interface.c:878
 msgid "overall signal gain"
-msgstr "Lautstärke"
+msgstr "ganho total do sinal"
 
 #: src/interface.c:884 src/interface.c:1641
 msgid "exc. amp."
-msgstr "Ampl. d. Anreg."
+msgstr "amp. exc."
 
 #: src/interface.c:908
 msgid "frequencies"
-msgstr "Frequenz"
+msgstr "frequencias"
 
 #: src/interface.c:928
 msgid "bandwidths"
-msgstr "Bandbreite"
+msgstr "larguras de faixa"
 
 #: src/interface.c:1424
 msgid "About"
-msgstr "Über"
+msgstr "Sobre"
 
 #: src/interface.c:1459 src/interface.c:2231
 msgid "Credits"
-msgstr "Credits"
+msgstr ""
 
 #: src/interface.c:1592
 msgid "Formant 2"
-msgstr "Formant 2"
+msgstr "Formante 2"
 
 #: src/interface.c:1599
 msgid "Formant 3"
-msgstr "Formant 3"
+msgstr "Formante 3"
 
 #: src/interface.c:1606
 msgid "Formant 4"
-msgstr "Formant 4"
+msgstr "Formante 4"
 
 #: src/interface.c:1613
 msgid "Formant 5"
-msgstr "Formant 5"
+msgstr "Formante 5"
 
 #: src/interface.c:1620
 msgid "Formant 6"
-msgstr "Formant 6"
+msgstr "Formante 6"
 
 #: src/interface.c:1627
 msgid "Nasals"
-msgstr "Nasale"
+msgstr "Nasais"
 
 #: src/interface.c:1648
 msgid "Formant 1"
-msgstr "Formant 1"
+msgstr "Formante 1"
 
 #: src/interface.c:1660 src/interface.c:1667 src/interface.c:1674
 #: src/interface.c:1681 src/interface.c:1688 src/interface.c:1695
 #: src/interface.c:1702 src/interface.c:1709 src/interface.c:1716
 msgid "Change Color"
-msgstr "Ändere Farbe"
+msgstr "Muda cor"
 
 #: src/interface.c:1750
 msgid "Colors"
-msgstr "Farben"
+msgstr "Cores"
 
 #: src/interface.c:1787
 msgid "value:"
-msgstr "Wert:"
+msgstr "valor"
 
 #: src/interface.c:1794
 msgid "Font: "
-msgstr "Schriftart: "
+msgstr "Fonte: "
 
 #: src/interface.c:1801
 msgid "max bandwidth"
-msgstr "max. Bandbreite"
+msgstr "largura de faixa max"
 
 #: src/interface.c:1808
 msgid "max amplidute"
-msgstr "max. Amplitude"
+msgstr "amplitude max"
 
 #: src/interface.c:1815
 msgid "max frequence"
-msgstr "max. Frequenzen"
+msgstr "frequencia max"
 
 #: src/interface.c:1854
 msgid "Ruler"
-msgstr "Lineal"
+msgstr "Regua"
 
 #: src/interface.c:1867
 msgid "directory for temp-files"
-msgstr "Verzeichnis für die Temp-Dateien"
+msgstr "pasta para arquivos temporarios"
 
 #: src/interface.c:1868
 msgid "/tmp"
@@ -397,68 +394,67 @@ msgstr "/tmp"
 
 #: src/interface.c:1875
 msgid "playcommand"
-msgstr "Abspielkommando"
+msgstr "comandotoca"
 
-# kommando zum Abspielen
 #: src/interface.c:1876
 msgid "play"
-msgstr "play"
+msgstr "toca"
 
 #: src/interface.c:1878
 msgid "Path"
-msgstr "Pfad"
+msgstr "Caminho"
 
 #: src/interface.c:1885
 msgid "tmp directory"
-msgstr "Tmp-Verzeichnis"
+msgstr "pasta temporaria"
 
 #: src/interface.c:1892
 msgid "wav player"
-msgstr "Wave-Player"
+msgstr "tocador de wav"
 
 #: src/interface.c:1931
 msgid "Paths"
-msgstr "Verzeichnisse"
+msgstr "Caminhos"
 
 #: src/interface.c:1957
 msgid "show really quit dialog: "
-msgstr "Anzeigen des Beenden-Dialogs: "
+msgstr "mostre dialogo para sair: "
 
 #: src/interface.c:1964
 msgid "toolbar style:"
-msgstr "Symbolleistenstil:"
+msgstr "estilo da barra de ferramentas:"
 
 #: src/interface.c:1971
 msgid "Value"
-msgstr "Wert"
+msgstr "Valor"
 
 #: src/interface.c:1983
 msgid "icons"
-msgstr "Icons"
+msgstr ""
 
 #: src/interface.c:1984
 msgid "text"
-msgstr "Text"
+msgstr "texto"
 
 #: src/interface.c:1985
 msgid "both"
-msgstr "beide"
+msgstr "ambos"
 
 #: src/interface.c:2019
 msgid "Misc"
-msgstr "Verschiende"
+msgstr ""
 
 #: src/interface.c:2048
 msgid "_Default"
-msgstr "_Voreinstellungen"
+msgstr ""
 
 #: src/interface.c:2255
 msgid "written by"
-msgstr "programmiert von"
+msgstr "Escrito por"
 
 #: src/interface.c:2270
 msgid "translators"
-msgstr "Übersetzer"
+msgstr "tradutores"
 
 #: src/interface.c:2284
 msgid ""
@@ -471,235 +467,195 @@ msgid ""
 "Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
 "(for KPE (gui for klatt from 1995))"
 msgstr ""
-"Dennis Klatt \n"
-"(für den Klatt-Formant-Synthese-Algorithmus)\n"
-"\n"
-"Jon Iles, Nick Ing-Simmons \n"
-"(für das Klatt-Kommandozeilen-Tool)\n"
-"\n"
-"Andrew Simpson, Jon Iles, Nick Ing-Simmons, Andreas Voegele \n"
-"(für die KPE-GUI aus dem Jahre 1995)"
 
 #: src/interface.c:2286
 msgid "thanks to"
-msgstr "Danksagung an"
+msgstr "agradecimentos a"
 
 #: src/interface.c:2345
 msgid "move dialog"
-msgstr "Verschieben Dialog"
+msgstr "dialogo de move"
 
 #: src/interface.c:2391
 msgid "imskpe - Move"
-msgstr "imskpe - Verschieben"
+msgstr ""
 
 #: src/interface.c:2405
 msgid "Value: "
-msgstr "Wert: "
+msgstr "Valor: "
 
 #: src/interface.c:2419
 msgid "Hz"
-msgstr "Hz"
+msgstr ""
 
 #: src/interface.c:2427
 msgid "Time:"
-msgstr "Zeit: "
+msgstr "Tempo:"
 
 #: src/interface.c:2434
 msgid "sec"
-msgstr "sek"
+msgstr "seg"
 
 #: src/interface.c:2497
 msgid "IMSKPE - Information"
-msgstr "IMSKPE - Information"
+msgstr ""
 
 #: src/interface.c:2509
 msgid "IMSKPE-Splash"
-msgstr "IMSKPE-Splash"
+msgstr ""
 
 #: src/interface.c:2652
 msgid "Adding a set"
-msgstr "Ein Set hinzufügen"
+msgstr "Adiciona um conjunto"
 
 #: src/interface.c:2676
 msgid "Name of Set:"
-msgstr "Name des Set:"
+msgstr "Nome do conjunto:"
 
 #: src/interface.c:2758
 msgid "Delete a set"
-msgstr "Ein Set löschen"
+msgstr "Remover um conjunto"
 
 #: src/interface.c:2796
 msgid "Which Set do You want to delete?"
-msgstr "Welches Set wollen Sie löschen?"
+msgstr "Qual conjunto voce quer remover?"
 
 #: src/interface.c:2808
 msgid "choose"
-msgstr "auswählen"
+msgstr "escolha"
 
 #: src/callbacks.c:92 src/callbacks.c:258 src/callbacks.c:284
 msgid "Save changed data?"
-msgstr "Veränderungen speichern?"
+msgstr "Gravar dados modificados"
 
 #: src/callbacks.c:245
 msgid " written"
-msgstr " geschrieben"
+msgstr " escrito"
 
 #: src/callbacks.c:379
 msgid "Filetype: "
-msgstr "Dateityp: "
+msgstr "Tipo de arquivo: "
 
 #: src/callbacks.c:429
 msgid "All Files"
-msgstr "alle Dateien"
+msgstr "Todos arquivos"
 
 #: src/callbacks.c:434
 msgid "par-Files"
-msgstr "par-Dateien"
+msgstr "Arquivos par"
 
 #: src/callbacks.c:510
 msgid "Compiled"
-msgstr "kompiliert"
+msgstr "Compilado"
 
 #: src/callbacks.c:758 src/callbacks.c:850
 #, c-format
 msgid "%d ms - %d Hz "
-msgstr "%d ms - %d Hz "
+msgstr ""
 
 #: src/callbacks.c:804
 #, c-format
 msgid "%d ms - %d dB "
-msgstr "%d ms - %d dB "
+msgstr ""
 
 #: src/callbacks.c:1988
 msgid "Really reset preferences?"
-msgstr "Wirklich die Einstellungen zurücksetzen?"
+msgstr "Realmente reinicia preferencias?"
 
 #: src/callbacks.c:2352
 msgid "You need insert a name for the set!"
-msgstr "Sie muessen dem Set einen Namen geben."
+msgstr "Voce precisa fornecer um nome para o conjunto!"
 
 #: src/callbacks.c:2527
 msgid "Really quit?"
-msgstr "Wirklich Beenden?"
+msgstr "Realmente sair?"
 
 #: src/callbacks.c:2570 src/callbacks.c:2581
 msgid "Really interpolate?"
-msgstr "Wirklich Interpolieren?"
+msgstr "Realmente interpolar?"
 
 #: src/support.c:90 src/support.c:114
 #, c-format
 msgid "Couldn't find pixmap file: %s"
-msgstr "Kann Bild %s nicht finden."
+msgstr "Nao foi achado o arquivo de pixmap: %s"
 
 #: src/graphics.c:1145
 msgid "write bugreports here: "
-msgstr "Fehlermeldungen bitte hier schreiben: "
+msgstr "escreva relatorios de bugs aqui: "
 
 #: src/graphics.c:1146
 msgid "get announcements:"
-msgstr "Um bei neuen Versionen benachrichtigt zu werden:"
+msgstr "receba anuncios:"
 
 #: src/cfg.c:482
 msgid "Problems saving config-file!"
-msgstr "Probleme beim Speichern der Konfiguration!"
+msgstr "Problemas gravando arquivo de config!"
 
 #: src/cfg.c:505
 msgid "get_home_dir failed!"
-msgstr "Das Bestimmen des Heimatverzeichnisses ist fehlgeschlagen!"
+msgstr "get_home_dir falhou!"
 
 #: src/cfg.c:573
 msgid "Only Characters, Numbers, Space and - are allowed!"
-msgstr "Nur Buchstaben, Zahlen, Leerzeichen und Bindestriche (-) sind erlaubt!"
+msgstr "Apenas caracteres, numeros, espaco e - sao permitidos!"
 
 #: loadpar.l:121
 msgid "Problems open parameter file."
-msgstr "Probleme beim Öffnen der Parameterdatei."
+msgstr "Problemas abrindo arquivo de parametros."
 
 #: loadpar.l:138
 msgid "no parameter file."
-msgstr "Datei ist keine PAR-Datei."
+msgstr "Nao existe arquivo de parametro."
 
 #: loadpar.l:166 loadpar.l:176 loadpar.l:186 loadpar.l:196 loadpar.l:206
 #: loadpar.l:216
 #, c-format
 msgid "PAR-Import-Error: "
-msgstr "PAR-Importier-Fehler: "
+msgstr "Erro na importacao do PAR: "
 
 #: loadpar.l:167
 #, c-format
 msgid "DU not integer\n"
-msgstr "DU ist keine Ganzzahl\n"
+msgstr "DU deve ser um inteiro\n"
 
 #: loadpar.l:177
 #, c-format
 msgid "UI not integer\n"
-msgstr "UI ist keine Ganzzahl\n"
+msgstr "UI deve ser um inteiro\n"
 
 #: loadpar.l:187
 #, c-format
 msgid "SR not integer\n"
-msgstr "SR ist keine Ganzzahl\n"
+msgstr "SR deve ser um inteiro\n"
 
 #: loadpar.l:197
 #, c-format
 msgid "NF not integer\n"
-msgstr "NF ist keine Ganzzahl\n"
+msgstr "NF deve ser um inteiro\n"
 
 #: loadpar.l:207
 #, c-format
 msgid "SS not integer\n"
-msgstr "SS ist keine Ganzzahl\n"
+msgstr "SS deve ser um inteiro\n"
 
 #: loadpar.l:217
 #, c-format
 msgid "CP not integer\n"
-msgstr "CP ist keine Ganzzahl\n"
+msgstr "CP deve ser um inteiro\n"
 
 #: loadpar.l:223
 #, c-format
 msgid "not recognized variable in PAR-File: %s [%s]\n"
-msgstr "Eine nicht zuweisbare Variable in der PAR-Datei: %s [%s]\n"
+msgstr ""
 
 #: loadpar.l:236
 msgid "Parameterfile has loops?"
-msgstr "Parameterfile hat Wiederholungen!"
+msgstr "Arquivo de parametros tem loops?"
 
 #: src/savefile.c:91
 msgid "Can't open output parameter file."
-msgstr "Kann Ausgabedatei nicht zum Schreiben öffnen."
+msgstr "Nao pude abrir arquivo de parametros de saida."
 
 #: loadconf.l:94
 msgid "couldn't find configfile / use default!"
-msgstr "Kann Konfigurationsdatei nicht finden. Verwende Voreinstellungen."
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "imskpe \n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "(c) 2004 by Andreas Madsack"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "imskpe\n"
-#~ "\n"
-#~ "\n"
-#~ "\n"
-#~ "(c) 2004 by Andreas Madsack"
-
-#~ msgid "Andreas Madsack <bolsog@users.sf.net>"
-#~ msgstr "Andreas Madsack <bolsog@users.sf.net>"
-
-#~ msgid ""
-#~ "Manuel Kountz (de)\n"
-#~ "Franz-Albert Van Den Bussche (fr)"
-#~ msgstr ""
-#~ "Manuel Kountz (de)\n"
-#~ "FaVdB (fr)"
-
-#~ msgid "Needs to be done."
-#~ msgstr "Muss noch programmiert werden."
+msgstr "Nao foi achado arquivo config / usando default!"

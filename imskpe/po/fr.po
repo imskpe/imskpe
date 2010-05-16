@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: imskpe\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-22 19:05+0200\n"
+"POT-Creation-Date: 2010-05-16 14:21+0200\n"
 "PO-Revision-Date: 2010-05-01 17:07+0200\n"
 "Last-Translator: Franz-Albert Van Den Bussche <franz@favdb.net>\n"
 "Language-Team: <imskpe-devel@lists.sf.net>\n"
@@ -72,7 +72,7 @@ msgstr "Ouvrir fichier"
 msgid "New File"
 msgstr "Nouveau fichier"
 
-#: src/interface.c:335 src/interface.c:2595
+#: src/interface.c:335 src/interface.c:2596
 msgid "Save File"
 msgstr "Enregistrer"
 
@@ -144,23 +144,23 @@ msgstr "branches"
 msgid "samp/sec"
 msgstr "échantillons/sec"
 
-#: src/interface.c:508 src/callbacks.c:1362 src/graphics.c:123
+#: src/interface.c:508 src/callbacks.c:1384 src/graphics.c:123
 msgid "impulse"
 msgstr "impulsion"
 
-#: src/interface.c:509 src/callbacks.c:1366 src/graphics.c:126
+#: src/interface.c:509 src/callbacks.c:1388 src/graphics.c:126
 msgid "natural"
 msgstr "naturel"
 
-#: src/interface.c:510 src/callbacks.c:1370 src/graphics.c:129
+#: src/interface.c:510 src/callbacks.c:1392 src/graphics.c:129
 msgid "sampled"
 msgstr "échantillonné"
 
-#: src/interface.c:525 src/callbacks.c:1384 src/graphics.c:144
+#: src/interface.c:525 src/callbacks.c:1406 src/graphics.c:144
 msgid "cascade + parallel"
 msgstr "caskade + parallèle"
 
-#: src/interface.c:526 src/callbacks.c:1388 src/graphics.c:147
+#: src/interface.c:526 src/callbacks.c:1410 src/graphics.c:147
 msgid "parallel only"
 msgstr "parallèle seul"
 
@@ -319,26 +319,6 @@ msgstr "largeur de bande"
 msgid "About"
 msgstr "A propos"
 
-#: src/interface.c:1431
-msgid ""
-"\n"
-"\n"
-"\n"
-"imskpe \n"
-"\n"
-"\n"
-"\n"
-"(c) 2004 by Andreas Madsack"
-msgstr ""
-"\n"
-"\n"
-"\n"
-"imskpe\n"
-"\n"
-"\n"
-"\n"
-"(c) 2004 par Andreas Madsack"
-
 #: src/interface.c:1459 src/interface.c:2231
 msgid "Credits"
 msgstr "Crédits"
@@ -470,21 +450,9 @@ msgstr "Divers"
 msgid "_Default"
 msgstr "_Défaut"
 
-#: src/interface.c:2253
-msgid "Andreas Madsack <bolsog@users.sf.net>"
-msgstr "Andreas Madsack <bolsog@users.sf.net>"
-
 #: src/interface.c:2255
 msgid "written by"
 msgstr "écrit par"
-
-#: src/interface.c:2268
-msgid ""
-"Manuel Kountz (de)\n"
-"Franz-Albert Van Den Bussche (fr)"
-msgstr ""
-"Manuel Kountz (de)\n"
-"FaVdB (fr)"
 
 #: src/interface.c:2270
 msgid "translators"
@@ -546,73 +514,73 @@ msgstr "IMSKPE - Information"
 msgid "IMSKPE-Splash"
 msgstr "IMSKPE-Splash"
 
-#: src/interface.c:2650
+#: src/interface.c:2652
 msgid "Adding a set"
 msgstr "Ajout d'un set"
 
-#: src/interface.c:2674
+#: src/interface.c:2676
 msgid "Name of Set:"
 msgstr "Nom du Set:"
 
-#: src/interface.c:2756
+#: src/interface.c:2758
 msgid "Delete a set"
 msgstr "Supprimer un set"
 
-#: src/interface.c:2794
+#: src/interface.c:2796
 msgid "Which Set do You want to delete?"
 msgstr "Quel Set voulez-vous supprimer?"
 
-#: src/interface.c:2806
+#: src/interface.c:2808
 msgid "choose"
 msgstr "choisissez"
 
-#: src/callbacks.c:92 src/callbacks.c:257 src/callbacks.c:283
+#: src/callbacks.c:92 src/callbacks.c:258 src/callbacks.c:284
 msgid "Save changed data?"
 msgstr "Enregistrer les chagements?"
 
-#: src/callbacks.c:243
+#: src/callbacks.c:245
 msgid " written"
 msgstr " écrits"
 
-#: src/callbacks.c:364
+#: src/callbacks.c:379
 msgid "Filetype: "
 msgstr "Type fichier: "
 
-#: src/callbacks.c:407
+#: src/callbacks.c:429
 msgid "All Files"
 msgstr "Tous fichiers"
 
-#: src/callbacks.c:412
+#: src/callbacks.c:434
 msgid "par-Files"
 msgstr "Fichiers-par"
 
-#: src/callbacks.c:488
+#: src/callbacks.c:510
 msgid "Compiled"
 msgstr "Compilé"
 
-#: src/callbacks.c:736 src/callbacks.c:828
+#: src/callbacks.c:758 src/callbacks.c:850
 #, c-format
 msgid "%d ms - %d Hz "
 msgstr "%d ms - %d Hz "
 
-#: src/callbacks.c:782
+#: src/callbacks.c:804
 #, c-format
 msgid "%d ms - %d dB "
 msgstr "%d ms - %d dB "
 
-#: src/callbacks.c:1966
+#: src/callbacks.c:1988
 msgid "Really reset preferences?"
 msgstr "Réinitialiser vraiment les préférences?"
 
-#: src/callbacks.c:2330
+#: src/callbacks.c:2352
 msgid "You need insert a name for the set!"
 msgstr "Vous devez insérer un nom pour le set"
 
-#: src/callbacks.c:2505
+#: src/callbacks.c:2527
 msgid "Really quit?"
 msgstr "Terminer vraiment?"
 
-#: src/callbacks.c:2548 src/callbacks.c:2559
+#: src/callbacks.c:2570 src/callbacks.c:2581
 msgid "Really interpolate?"
 msgstr "Interpoler vraiment?"
 
@@ -629,15 +597,15 @@ msgstr "rapport de bug ici: "
 msgid "get announcements:"
 msgstr "avoir les annonces:"
 
-#: src/cfg.c:470
+#: src/cfg.c:482
 msgid "Problems saving config-file!"
 msgstr "Problèmes denregistrement du fichier de configuration!"
 
-#: src/cfg.c:493
+#: src/cfg.c:505
 msgid "get_home_dir failed!"
 msgstr "get_home_dir en erreur!"
 
-#: src/cfg.c:561
+#: src/cfg.c:573
 msgid "Only Characters, Numbers, Space and - are allowed!"
 msgstr "Seuls les lettres, nombres, espaces et - sont autorisés!"
 
@@ -701,6 +669,35 @@ msgstr "Fichier paramètre impossible à ouvrir."
 #: loadconf.l:94
 msgid "couldn't find configfile / use default!"
 msgstr "Impossible de trouver le fichier de configuration. Usage par défaut."
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "imskpe \n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "(c) 2004 by Andreas Madsack"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "imskpe\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "(c) 2004 par Andreas Madsack"
+
+#~ msgid "Andreas Madsack <bolsog@users.sf.net>"
+#~ msgstr "Andreas Madsack <bolsog@users.sf.net>"
+
+#~ msgid ""
+#~ "Manuel Kountz (de)\n"
+#~ "Franz-Albert Van Den Bussche (fr)"
+#~ msgstr ""
+#~ "Manuel Kountz (de)\n"
+#~ "FaVdB (fr)"
 
 #~ msgid "Needs to be done."
 #~ msgstr "Apportez votre aide."

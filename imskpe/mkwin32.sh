@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # install mingw32 for ubuntu:
 # sudo apt-get install mingw32
@@ -9,7 +9,6 @@ echo
 make clean
 rm -f src/imskpe.exe
 
-./configure --with-win32
 export CC=i586-mingw32msvc-gcc
 export CXX=i586-mingw32msvc-g++
 export LD=i586-mingw32msvc-ld
@@ -22,7 +21,9 @@ export DLLTOOL=i586-mingw32msvc-dlltool
 export OBJDUMP=i586-mingw32msvc-objdump
 export RC=i586-mingw32msvc-windres
 export PKG_CONFIG_PATH=~/cross/lib/pkgconfig
+./autogen.sh
+./configure --with-win32
 
 make
 
-# /opt/cross/bin/i386-mingw32msvc-strip src/imskpe.exe
+# i586-mingw32msvc-strip src/imskpe.exe

@@ -2596,7 +2596,7 @@ fi
 
 # Define the identity of the package.
  PACKAGE=imskpe
- VERSION="1.0.2"
+ VERSION="1.0.3"
 
 
 cat >>confdefs.h <<_ACEOF
@@ -5839,6 +5839,7 @@ $as_echo "no" >&6; }
 fi
 
 
+ALL_LINGUAS="de fr pt_BR"
 
    for ac_header in locale.h
 do :

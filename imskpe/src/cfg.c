@@ -404,6 +404,8 @@ void ConfigFree()
 
 void ConfigNew()
 {
+  char *tmp;
+  int homelen;
 
   ConfigInsert("maxfreq","5000");
   ConfigInsert("maxamp","100");
@@ -417,6 +419,16 @@ void ConfigNew()
   ConfigInsert("playcmd","\"play\"");
   ConfigInsert("tmpdir","\"/tmp\"");
 #endif
+
+  homelen=strlen(g_get_home_dir());
+  tmp=(char *)g_malloc(homelen+3);
+
+  tmp[0]='\"';
+  tmp[1]=0;
+  strncat(tmp,g_get_home_dir(),homelen);
+  tmp[homelen+1]='\"';
+  tmp[homelen+2]=0;
+  ConfigInsert("lastdir",tmp);
 
   ConfigInsert("color_f1","#ff0000");
   ConfigInsert("color_f2","#00ff00");

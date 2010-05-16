@@ -277,7 +277,7 @@ create_imskpe_main (void)
   gtk_container_add (GTK_CONTAINER (menuitem3_menu), execute1);
   gtk_tooltips_set_tip (tooltips, execute1, _("Convert & Play"), NULL);
   gtk_widget_add_accelerator (execute1, "activate", accel_group,
-                              GDK_E, (GdkModifierType) GDK_CONTROL_MASK,
+                              GDK_E, GDK_CONTROL_MASK,
                               GTK_ACCEL_VISIBLE);
 
   image11 = gtk_image_new_from_stock ("gtk-execute", GTK_ICON_SIZE_MENU);
@@ -1428,7 +1428,7 @@ create_imskpe_about (void)
   dialog_vbox1 = GTK_DIALOG (imskpe_about)->vbox;
   gtk_widget_show (dialog_vbox1);
 
-  about_label = gtk_label_new (_("\n\n\nimskpe \n\n\n\n(c) 2004 by Andreas Madsack"));
+  about_label = gtk_label_new ("\n\n\nimskpe \n\n\n\n(c) 2004 by Andreas Madsack");
   gtk_widget_show (about_label);
   gtk_box_pack_start (GTK_BOX (dialog_vbox1), about_label, FALSE, FALSE, 0);
   GTK_WIDGET_SET_FLAGS (about_label, GTK_CAN_FOCUS);
@@ -2250,7 +2250,7 @@ create_imskpe_credits (void)
   gtk_container_add (GTK_CONTAINER (scrolledwindow3), textview6);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (textview6), FALSE);
   gtk_text_view_set_accepts_tab (GTK_TEXT_VIEW (textview6), FALSE);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview6)), _("Andreas Madsack <bolsog@users.sf.net>"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (textview6)), "Andreas Madsack <bolsog@users.sf.net>", -1);
 
   label6 = gtk_label_new (_("written by"));
   gtk_widget_show (label6);
@@ -2265,7 +2265,7 @@ create_imskpe_credits (void)
   gtk_widget_show (_);
   gtk_container_add (GTK_CONTAINER (scrolledwindow2), _);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (_), FALSE);
-  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (_)), _("Manuel Kountz (de)\nFranz-Albert Van Den Bussche (fr)"), -1);
+  gtk_text_buffer_set_text (gtk_text_view_get_buffer (GTK_TEXT_VIEW (_)), "Manuel Kountz (de)\nFranz-Albert Van Den Bussche (fr)\nAldebaro Klautau (pt_BR)", -1);
 
   label7 = gtk_label_new (_("translators"));
   gtk_widget_show (label7);

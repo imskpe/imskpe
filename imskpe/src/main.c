@@ -62,6 +62,8 @@ int main (int argc, char *argv[])
 
 #ifdef ENABLE_NLS
 #ifdef WIN32
+  // TODO: use: g_win32_locale_filename_from_utf8
+  // see gimp-source: libgimpbase/gimpenv.c
   bindtextdomain (GETTEXT_PACKAGE, "..\\share\\locale");
 #else
   bindtextdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR);

@@ -57,7 +57,7 @@ AC_ARG_WITH(win32,
   ])
 
 dnl Add the languages which your application supports here.
-ALL_LINGUAS="de fr"
+ALL_LINGUAS="de fr pt_BR"
 AM_GLIB_GNU_GETTEXT
 
 pkg_modules="gtk+-2.0 >= 2.4.0"

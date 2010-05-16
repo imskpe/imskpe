@@ -363,6 +363,15 @@ void InitDialogSave()
     {
       gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(filesave), tmp);
 //      gtk_file_chooser_set_filename (GTK_FILE_CHOOSER(filesave), tmp);
+      free(tmp);
+    }
+
+    tmp=(char *)g_malloc(200); // should be not a constant!!
+    strcpy(tmp,filtertoken(ConfigGetString("lastdir"),"\""));
+    if (tmp)
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (filesave), tmp);
+      free(tmp);
     }
 
     hbox = gtk_hbox_new (FALSE, 0);
@@ -398,6 +407,7 @@ void InitDialogLoad()
 {
   static GtkWidget *fileopen = NULL;
   GtkFileFilter *filter;
+  char tmp[200];  // not good!
 
   if (fileopen == NULL) 
   {
@@ -407,6 +417,12 @@ void InitDialogLoad()
     		      "destroy",
     		      G_CALLBACK (gtk_widget_destroyed),
     		      &fileopen);
+
+    strcpy(tmp,filtertoken(ConfigGetString("lastdir"),"\""));
+    if (tmp)
+    {
+      gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (fileopen), tmp);
+    }
 
     /* Filters */
     filter = gtk_file_filter_new ();
