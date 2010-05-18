@@ -1,7 +1,12 @@
+#
+# Internal Package for the 
+# Institute for Natural Language Processing
+# at Universität Stuttgart
+#
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
 Version: 1.0.4
-Release: 1
+Release: IMS
 License: GPL
 Group: Applications/Sound
 URL: http://imskpe.sf.net
@@ -10,7 +15,7 @@ Source0: %{name}-%{version}.tar.gz
 Buildroot: /tmp/bol
 #Requires:        gtk+ >= @GTK_REQUIRED@
 #BuildRequires:   gtk+-devel >= @GTK_REQUIRED@
-prefix: /usr/local
+prefix: /usr
 
 # cheats
 %define _unpackaged_files_terminate_build 0 

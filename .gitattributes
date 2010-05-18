@@ -1,6 +1,7 @@
 * text=auto !eol
 imskpe/imskpe-icon.png -text
 imskpe/imskpe-icon.xcf -text
+imskpe/packages/imskpe-ims.spec -text
 imskpe/pixmaps/delete_point.png -text
 imskpe/pixmaps/move_point.png -text
 imskpe/pixmaps/new_point.png -text
