@@ -1,9 +1,20 @@
+imskpe (1.0.4-1) unstable; urgency=low
+
+  * 1.0.4 release
+  * Fixed segfault on empty filenames in load/save-dialog
+  * Last directory in load/save-dialog now saved
+  * Default last directory in load/save-dialog is now the user home directory
+  * added Brazilian Portuguese (thanks to Aldebaro Klautau for translation)
+  * Fixed bug in lexer for play-command (now '.' is allowed)
+
+ -- Andreas Madsack <bolsog@users.sf.net>  Tue, 18 May 2010 15:55:17 +0100
+
 imskpe (1.0.3-1) unstable; urgency=low
 
-  * 1.0.3 release!
+  * 1.0.3 testing release!
   * Important Fix in Save-as
 
- -- Andreas Madsack <bolsog@users.sf.net>  Wed, 10 May 2010 12:40:01 +0100
+ -- Andreas Madsack <bolsog@users.sf.net>  Mon, 10 May 2010 12:40:01 +0100
 
 imskpe (1.0.2-1) unstable; urgency=low
 

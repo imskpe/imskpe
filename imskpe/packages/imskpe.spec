@@ -1,6 +1,6 @@
 Name: imskpe
 Summary:  imskpe - formantsynthesis gui
-Version: 1.0.2
+Version: 1.0.4
 Release: 1
 License: GPL
 Group: Applications/Sound

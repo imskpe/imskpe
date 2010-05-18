@@ -1,3 +1,17 @@
+2010-05-18  Andreas Madsack  <bolsog@users.sf.net>
+
+	* 1.0.4 release
+	* Fixed segfault on empty filenames in load/save-dialog
+	* Last directory in load/save-dialog now saved
+	* Default last directory in load/save-dialog is now the user home directory
+	* added Brazilian Portuguese (thanks to Aldebaro Klautau for translation)
+	* Fixed bug in lexer for play-command (now '.' is allowed)
+	* including Win32-Release
+
+2010-05-15  Andreas Madsack  <bolsog@users.sf.net>
+
+	* 1.0.3 -- internal testing release!!
+
 2010-05-02  Andreas Madsack  <bolsog@users.sf.net>
 
 	* 1.0.2 Release
