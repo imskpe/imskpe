@@ -16,14 +16,14 @@ GETTEXT_PACKAGE = imskpe
 PACKAGE = imskpe
 VERSION = 1.0.4
 
-SHELL = /bin/sh
+SHELL = /bin/bash
 
 
 srcdir = .
 top_srcdir = ..
 
 
-prefix = /usr/local
+prefix = /usr
 exec_prefix = ${prefix}
 datarootdir = ${prefix}/share
 datadir = ${datarootdir}
@@ -37,7 +37,7 @@ INSTALL = /usr/bin/install -c
 INSTALL_DATA = ${INSTALL} -m 644
 MKINSTALLDIRS = $(top_srcdir)/./mkinstalldirs
 
-CC = gcc
+CC = x86_64-linux-gnu-gcc
 GENCAT = @GENCAT@
 GMSGFMT = /usr/bin/msgfmt
 MSGFMT = /usr/bin/msgfmt
@@ -46,7 +46,7 @@ XGETTEXT = /usr/bin/xgettext
 MSGMERGE = msgmerge
 
 DEFS = -DHAVE_CONFIG_H
-CFLAGS = -g -O2  
+CFLAGS = -Wall -g -O2  
 CPPFLAGS = 
 
 INCLUDES = -I.. -I$(top_srcdir)/intl
