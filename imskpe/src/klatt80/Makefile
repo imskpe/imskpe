@@ -69,18 +69,18 @@ am__can_run_installinfo = \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /tmp/imskpe/imskpe/missing --run aclocal-1.11
+ACLOCAL = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run aclocal-1.11
 AMTAR = $${TAR-tar}
-AUTOCONF = ${SHELL} /tmp/imskpe/imskpe/missing --run autoconf
-AUTOHEADER = ${SHELL} /tmp/imskpe/imskpe/missing --run autoheader
-AUTOMAKE = ${SHELL} /tmp/imskpe/imskpe/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run automake-1.11
 AWK = gawk
 CATALOGS =  de.gmo fr.gmo pt_BR.gmo
 CATOBJEXT = .gmo
-CC = x86_64-linux-gnu-gcc
+CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -Wall -g -O2  
-CPP = x86_64-linux-gnu-gcc -E
+CFLAGS = -g -O2  
+CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DATADIRNAME = share
@@ -106,13 +106,13 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 INSTOBJEXT = .mo
 INTLLIBS = 
 LDFLAGS =   
-LEX = flex
-LEXLIB = -lfl
-LEX_OUTPUT_ROOT = lex.yy
+LEX = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run flex
+LEXLIB = 
+LEX_OUTPUT_ROOT = 
 LIBOBJS = 
-LIBS =   
+LIBS = -lm  
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /tmp/imskpe/imskpe/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/mfa/git/imskpe/imskpe/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 MKINSTALLDIRS = ./mkinstalldirs
 MSGFMT = /usr/bin/msgfmt
@@ -120,8 +120,8 @@ MSGFMT_OPTS = -c
 OBJEXT = o
 PACKAGE = imskpe
 PACKAGE_BUGREPORT = 
-PACKAGE_CFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12  
-PACKAGE_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lglib-2.0  
+PACKAGE_CFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/freetype2 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/libpng12 -I/usr/include/harfbuzz  
+PACKAGE_LIBS = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfontconfig -lgobject-2.0 -lglib-2.0 -lfreetype  
 PACKAGE_NAME = 
 PACKAGE_STRING = 
 PACKAGE_TARNAME = 
@@ -144,38 +144,38 @@ WINGTK_CFLAGS =
 WINGTK_LDLAGS = 
 WINGTK_LIBS = 
 XGETTEXT = /usr/bin/xgettext
-abs_builddir = /tmp/imskpe/imskpe/src/klatt80
-abs_srcdir = /tmp/imskpe/imskpe/src/klatt80
-abs_top_builddir = /tmp/imskpe/imskpe
-abs_top_srcdir = /tmp/imskpe/imskpe
-ac_ct_CC = 
+abs_builddir = /home/mfa/git/imskpe/imskpe/src/klatt80
+abs_srcdir = /home/mfa/git/imskpe/imskpe/src/klatt80
+abs_top_builddir = /home/mfa/git/imskpe/imskpe
+abs_top_srcdir = /home/mfa/git/imskpe/imskpe
+ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
 am__quote = 
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
-build_alias = x86_64-linux-gnu
+build_alias = 
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
-host_alias = x86_64-linux-gnu
+host_alias = 
 htmldir = ${docdir}
 includedir = ${prefix}/include
-infodir = ${prefix}/share/info
-install_sh = ${SHELL} /tmp/imskpe/imskpe/install-sh
+infodir = ${datarootdir}/info
+install_sh = ${SHELL} /home/mfa/git/imskpe/imskpe/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
 localstatedir = ${prefix}/var
-mandir = ${prefix}/share/man
+mandir = ${datarootdir}/man
 mkdir_p = /bin/mkdir -p
 oldincludedir = /usr/include
 pdfdir = ${docdir}
-prefix = /usr
+prefix = /usr/local
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
@@ -376,12 +376,12 @@ uninstall-am:
 	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am
 
 
-#klatt_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfreetype -lfontconfig -lgobject-2.0 -lglib-2.0   $(INTLLIBS)
+#klatt_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -latk-1.0 -lgio-2.0 -lpangoft2-1.0 -lpangocairo-1.0 -lgdk_pixbuf-2.0 -lcairo -lpango-1.0 -lfontconfig -lgobject-2.0 -lglib-2.0 -lfreetype   $(INTLLIBS)
 
 #INCLUDES = \
 #	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
 #	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
-#	-pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/freetype2 -I/usr/include/libpng12  
+#	-pthread -I/usr/include/gtk-2.0 -I/usr/lib/x86_64-linux-gnu/gtk-2.0/include -I/usr/include/atk-1.0 -I/usr/include/cairo -I/usr/include/gdk-pixbuf-2.0 -I/usr/include/pango-1.0 -I/usr/include/gio-unix-2.0/ -I/usr/include/freetype2 -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/pixman-1 -I/usr/include/libpng12 -I/usr/include/harfbuzz  
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
